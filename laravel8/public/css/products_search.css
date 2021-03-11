@@ -1,0 +1,113 @@
+/* Index products */
+
+div.no-offer div.product_price {
+  filter: grayscale(30%);
+}
+
+div.no-offer div.product_pict {
+  filter: grayscale(90%);
+}
+
+div.grid_product div.down.no-offer p {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+
+div.grid_product div.down.no-offer div p {
+  width: 100%;
+  color: black;
+  background-color: darkgrey;
+}
+
+div.grid_product div.down.offer-soon div p {
+  color: black;
+  display: inline-flex;
+  gap: 0.25rem;
+  background-color: #ed8936;
+}
+
+.product_price {
+  position: absolute;
+  top: 1rem;
+  padding: 0.5rem;
+  font-weight: 600;
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+  border-width: 1px;
+  border-left-width: 0px;
+  --tw-border-opacity: 1;
+  border-color: rgba(255, 255, 255, var(--tw-border-opacity));
+}
+
+.product_pict {
+  height: 11rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.product_bookmark {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
+  border-top-right-radius: 0.25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  color: #ed8936;
+}
+
+.product_bookmark svg.saved {
+  fill: currentColor;
+}
+
+/* Search products bar */
+
+.sticky_search_bar.off {
+  position: relative;
+  margin-top: 2rem;
+}
+
+.sticky_search_bar.off div#search_bar {
+  position: absolute;
+  top: -2.5rem;
+  right: 0px;
+}
+
+.sticky_search_bar.on {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgba(107, 114, 128, var(--tw-border-opacity));
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  position: fixed;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 2rem;
+  padding-right: 3rem;
+  width: 100vw;
+  left: 0px;
+  z-index: 8;
+  top: 3.4rem;
+  background-color: bisque;
+}
+
+.sticky_search_bar div#search_bar {
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+}
+
+input#search_text, input#search_text:focus {
+  border-style: none;
+}
+
+input#search_text, input#search_text:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+

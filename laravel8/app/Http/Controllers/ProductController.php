@@ -1,0 +1,247 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\ProductRequest;
+use Illuminate\Http\Request;
+use App\Models\Product;
+use App\Models\ProductUsers;
+use App\Models\ProductPhoto;
+use App\Models\ProductWebsite;
+use App\Models\Purchase;
+use Carbon\Carbon;
+use EloquentBuilder;
+
+class ProductController extends Controller
+{
+    private $nb_page_results = 5;
+
+    public function setProductWebsites(&$products){
+        foreach($products as $product){
+            $product->nb_offers = count($product->getAvailableWebsites());
+            $product->can_buy = $product->nb_offers > count($product->getWebsitesAvailableSoon());
+            $product->date_show = null;
+
+            if($product->nb_offers > 0){ //Des offres sont disponibles
+                if($product->can_buy){
+                    if(count($product->purchases) >= 1){
+                        $product->date_show = __('Purchased on').' '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date));
+                    }else{
+                        $product->date_show = __('Not bought');
+                    }
+                }else{ //Les offres sont pour des dates futures
+                    $offer = $product->getWebsitesAvailableSoon()->first();
+                    $product->date_show = app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($offer->available_date);
+                }
+            }else $product->date_show = __('No offer listed');
+            
+        }
+    }
+
+    //Routes
+    public function index(Request $request){
+        $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid'];
+        $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'f_nb_results' => $this->nb_page_results];
+        $search = $request->search;
+        if(is_null($search)) $products = Product::orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
+        else $products = Product::where('label', 'like', '%'.$search.'%')->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
+
+        $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
+        $this->setProductWebsites($products);
+        return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
+    }
+
+    function filter(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'search_text' => 'bail|nullable|string',
+                'sort_by' => 'bail|required|string',
+                'order_by' => 'bail|required|string',
+                'list' => 'bail|required|string',
+                'page' => 'bail|required|int',
+                'stock' => 'bail|required|string',
+                'purchased' => 'bail|required|string',
+                'f_nb_results' => 'bail|required|int',
+            ]);
+            switch($request->sort_by){
+                case 'alpha': $sort_by = 'label';
+                break;
+                case 'price': $sort_by = 'real_cost';
+                break;
+                default: $sort_by = 'created_at';
+            }
+
+            $buildRequest = Product::query();
+            $filter_pw = [];
+            //Filtrés par sites
+            foreach($request->websites as $product_website){
+                $r = explode('_', $product_website);
+                $filter_pw[] = intval($r[1]);
+            }
+
+            //$products = DB::table('product_websites')->rightJoin('products', 'product_websites.product_id', '=', 'products.id')->get();
+            if($request->stock === 'product_missing'){
+                $buildRequest->wheredoesntHave('productWebsites');
+            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all'){
+                $buildRequest->wheredoesntHave('productWebsites')
+                ->orWhereHas('productWebsites', function($query) use ($filter_pw){
+                    $query->whereIn('website_id', $filter_pw);
+                });
+            }else{
+                $buildRequest->whereHas('productWebsites', function($query) use ($filter_pw){
+                    $query->whereIn('website_id', $filter_pw);
+                });
+            }
+
+            //Filtrés par produits achetés ou non, vendus ou non
+            switch($request->purchased){
+                case 'purchased_yes': $buildRequest->has('purchases');
+                    break;
+                case 'purchased_no': $buildRequest->doesntHave('purchases');
+                    break;
+                case 'selling': $buildRequest->whereHas('sellings', function($query){
+                        $query->whereNull('date_send');
+                    });
+                    break;
+                    case 'resold': $buildRequest->whereHas('sellings', function($query){
+                        $query->whereNotNull('date_send');
+                    });
+                    break;
+                default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
+            }
+
+            //Filtrés par produits disponibles, a venir, expirés
+            switch($request->stock){
+                case 'product_available': 
+                    $buildRequest->whereHas('productWebsites', function($query){
+                        $query->where([['available_date', '<=', date("Y-m-d H:i:s")], ['expiration_date', '>', date("Y-m-d")]])
+                            ->orWhere([['available_date', '<=', date("Y-m-d H:i:s")], ['expiration_date', '=', null]])
+                            ->orWhere([['available_date', '=', null], ['expiration_date', '>', date("Y-m-d")]])
+                            ->orWhere([['available_date', '=', null], ['expiration_date', '=', null]]);
+                    })->where('label', 'like', '%'.$request->search_text.'%');
+                    break;
+                case 'product_to_come': 
+                    $buildRequest->whereHas('productWebsites', function($query){
+                        $query->where([['available_date', '>', date("Y-m-d H:i:s")], ['available_date', '<>', null]]);
+                    })->where('label', 'like', '%'.$request->search_text.'%');
+                    break;
+                case 'product_expired': 
+                    $buildRequest->whereHas('productWebsites', function($query){
+                        $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
+                    })->where('label', 'like', '%'.$request->search_text.'%');
+                    break;
+                default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
+            }
+            $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
+            
+            app('App\Http\Controllers\ProductController')->setProductWebsites($products);
+            
+            foreach($products as $product){
+                $product->url = route('products.show', $product->id);
+                $product->pict = asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label);
+            }
+            $view = ($request->list === 'grid')? 'partials.products.grid_details' : 'partials.products.list_details';
+            $returnHTML = view($view)->with(['products' => $products])->render();
+            return response()->json(array('success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML));
+        }
+        abort(404);
+    }
+
+    /*public function bookmark(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'product' => 'bail|required|int',
+            ]);
+            //On vérifie que le produit n'est pas déjà sauvegardé par l'utilisateur
+            $product_user = ProductUsers::where(['product_id' => $request->product, 'product_website_id' => $request->product])->get();
+            dd($product_user);
+            return response()->json(array('success' => true, 'product' => ['bookmark' => $product.]))
+        }
+    }*/
+
+    public function create(){
+        return view('products.create');
+    }
+
+    public function store(ProductRequest $request){
+        $product = new Product([
+            'label' => $request->label,
+            'description' => $request->description,
+            'limited_edition' => $request->limited_edition,
+            'real_cost' => $request->real_cost,
+        ]);
+        $product->save();
+        //Adding the photo
+        app('App\Http\Controllers\UploadController')->storePhoto($request, 1, $product);
+        $info = __('The product has been created.');
+        
+        if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
+
+            $product_website = new ProductWebsite([
+                'product_id' => $product->id,
+                'website_id' => $request->website_id,
+                'price' => $request->price,
+                'url' => $request->url,
+                'expiration_date' => $request->expiration_date,
+            ]);
+            $product_website->save();
+            
+            $purchase = new Purchase([
+                'product_id' => $product->id,
+                'product_state_id' => $request->product_state_id,
+                'website_id' => $request->website_id,
+                'cost' => $request->cost,
+                'date' => $request->date,
+            ]);
+            $purchase->save();
+            
+            $info = __('The product & the related purchase have been created.');
+        }
+
+        return redirect()->route('products.show', $product->id)->with('info', $info);
+    }
+    
+    public function show(Product $product){
+        $product_websites = $product->productWebsites()->orderBy('price')->get();
+        $purchases = $product->purchases()->orderBy('date')->get();
+        $photos = $product->photos()->orderBy('ordered')->get();
+        $product_websites->nb_expired = 0;
+        //On ajoute des infos pour l'affichage
+        foreach($purchases as $purchase){
+            if(!is_null($purchase->selling) && $purchase->selling->resold()){
+                $purchase->display_type = 'benef';
+            }elseif(!is_null($purchase->selling)){
+                $purchase->display_type = 'sell';
+            }else{
+                $purchase->display_type = 'buy';
+            }
+        }
+
+        foreach($product_websites as $pw){
+            $pw->expired = !is_null($pw->expiration_date) && ($pw->expiration_date < Carbon::now());
+            $pw->available_soon = !is_null($pw->available_date) && ($pw->available_date >= Carbon::now());
+            $pw->lower_price = $pw->price < $product->real_cost;
+            if($pw->expired || !is_null($pw->expiration_date)){ //Une date d'expiration est renseignée
+                $pw->date_show = __('Expire');
+                $past_date = $pw->expiration_date < Carbon::now();
+                if($past_date){
+                    $product_websites->nb_expired++;
+                    $pw->date_show = __('Expired');
+                }
+                $pw->date_show .= ' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->expiration_date, $past_date);
+            }elseif($pw->available_soon){
+                $pw->date_show = __('Available').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->available_date);
+            }
+        }
+        return view('products.show', compact('product', 'photos', 'product_websites', 'purchases'));
+    }
+
+    public function edit(Product $product){
+        return view('products.edit', compact('product'));
+    }
+    
+    public function update(ProductRequest $request, Product $product){
+        $product->update($request->all());
+        return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
+    }
+}

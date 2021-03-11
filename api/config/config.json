@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root3sBZCpR",
+    "database": "api_products_managing",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": "3308"
+  },
+  "test": {
+    "username": "root",
+    "password": "root3sBZCpR",
+    "database": "api_products_managing",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": "3308"
+  },
+  "production": {
+    "username": "root",
+    "password": "root3sBZCpR",
+    "database": "api_products_managing",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": "3308"
+  }
+}

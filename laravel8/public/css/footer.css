@@ -1,0 +1,88 @@
+#footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  --tw-bg-opacity: 1;
+  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+  margin-top: 2rem;
+}
+
+#footer div.nav {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 60%;
+}
+
+#footer div.nav div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#footer div.nav div span, #footer div.nav div span a {
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+
+#footer div.nav div span, #footer div.nav div span a {
+  font-weight: 700;
+}
+
+#footer div.nav div span a {
+  --tw-text-opacity: 1;
+  color: rgba(209, 213, 219, var(--tw-text-opacity));
+  font-weight: 700;
+}
+
+#footer div.nav div ul {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  line-height: 1.75rem;
+  cursor: pointer;
+}
+
+#footer div.nav div ul li:hover {
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  --tw-translate-x: 0.75rem;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 500ms;
+}
+
+#footer div.nav div ul li a {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+
+#footer div.nav div ul li:hover a,
+#footer div.nav div a:hover {
+  color: #ed8936;
+}
+
+#footer div.copyright {
+  --tw-bg-opacity: 1;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  width: 100%;
+  text-align: center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+/* @media (min-width: 768px) {
+    #footer div.nav.md {
+        width: 100%;
+    }
+} */
+

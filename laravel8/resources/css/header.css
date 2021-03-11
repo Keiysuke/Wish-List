@@ -1,0 +1,276 @@
+/* Menu & Submenu */
+.navitem {
+    @apply relative;
+    @apply text-white;
+    @apply px-1;
+    @apply py-2;
+    @apply text-sm;
+    @apply font-medium;
+    @apply border-b-2;
+    @apply border-gray-800;
+    @apply px-3;
+}
+
+.navitem.active {
+    border-color: #ed8936;
+}
+
+.navitem.not-active {
+    @apply text-gray-300;
+    @apply rounded-md;
+}
+
+.navitem.not-active:hover {
+    @apply bg-gray-700;
+    @apply text-white;
+}
+
+/* Fast search bar */
+form#fast_search div:first-of-type input {
+    @apply border-2;
+    @apply border-gray-300;
+    @apply bg-white;
+    @apply h-8;
+    @apply pl-2;
+    @apply pr-5;
+    @apply w-0;
+    @apply rounded-full;
+    @apply text-sm;
+    @apply ease-in-out;
+    @apply duration-300;
+}
+
+form#fast_search div:first-of-type input.focus_search {
+    @apply outline-none;
+    @apply w-52;
+    @apply pr-8;
+    @apply ease-in-out;
+    @apply duration-300;
+}
+
+form#fast_search div:first-of-type svg {
+    @apply absolute;
+    @apply text-gray-600;
+    @apply h-8;
+    @apply cursor-pointer;
+}
+
+/* Icons */
+#icon-bell,
+#icon-msg,
+#icon-profil {
+    @apply h-6;
+    @apply text-gray-400;
+    @apply cursor-pointer;
+    transition: color;
+    @apply ease-in-out;
+    @apply duration-300;
+}
+
+#icon-profil {
+    @apply h-8;
+}
+
+#icon-profil:hover {
+    @apply text-white;
+}
+
+#icon-profil.on {
+    color: white;
+}
+
+#icon-bell.on {
+    color: rgba(239, 68, 68, 1);
+}
+
+#icon-bell:hover {
+    @apply text-red-400;
+}
+
+#icon-msg:hover {
+    @apply text-blue-400;
+}
+
+.bounce-effect {
+    animation: bounce 0.45s ease infinite alternate;
+}
+
+/* Submenu & Subicons */
+.submenu,
+.subicon {
+    @apply flex;
+    @apply flex-col;
+    @apply py-2;
+    @apply fixed;
+    @apply border;
+    @apply border-t-0;
+    z-index: 15;
+    transform: scaleY(0);
+}
+
+.submenu {
+    left: 19.5rem;
+    top: 3.3rem;
+    @apply border-gray-800;
+    @apply bg-white;
+    transform-origin: 0 0;
+    transition: transform 0.5s ease;
+}
+
+.submenu.open {
+    transform: scaleY(1);
+}
+
+.submenu a {
+    @apply cursor-pointer;
+    @apply px-3;
+    @apply text-gray-800;
+}
+
+.submenu a:hover {
+    background-color: #ed8936;
+    @apply text-white;
+}
+
+.subicon {
+    @apply leading-8;
+    @apply border-gray-900;
+    @apply bg-gray-900;
+}
+
+.subicon.open {
+    animation: subicon_open 0.5s ease 1 normal forwards;
+}
+
+.subicon.close {
+    animation: subicon_close 0.5s ease 1 normal forwards;
+}
+
+.subicon.open-v {
+    transform: scaleY(1);
+}
+
+.subicon.close-v {
+    transform: scaleY(0);
+}
+
+#subicon_user {
+    right: 1.5rem;
+    top: 3.3rem;
+}
+
+#subicon_bell {
+    @apply flex-col;
+    @apply w-72;
+    @apply h-28;
+    @apply justify-center;
+    @apply items-center;
+    @apply text-white;
+    @apply right-6;
+    top: 3.3rem;
+    transform-origin: 0 0;
+    transition: transform 0.2s ease;
+}
+
+.subicon.menu span {
+    @apply inline-flex;
+    @apply gap-1;
+    @apply cursor-pointer;
+    @apply px-4;
+    @apply text-gray-300;
+}
+
+.subicon.menu span:hover {
+    background-color: white;
+    @apply text-gray-800;
+}
+
+#btn-go-up {
+    position: fixed;
+    border-radius: 0.5rem;
+    --tw-text-opacity: 1;
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgba(59, 130, 246, var(--tw-bg-opacity));
+    padding: 1rem;
+    right: 3.5rem;
+    bottom: 3.5rem;
+    cursor: pointer;
+    opacity: 0;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 500ms;
+}
+
+#btn-go-up.show {
+    opacity: 1;
+}
+
+#btn-go-up.show:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
+    transition-duration: 300ms;
+}
+
+/* Breadcrumb */
+nav.breadcrumb {
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    width: 100%;
+}
+
+ol.breadcrumb {
+    display: flex;
+    --tw-text-opacity: 1;
+    color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+
+li.breadcrumb-item:not(.active) {
+    --tw-text-opacity: 1;
+    color: rgba(59, 130, 246, var(--tw-text-opacity));
+    font-weight: 700;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes subicon_open {
+    0% {
+        transform: scaleY(0);
+        transform: scaleX(0);
+    }
+
+    80% {
+        transform: scaleY(0);
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleY(1);
+        transform: scaleX(1);
+    }
+}
+
+@keyframes subicon_close {
+    0% {
+        transform: scaleY(1);
+        transform: scaleX(1);
+    }
+
+    20% {
+        transform: scaleY(0);
+        transform: scaleX(1);
+    }
+
+    100% {
+        transform: scaleY(0);
+        transform: scaleX(0);
+    }
+}

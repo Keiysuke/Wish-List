@@ -1,0 +1,54 @@
+.thumbnail-recto-verso {
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    position: relative;
+    --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.thumbnail-recto-verso .thumbnail {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.thumbnail-recto-verso .thumbnail .layer {
+    margin: 0px !important;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.thumbnail-recto-verso .thumbnail .layer {
+    margin: 0px !important;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.thumbnail-recto-verso .thumbnail .recto-side {
+    min-width: -webkit-fill-available;
+    position: absolute;
+    z-index: 1;
+}
+
+.thumbnail-recto-verso .mode-recto .recto-side {
+    -webkit-transform: rotatey(-0deg);
+    transform: rotatey(-0deg);
+}
+
+.thumbnail-recto-verso .mode-recto .verso-side {
+    -webkit-transform: rotatey(-180deg);
+    transform: rotatey(-180deg);
+}
+
+.thumbnail-recto-verso .mode-verso .recto-side {
+    -webkit-transform: rotatey(+180deg);
+    transform: rotatey(+180deg);
+}
+
+.thumbnail-recto-verso .mode-verso .verso-side {
+    -webkit-transform: rotatey(0deg);
+    transform: rotatey(0deg);
+}

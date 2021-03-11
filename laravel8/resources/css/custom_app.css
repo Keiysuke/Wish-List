@@ -1,0 +1,125 @@
+body {
+    @apply min-h-screen;
+    @apply flex;
+    @apply flex-col;
+    @apply overflow-auto;
+    @apply overflow-x-hidden;
+}
+
+div.notification {
+    @apply w-full;
+    @apply border-2;
+    @apply rounded;
+    @apply p-1;
+    @apply mb-4;
+    @apply font-semibold;
+}
+
+div.notification.is-success {
+    @apply border-green-500;
+    @apply bg-green-200;
+    @apply text-green-600;
+}
+
+div.notification div {
+    @apply inline-flex;
+    @apply w-full;
+    @apply bg-white;
+    @apply p-4;
+}
+
+#page-container {
+    @apply flex;
+    @apply justify-center;
+    @apply pt-12;
+    @apply flex-grow;
+}
+
+#main {
+    @apply p-5;
+    width: 85%;
+}
+
+.vertical-line {
+    border-left: 1px solid #000;
+    display: inline-block;
+    @apply h-6;
+    @apply mx-4;
+}
+
+hr {
+    padding: 0.375rem;
+}
+
+h1 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+}
+
+h3 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+a.link {
+    @apply text-blue-500;
+}
+
+a.link:hover {
+    @apply underline;
+}
+
+.invalid-feedback {
+    @apply text-red-500;
+    @apply text-sm;
+    @apply font-semibold;
+    @apply p-2;
+}
+
+.required,
+.error {
+    @apply text-red-500;
+}
+
+.title-icon {
+    @apply text-gray-700;
+    @apply border-2;
+    @apply border-b-0;
+    @apply rounded;
+    @apply rounded-b-none;
+    @apply p-2;
+}
+
+.title-icon:hover {
+    @apply text-white;
+    @apply bg-blue-500;
+    transition: ease-in-out;
+    transition-duration: 150ms;
+}
+
+li.li_website.expired {
+    text-decoration: line-through;
+}
+
+.disabled {
+    @apply text-gray-400;
+}
+
+.disabled:hover {
+    @apply text-gray-400;
+    background-color: transparent;
+}
+
+a.sitemap_link {
+    @apply inline-flex;
+}
+
+a.sitemap_link:hover span {
+    color: #ed8936;
+}

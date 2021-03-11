@@ -1,0 +1,143 @@
+@extends('template')
+
+@section('metas')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('list', 'product') }}
+@endsection
+
+@section('css')
+    <link href="{{ asset('css/pagination.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/products_search.css') }}" rel="stylesheet">
+@endsection
+
+@section('js')
+<script>
+    search_products();
+
+    function toggle_filters(){
+        if(window.scrollY >= '40'){
+            window.scrollTo(0, 0);
+            if(document.getElementById('content_filters').classList.contains('hidden')) document.getElementById('content_filters').classList.remove('hidden');
+        }else
+            document.getElementById('content_filters').classList.toggle('hidden');
+    }
+    function sort(order_by){
+        document.getElementById('icon_asc_sort').classList.toggle('hidden');
+        document.getElementById('icon_desc_sort').classList.toggle('hidden');
+        document.getElementById('order_by').value = order_by;
+        document.getElementById('title_order_by').title = (order_by === 'asc')? 'Ordre croissant' : 'Ordre décroissant';
+        search_products();
+    }
+    function display_result(kind){
+        document.getElementById('result_icon_list').classList.toggle('hidden');
+        document.getElementById('result_icon_grid').classList.toggle('hidden');
+        document.getElementById('list').value = (kind === 'list')? 'list' : 'grid';
+        document.getElementById('icon_list').title = (kind === 'list')? 'Liste' : 'Grille';
+        search_products();
+    }
+    function change_page(nb){
+        document.getElementById('page').value = nb;
+        search_products();
+    }
+
+    function search_products(){
+        let websites = Array();
+        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+            if(el.checked) websites.push(el.name);
+        });
+        
+        fetch('{{ route('products_search') }}', {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
+            },
+            method: 'post',
+            body: JSON.stringify ({
+                search_text: document.getElementById('search_text').value,
+                sort_by: document.getElementById('sort_by').value,
+                order_by: document.getElementById('order_by').value,
+                list: document.getElementById('list').value,
+                page: document.getElementById('page').value,
+                websites: websites,
+                purchased: document.querySelector('input[name="purchased"]:checked').value,
+                stock: document.querySelector('input[name="stock"]:checked').value,
+                f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
+            })
+        }).then(response => {
+            if (response.ok) {
+                document.getElementById('search_text').classList.remove('border');
+                return response.json();
+            } else {
+                if(response.status == 422) {
+                    document.getElementById('search_text').classList.add('border');
+                    document.getElementById('search_text').classList.add('border-red-500');
+                }
+                return null;
+            }
+        }).then(products => {
+            console.log(products);
+            document.getElementById('content_results').innerHTML = products.html;
+
+            if(products === null) return;
+            
+            if(products.nb_results === 0) document.getElementById('nb_results').innerHTML = '0 Résultat';
+            else document.getElementById('nb_results').innerHTML = products.nb_results+' Résultat'+(products.nb_results > 1? 's' : '');
+        });
+    }
+
+    document.forms['search_products'].onsubmit = (e) => {
+        e.preventDefault();
+        search_products();
+    }
+
+    window.addEventListener('scroll', stick_searchbar);
+    function stick_searchbar(){
+        if(window.scrollY >= '40') document.getElementById('result_bar').setAttribute('class', 'sticky_search_bar on');
+        else document.getElementById('result_bar').setAttribute('class', 'sticky_search_bar off');
+    }
+
+    /*
+    function bookmark_product(id){
+        fetch('{{ route('product_bookmark') }}', {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
+            },
+            method: 'post',
+            body: JSON.stringify ({
+                product: id,
+            })
+        }).then(response => {
+            if(response.ok) return response.json();
+            else return null;
+        }).then(product => {
+            console.log(product);
+            if(product.bookmark)
+                document.getElementById('bookmark_'+product.id).classList.add('saved');
+            else
+                document.getElementById('bookmark_'+product.id).classList.remove('saved');
+        });
+    }*/
+</script>
+@endsection
+
+@section('content')
+    <form id="search_products">
+        <div class="sticky_search_bar off" id="result_bar">
+            <h4 class="font-medium" id="nb_results"></h4>
+            @include('partials.products.search_bar', ['sortBy' => $sortBy])
+        </div>
+
+        <hr class="mt-2"/>
+        @include('partials.products.filter')
+    </form>
+    
+    <div id="content_results">
+    </div>
+    <input type="hidden" id="page" name="cur_page" value="{{ $paginator->cur_page }}">
+@endsection
