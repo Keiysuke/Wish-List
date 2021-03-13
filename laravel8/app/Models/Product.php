@@ -33,9 +33,12 @@ class Product extends Model
     //Utils
     public function getAvailableWebsites(){
         return $this->productWebsites()->where(function($query){
-            $query->where('available_date', '>', date("Y-m-d"))->orWhereNull('available_date');
+            $query->where('available_date', '<=', date("Y-m-d"))
+                ->orWhereNull('available_date')
+                ->orWhere('available_date', '>', date("Y-m-d"));
         })->where(function($query){
-            $query->where('expiration_date', '>', date("Y-m-d"))->orWhereNull('expiration_date');
+            $query->where('expiration_date', '>', date("Y-m-d"))
+                ->orWhereNull('expiration_date');
         })->orderBy('available_date')->get();
     }
 
