@@ -23,7 +23,7 @@ class PurchaseController extends Controller
             'product_id' => $request->product_id,
             'product_state_id' => $request->product_state_id,
             'website_id' => $request->website_id,
-            'cost' => $request->cost,
+            'cost' => str_replace(',', '.', $request->cost),
             'date' => $request->date
         ]);
         $purchase->save();
@@ -35,10 +35,10 @@ class PurchaseController extends Controller
                 'purchase_id' => $purchase->id,
                 'website_id' => $request->sell_website_id,
                 'sell_state_id' => $request->sell_state_id,
-                'price' => $request->price,
-                'confirmed_price' => $request->confirmed_price,
-                'shipping_fees' => $request->shipping_fees,
-                'shipping_fees_payed' => $request->shipping_fees_payed,
+                'price' => str_replace(',', '.', $request->price),
+                'confirmed_price' => is_null($request->confirmed_price)? $request->confirmed_price : str_replace(',', '.', $request->confirmed_price),
+                'shipping_fees' => is_null($request->shipping_fees)? $request->shipping_fees : str_replace(',', '.', $request->shipping_fees),
+                'shipping_fees_payed' => is_null($request->shipping_fees_payed)? $request->shipping_fees_payed : str_replace(',', '.', $request->shipping_fees_payed),
                 'nb_views' => $request->nb_views,
                 'date_begin' => $request->date_begin,
                 'date_sold' => $request->date_sold,
@@ -58,7 +58,17 @@ class PurchaseController extends Controller
     }
 
     public function update(PurchaseRequest $request, Purchase $purchase){
-        $purchase->update($request->all());
+        if($request->add_selling){
+            $request->merge(['price' => str_replace(',', '.', $request->price),
+                'confirmed_price' => is_null($request->confirmed_price)? $request->confirmed_price : str_replace(',', '.', $request->confirmed_price),
+                'shipping_fees' => is_null($request->shipping_fees)? $request->shipping_fees : str_replace(',', '.', $request->shipping_fees),
+                'shipping_fees_payed' => is_null($request->shipping_fees_payed)? $request->shipping_fees_payed : str_replace(',', '.', $request->shipping_fees_payed),
+            ]);
+        }
+        $purchase->update($request
+            ->merge(['cost' => str_replace(',', '.', $request->cost)])
+            ->all()
+        );
         return redirect()->route('products.show', $purchase->product_id)->with('info', __('The purchase has been edited.'));
     }
 

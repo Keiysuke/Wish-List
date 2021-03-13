@@ -168,7 +168,7 @@ class ProductController extends Controller
             'label' => $request->label,
             'description' => $request->description,
             'limited_edition' => $request->limited_edition,
-            'real_cost' => $request->real_cost,
+            'real_cost' => str_replace(',', '.', $request->real_cost),
         ]);
         $product->save();
         //Adding the photo
@@ -180,7 +180,7 @@ class ProductController extends Controller
             $product_website = new ProductWebsite([
                 'product_id' => $product->id,
                 'website_id' => $request->website_id,
-                'price' => $request->price,
+                'price' => str_replace(',', '.', $request->price),
                 'url' => $request->url,
                 'expiration_date' => $request->expiration_date,
             ]);
@@ -190,7 +190,7 @@ class ProductController extends Controller
                 'product_id' => $product->id,
                 'product_state_id' => $request->product_state_id,
                 'website_id' => $request->website_id,
-                'cost' => $request->cost,
+                'cost' => str_replace(',', '.', $request->cost),
                 'date' => $request->date,
             ]);
             $purchase->save();
@@ -241,6 +241,12 @@ class ProductController extends Controller
     }
     
     public function update(ProductRequest $request, Product $product){
+        if($request->add_purchase){
+            $request->merge(['price' => str_replace(',', '.', $request->price),
+                'cost' => str_replace(',', '.', $request->cost)
+            ]);
+        }
+        $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
         $product->update($request->all());
         return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
     }

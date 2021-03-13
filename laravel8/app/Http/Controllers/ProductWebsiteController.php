@@ -38,7 +38,7 @@ class ProductWebsiteController extends Controller
         $product_website = new \App\Models\ProductWebsite([
             'product_id' => $product->id,
             'website_id' => $request->website_id,
-            'price' => $request->price,
+            'price' => str_replace(',', '.', $request->price),
             'url' => $request->url,
             'available_date' => $request->available_date,
             'expiration_date' => $request->expiration_date
@@ -52,6 +52,7 @@ class ProductWebsiteController extends Controller
     }
     
     public function update(ProductWebsiteRequest $request, ProductWebsite $product_website){
+        $request->merge(['price' => str_replace(',', '.', $request->price)]);
         $product_website->update($request->all());
         return redirect()->route('products.show', $product_website->product_id)->with('info', __('The linked website has been edited.'));
     }
