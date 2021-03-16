@@ -103,6 +103,19 @@ a.link:hover {
     transition-duration: 150ms;
 }
 
+.title-icon.heart.on {
+    @apply text-red-500;
+}
+
+.title-icon.heart.on:hover {
+    @apply bg-red-500;
+    @apply text-white;
+}
+
+.title-icon.heart:hover {
+    @apply bg-red-500;
+}
+
 li.li_website.expired {
     text-decoration: line-through;
 }

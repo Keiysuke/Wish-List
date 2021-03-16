@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Product;
-use App\Models\ProductUsers;
 use App\Models\ProductPhoto;
 use App\Models\ProductWebsite;
 use App\Models\Purchase;
@@ -43,9 +43,25 @@ class ProductController extends Controller
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid'];
         $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'f_nb_results' => $this->nb_page_results];
         $search = $request->search;
-        if(is_null($search)) $products = Product::orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
-        else $products = Product::where('label', 'like', '%'.$search.'%')->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
 
+        $buildRequest = Product::query();
+        if($request->path() === 'products/user'){
+            $buildRequest->whereHas('users', function($query){
+                $query->where('user_id', '=', \Auth::user()->id);
+            });
+        }else{
+            $buildRequest->whereHas('users', function($query){
+                $query->where('user_id', '<>', \Auth::user()->id);
+            });
+        }
+
+        if(!is_null($search)) $buildRequest->where('label', 'like', '%'.$search.'%');
+        $products = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
+        // dd($products);
+        // \DB::enableQueryLog();
+        // dd(\DB::getQueryLog());
+        // die();
+        
         $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
         $this->setProductWebsites($products);
         return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
@@ -79,13 +95,27 @@ class ProductController extends Controller
                 $filter_pw[] = intval($r[1]);
             }
 
+            if($request->url === 'products/user'){
+                $buildRequest->whereHas('users', function($query){
+                    $query->where('user_id', '=', \Auth::user()->id);
+                });
+            }else{
+                $buildRequest->whereHas('users', function($query){
+                    $query->whereNotIn('product_id', function($query){
+                        $query->select('product_id')->from('product_users')->where('user_id', '=', \Auth::user()->id);
+                    });
+                })->orWheredoesntHave('users');
+            }
+
             //$products = DB::table('product_websites')->rightJoin('products', 'product_websites.product_id', '=', 'products.id')->get();
             if($request->stock === 'product_missing'){
                 $buildRequest->wheredoesntHave('productWebsites');
             }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all'){
-                $buildRequest->wheredoesntHave('productWebsites')
-                ->orWhereHas('productWebsites', function($query) use ($filter_pw){
-                    $query->whereIn('website_id', $filter_pw);
+                $buildRequest->where(function($query) use ($filter_pw){
+                    $query->wheredoesntHave('productWebsites')
+                    ->orWhereHas('productWebsites', function($query) use ($filter_pw){
+                        $query->whereIn('website_id', $filter_pw);
+                    });
                 });
             }else{
                 $buildRequest->whereHas('productWebsites', function($query) use ($filter_pw){
@@ -133,6 +163,9 @@ class ProductController extends Controller
                 default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
             }
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
+
+            // \DB::enableQueryLog();
+            // return \DB::getQueryLog();
             
             app('App\Http\Controllers\ProductController')->setProductWebsites($products);
             
@@ -145,6 +178,28 @@ class ProductController extends Controller
             return response()->json(array('success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML));
         }
         abort(404);
+    }
+
+    function follow(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['id' => 'bail|required|int']);
+            //Si le produit est suivi par l'utilisateur, on l'enlève
+            $product = User::whereHas('products', function($query) use($request){
+                $query->where('product_id', '=', $request->id)
+                    ->where('user_id', '=', \Auth::user()->id);
+            })->get();
+            
+            $res = array('success' => true);
+            $user = User::find(\Auth::user()->id);
+            if(count($product) === 0){ //On ajoute le suivi du produit pour cet utilisateur
+                $user->products()->attach($request->id);
+                $res['product'] = ['follow' => true];
+            }else{
+                $res['product'] = ['follow' => false];
+                $user->products()->detach($request->id);
+            }
+            return response()->json($res);
+        }
     }
 
     /*public function bookmark(Request $request){
@@ -174,6 +229,9 @@ class ProductController extends Controller
         //Adding the photo
         app('App\Http\Controllers\UploadController')->storePhoto($request, 1, $product);
         $info = __('The product has been created.');
+
+        //We link it to the current user
+        $product->users()->attach($request->user_id);
         
         if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
 
@@ -187,6 +245,7 @@ class ProductController extends Controller
             $product_website->save();
             
             $purchase = new Purchase([
+                'user_id' => $request->user_id,
                 'product_id' => $product->id,
                 'product_state_id' => $request->product_state_id,
                 'website_id' => $request->website_id,
@@ -202,6 +261,8 @@ class ProductController extends Controller
     }
     
     public function show(Product $product){
+        $product->createdBy();
+        $product->following();
         $product_websites = $product->productWebsites()->orderBy('price')->get();
         $purchases = $product->purchases()->orderBy('date')->get();
         $photos = $product->photos()->orderBy('ordered')->get();

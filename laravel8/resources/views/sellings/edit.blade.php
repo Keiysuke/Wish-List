@@ -14,6 +14,7 @@
         <h1>Edition d'une vente</h1>
         <hr/>
 
+        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
             <div class="w-1/2">
                 <label class="block text-gray-600 text-sm font-semibold mb-2" for="product_id">Produit à vendre <span class="required">*</span></label>

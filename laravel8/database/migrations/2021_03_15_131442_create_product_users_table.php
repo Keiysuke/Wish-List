@@ -27,16 +27,9 @@ class CreateProductUsersTable extends Migration
                 ->on('products')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->unsignedInteger('product_website_id');
-            $table->foreign('product_website_id')
-                ->references('id')
-                ->on('product_websites')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
-            $table->tinyInteger('available');
-            $table->tinyInteger('expired');
-            $table->tinyInteger('on');
+            $table->tinyInteger('archive')->default(0);
             $table->timestamps();
+            $table->primary(['user_id', 'product_id']);
         });
     }
 

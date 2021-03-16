@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Product;
+use App\Models\Purchase;
+use App\Models\Selling;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -58,4 +61,20 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function products(){
+        return $this->belongsToMany(Product::class, 'product_users')->withPivot('archive')->withTimestamps();
+    }
+
+    public function createdProducts(){
+        return $this->hasMany(Product::class);
+    }
+    
+    public function sellings(){
+        return $this->hasMany(Selling::class);
+    }
+    
+    public function purchases(){
+        return $this->hasMany(Purchase::class);
+    }
 }

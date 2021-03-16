@@ -21,7 +21,8 @@
         @csrf
         <h1>Création d'un achat</h1>
         <hr/>
-
+        
+        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
             <div class="w-2/3">
                 <input type="hidden" value="{{ $product->id }}" name="product_id" id="product_id"/>

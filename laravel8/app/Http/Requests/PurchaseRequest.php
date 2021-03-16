@@ -15,6 +15,7 @@ class PurchaseRequest extends FormRequest
     {
         if($this->add_selling){
             return [
+                'user_id' => 'int|required',
                 'product_id' => 'int|required',
                 'product_state_id' => 'int|required',
                 'website_id' => 'int|required',
@@ -34,6 +35,7 @@ class PurchaseRequest extends FormRequest
 
         }else{
             return [
+                'user_id' => 'int|required',
                 'product_state_id' => 'int|required',
                 'website_id' => 'int|required',
                 'cost' => 'required',

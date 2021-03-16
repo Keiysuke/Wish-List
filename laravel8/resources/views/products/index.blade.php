@@ -62,6 +62,7 @@
                 order_by: document.getElementById('order_by').value,
                 list: document.getElementById('list').value,
                 page: document.getElementById('page').value,
+                url: document.getElementById('url').value,
                 websites: websites,
                 purchased: document.querySelector('input[name="purchased"]:checked').value,
                 stock: document.querySelector('input[name="stock"]:checked').value,
@@ -94,12 +95,17 @@
         search_products();
     }
 
-    window.addEventListener('scroll', stick_searchbar);
-    function stick_searchbar(){
+    window.addEventListener('scroll', () => {
         if(window.scrollY >= '40') document.getElementById('result_bar').setAttribute('class', 'sticky_search_bar on');
         else document.getElementById('result_bar').setAttribute('class', 'sticky_search_bar off');
-    }
+    });
 
+    document.querySelector('#check_all_websites').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+            el.checked = !event.target.checked;
+        });
+    });
+    
     /*
     function bookmark_product(id){
         fetch('{{ route('product_bookmark') }}', {
@@ -140,4 +146,5 @@
     <div id="content_results">
     </div>
     <input type="hidden" id="page" name="cur_page" value="{{ $paginator->cur_page }}">
+    <input type="hidden" id="url" name="url" value="{{ Request::path() }}">
 @endsection

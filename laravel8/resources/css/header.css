@@ -109,12 +109,15 @@ form#fast_search div:first-of-type svg {
 }
 
 .submenu {
-    left: 19.5rem;
-    top: 3.3rem;
     @apply border-gray-800;
     @apply bg-white;
     transform-origin: 0 0;
     transition: transform 0.5s ease;
+}
+
+#submenu_create {
+    left: 25.5rem;
+    top: 3.3rem;
 }
 
 .submenu.open {

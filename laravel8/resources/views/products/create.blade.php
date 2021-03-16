@@ -31,6 +31,7 @@
         <h1>Ajout de produit</h1>
         <hr/>
 
+        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex gap-4">
             <div class="w-1/2">
                 <label class="block text-gray-600 text-sm font-semibold mb-2" for="label">Nom du produit <span class="required">*</span></label>
@@ -87,7 +88,7 @@
                     <label class="block text-gray-600 text-sm font-semibold mb-2" for="website_id">Site de vente <span class="required">*</span></label>
                     <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($websites as $website)
-                            <option value="{{ $website->id }}" @if(old('website_id') === $website->id) selected @endif>{{ $website->label }}</option>
+                            <option value="{{ $website->id }}" @if(old('website_id') == $website->id) selected @endif>{{ $website->label }}</option>
                         @endforeach
                     </select>
                     @error('website_id')

@@ -20,6 +20,7 @@ class PurchaseController extends Controller
     public function store(PurchaseRequest $request){
         $this->validate($request, ['product_id' => 'int|required']); //Not required when updated the purchase
         $purchase = new Purchase([
+            'user_id' => $request->user_id,
             'product_id' => $request->product_id,
             'product_state_id' => $request->product_state_id,
             'website_id' => $request->website_id,
@@ -30,6 +31,7 @@ class PurchaseController extends Controller
         
         if($request->add_selling){ //On créé et lie également une vente
             $selling = new Selling([
+                'user_id' => $request->user_id,
                 'product_id' => $request->product_id,
                 'product_state_id' => $request->sell_product_state_id,
                 'purchase_id' => $purchase->id,

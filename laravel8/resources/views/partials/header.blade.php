@@ -1,4 +1,4 @@
-@php($url = explode('/', Request::url()))
+@php($path = Request::path())
 <nav class="flex items-center justify-between flex-wrap fixed w-full z-20 bg-gray-800 py-2 lg:px-12 shadow-xl">
     <div class="flex justify-between w-full pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-2 lg:w-auto lg:border-b-0 lg:pb-0">
         <div class="flex items-center flex-shrink-0 text-white mr-16">
@@ -8,15 +8,21 @@
 
     <div class="menu w-full block flex-grow flex px-8 pt-3 lg:items-center lg:w-auto lg:px-3 lg:pt-0">
         <div class="flex text-md font-bold text-blue-700 flex-grow">
-            <a href="{{ route('products.index') }}" class="inline-flex navitem {{ end($url) === 'products' ? 'active' : 'not-active' }}">
+            <a href="{{ route('products.index') }}" class="inline-flex navitem {{ $path === 'products' ? 'active' : 'not-active' }}">
                 <x-svg.house class="icon-xs"/>
                 <span class="px-1">{{ __('Home') }}</span>
             </a>
-            <a id="menu_create" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');" href="{{ route('products.create') }}" class="navitem {{ end($url) === 'create' ? 'active' : 'not-active' }}">
+            <a href="{{ route('my_products') }}" class="navitem {{ $path === 'products/user' ? 'active' : 'not-active' }}">
+                {{ __('My products') }}
+            </a>
+            <a id="menu_create" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');" href="{{ route('products.create') }}" class="navitem {{ $path === 'products/create' ? 'active' : 'not-active' }}">
                 {{ __('Add new') }}
             </a>
-            <a href="{{ route('sitemap') }}" class="navitem {{ end($url) === 'sitemap' ? 'active' : 'not-active' }}">
+            <a href="{{ route('sitemap') }}" class="navitem {{ $path === 'sitemap' ? 'active' : 'not-active' }}">
                 {{ __('Sitemap') }}
+            </a>
+            <a href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro" target="_blank" class="navitem not-active">
+                {{ __('Convertisseur $ -> €') }}
             </a>
         </div>
         <!-- Fast menu search -->

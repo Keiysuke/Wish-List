@@ -115,6 +115,23 @@ a.link:hover {
   transition-duration: 150ms;
 }
 
+.title-icon.heart.on {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.title-icon.heart.on:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.title-icon.heart:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
 li.li_website.expired {
   text-decoration: line-through;
 }

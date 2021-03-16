@@ -1,6 +1,10 @@
 @extends('template')
 @php($dir = config('images.path_products').'/'.$product->id.'/')
 
+@section('metas')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('absolute_content')
     @include('partials.products.zoom_pictures', ['dir' => $dir, 'photos' => $photos])
 @endsection
@@ -63,21 +67,50 @@
         document.getElementById('content_picture_zoomed').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
+
+    document.querySelector('#follow_product').addEventListener('click', () => {
+        fetch('{{ route('follow_product') }}', {
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
+            },
+            method: 'post',
+            body: JSON.stringify ({ id: document.getElementById('product_id').value })
+        }).then(response => {
+            if (response.ok) return response.json();
+            else {
+                if(response.status == 422) {}
+                return null;
+            }
+        }).then(res => {
+            console.log(res);
+            document.querySelector('#follow_product').setAttribute('title', 'Suivre');
+            document.querySelector('#follow_product').setAttribute('title', 'Ne plus suivre');
+            document.querySelector('#follow_product').classList.toggle('on');
+        });
+    });
 </script>
 @endsection
 
 @section('content')
+    <input type="hidden" id="product_id" value="{{ $product->id }}"/>
     <x-notification type="success" msg="{{ session('info') }}"/>
     
     <div class="relative flex justify-center border-b-2 mb-4">
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
-            <a title="Editer le produit" href="{{ route('products.edit', $product->id) }}" class="title-icon inline-flex">
-                <x-svg.edit class="icon-xs"/>
-            </a>
-            <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
-                <x-svg.picture class="icon-xs"/>
-            </a>
+            @if($product->created)
+                <a title="Editer le produit" href="{{ route('products.edit', $product->id) }}" class="title-icon inline-flex">
+                    <x-svg.edit class="icon-xs"/>
+                </a>
+                <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
+                    <x-svg.picture class="icon-xs"/>
+                </a>
+            @endif
+            <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow_product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
+                <x-svg.heart class="icon-xs"/>
+            </span>
         </div>
     </div>
     <div class="flex justify-between h-full divide-x-2 {{ (count($purchases) > 0 && session()->has('info'))? 'pb-32' : 'pb-12' }}">

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\ProductWebsite;
 use App\Models\Purchase;
 use App\Models\Selling;
@@ -14,16 +15,26 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['label', 'description', 'img_ext', 'limited_edition', 'real_cost'];
     
+    public function users(){
+        return $this->belongsToMany(User::class, 'product_users')->withPivot('archive')->withTimestamps();
+    }
+    
     public function productWebsites(){
         return $this->hasMany(ProductWebsite::class);
     }
     
+    public function creator(){
+        return $this->belongsTo(User::class);
+    }
+    
     public function purchases(){
-        return $this->hasMany(Purchase::class);
+        if(\Auth::user()) return $this->hasMany(Purchase::class)->where('user_id', '=', \Auth::user()->id);
+        else return $this->hasMany(Purchase::class);
     }
     
     public function sellings(){
-        return $this->hasMany(Selling::class);
+        if(\Auth::user()) return $this->hasMany(Selling::class)->where('user_id', '=', \Auth::user()->id);
+        else return $this->hasMany(Selling::class);
     }
     
     public function photos(){
@@ -65,5 +76,16 @@ class Product extends Model
         return $this->whereHas('productWebsites', function($query){
             $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
         });
+    }
+
+    public function following(){
+        $this->following = count(User::whereHas('products', function($query){
+            $query->where('user_id', '=', \Auth::user()->id)
+                ->where('product_id', '=', $this->id);
+        })->get()) >= 1;
+    }
+
+    public function createdBy(){
+        $this->created = $this->created_by == \Auth::user()->id;
     }
 }

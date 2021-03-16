@@ -12,7 +12,7 @@
             <h2>{{ __('The website') }}</h2>
             <hr />
             <x-sitemap.link label="Home" url="{{ route('products.index') }}"/>
-            <x-sitemap.link label="Products list" url="{{ route('products.index') }}" ml="4"/>
+            <x-sitemap.link label="My products" url="{{ route('my_products') }}" ml="4"/>
             <x-sitemap.link label="Add a product" url="{{ route('products.create') }}" ml="4"/>
             <x-sitemap.link label="Contact-me" url="https://www.linkedin.com/in/thomas-chazelles-30491a8b/" target="_blank" ml="4"/>
             <x-sitemap.link label="Sitemap" url="{{ route('sitemap') }}" ml="4"/>

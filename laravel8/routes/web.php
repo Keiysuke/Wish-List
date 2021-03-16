@@ -26,10 +26,12 @@ use App\Http\Controllers\SellStateController;
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
 
+Route::post('products/follow', [ProductController::class, 'follow'])->name('follow_product');
 Route::get('products/filter', [ProductController::class, 'index'])->name('products_search');
 Route::post('products/filter', [ProductController::class, 'filter'])->name('products_search');
 Route::post('products/bookmark', [ProductController::class, 'bookmark'])->name('product_bookmark');
 
+Route::get('products/user', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('my_products');
 Route::resource('products', ProductController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 
 Route::get('products/{product}/photos/edit', [ProductPhotoController::class, 'edit'])->name('product_photos.edit');

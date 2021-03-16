@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Website;
 use App\Models\ProductState;
@@ -13,7 +14,11 @@ use App\Models\Purchase;
 class Selling extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id', 'product_state_id', 'purchase_id', 'website_id', 'sell_state_id', 'price', 'confirmed_price', 'shipping_fees', 'shipping_fees_payed', 'nb_views', 'date_begin', 'date_sold', 'date_send', 'box'];
+    protected $fillable = ['user_id', 'product_id', 'product_state_id', 'purchase_id', 'website_id', 'sell_state_id', 'price', 'confirmed_price', 'shipping_fees', 'shipping_fees_payed', 'nb_views', 'date_begin', 'date_sold', 'date_send', 'box'];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 
     public function product(){
         return $this->belongsTo(Product::class);

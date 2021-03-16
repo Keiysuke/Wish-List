@@ -19,6 +19,7 @@ class SellingController extends Controller
     public function store(SellingRequest $request){
         $this->validate($request, ['purchase_id' => 'int|required']); //Not required when updated the selling
         $selling = new Selling([
+            'user_id' => $request->user_id,
             'product_id' => $request->product_id,
             'product_state_id' => $request->product_state_id,
             'purchase_id' => $request->purchase_id,

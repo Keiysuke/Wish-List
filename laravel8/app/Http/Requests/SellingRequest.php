@@ -14,6 +14,7 @@ class SellingRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id' => 'int|required',
             'product_id' => 'int|required',
             'product_state_id' => 'int|required',
             'website_id' => 'int|required',
