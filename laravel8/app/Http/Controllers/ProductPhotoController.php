@@ -35,7 +35,7 @@ class ProductPhotoController extends Controller
         }
         //Réorganisation si supression
         for($i = $request->nb_photos; $i > 0; $i--){
-            if(!is_null($request['del_photo_'.$i]) && !is_null($request['photo_'.$i])){
+            if(!is_null($request['del_photo_'.$i]) || !is_null($request['photo_'.$i])){
                 $p = ProductPhoto::where(['product_id' => $product->id, 'ordered' => $i])->first();
                 if(is_null($p)) continue;
 
