@@ -33,6 +33,7 @@ Route::post('products/bookmark', [ProductController::class, 'bookmark'])->name('
 
 Route::get('products/user', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('my_products');
 Route::resource('products', ProductController::class)->middleware(['auth', 'verified'])->except(['destroy']);
+Route::get('products/{product}/notifications/{notification}', [ProductController::class, 'showFromNotification'])->middleware(['auth', 'verified'])->name('products.showFromNotification');
 
 Route::get('products/{product}/photos/edit', [ProductPhotoController::class, 'edit'])->name('product_photos.edit');
 Route::put('products/{product}/photos', [ProductPhotoController::class, 'update'])->name('product_photos.update');

@@ -165,9 +165,7 @@ form#fast_search div:first-of-type svg {
 #subicon_bell {
     @apply flex-col;
     @apply w-72;
-    @apply h-28;
-    @apply justify-center;
-    @apply items-center;
+    @apply py-1;
     @apply text-white;
     @apply right-6;
     top: 3.3rem;

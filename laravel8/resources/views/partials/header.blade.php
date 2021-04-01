@@ -35,7 +35,7 @@
         </form>
         <!-- menu icons -->
         <div class="flex items-center gap-5 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <x-svg.bell id="icon-bell" class="bounce-effect"/>
+            <x-svg.bell id="icon-bell" notif="{{ auth()->user()->unreadNotifications->count() }}"/>
             <x-svg.msg id="icon-msg"/>
             <x-svg.profil id="icon-profil"/>
             <!--
@@ -58,8 +58,17 @@
         <a href="{{ route('states.products.create') }}">{{ __("Product's state") }}</a>
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>
     </div>
-    <div id="subicon_bell" class="subicon">
-        <span class="px-2">Aucune notification</span>
+    <div id="subicon_bell" class="subicon flex justify-end gap-1">
+        @if(auth()->user()->unreadNotifications->isEmpty())
+            <span class="px-2">Aucune notification</span>
+        @else
+            @foreach(auth()->user()->unreadNotifications as $notif)
+                <a href="{{ route('products.showFromNotification', ['product' => $notif->data['product_id'], 'notification' => $notif->id]) }}" class="flex items-center mx-1 bg-white" title="{{ $notif->data['product_label'] }}">
+                    <img class="w-2/6 h-20" src="{{ asset(config('images.path_products').'/'.$notif->data['product_id'].'/'.$notif->data['product_photo']) }}"/>
+                    <span class="w-4/6 flex justify-center text-black text-sm">Expire dans {{ $notif->data['days'] }} jour(s)</span>
+                </a>
+            @endforeach
+        @endif
     </div>
     <div id="subicon_user" class="subicon menu">
         <span>

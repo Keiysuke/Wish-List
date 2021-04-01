@@ -13,6 +13,8 @@ Here are the current functionnalities (updated when code is) :
 - Add pruchases - You bought a product ? You can save the purchase by creating one on the product page.
 - Add sells - Create as many purchases as you want and if you're selling a product, switch the purchase by clicking on it and link a new sell.
 - Manage datas with the Dashboard - Add new websites / product states / sell states
+- Follow a product created by other users and link purchases/sells - You can't edit that kind of product
+- Follow a product and be notified when some of its offers are soon available/expired (from 3 to 0 days before).
 
 And more :
 - Add up to 10 pictures on a product. Zoom on them.
@@ -21,8 +23,6 @@ And more :
 - Pagination available on Home page with at least 16 products.
 
 In future
-- There will be notifications on dates - Available / Expired soon ? -> notification
-- Notification only on some products ? Bookmark the wanted products.
 - Notification for sells informations maybe too.
 - Add other users as friend and tchat with them.
 - Create / share lists with friends for future bought (anniversary ? Christmas ?).

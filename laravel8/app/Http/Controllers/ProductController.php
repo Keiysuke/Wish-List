@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductPhoto;
 use App\Models\ProductWebsite;
 use App\Models\Purchase;
+use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
 
@@ -40,6 +41,9 @@ class ProductController extends Controller
 
     //Routes
     public function index(Request $request){
+        //Si la mise à jour des notifications n'a pas été faite
+        app('App\Http\Controllers\NotificationsController')->checkProductNotifications();
+
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid'];
         $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'f_nb_results' => $this->nb_page_results];
         $search = $request->search;
@@ -207,18 +211,6 @@ class ProductController extends Controller
         }
     }
 
-    /*public function bookmark(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'product' => 'bail|required|int',
-            ]);
-            //On vérifie que le produit n'est pas déjà sauvegardé par l'utilisateur
-            $product_user = ProductUsers::where(['product_id' => $request->product, 'product_website_id' => $request->product])->get();
-            dd($product_user);
-            return response()->json(array('success' => true, 'product' => ['bookmark' => $product.]))
-        }
-    }*/
-
     public function create(){
         return view('products.create');
     }
@@ -300,6 +292,11 @@ class ProductController extends Controller
             }
         }
         return view('products.show', compact('product', 'photos', 'product_websites', 'purchases'));
+    }
+
+    public function showFromNotification(Product $product, DatabaseNotification $notification){
+        $notification->markAsRead();
+        return $this->show($product);
     }
 
     public function edit(Product $product){

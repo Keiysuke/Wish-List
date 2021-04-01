@@ -105,30 +105,6 @@
             el.checked = !event.target.checked;
         });
     });
-    
-    /*
-    function bookmark_product(id){
-        fetch('{{ route('product_bookmark') }}', {
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
-            },
-            method: 'post',
-            body: JSON.stringify ({
-                product: id,
-            })
-        }).then(response => {
-            if(response.ok) return response.json();
-            else return null;
-        }).then(product => {
-            console.log(product);
-            if(product.bookmark)
-                document.getElementById('bookmark_'+product.id).classList.add('saved');
-            else
-                document.getElementById('bookmark_'+product.id).classList.remove('saved');
-        });
-    }*/
 </script>
 @endsection
 

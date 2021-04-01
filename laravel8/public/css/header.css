@@ -231,9 +231,8 @@ form#fast_search div:first-of-type svg {
 #subicon_bell {
   flex-direction: column;
   width: 18rem;
-  height: 7rem;
-  justify-content: center;
-  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
   right: 1.5rem;
