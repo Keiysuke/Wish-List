@@ -4,6 +4,7 @@ body {
     @apply flex-col;
     @apply overflow-auto;
     @apply overflow-x-hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 div.notification {
