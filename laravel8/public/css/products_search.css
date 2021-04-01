@@ -8,6 +8,10 @@ div.no-offer div.product_pict {
   filter: grayscale(90%);
 }
 
+div.grid_product div.top.no-offer div.product_price {
+  display: none;
+}
+
 div.grid_product div.down.no-offer p {
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));

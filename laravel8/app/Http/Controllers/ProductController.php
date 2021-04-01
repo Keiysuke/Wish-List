@@ -109,7 +109,10 @@ class ProductController extends Controller
 
             //$products = DB::table('product_websites')->rightJoin('products', 'product_websites.product_id', '=', 'products.id')->get();
             if($request->stock === 'product_missing'){
-                $buildRequest->wheredoesntHave('productWebsites');
+                $buildRequest->wheredoesntHave('productWebsites')
+                    ->orWhereHas('productWebsites', function($query){
+                        $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
+                });
             }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all'){
                 $buildRequest->where(function($query) use ($filter_pw){
                     $query->wheredoesntHave('productWebsites')
@@ -125,7 +128,9 @@ class ProductController extends Controller
 
             //Filtrés par produits achetés ou non, vendus ou non
             switch($request->purchased){
-                case 'purchased_yes': $buildRequest->has('purchases');
+                case 'purchased_yes': $buildRequest->whereHas('purchases', function($query){
+                    $query->doesntHave('selling');
+                });
                     break;
                 case 'purchased_no': $buildRequest->doesntHave('purchases');
                     break;

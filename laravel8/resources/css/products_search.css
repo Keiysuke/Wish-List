@@ -7,6 +7,10 @@ div.no-offer div.product_pict {
     filter: grayscale(90%);
 }
 
+div.grid_product div.top.no-offer div.product_price {
+    @apply hidden;
+}
+
 div.grid_product div.down.no-offer p {
     @apply text-gray-400;
 }

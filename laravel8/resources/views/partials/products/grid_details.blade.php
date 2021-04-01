@@ -3,7 +3,7 @@
         @foreach($products as $product)
             <a href="{{ route('products.show', $product->id) }}">
                 <div class="grid_product flex flex-col justify-between shadow border rounded h-full transform hover:-rotate-3 hover:shadow-xl transition ease-in-out duration-150">
-                    <div class="relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
+                    <div class="top relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                         <div class="product_price">{{ $product->real_cost }} €</div>
                         <div class="product_pict rounded rounded-b-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
                         <!-- <div class="product_bookmark" onClick="event.preventDefault(); bookmark_product({{ $product->id }});"><x-svg.bookmark id="bookmark_{{ $product->id }}" class="icon-xl"/></div> -->
