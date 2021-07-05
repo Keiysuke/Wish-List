@@ -5,25 +5,25 @@
                 <div class="relative w-1/5 {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                     <a href="{{ route('products.show', $product->id) }}">
                         <div class="product_price">{{ $product->real_cost }} €</div>
-                        <div class="product_pict rounded rounded-r-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                        <div class="product_pict rounded rounded-r-none" style="height: 11rem; background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
                     </a>
                 </div>
                 <div class="flex flex-col w-4/5 {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">
                     <p class="text-lg font-semibold text-black py-1 pl-4 border-b border-gray-300 bg-gray-200">{{ $product->label }}</p>
                     <p class="italic py-2 px-4 text-sm">{{ $product->description }}</p>
                     <div class="flex h-full px-4">
-                        <div class="flex flex-col justify-end w-4/5 gap-2 pb-4">
+                        <div class="flex items-end w-4/5 pb-4">
                             <p class="font-semibold">Edition limitée : <span class="font-normal">{{ is_null($product->limited_edition)? 'Non' : $product->limited_edition.' ex.' }}</span></p>
-                            <p class="text-xs text-gray-400">{{ (count($product->purchases) >= 1)? 'Acheté le '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date)) : 'Pas acheté' }}</p>
+                            <x-utils.v_line />
+                            <x-products.bought_details :product="$product"/>
+                            {{-- <p class="text-xs text-gray-400">{{ (count($product->purchases) >= 1)? 'Acheté le '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date)) : 'Pas acheté' }}</p> --}}
                         </div>
                         
                         <div class="flex w-1/5 justify-end items-center mr-2">
                             <a href="{{ route('products.show', $product->id) }}" class="btn_show_product inline-flex text-white">
                                 <p class="bg-blue-500 px-8 py-2">Voir</p>
                                 <div class="flex items-center px-2 bg-blue-400">
-                                    <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                    </svg>
+                                    <x-svg.big.arrow class="icon-sm"/>
                                 </div>
                             </a>
                         </div>

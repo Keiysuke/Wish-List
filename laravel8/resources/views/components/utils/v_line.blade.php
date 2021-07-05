@@ -1,0 +1,1 @@
+<span {{ $attributes }} class="h-2 inline-block border-l mx-4 border-{{ isset($color)? $color : 'black' }} h-{{ isset($height)? $height : '6' }}"></span>

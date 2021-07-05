@@ -13097,6 +13097,136 @@ select {
   line-height: 1;
 }
 
+.hover\:text-xs:hover {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.hover\:text-sm:hover {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.hover\:text-base:hover {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.hover\:text-lg:hover {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.hover\:text-xl:hover {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.hover\:text-2xl:hover {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.hover\:text-3xl:hover {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.hover\:text-4xl:hover {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.hover\:text-5xl:hover {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.hover\:text-6xl:hover {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
+.hover\:text-7xl:hover {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.hover\:text-8xl:hover {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.hover\:text-9xl:hover {
+  font-size: 8rem;
+  line-height: 1;
+}
+
+.focus\:text-xs:focus {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.focus\:text-sm:focus {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.focus\:text-base:focus {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.focus\:text-lg:focus {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.focus\:text-xl:focus {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.focus\:text-2xl:focus {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.focus\:text-3xl:focus {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+}
+
+.focus\:text-4xl:focus {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.focus\:text-5xl:focus {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.focus\:text-6xl:focus {
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
+.focus\:text-7xl:focus {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.focus\:text-8xl:focus {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.focus\:text-9xl:focus {
+  font-size: 8rem;
+  line-height: 1;
+}
+
 .leading-3 {
   line-height: .75rem;
 }
@@ -46120,6 +46250,136 @@ select {
     line-height: 1;
   }
 
+  .sm\:hover\:text-xs:hover {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .sm\:hover\:text-sm:hover {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:hover\:text-base:hover {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sm\:hover\:text-lg:hover {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:hover\:text-xl:hover {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:hover\:text-2xl:hover {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .sm\:hover\:text-3xl:hover {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .sm\:hover\:text-4xl:hover {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .sm\:hover\:text-5xl:hover {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .sm\:hover\:text-6xl:hover {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .sm\:hover\:text-7xl:hover {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .sm\:hover\:text-8xl:hover {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .sm\:hover\:text-9xl:hover {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .sm\:focus\:text-xs:focus {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .sm\:focus\:text-sm:focus {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:focus\:text-base:focus {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .sm\:focus\:text-lg:focus {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:focus\:text-xl:focus {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .sm\:focus\:text-2xl:focus {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .sm\:focus\:text-3xl:focus {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .sm\:focus\:text-4xl:focus {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .sm\:focus\:text-5xl:focus {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .sm\:focus\:text-6xl:focus {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .sm\:focus\:text-7xl:focus {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .sm\:focus\:text-8xl:focus {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .sm\:focus\:text-9xl:focus {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
   .sm\:leading-3 {
     line-height: .75rem;
   }
@@ -78005,6 +78265,136 @@ select {
   }
 
   .md\:text-9xl {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .md\:hover\:text-xs:hover {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .md\:hover\:text-sm:hover {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .md\:hover\:text-base:hover {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .md\:hover\:text-lg:hover {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:hover\:text-xl:hover {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:hover\:text-2xl:hover {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .md\:hover\:text-3xl:hover {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .md\:hover\:text-4xl:hover {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:hover\:text-5xl:hover {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .md\:hover\:text-6xl:hover {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .md\:hover\:text-7xl:hover {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .md\:hover\:text-8xl:hover {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .md\:hover\:text-9xl:hover {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .md\:focus\:text-xs:focus {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .md\:focus\:text-sm:focus {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .md\:focus\:text-base:focus {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .md\:focus\:text-lg:focus {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:focus\:text-xl:focus {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:focus\:text-2xl:focus {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .md\:focus\:text-3xl:focus {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .md\:focus\:text-4xl:focus {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .md\:focus\:text-5xl:focus {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .md\:focus\:text-6xl:focus {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .md\:focus\:text-7xl:focus {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .md\:focus\:text-8xl:focus {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .md\:focus\:text-9xl:focus {
     font-size: 8rem;
     line-height: 1;
   }
@@ -109898,6 +110288,136 @@ select {
     line-height: 1;
   }
 
+  .lg\:hover\:text-xs:hover {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .lg\:hover\:text-sm:hover {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .lg\:hover\:text-base:hover {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .lg\:hover\:text-lg:hover {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:hover\:text-xl:hover {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:hover\:text-2xl:hover {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .lg\:hover\:text-3xl:hover {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .lg\:hover\:text-4xl:hover {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .lg\:hover\:text-5xl:hover {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .lg\:hover\:text-6xl:hover {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .lg\:hover\:text-7xl:hover {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .lg\:hover\:text-8xl:hover {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .lg\:hover\:text-9xl:hover {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .lg\:focus\:text-xs:focus {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .lg\:focus\:text-sm:focus {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .lg\:focus\:text-base:focus {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .lg\:focus\:text-lg:focus {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:focus\:text-xl:focus {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .lg\:focus\:text-2xl:focus {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .lg\:focus\:text-3xl:focus {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .lg\:focus\:text-4xl:focus {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .lg\:focus\:text-5xl:focus {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .lg\:focus\:text-6xl:focus {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .lg\:focus\:text-7xl:focus {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .lg\:focus\:text-8xl:focus {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .lg\:focus\:text-9xl:focus {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
   .lg\:leading-3 {
     line-height: .75rem;
   }
@@ -141787,6 +142307,136 @@ select {
     line-height: 1;
   }
 
+  .xl\:hover\:text-xs:hover {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .xl\:hover\:text-sm:hover {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .xl\:hover\:text-base:hover {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .xl\:hover\:text-lg:hover {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .xl\:hover\:text-xl:hover {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .xl\:hover\:text-2xl:hover {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .xl\:hover\:text-3xl:hover {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .xl\:hover\:text-4xl:hover {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .xl\:hover\:text-5xl:hover {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .xl\:hover\:text-6xl:hover {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .xl\:hover\:text-7xl:hover {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .xl\:hover\:text-8xl:hover {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .xl\:hover\:text-9xl:hover {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .xl\:focus\:text-xs:focus {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .xl\:focus\:text-sm:focus {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .xl\:focus\:text-base:focus {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .xl\:focus\:text-lg:focus {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .xl\:focus\:text-xl:focus {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .xl\:focus\:text-2xl:focus {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .xl\:focus\:text-3xl:focus {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .xl\:focus\:text-4xl:focus {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .xl\:focus\:text-5xl:focus {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .xl\:focus\:text-6xl:focus {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .xl\:focus\:text-7xl:focus {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .xl\:focus\:text-8xl:focus {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .xl\:focus\:text-9xl:focus {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
   .xl\:leading-3 {
     line-height: .75rem;
   }
@@ -173672,6 +174322,136 @@ select {
   }
 
   .\32xl\:text-9xl {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .\32xl\:hover\:text-xs:hover {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .\32xl\:hover\:text-sm:hover {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .\32xl\:hover\:text-base:hover {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .\32xl\:hover\:text-lg:hover {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .\32xl\:hover\:text-xl:hover {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .\32xl\:hover\:text-2xl:hover {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .\32xl\:hover\:text-3xl:hover {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .\32xl\:hover\:text-4xl:hover {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .\32xl\:hover\:text-5xl:hover {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .\32xl\:hover\:text-6xl:hover {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .\32xl\:hover\:text-7xl:hover {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .\32xl\:hover\:text-8xl:hover {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .\32xl\:hover\:text-9xl:hover {
+    font-size: 8rem;
+    line-height: 1;
+  }
+
+  .\32xl\:focus\:text-xs:focus {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .\32xl\:focus\:text-sm:focus {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .\32xl\:focus\:text-base:focus {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  .\32xl\:focus\:text-lg:focus {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .\32xl\:focus\:text-xl:focus {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .\32xl\:focus\:text-2xl:focus {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
+
+  .\32xl\:focus\:text-3xl:focus {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+  }
+
+  .\32xl\:focus\:text-4xl:focus {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .\32xl\:focus\:text-5xl:focus {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .\32xl\:focus\:text-6xl:focus {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .\32xl\:focus\:text-7xl:focus {
+    font-size: 4.5rem;
+    line-height: 1;
+  }
+
+  .\32xl\:focus\:text-8xl:focus {
+    font-size: 6rem;
+    line-height: 1;
+  }
+
+  .\32xl\:focus\:text-9xl:focus {
     font-size: 8rem;
     line-height: 1;
   }

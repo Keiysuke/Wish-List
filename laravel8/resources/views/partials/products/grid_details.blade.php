@@ -6,7 +6,6 @@
                     <div class="top relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                         <div class="product_price">{{ $product->real_cost }} €</div>
                         <div class="product_pict rounded rounded-b-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
-                        <!-- <div class="product_bookmark" onClick="event.preventDefault(); bookmark_product({{ $product->id }});"><x-svg.bookmark id="bookmark_{{ $product->id }}" class="icon-xl"/></div> -->
                     </div>
                     <div class="down flex flex-col justify-between h-full font-semibold text-center {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">
                         <p class="mt-2 text-black">{{ (strlen($product->label) > 50)? substr($product->label, 0, 50).'...' : $product->label }}</p>

@@ -174,8 +174,13 @@ form#fast_search div:first-of-type svg {
   transition: transform 0.5s ease;
 }
 
+#submenu_my_datas {
+  left: 19.5rem;
+  top: 3.3rem;
+}
+
 #submenu_create {
-  left: 25rem;
+  left: 26rem;
   top: 3.3rem;
 }
 

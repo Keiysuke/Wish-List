@@ -1,0 +1,31 @@
+/* Index products */
+
+div.no-offer div.product_pict {
+  filter: grayscale(90%);
+}
+
+.product_pict {
+  height: 6rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.icons_container {
+  display: flex;
+  display: inline-flex;
+  gap: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.icons_container a {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+#my_lists div#left div.selected {
+  --tw-bg-opacity: 1;
+  background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+  font-weight: 600;
+  padding: 0.5rem;
+}
+

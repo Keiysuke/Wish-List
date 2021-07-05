@@ -46,20 +46,6 @@ div.grid_product div.down.offer-soon div p {
     @apply bg-cover;
 }
 
-.product_bookmark {
-    @apply absolute;
-    @apply top-0;
-    @apply right-0;
-    @apply bg-gray-800;
-    @apply rounded-tr;
-    @apply py-1;
-    color: #ed8936;
-}
-
-.product_bookmark svg.saved {
-    @apply fill-current;
-}
-
 /* Search products bar */
 .sticky_search_bar.off {
     @apply relative;

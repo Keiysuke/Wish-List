@@ -41,13 +41,6 @@ div.notification div {
     width: 85%;
 }
 
-.vertical-line {
-    border-left: 1px solid #000;
-    display: inline-block;
-    @apply h-6;
-    @apply mx-4;
-}
-
 hr {
     padding: 0.375rem;
 }

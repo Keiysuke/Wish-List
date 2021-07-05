@@ -51,22 +51,6 @@ div.grid_product div.down.offer-soon div p {
   background-size: cover;
 }
 
-.product_bookmark {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  --tw-bg-opacity: 1;
-  background-color: rgba(31, 41, 55, var(--tw-bg-opacity));
-  border-top-right-radius: 0.25rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  color: #ed8936;
-}
-
-.product_bookmark svg.saved {
-  fill: currentColor;
-}
-
 /* Search products bar */
 
 .sticky_search_bar.off {
