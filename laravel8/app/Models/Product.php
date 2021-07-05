@@ -9,6 +9,7 @@ use App\Models\ProductWebsite;
 use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\ProductPhoto;
+use App\Models\Listing;
 
 class Product extends Model
 {
@@ -17,6 +18,10 @@ class Product extends Model
     
     public function users(){
         return $this->belongsToMany(User::class, 'product_users')->withPivot('archive')->withTimestamps();
+    }
+    
+    public function listings(){
+        return $this->belongsToMany(Listing::class, 'listing_products')->withTimestamps();
     }
     
     public function productWebsites(){
@@ -55,6 +60,10 @@ class Product extends Model
 
     public function getwebsitesAvailableSoon(){
         return $this->productWebsites()->where('available_date', '>=', date("Y-m-d"))->orderBy('available_date')->get();
+    }
+
+    public function getwebsitesExpirationSoon(){
+        return $this->productWebsites()->where('expiration_date', '>=', date("Y-m-d"))->orderBy('expiration_date')->get();
     }
 
     public function isAvailable(){

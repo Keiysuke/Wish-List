@@ -11,7 +11,7 @@ use App\Models\Selling;
 class Website extends Model
 {
     use HasFactory;
-    protected $fillable = ['label', 'url'];
+    protected $fillable = ['label', 'url', 'can_sell'];
 
     public function product_websites(){
         return $this->hasMany(ProductWebsite::class);
