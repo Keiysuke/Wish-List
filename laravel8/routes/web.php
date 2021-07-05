@@ -53,9 +53,10 @@ Route::resource('purchases', PurchaseController::class)->except(['index', 'creat
 Route::get('products/{product?}/purchase/create', [PurchaseController::class, 'create'])->name('purchases.create');
 Route::get('purchases/{purchase}/destroy', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
 
-Route::resource('group_buys', GroupBuyController::class);
+Route::resource('group_buys', GroupBuyController::class)->except(['index', 'show', 'destroy']);
 Route::post('group_buys/product/get_datas', [GroupBuyController::class, 'get_product_datas'])->name('group_buys.get_product_datas');
 Route::post('group_buys/get_products', [GroupBuyController::class, 'get_products'])->name('group_buys.get_products');
+Route::get('group_buys/{group_buy}/destroy', [GroupBuyController::class, 'destroy'])->name('group_buys.destroy');
 
 Route::resource('sellings', SellingController::class)->except(['index', 'create', 'destroy']);
 Route::get('sellings/purchase/{purchase}/create', [SellingController::class, 'create'])->name('sellings.create');

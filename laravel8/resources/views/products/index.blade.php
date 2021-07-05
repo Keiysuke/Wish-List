@@ -14,6 +14,7 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     search_products();
 
@@ -49,25 +50,17 @@
             if(el.checked) websites.push(el.name);
         });
         
-        fetch('{{ route('products_search') }}', {
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
-            },
-            method: 'post',
-            body: JSON.stringify ({
-                search_text: document.getElementById('search_text').value,
-                sort_by: document.getElementById('sort_by').value,
-                order_by: document.getElementById('order_by').value,
-                list: document.getElementById('list').value,
-                page: document.getElementById('page').value,
-                url: document.getElementById('url').value,
-                websites: websites,
-                purchased: document.querySelector('input[name="purchased"]:checked').value,
-                stock: document.querySelector('input[name="stock"]:checked').value,
-                f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
-            })
+        my_fetch('{{ route('products_search') }}', {method: 'post', csrf: true}, {
+            search_text: document.getElementById('search_text').value,
+            sort_by: document.getElementById('sort_by').value,
+            order_by: document.getElementById('order_by').value,
+            list: document.getElementById('list').value,
+            page: document.getElementById('page').value,
+            url: document.getElementById('url').value,
+            websites: websites,
+            purchased: document.querySelector('input[name="purchased"]:checked').value,
+            stock: document.querySelector('input[name="stock"]:checked').value,
+            f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
         }).then(response => {
             if (response.ok) {
                 document.getElementById('search_text').classList.remove('border');
@@ -80,18 +73,15 @@
                 return null;
             }
         }).then(products => {
-            console.log(products);
             document.getElementById('content_results').innerHTML = products.html;
-
             if(products === null) return;
-            
-            if(products.nb_results === 0) document.getElementById('nb_results').innerHTML = '0 Résultat';
-            else document.getElementById('nb_results').innerHTML = products.nb_results+' Résultat'+(products.nb_results > 1? 's' : '');
+            document.getElementById('nb_results').innerHTML = products.nb_results+' Résultat(s)';
         });
     }
 
     document.forms['search_products'].onsubmit = (e) => {
         e.preventDefault();
+        document.getElementById('page').value = 1;
         search_products();
     }
 
@@ -114,7 +104,7 @@
             <h4 class="font-medium" id="nb_results"></h4>
             @include('partials.products.search_bar', ['sortBy' => $sortBy])
         </div>
-
+        
         <hr class="mt-2"/>
         @include('partials.products.filter')
     </form>

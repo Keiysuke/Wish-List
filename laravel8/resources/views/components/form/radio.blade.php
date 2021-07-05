@@ -1,0 +1,1 @@
+<input type="radio" class="mr-2 mt-1" name="{{ $name }}" id="{{ $id ?? $value }}" value="{{ $value }}" {{ $slot }}/>

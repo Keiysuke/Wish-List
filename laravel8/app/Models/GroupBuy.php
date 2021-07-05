@@ -21,6 +21,14 @@ class GroupBuy extends Model
         return $this->hasMany(GroupBuyPurchase::class);
     }
 
+    public function setDatas(){
+        $purchases_id = [];
+        foreach($this->group_buy_purchases as $p){
+            $purchases_id[] = $p->purchase_id;
+        }
+        $this->datas = compact('purchases_id');
+    }
+
     public function grouped_purchases(){ //Return a collection of purchases grouped by product_id and with the number for each of them
         $distinct_products = [];
         $r = collect([]);

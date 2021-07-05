@@ -39,7 +39,7 @@
 
         <div class="flex justify-center">
             <div class="w-1/3">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="nb_photos">Nombre de photos à lier</label>
+                <x-form.label for="nb_photos" block>Nombre de photos à lier</x-form.label>
                 <select name="nb_photos" id="nb_photos" value="{{ $nb_photos }}" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent" onChange="upload_photos(this.value)">
                     @for ($i = 1; $i <= 10; $i++)
                         <option value="{{ $i }}" @if($nb_photos == $i) selected @endif>{{ $i }}</option>
@@ -73,10 +73,8 @@
             @endfor
         </div>
         <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Modifier les photos
-            </button>
-            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('products.show', $product->id) }}">Annuler</a>
+            <x-form.btn type="submit">Modifier les photos</x-form.btn>
+            <x-form.cancel href="{{ route('products.show', $product->id) }}"/>
         </div>
     </form>
     </div>

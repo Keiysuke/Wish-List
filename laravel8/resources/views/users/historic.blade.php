@@ -16,6 +16,10 @@
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
+    function toggle_filters(){
+        document.querySelector('#content_filters').classList.toggle('hidden');
+    }
+
     function change_page(nb){
         document.getElementById('page').value = nb;
         get_historic();
@@ -25,12 +29,21 @@
         my_fetch('{{ route('post_user_historic') }}', {method: 'post', csrf: true}, {
             user_id: document.querySelector('#user_id').value,
             kind: "{{ $kind }}",
+            date_from: document.querySelector('#date_from').value,
+            date_to: document.querySelector('#date_to').value,
             page: document.getElementById('page').value,
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
             document.getElementById('content_results').innerHTML = results.html;
+            document.querySelector('#btn-go-up').click();
         });
+    }
+
+    document.forms['filter_historic'].onsubmit = (e) => {
+        e.preventDefault();
+        document.getElementById('page').value = 1;
+        get_historic();
     }
     
     get_historic();
@@ -43,12 +56,25 @@
         @else <a href="{{ route('user_historic', 'purchases') }}" class="link">Mes achats</a> / <span class="font-semibold text-green-500">Mes ventes</span>
         @endif
     </div>
-    <div class="flex align-start gap-1 mb-2">
+    <div class="flex align-start gap-1">
         @if($purchases) <x-svg.big.cart class="icon-sm"/>
         @else <x-svg.big.truck class="icon-sm"/>
         @endif
-        <h2>Mon historique {{ $purchases? "d'achats" : "de ventes" }}</h2>
+        
+        <div class="w-full relative flex">
+            <h2>Mon historique {{ $purchases? "d'achats" : "de ventes" }}</h2>
+            <div class="absolute right-0 bottom-0" onClick="toggle_filters();">
+                <span class="title-icon cursor-pointer inline-flex">
+                    <x-svg.filter class="icon-xs"/>
+                </span>
+            </div>
+        </div>
     </div>
+    <hr/>
+
+    <form id="filter_historic">
+        @include("partials.group_buy.filter")
+    </form>
 
     <input id="user_id" type="hidden" value="{{ auth()->user()->id }}"/>
     <div id="content_results"></div>

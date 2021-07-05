@@ -36,6 +36,7 @@ class CreatePurchasesTable extends Migration
                 ->onUpdate('cascade');
             $table->decimal('cost', $precision = 10, $scale = 2);
             $table->date('date');
+            $table->decimal('customs', $precision = 10, $scale = 2)->nullable();
             $table->timestamps();
         });
     }

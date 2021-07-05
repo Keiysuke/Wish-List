@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "automate",
+			"path": "api/",
+			"problemMatcher": [],
+			"label": "npm: automate - api",
+			"detail": "sequelize-automate -c config/sequelize-automate.config.js"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "laravel8/vendor/facade/ignition/",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: build - laravel8/vendor/facade/ignition",
+			"detail": "NODE_ENV=production webpack --mode production"
+		}
+	]
+}

@@ -7,6 +7,7 @@
 
 @section('absolute_content')
     @include('partials.products.zoom_pictures', ['dir' => $dir, 'photos' => $photos])
+    @include('partials.products.my_lists', ['id' => $product->id, 'product_id' => $product->id])
 @endsection
 
 @section('breadcrumbs')
@@ -17,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/css/recto_verso.css') }}">
 @endsection
 @section('js')
+<script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     window.onload = function(){
         //Flip thumbnails if some are in a selling's state
@@ -69,27 +71,32 @@
     }
 
     document.querySelector('#follow_product').addEventListener('click', () => {
-        fetch('{{ route('follow_product') }}', {
-            headers: {
-                "Content-Type": "application/json",
-                "X-Requested-With": "XMLHttpRequest",
-                "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
-            },
-            method: 'post',
-            body: JSON.stringify ({ id: document.getElementById('product_id').value })
+        my_fetch('{{ route('follow_product') }}', {method: 'post', csrf: true}, {
+            id: document.getElementById('product_id').value
         }).then(response => {
             if (response.ok) return response.json();
-            else {
-                if(response.status == 422) {}
-                return null;
-            }
         }).then(res => {
-            console.log(res);
             document.querySelector('#follow_product').setAttribute('title', 'Suivre');
             document.querySelector('#follow_product').setAttribute('title', 'Ne plus suivre');
             document.querySelector('#follow_product').classList.toggle('on');
         });
     });
+
+    //Lists Functions
+    function toggleShowLists(){
+        event.stopPropagation();
+        document.getElementById('add_to_list').classList.toggle('hidden');
+        document.getElementById('main').classList.toggle('pointer-events-none');
+    }
+
+    function toggle_list(list_id, product_id, change_checked = true){
+        my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
+            list_id: list_id,
+            product_id: product_id,
+            nb: document.querySelector('#list_nb_'+list_id).value,
+            change_checked:change_checked
+        });
+    }
 </script>
 @endsection
 
@@ -108,6 +115,9 @@
                     <x-svg.picture class="icon-xs"/>
                 </a>
             @endif
+            <span title="Ajouter à une liste" id="add_to_list" class="title-icon add_to_list cursor-pointer inline-flex" onClick="toggleShowLists();">
+                <x-svg.add_to_list class="icon-xs"/>
+            </span>
             <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow_product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.heart class="icon-xs"/>
             </span>
@@ -137,7 +147,7 @@
                 <div class="h-full">
                     <div class="relative flex justify-between border-b-2 mb-4">
                         <div class="flex align-start gap-1">
-                            <x-svg.cart class="w-7"/>
+                            <x-svg.big.cart class="w-7"/>
                             <h2>Offres recensées :</h2>
                         </div>
                         
@@ -161,7 +171,7 @@
                 <div class="h-full">
                     <div class="flex justify-between border-b-2 mb-4">
                         <div class="flex align-start gap-1">
-                            <x-svg.truck class="w-7"/>
+                            <x-svg.big.truck class="w-7"/>
                             <h2>Mes achats & ventes associées :</h2>
                         </div>
                         <a title="Ajouter un achat" href="{{ route('purchases.create', $product->id) }}" class="title-icon inline-flex">

@@ -20,7 +20,7 @@
                     <div class="item_list flex flex-between gap-4 p-2 shadow rounded border-l-4 border-indigo-400 hover:shadow-lg transform hover:scale-105">
                         <div class="flex w-full gap-8">
                             <span class="font-bold"># {{ $sell_state->id }}</span>
-                            <span class="vertical-line"></span>
+                            <x-utils.v_line />
                             <span>{{ $sell_state->label }}</span>
                         </div>
                         <div class="flex flex-around gap-4 text-sm">

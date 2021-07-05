@@ -12,32 +12,29 @@
                 <x-svg.house class="icon-xs"/>
                 <span class="px-1">{{ __('Home') }}</span>
             </a>
-            <a href="{{ route('my_products') }}" class="navitem {{ $path === 'products/user' ? 'active' : 'not-active' }}">
-                {{ __('My products') }}
-            </a>
-            <a id="menu_create" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');" href="{{ route('products.create') }}" class="navitem {{ $path === 'products/create' ? 'active' : 'not-active' }}">
-                {{ __('Add new') }}
-            </a>
-            <a href="{{ route('sitemap') }}" class="navitem {{ $path === 'sitemap' ? 'active' : 'not-active' }}">
-                {{ __('Sitemap') }}
-            </a>
-            <a href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro" target="_blank" class="navitem not-active">
-                {{ __('Convertisseur $ -> €') }}
-            </a>
+            <x-menu.submenu id="my_datas" href="{{ route('my_products') }}" active="{{ $path === 'products/user' }}">{{ __('My products') }}</x-menu.submenu>
+            <x-menu.submenu id="create" href="{{ route('products.create') }}" active="{{ $path === 'products/create' }}">{{ __('Add new') }}</x-menu.submenu>
+            <x-menu.link href="{{ route('sitemap') }}" active="{{ $path === 'sitemap' }}">{{ __('Sitemap') }}</x-menu.link>
+            <x-menu.ext_link href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro">{{ __('Convertisseur $ -> €') }}</x-menu.ext_link>
+
+            <x-menu.ext_link href="http://localhost/phpmyadmin/db_structure.php?server=2&db=api_products_managing">
+                <x-svg.big.db class="inline-flex icon-sm mr-1"/>Base de données
+            </x-menu.ext_link>
         </div>
         <!-- Fast menu search -->
         <form id="fast_search" action="{{ route('products.index') }}" method="POST">
             @method("GET")
             <div class="relative flex inline-flex justify-end" onMouseOver="open_search();" onMouseOut="open_search(false);">
                 <input id="fast_search_text" class="{{ isset($search)? 'focus_search' : '' }}" type="search" name="search" placeholder="{{ __('Search products...') }}" value="{{ isset($search)? $search : '' }}" onFocus="open_search();" onFocusOut="open_search(false);">
-                <x-svg.circle_search onClick="document.forms['fast_search'].submit();"/>
+                <!-- <x-svg.big.circle_search onClick="document.forms['fast_search'].submit();"/> -->
+                <x-svg.big.circle_search onClick="document.forms['fast_search'].submit();"/>
             </div>
         </form>
         <!-- menu icons -->
         <div class="flex items-center gap-5 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <x-svg.bell id="icon-bell" notif="{{ auth()->user()->unreadNotifications->count() }}"/>
-            <x-svg.msg id="icon-msg"/>
-            <x-svg.profil id="icon-profil"/>
+            <x-svg.big.bell id="icon-bell" notif="{{ auth()->user()->unreadNotifications->count() }}"/>
+            <x-svg.big.msg id="icon-msg"/>
+            <x-svg.big.profil id="icon-profil"/>
             <!--
             <svg class="icon-sm text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -52,8 +49,17 @@
     </div>
 </nav>
 <nav id="submenu">
+    <div id="submenu_my_datas" class="submenu" onMouseOver="submenu(true, 'my_datas');" onMouseOut="submenu(false, 'my_datas');">
+        <a href="{{ route('my_products') }}">{{ __('My products') }}</a>
+        <a href="{{ route('lists.index') }}">{{ __("My lists") }}</a>
+        <a href="{{ route('user_historic', 'purchases') }}">{{ __('My purchases') }}</a>
+        <a href="{{ route('user_historic', 'sellings') }}">{{ __('My sells') }}</a>
+    </div>
     <div id="submenu_create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
         <a href="{{ route('products.create') }}">{{ __('Product') }}</a>
+        <a href="{{ route('group_buys.create') }}">{{ __('Group purchase') }}</a>
+        <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
+        <hr class="py-1 border-black"/>
         <a href="{{ route('websites.create') }}">{{ __('Website') }}</a>
         <a href="{{ route('states.products.create') }}">{{ __("Product's state") }}</a>
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>

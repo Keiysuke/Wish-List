@@ -16,20 +16,33 @@ class UserController extends Controller
         if ($request->ajax()) {
             $this->validate($request, [
                 'user_id' => 'bail|required|int',
+                'date_from' => 'bail|nullable|date',
+                'date_to' => 'bail|nullable|date',
                 'kind' => 'bail|required|string',
             ]);
             
+            $date_from = is_null($request->date_from)? '1970-01-01' : $request->date_from;
+            $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
             $user_id = $request->user_id;
             $kind = $request->kind;
             $totals = [];
             if($kind === "purchases"){
-                $purchases = Purchase::where('user_id', '=', $user_id)->doesnthave('group_buy')->orderBy('date', 'desc')->get();
+                $purchases = Purchase::where('user_id', '=', $user_id)
+                    ->where('date', '>=', $date_from)
+                    ->where('date', '<=', $date_to)
+                    ->doesnthave('group_buy')
+                    ->orderBy('date', 'desc')
+                    ->get();
                 foreach($purchases as $data){
                     $data->kind = 'purchase';
                     $data->date_used = strtotime($data->date);
                     $data->date_show = __('Purchased on').' '.date('d F Y', $data->date_used);
                 }
-                $group_buys = GroupBuy::where('user_id', '=', $user_id)->orderBy('date', 'desc')->get();
+                $group_buys = GroupBuy::where('user_id', '=', $user_id)
+                    ->where('date', '>=', $date_from)
+                    ->where('date', '<=', $date_to)
+                    ->orderBy('date', 'desc')
+                    ->get();
                 foreach($group_buys as $data){
                     $data->kind = 'group_buy';
                     $data->date_used = strtotime($data->date);
@@ -39,7 +52,12 @@ class UserController extends Controller
                 }
                 $datas = $purchases->concat($group_buys);
             }else{
-                $datas = Selling::where('user_id', '=', $user_id)->where('sell_state_id', '=', 5)->orderBy('date_sold', 'desc')->get();
+                $datas = Selling::where('user_id', '=', $user_id)
+                    ->where('sell_state_id', '=', 5)
+                    ->where('date_sold', '>=', $date_from)
+                    ->where('date_sold', '<=', $date_to)
+                    ->orderBy('date_sold', 'desc')
+                    ->get();
                 foreach($datas as $data){
                     $data->kind = 'selling';
                     $data->date_used = strtotime($data->date_sold);

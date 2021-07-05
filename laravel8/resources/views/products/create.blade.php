@@ -34,27 +34,18 @@
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex gap-4">
             <div class="w-1/2">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="label">Nom du produit <span class="required">*</span></label>
-                <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="label" id="label" type="text" placeholder="Uncharted 4" value="{{ old('label') }}"/>
-                @error('label')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <x-form.label for="label" block required>Nom du produit</x-form.label>
+                <x-form.input name="label" placeholder="Uncharted 4" value="{{ old('label') }}"/>
             </div>
 
             <div class="flex justify-around w-1/2 gap-4">
                 <div class="w-1/3">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="limited_edition">Edition limitée ?</label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="limited_edition" id="limited_edition" type="text" placeholder="3000" value="{{ old('limited_edition') }}"/>
-                    @error('limited_edition')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-form.label for="limited_edition" block>Edition limitée ?</x-form.label>
+                    <x-form.input name="limited_edition" placeholder="3000" value="{{ old('limited_edition') }}"/>
                 </div>
                 <div class="w-1/3">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="real_cost">Prix neuf (€) <span class="required">*</span></label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="real_cost" id="real_cost" type="text" placeholder="20.50" value="{{ old('real_cost') }}"/>
-                    @error('real_cost')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-form.label for="real_cost" block required>Prix neuf (€)</x-form.label>
+                    <x-form.input name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
                 </div>
                 <div class="flex flex-col items-center w-1/3">
                     <input type="file" accept="image/*" id="photo_1" name="photo_1" class="hidden" onchange="loadFile(event)">
@@ -70,11 +61,8 @@
             </div>
         </div>
         <div class="my-4">
-            <label class="block text-gray-600 text-sm font-semibold mb-2" for="description">Description <span class="required">*</span></label>
-            <textarea rows="4" cols="50" class="bg-gray-100 p-1 appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="description" id="description" type="text"/>{{ old('description') }}</textarea>
-            @error('description')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <x-form.label for="description" block required>Description</x-form.label>
+            <x-form.textarea name="description">{{ old('description') }}</x-form.textarea>
         </div>
         
         <!-- Formulaire liaison de site de vente au produit -->
@@ -85,7 +73,7 @@
             
             <div class="flex gap-4">
                 <div class="w-1/2">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="website_id">Site de vente <span class="required">*</span></label>
+                    <x-form.label for="website_id" block required>Site de vente</x-form.label>
                     <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($websites as $website)
                             <option value="{{ $website->id }}" @if(old('website_id') == $website->id) selected @endif>{{ $website->label }}</option>
@@ -97,27 +85,18 @@
                 </div>
                 <div class="flex justify-around gap-4 w-1/2">
                     <div class="w-1/2">
-                        <label class="block text-gray-600 text-sm font-semibold mb-2" for="price">Prix du site (€) <span class="required">*</span></label>
-                        <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="price" id="price" type="text" placeholder="50" value="{{ old('price') }}"/>
-                        @error('price')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <x-form.label for="price" block required>Prix du site (€)</x-form.label>
+                        <x-form.input name="price" placeholder="50" value="{{ old('price') }}"/>
                     </div>
                     <div class="w-1/2">
-                        <label class="block text-gray-600 text-sm font-semibold mb-2" for="expiration_date">Date d'expiration</label>
-                        <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="expiration_date" id="expiration_date" type="date" value="{{ old('expiration_date') }}"/>
-                        @error('expiration_date')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <x-form.label for="expiration_date" block>Date d'expiration</x-form.label>
+                        <x-form.date name="expiration_date" value="{{ old('expiration_date') }}"/>
                     </div>
                 </div>
             </div>
             <div class="my-4">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="url">Url</label>
-                <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="url" id="url" type="text" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
-                @error('url')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <x-form.label for="url" block>Url</x-form.label>
+                <x-form.input name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
             </div>
         </div>
         
@@ -129,10 +108,10 @@
             
             <div class="flex gap-4 mb-4">
                 <div class="w-1/2">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="product_state_id">Etat du produit <span class="required">*</span></label>
+                    <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
                     <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($product_states as $product_state)
-                            <option value="{{ $product_state->id }}" @if(old('product_state_id') === $product_state->id) selected @endif>{{ $product_state->label }}</option>
+                            <option value="{{ $product_state->id }}" @if(old('product_state_id') == $product_state->id) selected @endif>{{ $product_state->label }}</option>
                         @endforeach
                     </select>
                     @error('product_state_id')
@@ -141,33 +120,24 @@
                 </div>
                 <div class="flex justify-around gap-4 w-1/2">
                     <div class="w-1/2">
-                        <label class="block text-gray-600 text-sm font-semibold mb-2" for="cost">Coût (€) <span class="required">*</span></label>
-                        <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="cost" id="cost" type="text" placeholder="Ce produit m'a coûté..." value="{{ old('cost') }}"/>
-                        @error('cost')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <x-form.label for="cost" block required>Coût (€)</x-form.label>
+                        <x-form.input name="cost" type="text" placeholder="Ce produit m'a coûté..." value="{{ old('cost') }}"/>
                     </div>
                     <div class="w-1/2">
-                        <label class="block text-gray-600 text-sm font-semibold mb-2" for="date">Date d'achat <span class="required">*</span></label>
-                        <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="date" id="date" type="date" value="{{ old('date') }}"/>
-                        @error('date')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <x-form.label for="date" block required>Date d'achat</x-form.label>
+                        <x-form.date name="date" type="date" value="{{ old('date') }}"/>
                     </div>
                 </div>
             </div>
         </div>
 
-
         <div class="mb-4">
-            <input onChange="set_purchase(this.checked);" class="mr-1" type="checkbox" name="add_purchase" id="add_purchase" {{ strcmp(old('add_purchase'), 'on') === 0 ? 'checked' : '' }}/>
-            <label class="text-gray-600 text-sm font-semibold mb-2" for="add_purchase">Créer & lier un achat</label>
+            <x-form.checkbox onChange="set_purchase(this.checked);" name="add_purchase">{{ strcmp(old('add_purchase'), 'on') === 0 ? 'checked' : '' }}</x-form.checkbox>
+            <x-form.label class="ml-1" for="add_purchase">Créer & lier un achat</x-form.label>
         </div>
         <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Ajouter le produit
-            </button>
-            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('products.index') }}">Annuler</a>
+            <x-form.btn type="submit">Ajouter le produit</x-form.btn>
+            <x-form.cancel href="{{ route('products.index') }}"/>
         </div>
     </form>
     </div>

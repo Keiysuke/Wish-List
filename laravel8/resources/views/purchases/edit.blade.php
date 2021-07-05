@@ -11,17 +11,24 @@
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('purchases.update', $purchase) }}" method="POST">
         @csrf
         @method('put')
-        <h1>Edition d'un achat</h1>
+        <div class="relative flex">
+            <h1>Edition d'un achat</h1>
+            <div class="absolute right-0 bottom-0">
+                <a href="{{ route('purchases.destroy', $purchase->id) }}" title="Supprimer l'achat" class="title-icon heart cursor-pointer inline-flex" onClick="return confirm('Supprimer l\'achat ?');">
+                    <x-svg.trash class="icon-xs"/>
+                </a>
+            </div>
+        </div>
         <hr/>
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
-            <div class="w-2/3">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="product_id">Produit acheté</label>
+            <div class="w-3/5">
+                <x-form.label for="product_id" block>Produit acheté</x-form.label>
                 <div class="pl-2 pt-2">{{ $purchase->product->label }}</div>
             </div>
-            <div class="w-1/3">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="product_state_id">Etat du produit <span class="required">*</span></label>
+            <div class="w-2/5">
+                <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
                 <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($product_states as $product_state)
                         <option value="{{ $product_state->id }}" @if(strcmp(old('product_state_id', $purchase->product_state_id), $product_state->id) === 0) selected @endif>{{ $product_state->label }}</option>
@@ -34,8 +41,8 @@
         </div>
         
         <div class="flex gap-4 mb-4">
-            <div class="w-2/3">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="website_id">Site web <span class="required">*</span></label>
+            <div class="w-3/5">
+                <x-form.label for="website_id" block required>Site web</x-form.label>
                 <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($websites as $website)
                         <option value="{{ $website->id }}" @if(strcmp(old('website_id', $purchase->website_id), $website->id) === 0) selected @endif>{{ $website->label }}</option>
@@ -45,28 +52,24 @@
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="flex gap-4 w-1/3">
-                <div class="w-1/2">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="cost">Coût (€) <span class="required">*</span></label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="cost" id="cost" type="text" placeholder="60" value="{{ old('cost', $purchase->cost) }}"/>
-                    @error('cost')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+            <div class="flex gap-4 w-2/5">
+                <div class="w-1/3">
+                    <x-form.label for="cost" block required>Coût (€)</x-form.label>
+                    <x-form.input name="cost" placeholder="60" value="{{ old('cost', $purchase->cost) }}"/>
                 </div>
-                <div class="w-1/2">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="date">Date d'achat <span class="required">*</span></label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="date" id="date" type="date" value="{{ old('date', $purchase->date) }}"/>
-                    @error('date')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                <div class="w-1/3">
+                    <x-form.label for="date" block required>Date d'achat</x-form.label>
+                    <x-form.date name="date" value="{{ old('date', $purchase->date) }}"/>
+                </div>
+                <div class="w-1/3">
+                    <x-form.label for="customs" block>Douane (€)</x-form.label>
+                    <x-form.input name="customs" placeholder="0" value="{{ old('customs', $purchase->customs) }}"/>
                 </div>
             </div>
         </div>
         <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Mettre à jour l'achat
-            </button>
-            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('products.show', $purchase->product_id) }}">Annuler</a>
+            <x-form.btn type="submit">Mettre à jour l'achat</x-form.btn>
+            <x-form.cancel href="{{ route('products.show', $purchase->product_id) }}"/>
         </div>
     </form>
 </div>

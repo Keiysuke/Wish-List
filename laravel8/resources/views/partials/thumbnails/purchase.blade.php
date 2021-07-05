@@ -10,6 +10,9 @@
     <div class="flex flex-col justify-around h-40 py-4">
         <p><span class="font-semibold">Etat :</span> {{ $purchase->productState->label }}</p>
         <p><span class="font-semibold">Prix :</span> {{ $purchase->cost }} €</p>
+        @if(!is_null($purchase->customs))
+            <p class="text-sm text-red-400"><span class="font-semibold">Douane :</span> {{ $purchase->customs }} €</p>
+        @endif
         <p class="text-sm text-gray-500">via <a class="link no-propagate" href="{{ $purchase->website->url }}" target="_blank">{{ $purchase->website->label }}</a>{{ is_null($purchase->date)? '' : ', le '.date('d/m/Y', strtotime($purchase->date)) }}</p>
     </div>
     <div class="absolute bottom-1 right-1 cursor-pointer">

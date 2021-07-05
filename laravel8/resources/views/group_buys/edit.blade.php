@@ -61,12 +61,14 @@
             document.getElementById('product_bought_existing_'+nb).setAttribute('checked', true);
             document.getElementById('product_bought_purchase_'+nb).classList.remove('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.add('hidden');
-            document.getElementById('product_bought_nb_'+nb).classList.add('hidden');
+            document.getElementById('div_product_bought_nb_'+nb).classList.add('hidden');
+            document.getElementById('product_bought_customs_'+nb).classList.add('hidden');
         }else{
             document.getElementById('product_bought_existing_'+nb).removeAttribute('checked');
             document.getElementById('product_bought_purchase_'+nb).classList.add('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.remove('hidden');
-            document.getElementById('product_bought_nb_'+nb).classList.remove('hidden');
+            document.getElementById('div_product_bought_nb_'+nb).classList.remove('hidden');
+            document.getElementById('product_bought_customs_'+nb).classList.remove('hidden');
         }
     }
 
@@ -93,7 +95,14 @@
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('group_buys.update', $group_buy) }}" method="POST">
         @csrf
         @method('put')
-        <h1>Edition d'un achat groupé</h1>
+        <div class="relative flex">
+            <h1>Edition d'un achat groupé</h1>
+            <div class="absolute right-0 bottom-0">
+                <a href="{{ route('group_buys.destroy', $group_buy->id) }}" title="Supprimer l'achat groupé" class="title-icon heart cursor-pointer inline-flex" onClick="return confirm('Supprimer l\'achat groupé ?');">
+                    <x-svg.trash class="icon-xs"/>
+                </a>
+            </div>
+        </div>
         <hr/>
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
@@ -124,10 +133,17 @@
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
         <div id="all_products_bought" class="flex flex-col gap-4 my-4">
+            @php($prev_product_id = null)
             @for($nb = 0; $nb < old('max_product_nb', count($group_buy->group_buy_purchases)); $nb++)
                 <!-- On trie les produits par id afin de récupérer celui correspondant à l'ancien id sélectionné -->
                 @php($product = $products->keyBy('id')->get(old('product_bought_id_'.$nb, $group_buy->group_buy_purchases->skip($nb)->first()->purchase->product_id)))
-                @include('partials.group_buy.select_product', compact('nb', 'products', 'product'))
+                <!-- S'il s'agit d'un produit différent, on repart du 1er achat pour celui-ci -->
+                @if(is_null($prev_product_id) || $product->id != $prev_product_id)
+                    @php($prev_product_id = $product->id)
+                    @php($skip_purchase = 0)
+                @endif
+                @php($edit_purchase = $product->purchases->whereIn('id', $group_buy->datas['purchases_id'])->skip($skip_purchase++)->first())
+                @include('partials.group_buy.select_product', compact('nb', 'products', 'product', 'edit_purchase'))
             @endfor
         </div>
 

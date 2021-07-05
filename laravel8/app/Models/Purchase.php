@@ -14,7 +14,7 @@ use App\Models\GroupBuyPurchase;
 class Purchase extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'product_id', 'product_state_id', 'website_id', 'cost', 'date'];
+    protected $fillable = ['user_id', 'product_id', 'product_state_id', 'website_id', 'cost', 'date', 'customs'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -48,6 +48,6 @@ class Purchase extends Model
         // $price_sold -= (((($s->confirmed_price* 8) / 100)* 20) / 100) + (($s->confirmed_price* 8) / 100);
         //New
         $price_sold -= ($price_sold*11.08)/100;
-        return $price_sold - ($this->cost + $s->shipping_fees_payed);
+        return $price_sold - ($this->cost + $s->shipping_fees_payed + $this->customs);
     }
 }

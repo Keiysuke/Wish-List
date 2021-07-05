@@ -13,11 +13,19 @@ use Illuminate\Http\Request;
 class GroupBuyController extends Controller
 {
     public function link_purchase($group_buy_id, $purchase_id){
-        $group_buy_purchase = new GroupBuyPurchase([
-            'group_buy_id' => $group_buy_id,
-            'purchase_id' => $purchase_id,
-        ]);
-        $group_buy_purchase->save();
+        //Creating one if not already existing
+        $existing = GroupBuyPurchase::where('group_buy_id', '=', $group_buy_id)->where('purchase_id', '=', $purchase_id)->get();
+        if(count($existing) === 0){
+            $group_buy_purchase = new GroupBuyPurchase([
+                'group_buy_id' => $group_buy_id,
+                'purchase_id' => $purchase_id,
+            ]);
+            $group_buy_purchase->save();
+        }
+    }
+
+    public function unlink_purchase($group_buy_id, $purchase_id){
+        GroupBuyPurchase::where('group_buy_id', '=', $group_buy_id)->where('purchase_id', '=', $purchase_id)->delete();
     }
 
     public function get_products(Request $request){
@@ -54,10 +62,6 @@ class GroupBuyController extends Controller
             return response()->json(['success' => true, 'html' => compact('offers', 'purchases')]);
         }
     }
-
-    public function index(){
-        //
-    }
     
     public function create(){
         return view('group_buys.create');
@@ -72,7 +76,7 @@ class GroupBuyController extends Controller
             'shipping_fees' => $request->shipping_fees,
         ]);
         $group_buy->save();
-
+        
         for($i = 0; $i < $request->max_product_nb; $i++){
             if($request->has('product_bought_existing_'.$i)){
                 $this->link_purchase($group_buy->id, $request->input('product_bought_purchase_id_'.$i));
@@ -87,6 +91,7 @@ class GroupBuyController extends Controller
                         'website_id' => $offer->website->id,
                         'cost' => $offer->price,
                         'date' => $request->date,
+                        'customs' => $request->input('product_bought_customs_'.$i),
                     ]);
                     $purchase->save();
                     $this->link_purchase($group_buy->id, $purchase->id);
@@ -98,19 +103,61 @@ class GroupBuyController extends Controller
         return redirect()->route('user_historic', 'purchases')->with('info', $info);
     }
     
-    public function show(GroupedPurchase $groupedPurchase){
-        //
-    }
-    
     public function edit(GroupBuy $group_buy){
+        $group_buy->setDatas();
         return view('group_buys.edit', compact('group_buy'));
     }
     
-    public function update(Request $request, GroupedPurchase $groupedPurchase){
-        //
+    public function update(GroupBuyRequest $request, GroupBuy $group_buy){
+        $group_buy->update($request->merge([
+            'label' => $request->label,
+            'date' => $request->date,
+            'global_cost' => $request->global_cost,
+            'shipping_fees' => $request->shipping_fees,])
+            ->all()
+        );
+
+        $purchases_to_link = [];
+        for($i = 0; $i < $request->max_product_nb; $i++){
+            if($request->has('product_bought_delete_'.$i)) //We delete the purchase from the group buy
+                continue;
+            
+            if($request->has('product_bought_existing_'.$i)){
+                $this->link_purchase($group_buy->id, $request->input('product_bought_purchase_id_'.$i));
+                $purchases_to_link[] = $group_buy->id.'_'.$request->input('product_bought_purchase_id_'.$i);
+            }else{
+                for($j = 0; $j < $request->input('product_bought_nb_'.$i); $j++){
+                    //On récupère l'offre choisie
+                    $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
+                    $purchase = new Purchase([
+                        'user_id' => $request->user_id,
+                        'product_id' => $request->input('product_bought_id_'.$i),
+                        'product_state_id' => $request->input('product_bought_state_id_'.$i),
+                        'website_id' => $offer->website->id,
+                        'cost' => $offer->price,
+                        'date' => $request->date,
+                        'customs' => $request->input('product_bought_customs_'.$i),
+                    ]);
+                    $purchase->save();
+                    $this->link_purchase($group_buy->id, $purchase->id);
+                    $purchases_to_link[] = $group_buy->id.'_'.$purchase->id;
+                }
+            }
+        }
+
+        //We delete the previous linked purchases that has been edited/replaced
+        foreach($group_buy->group_buy_purchases as $gbp){
+            if(!in_array($gbp->group_buy_id.'_'.$gbp->purchase_id, $purchases_to_link)){
+                $this->unlink_purchase($gbp->group_buy_id, $gbp->purchase_id);
+            }
+        }
+        
+        $info = __('The group buy has been edited.');
+        return redirect()->route('user_historic', 'purchases')->with('info', $info);
     }
     
-    public function destroy(GroupedPurchase $groupedPurchase){
-        //
+    public function destroy(GroupBuy $groupBuy){
+        $groupBuy->delete();
+        return redirect()->route('user_historic', 'purchases')->with('info', __('The purchases\' group has been deleted.'));
     }
 }

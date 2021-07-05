@@ -20,9 +20,13 @@
                     <div class="item_list flex flex-between gap-4 p-2 shadow rounded border-l-4 border-indigo-400 hover:shadow-lg transform hover:scale-105">
                         <div class="flex w-full gap-8">
                             <span class="font-bold"># {{ $website->id }}</span>
-                            <span class="vertical-line"></span>
-                            <span>{{ $website->label }}</span>
-                            <span class="vertical-line"></span>
+                            <x-utils.v_line />
+                            <span class="inline-flex gap-2">{{ $website->label }}
+                                @if($website->can_sell)
+                                    <x-svg.truck class="icon-xs text-green-500"/>
+                                @endif
+                            </span>
+                            <x-utils.v_line />
                             <span>{{ $website->url }}</span>
                         </div>
                         <div class="flex flex-around gap-4 text-sm">

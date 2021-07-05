@@ -1,5 +1,5 @@
 <a href="#top_page">
     <div id="btn-go-up">
-        <x-svg.double_arrow class="icon-lg"/>
+        <x-svg.big.double_arrow class="icon-lg"/>
     </div>
 </a>

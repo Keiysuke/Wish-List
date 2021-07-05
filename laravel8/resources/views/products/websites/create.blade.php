@@ -15,7 +15,7 @@
         
         <div class="flex gap-4 my-4">
             <div class="w-1/2">
-                <label class="block text-gray-600 text-sm font-semibold mb-2" for="website_id">Site de vente <span class="required">*</span></label>
+                <x-form.label for="website_id" block required>Site de vente</x-form.label>
                 <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($websites as $website)
                         <option value="{{ $website->id }}" @if(old('website_id') === $website->id) selected @endif>{{ $website->label }}</option>
@@ -27,40 +27,26 @@
             </div>
             <div class="flex gap-4 w-1/2">
                 <div class="w-1/3">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="price">Prix du site (€) <span class="required">*</span></label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="price" id="price" type="text" placeholder="50" value="{{ old('price') }}"/>
-                    @error('price')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-form.label for="price" block required>Prix du site (€)</x-form.label>
+                    <x-form.input name="price" placeholder="50" value="{{ old('price') }}"/>
                 </div>
                 <div class="w-1/3">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="available_date">Date de disponibilité</label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="available_date" id="available_date" type="datetime-local" value="{{ old('available_date') }}"/>
-                    @error('available_date')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-form.label for="available_date" block>Date de disponibilité</x-form.label>
+                    <x-form.datetime name="available_date" value="{{ old('available_date') }}"/>
                 </div>
                 <div class="w-1/3">
-                    <label class="block text-gray-600 text-sm font-semibold mb-2" for="expiration_date">Date d'expiration</label>
-                    <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="expiration_date" id="expiration_date" type="datetime-local" value="{{ old('expiration_date') }}"/>
-                    @error('expiration_date')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <x-form.label for="expiration_date" block>Date d'expiration</x-form.label>
+                    <x-form.datetime name="expiration_date" value="{{ old('expiration_date') }}"/>
                 </div>
             </div>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-600 text-sm font-semibold mb-2" for="url">Url</label>
-            <input class="bg-gray-100 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="url" id="url" type="text" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
-            @error('url')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+            <x-form.label for="url" block>Url</x-form.label>
+            <x-form.input name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
         </div>
         <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Lier le site de vente
-            </button>
-            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="{{ route('products.show', $product->id) }}">Annuler</a>
+            <x-form.btn type="submit">Lier le site de vente</x-form.btn>
+            <x-form.cancel href="{{ route('products.show', $product->id) }}"/>
         </div>
     </form>
     </div>

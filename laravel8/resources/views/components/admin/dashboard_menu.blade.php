@@ -5,7 +5,7 @@
     @else
         <a href="{{ route('websites.index') }}">
     @endif
-        <x-svg.db class="icon"/>
+        <x-svg.big.db class="icon"/>
         {{ __('Database') }}
     </a>
     <div class="w-full">
@@ -16,7 +16,7 @@
         @endif
     </div>
     <a href="{{ route('profile.show') }}" class="{{ $menu === 'profil' ? 'active' : '' }}">
-        <x-svg.user class="icon"/>
+        <x-svg.big.user class="icon"/>
         {{ __('Profile') }}
     </a>
     @if($menu === 'profil')
@@ -24,11 +24,11 @@
         <a href="#" class="sub {{ $sub === 'website' ? 'active' : '' }}"">{{ __('The website') }}</a>
     @endif
     <a href="#" class="{{ $menu === 'messages' ? 'active' : '' }}">
-        <x-svg.msg class="icon"/>
+        <x-svg.big.msg class="icon"/>
         {{ __('Messages') }}
     </a>
     <a href="#" class="{{ $menu === 'stats' ? 'active' : '' }}">
-        <x-svg.stats class="icon"/>
+        <x-svg.big.stats class="icon"/>
         {{ __('Statistics') }}
     </a>
     @if($menu === 'stats')

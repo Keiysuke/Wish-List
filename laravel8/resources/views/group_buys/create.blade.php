@@ -61,12 +61,14 @@
             document.getElementById('product_bought_existing_'+nb).setAttribute('checked', true);
             document.getElementById('product_bought_purchase_'+nb).classList.remove('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.add('hidden');
-            document.getElementById('product_bought_nb_'+nb).classList.add('hidden');
+            document.getElementById('div_product_bought_nb_'+nb).classList.add('hidden');
+            document.getElementById('product_bought_customs_'+nb).classList.add('hidden');
         }else{
             document.getElementById('product_bought_existing_'+nb).removeAttribute('checked');
             document.getElementById('product_bought_purchase_'+nb).classList.add('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.remove('hidden');
-            document.getElementById('product_bought_nb_'+nb).classList.remove('hidden');
+            document.getElementById('div_product_bought_nb_'+nb).classList.remove('hidden');
+            document.getElementById('product_bought_customs_'+nb).classList.remove('hidden');
         }
     }
 

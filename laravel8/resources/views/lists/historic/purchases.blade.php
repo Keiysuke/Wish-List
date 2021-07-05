@@ -36,7 +36,12 @@
                                 <span class="text-base" title="{{ 'Coût + Fdp : '.$data->global_cost.' + '.$data->shipping_fees }}">{{ $data->cost.' €' }}</span><x-utils.v_line height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
                             </span>
                             <span class="text-lg">{{ is_null($data->label)? __("Group purchase") : $data->label }}</span>
-                            <span class="absolute right-2 font-normal italic">{{ $data->date_show }}</span>
+                            <span class="absolute right-2 font-normal italic">
+                                {{ $data->date_show }}
+                                <a href="{{ route('group_buys.edit', $data->id) }}" class="inline-flex hover:text-blue-500" title="Editer l'achat groupé">
+                                    <x-svg.edit class="icon-xs"/>
+                                </a>
+                            </span>
                         </p>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         @foreach ($data->purchases as $purchase)

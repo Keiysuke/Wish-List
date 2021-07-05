@@ -1,0 +1,1 @@
+<input type="checkbox" class="{{ $class ?? '' }}" {{ $attributes }} name="{{ $name }}" id="{{ $id ?? $name }}" {{ $slot }}>
