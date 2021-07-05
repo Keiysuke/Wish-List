@@ -75,7 +75,8 @@ class PurchaseController extends Controller
     }
 
     public function destroy(Purchase $purchase){
+        $product_id = $purchase->product_id;
         $purchase->delete();
-        return back()->with('info', __('The purchase has been deleted.'));
+        return redirect()->route('products.show', $product_id)->with('info', __('The purchase has been deleted.'));
     }
 }

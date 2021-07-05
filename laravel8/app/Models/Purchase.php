@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Website;
 use App\Models\Selling;
 use App\Models\ProductState;
+use App\Models\GroupBuyPurchase;
 
 class Purchase extends Model
 {
@@ -35,8 +36,18 @@ class Purchase extends Model
         return $this->hasOne(Selling::class);
     }
 
+    public function group_buy(){
+        return $this->hasOne(GroupBuyPurchase::class);
+    }
+
     public function getBenefice(){
         $s = $this->selling()->first();
-        return ($s->confirmed_price + $s->shipping_fees) - ($this->cost + $s->shipping_fees_payed);
+        $price_sold = ($s->confirmed_price + $s->shipping_fees);
+        //Old
+        // $price_sold -= ($price_sold*3.05)/100;
+        // $price_sold -= (((($s->confirmed_price* 8) / 100)* 20) / 100) + (($s->confirmed_price* 8) / 100);
+        //New
+        $price_sold -= ($price_sold*11.08)/100;
+        return $price_sold - ($this->cost + $s->shipping_fees_payed);
     }
 }

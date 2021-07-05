@@ -6,9 +6,12 @@ use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Website;
 use App\Models\ProductPhoto;
 use App\Models\ProductWebsite;
 use App\Models\Purchase;
+use App\Models\Listing;
+use App\Models\ListingProduct;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
@@ -16,6 +19,17 @@ use EloquentBuilder;
 class ProductController extends Controller
 {
     private $nb_page_results = 5;
+
+    public function get_picture(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['product_id' => 'bail|required|int']);
+            $product_id = $request->product_id;
+
+            $photo = ProductPhoto::where('product_id', '=', $product_id)->first();
+            $returnHTML = asset(config('images.path_products').'/'.$product_id.'/'.$photo->label);
+            return response()->json(['success' => true, 'html' => $returnHTML]);
+        }
+    }
 
     public function setProductWebsites(&$products){
         foreach($products as $product){
@@ -28,14 +42,30 @@ class ProductController extends Controller
                     if(count($product->purchases) >= 1){
                         $product->date_show = __('Purchased on').' '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date));
                     }else{
-                        $product->date_show = __('Not bought');
+                        //On affiche la date d'expiration la plus proche
+                        $nextExpiration = $product->getwebsitesExpirationSoon()->first();
+                        if(is_null($nextExpiration)) $product->date_show = __('Not bought');
+                        else $product->date_show = __('An offer expire on').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($nextExpiration->expiration_date);
                     }
                 }else{ //Les offres sont pour des dates futures
                     $offer = $product->getWebsitesAvailableSoon()->first();
                     $product->date_show = app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($offer->available_date);
                 }
             }else $product->date_show = __('No offer listed');
-            
+        }
+    }
+
+    public function setProductPurchases(&$products){
+        foreach($products as $product){
+            $product->url = route('products.show', $product->id);
+            $product->pict = asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label);
+            $product->description = strlen($product->description) > 450 ? substr($product->description, 0, 450).'...': $product->description;
+            $product->nb_purchases = count($product->purchases);
+            $product->nb_resells = 0;
+            foreach($product->sellings as $selling){
+                if($selling->resold()) $product->nb_resells++;
+            }
+            $product->nb_sellings = count($product->sellings)-$product->nb_resells;
         }
     }
 
@@ -67,6 +97,8 @@ class ProductController extends Controller
         // die();
         
         $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
+        $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+        
         $this->setProductWebsites($products);
         return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
     }
@@ -117,7 +149,7 @@ class ProductController extends Controller
                     ->orWhereHas('productWebsites', function($query){
                         $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
                 });
-            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all'){
+            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all' and !strcmp(count($filter_pw), Website::count())){
                 $buildRequest->where(function($query) use ($filter_pw){
                     $query->wheredoesntHave('productWebsites')
                     ->orWhereHas('productWebsites', function($query) use ($filter_pw){
@@ -172,42 +204,26 @@ class ProductController extends Controller
                 default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
             }
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
-
-            // \DB::enableQueryLog();
-            // return \DB::getQueryLog();
-            
-            app('App\Http\Controllers\ProductController')->setProductWebsites($products);
-            
-            foreach($products as $product){
-                $product->url = route('products.show', $product->id);
-                $product->pict = asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label);
-            }
-            $view = ($request->list === 'grid')? 'partials.products.grid_details' : 'partials.products.list_details';
-            $returnHTML = view($view)->with(['products' => $products])->render();
-            return response()->json(array('success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML));
+            $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+                        
+            $returnHTML = view('partials.products.'.$request->list.'_details')->with(['products' => $this->get_products($products)])->render();
+            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
         }
         abort(404);
+    }
+
+    function get_products($products){
+        $this->setProductWebsites($products);
+        $this->setProductPurchases($products);
+        return $products;
     }
 
     function follow(Request $request){
         if ($request->ajax()) {
             $this->validate($request, ['id' => 'bail|required|int']);
-            //Si le produit est suivi par l'utilisateur, on l'enlève
-            $product = User::whereHas('products', function($query) use($request){
-                $query->where('product_id', '=', $request->id)
-                    ->where('user_id', '=', \Auth::user()->id);
-            })->get();
             
-            $res = array('success' => true);
-            $user = User::find(\Auth::user()->id);
-            if(count($product) === 0){ //On ajoute le suivi du produit pour cet utilisateur
-                $user->products()->attach($request->id);
-                $res['product'] = ['follow' => true];
-            }else{
-                $res['product'] = ['follow' => false];
-                $user->products()->detach($request->id);
-            }
-            return response()->json($res);
+            User::find(auth()->user()->id)->products()->toggle($request->id);
+            return response()->json(['success' => true, 'product' => ['follow' => $user->products()->find($request->id)]]);
         }
     }
 
@@ -279,7 +295,8 @@ class ProductController extends Controller
             $pw->expired = !is_null($pw->expiration_date) && ($pw->expiration_date < Carbon::now());
             $pw->available_soon = !is_null($pw->available_date) && ($pw->available_date >= Carbon::now());
             $pw->lower_price = $pw->price < $product->real_cost;
-            if($pw->expired || !is_null($pw->expiration_date)){ //Une date d'expiration est renseignée
+            
+            if(($pw->expired || !is_null($pw->expiration_date)) && !$pw->available_soon){ //Une date d'expiration est renseignée
                 $pw->date_show = __('Expire');
                 $past_date = $pw->expiration_date < Carbon::now();
                 if($past_date){
@@ -291,7 +308,13 @@ class ProductController extends Controller
                 $pw->date_show = __('Available').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->available_date);
             }
         }
-        return view('products.show', compact('product', 'photos', 'product_websites', 'purchases'));
+
+        $lists = Listing::where('user_id', '=', auth()->user()->id)->get();
+        foreach($lists as $list){
+            $list->hasProduct = $list->products()->find($product->id);
+            $list->product_nb = ($list->hasProduct)? ListingProduct::where('product_id', '=', $product->id)->first()->nb : 1;
+        }
+        return view('products.show', compact('product', 'photos', 'product_websites', 'purchases', 'lists'));
     }
 
     public function showFromNotification(Product $product, DatabaseNotification $notification){

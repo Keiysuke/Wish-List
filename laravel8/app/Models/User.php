@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Selling;
+use App\Models\Listing;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -21,16 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -64,6 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function products(){
         return $this->belongsToMany(Product::class, 'product_users')->withPivot('archive')->withTimestamps();
+    }
+    
+    public function listings(){
+        return $this->belongsToMany(Listing::class, 'listing_products')->withTimestamps();
     }
 
     public function createdProducts(){

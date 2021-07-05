@@ -36,7 +36,7 @@ class SellingController extends Controller
             'box' => $request->has('box')? 1 : 0,
         ]);
         $selling->save();
-        return redirect()->route('products.show', $selling->product_id)->with('info', __('The selling has been created.'));
+        return redirect()->route('products.show', $selling->product_id)->with('info', __('The sell has been created.'));
     }
 
     public function edit(Selling $selling){
@@ -52,11 +52,12 @@ class SellingController extends Controller
                 'box' => ($request->has('box')? 1 : 0)])
             ->all()
         );
-        return redirect()->route('products.show', $selling->product_id)->with('info', __('The selling has been edited.'));
+        return redirect()->route('products.show', $selling->product_id)->with('info', __('The sell has been edited.'));
     }
 
     public function destroy(Selling $selling){
+        $product_id = $selling->product_id;
         $selling->delete();
-        return back()->with('info', __('The selling has been deleted.'));
+        return redirect()->route('products.show', $product_id)->with('info', __('The sell has been deleted.'));
     }
 }

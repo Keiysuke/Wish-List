@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/my_fetch.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),
@@ -22,7 +23,8 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/header.css', 'public/css', [require('tailwindcss')])
     .postCss('resources/css/footer.css', 'public/css', [require('tailwindcss')])
     .postCss('resources/css/pagination.css', 'public/css', [require('tailwindcss')])
-    .postCss('resources/css/products_search.css', 'public/css', [require('tailwindcss')]);
+    .postCss('resources/css/products_search.css', 'public/css', [require('tailwindcss')])
+    .postCss('resources/css/list_products.css', 'public/css', [require('tailwindcss')]);
 
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 

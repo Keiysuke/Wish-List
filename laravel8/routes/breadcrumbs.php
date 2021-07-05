@@ -14,7 +14,7 @@ Breadcrumbs::for('sitemap', function ($trail) {
 //Home > Produits
 Breadcrumbs::for('list', function ($trail, $elem) {
     $trail->parent('home');
-    $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos'];
+    $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes'];
     $trail->push(str_replace($elem, $elem, $all[$elem]), route($elem.'s.index'));
 });
 
@@ -80,4 +80,23 @@ Breadcrumbs::for('create_selling', function ($trail, $selling, $product) {
 Breadcrumbs::for('edit_selling', function ($trail, $selling, $product) {
     $trail->parent('show', 'product', $product);
     $trail->push('Edition d\'une vente', route('sellings.edit', $selling));
+});
+
+//Home > Mon historique
+Breadcrumbs::for('historic', function ($trail, $kind) {
+    $trail->parent('home');
+    $end_link = $kind === 'purchases' ? "d'achats" : "de ventes";
+    $trail->push('Mon historique '.$end_link, route('user_historic', $kind));
+});
+
+//Home > Mes achats > Nouvel achat groupé
+Breadcrumbs::for('create_group_buy', function ($trail) {
+    $trail->parent('historic', 'purchases');
+    $trail->push('Nouvel achat groupé', route('group_buys.create'));
+});
+
+//Home > Mes achats > Edition d'un achat groupé
+Breadcrumbs::for('edit_group_buy', function ($trail, $group_buy) {
+    $trail->parent('historic', 'purchases');
+    $trail->push('Edition d\'un achat groupé', route('group_buys.edit', $group_buy));
 });
