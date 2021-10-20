@@ -125,6 +125,11 @@ form#fast_search div:first-of-type svg {
     top: 3.3rem;
 }
 
+#submenu_externals {
+    left: 44.5rem;
+    top: 3.3rem;
+}
+
 .submenu.open {
     transform: scaleY(1);
 }

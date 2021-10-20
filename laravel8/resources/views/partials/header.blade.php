@@ -17,6 +17,7 @@
             <x-menu.link href="{{ route('sitemap') }}" active="{{ $path === 'sitemap' }}">{{ __('Sitemap') }}</x-menu.link>
             <x-menu.ext_link href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro">{{ __('Convertisseur $ -> €') }}</x-menu.ext_link>
 
+            <x-menu.submenu id="externals">{{ __('External links') }}</x-menu.submenu>
             <x-menu.ext_link href="http://localhost/phpmyadmin/db_structure.php?server=2&db=api_products_managing">
                 <x-svg.big.db class="inline-flex icon-sm mr-1"/>Base de données
             </x-menu.ext_link>
@@ -63,6 +64,10 @@
         <a href="{{ route('websites.create') }}">{{ __('Website') }}</a>
         <a href="{{ route('states.products.create') }}">{{ __("Product's state") }}</a>
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>
+    </div>
+    <div id="submenu_externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
+        <a href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
+        <a href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
     </div>
     <div id="subicon_bell" class="subicon flex justify-end gap-1">
         @if(auth()->user()->unreadNotifications->isEmpty())
