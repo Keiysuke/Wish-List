@@ -73,31 +73,37 @@ form#fast_search div:first-of-type svg {
 
 /* Icons */
 
-#icon-bell, #icon-msg, #icon-profil {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
   height: 1.5rem;
 }
 
-#icon-bell, #icon-msg, #icon-profil {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));
 }
 
-#icon-bell, #icon-msg, #icon-profil {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
   cursor: pointer;
 }
 
 #icon-bell,
 #icon-msg,
-#icon-profil {
+#icon-profil,
+#icon-sidebar {
   transition: color;
 }
 
-#icon-bell, #icon-msg, #icon-profil {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#icon-bell, #icon-msg, #icon-profil {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
   transition-duration: 300ms;
+}
+
+#icon-sidebar {
+  left: 1rem;
+  position: absolute;
 }
 
 #icon-profil {
@@ -120,6 +126,10 @@ form#fast_search div:first-of-type svg {
 #icon-bell:hover {
   --tw-text-opacity: 1;
   color: rgba(248, 113, 113, var(--tw-text-opacity));
+}
+
+#icon-sidebar:hover {
+  color: #ed8936;
 }
 
 #icon-msg:hover {
@@ -181,6 +191,11 @@ form#fast_search div:first-of-type svg {
 
 #submenu_create {
   left: 26rem;
+  top: 3.3rem;
+}
+
+#submenu_externals {
+  left: 44.5rem;
   top: 3.3rem;
 }
 

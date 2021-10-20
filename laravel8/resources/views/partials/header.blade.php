@@ -1,5 +1,9 @@
 @php($path = Request::path())
 <nav class="flex items-center justify-between flex-wrap fixed w-full z-20 bg-gray-800 py-2 lg:px-12 shadow-xl">
+    <div class="flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+        <x-svg.big.menu id="icon-sidebar"/>
+    </div>
+
     <div class="flex justify-between w-full pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-2 lg:w-auto lg:border-b-0 lg:pb-0">
         <div class="flex items-center flex-shrink-0 text-white mr-16">
             <a href="{{ route('products.index') }}" class="text-white"><span class="font-semibold text-xl tracking-tight">Wish List</span></a>

@@ -58,13 +58,19 @@ form#fast_search div:first-of-type svg {
 /* Icons */
 #icon-bell,
 #icon-msg,
-#icon-profil {
+#icon-profil,
+#icon-sidebar {
     @apply h-6;
     @apply text-gray-400;
     @apply cursor-pointer;
     transition: color;
     @apply ease-in-out;
     @apply duration-300;
+}
+
+#icon-sidebar {
+    @apply left-4;
+    @apply absolute;
 }
 
 #icon-profil {
@@ -85,6 +91,10 @@ form#fast_search div:first-of-type svg {
 
 #icon-bell:hover {
     @apply text-red-400;
+}
+
+#icon-sidebar:hover {
+    color: #ed8936;
 }
 
 #icon-msg:hover {
