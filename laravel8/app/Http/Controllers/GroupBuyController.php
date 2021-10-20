@@ -73,6 +73,7 @@ class GroupBuyController extends Controller
             'label' => $request->label,
             'date' => $request->date,
             'global_cost' => $request->global_cost,
+            'discount' => $request->discount,
             'shipping_fees' => $request->shipping_fees,
         ]);
         $group_buy->save();
@@ -91,6 +92,7 @@ class GroupBuyController extends Controller
                         'website_id' => $offer->website->id,
                         'cost' => $offer->price,
                         'date' => $request->date,
+                        'discount' => empty($request->input('product_bought_discount_'.$i))? 0 : $request->input('product_bought_discount_'.$i),
                         'customs' => $request->input('product_bought_customs_'.$i),
                     ]);
                     $purchase->save();
@@ -113,10 +115,11 @@ class GroupBuyController extends Controller
             'label' => $request->label,
             'date' => $request->date,
             'global_cost' => $request->global_cost,
+            'discount' => $request->discount,
             'shipping_fees' => $request->shipping_fees,])
             ->all()
         );
-
+        
         $purchases_to_link = [];
         for($i = 0; $i < $request->max_product_nb; $i++){
             if($request->has('product_bought_delete_'.$i)) //We delete the purchase from the group buy
@@ -136,6 +139,7 @@ class GroupBuyController extends Controller
                         'website_id' => $offer->website->id,
                         'cost' => $offer->price,
                         'date' => $request->date,
+                        'discount' => $request->input('product_bought_discount_'.$i),
                         'customs' => $request->input('product_bought_customs_'.$i),
                     ]);
                     $purchase->save();
@@ -152,12 +156,17 @@ class GroupBuyController extends Controller
             }
         }
         
+        //If there's no more buy linked, we delete the group buy
+        if(!$group_buy->has_purchases()){
+            $group_buy->delete();
+        }
+        
         $info = __('The group buy has been edited.');
         return redirect()->route('user_historic', 'purchases')->with('info', $info);
     }
     
-    public function destroy(GroupBuy $groupBuy){
-        $groupBuy->delete();
+    public function destroy(GroupBuy $group_buy){
+        $group_buy->delete();
         return redirect()->route('user_historic', 'purchases')->with('info', __('The purchases\' group has been deleted.'));
     }
 }

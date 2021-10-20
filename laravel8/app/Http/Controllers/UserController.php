@@ -30,7 +30,7 @@ class UserController extends Controller
                 $purchases = Purchase::where('user_id', '=', $user_id)
                     ->where('date', '>=', $date_from)
                     ->where('date', '<=', $date_to)
-                    ->doesnthave('group_buy')
+                    ->doesnthave('group_buy_purchases')
                     ->orderBy('date', 'desc')
                     ->get();
                 foreach($purchases as $data){
@@ -47,7 +47,7 @@ class UserController extends Controller
                     $data->kind = 'group_buy';
                     $data->date_used = strtotime($data->date);
                     $data->date_show = __('Purchased on').' '.date('d F Y', $data->date_used);
-                    $data->cost = $data->global_cost + $data->shipping_fees;
+                    $data->cost = $data->global_cost + $data->shipping_fees - $data->discount;
                     $data->purchases = $data->grouped_purchases();
                 }
                 $datas = $purchases->concat($group_buys);

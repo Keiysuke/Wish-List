@@ -5,6 +5,7 @@ use App\Http\Requests\PurchaseRequest;
 use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\Product;
+use App\Models\GroupBuy;
 
 class PurchaseController extends Controller
 {
@@ -76,6 +77,14 @@ class PurchaseController extends Controller
 
     public function destroy(Purchase $purchase){
         $product_id = $purchase->product_id;
+        
+        //Deleting Group_buys that only have that purchase as linked 
+        foreach($purchase->group_buy_purchases()->get() as $group_buy_purchase){
+            if($group_buy_purchase->group_buy()->first()->count_purchases() <= 1){
+                $group_buy_purchase->group_buy()->delete();
+            }
+        }
+
         $purchase->delete();
         return redirect()->route('products.show', $product_id)->with('info', __('The purchase has been deleted.'));
     }
