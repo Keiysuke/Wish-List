@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class GroupBuy extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'label', 'date', 'global_cost', 'shipping_fees'];
+    protected $fillable = ['user_id', 'label', 'date', 'global_cost', 'shipping_fees', 'discount'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -27,6 +27,14 @@ class GroupBuy extends Model
             $purchases_id[] = $p->purchase_id;
         }
         $this->datas = compact('purchases_id');
+    }
+
+    public function has_purchases(){
+        return $this->count_purchases() >= 1;
+    }
+
+    public function count_purchases(){
+        return count($this->group_buy_purchases()->get());
     }
 
     public function grouped_purchases(){ //Return a collection of purchases grouped by product_id and with the number for each of them

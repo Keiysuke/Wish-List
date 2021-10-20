@@ -25,4 +25,11 @@ class GroupBuyRequest extends FormRequest
         }
         return $rules;
     }
+    
+    public function messages()
+    {
+        return [
+            'max_product_nb.min' => 'There must be at least one product.',
+        ];
+    }
 }

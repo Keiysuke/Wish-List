@@ -25,7 +25,7 @@
                         <div class="flex flex-col justify-center h-full px-4">
                             <p><span class="italic">{{ $data->date_show }}</span>
                                 sur <a class="link" href="{{ $data->website->url }}" target="_blank">{{ $data->website->label }}</a> 
-                                pour <span class="text-blue-500 font-bold">{{ $data->cost }} €</span>
+                                pour <span class="text-{{ ($data->discount > 0)? 'green' : 'blue' }}-500 font-bold">{{ $data->cost - $data->discount }} €</span>
                             </p>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                     <div class="flex flex-col w-full border-1 border-b border-gray-100 rounded">
                         <p class="relative flex justify-center items-center mb-2 text-sm font-semibold text-black py-1 border-b border-gray-300 bg-gray-200">
                             <span class="flex inline-flex items-center absolute left-2">
-                                <span class="text-base" title="{{ 'Coût + Fdp : '.$data->global_cost.' + '.$data->shipping_fees }}">{{ $data->cost.' €' }}</span><x-utils.v_line height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
+                                <span class="text-base" title="{{ 'Coût + Fdp - Réduc : '.$data->global_cost.' + '.$data->shipping_fees.' - '.$data->discount }}">{{ $data->cost.' €' }}</span><x-utils.v_line height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
                             </span>
                             <span class="text-lg">{{ is_null($data->label)? __("Group purchase") : $data->label }}</span>
                             <span class="absolute right-2 font-normal italic">
@@ -50,7 +50,7 @@
                                 <div class="flex flex-col items-center relative">
                                     <a href="{{ route('products.show', $purchase->product_id) }}">
                                         <img class="{{ (count($data->purchases) > 1)? 'h-60' : 'h-40' }} transform hover:scale-75 transition ease-in-out duration-200" src="{{ $img }}"/>
-                                        <p class="absolute top-6 left-0 border-l-0 p-2 px-4 bg-{{ ($purchase->cost > 0)? 'red' : 'green' }}-500 text-white font-semibold border-2 border-white">{{ $purchase->nb * $purchase->cost }} €</p>
+                                        <p class="absolute top-6 left-0 border-l-0 p-2 px-4 bg-{{ ($purchase->cost > 0 && !$purchase->discount)? 'red' : 'green' }}-500 text-white font-semibold border-2 border-white">{{ $purchase->nb * ($purchase->cost - $purchase->discount) }} €</p>
                                         @if($purchase->nb > 1)
                                             <p class="absolute top-6 right-0 border-r-0 p-2 px-4 bg-blue-600 text-white font-semibold border-2 border-white">{{ 'x'.$purchase->nb }}</p>
                                         @endif

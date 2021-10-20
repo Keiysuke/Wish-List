@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         \App\Models\Website::create(['label' => 'Amazon', 'url' => 'https://www.amazon.fr/']);
         \App\Models\Website::create(['label' => 'eBay', 'url' => 'https://www.ebay.fr/']);
         \App\Models\Website::create(['label' => 'Cdiscount', 'url' => 'https://www.cdiscount.com/']);

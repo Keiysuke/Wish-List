@@ -50,6 +50,11 @@
             @enderror
         </div>
 
+        <div class="w-1/12 {{ $existing_purchase? 'hidden' : '' }}" id="product_bought_discount_{{ $nb }}">
+            <x-form.label for="product_bought_discount_{{ $nb }}" block>Réduction (€)</x-form.label>
+            <x-form.input name="product_bought_discount_{{ $nb }}" placeholder="0" value="{{ old('product_bought_discount_'.$nb) }}"/>
+        </div>
+
         <div class="w-1/12 {{ $existing_purchase? 'hidden' : '' }}" id="product_bought_customs_{{ $nb }}">
             <x-form.label for="product_bought_customs_{{ $nb }}" block>Douane (€)</x-form.label>
             <x-form.input name="product_bought_customs_{{ $nb }}" placeholder="0" value="{{ old('product_bought_customs_'.$nb) }}"/>

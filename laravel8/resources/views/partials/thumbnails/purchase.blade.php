@@ -9,7 +9,10 @@
     </div>
     <div class="flex flex-col justify-around h-40 py-4">
         <p><span class="font-semibold">Etat :</span> {{ $purchase->productState->label }}</p>
-        <p><span class="font-semibold">Prix :</span> {{ $purchase->cost }} €</p>
+        <p><span class="font-semibold">Prix :</span> {{ $purchase->cost - $purchase->discount }} €</p>
+        @if(!is_null($purchase->discount))
+            <p class="text-sm text-green-400"><span class="font-semibold">Réduction :</span> {{ $purchase->discount }} €</p>
+        @endif
         @if(!is_null($purchase->customs))
             <p class="text-sm text-red-400"><span class="font-semibold">Douane :</span> {{ $purchase->customs }} €</p>
         @endif

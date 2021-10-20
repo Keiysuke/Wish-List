@@ -62,12 +62,14 @@
             document.getElementById('product_bought_purchase_'+nb).classList.remove('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.add('hidden');
             document.getElementById('div_product_bought_nb_'+nb).classList.add('hidden');
+            document.getElementById('product_bought_discount_'+nb).classList.add('hidden');
             document.getElementById('product_bought_customs_'+nb).classList.add('hidden');
         }else{
             document.getElementById('product_bought_existing_'+nb).removeAttribute('checked');
             document.getElementById('product_bought_purchase_'+nb).classList.add('hidden');
             document.getElementById('product_bought_offer_'+nb).classList.remove('hidden');
             document.getElementById('div_product_bought_nb_'+nb).classList.remove('hidden');
+            document.getElementById('product_bought_discount_'+nb).classList.remove('hidden');
             document.getElementById('product_bought_customs_'+nb).classList.remove('hidden');
         }
     }
@@ -108,7 +110,7 @@
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         
         <div class="flex justify-center gap-4 mb-4">
-            <div class="w-3/12">
+            <div class="w-4/12">
                 <x-form.label for="label" block>Nommer l'achat groupé ?</x-form.label>
                 <x-form.input name="label" placeholder="Fête des pères" value="{{ old('label', $group_buy->label) }}"/>
             </div>
@@ -116,9 +118,13 @@
                 <x-form.label for="global_cost" block required>Coût global € (sans les Fdp)</x-form.label>
                 <x-form.input name="global_cost" placeholder="350" value="{{ old('global_cost', $group_buy->global_cost) }}"/>
             </div>
-            <div class="w-2/12">
+            <div class="w-1/12">
                 <x-form.label for="shipping_fees" block required>Frais de port</x-form.label>
                 <x-form.input name="shipping_fees" placeholder="49.99" value="{{ old('shipping_fees', $group_buy->shipping_fees) }}"/>
+            </div>
+            <div class="w-1/12">
+                <x-form.label for="discount" block>Réduction (€)</x-form.label>
+                <x-form.input name="discount" placeholder="0" value="{{ old('discount', $group_buy->discount) }}"/>
             </div>
             <div class="w-2/12">
                 <x-form.label for="date" block required>Date d'achat</x-form.label>
