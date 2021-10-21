@@ -54,21 +54,23 @@
     </div>
 </nav>
 
-<div id="left_sidebar">
-    <div class="icons">
-        <x-svg.big.globe_alt id="icon-globe_alt"/>
-        <x-svg.big.globe id="icon-globe"/>
-    </div>
-    
-    <div id="left_sidebar_websites">
-        <div>
-            Test de contenu
+<div id="left_sidebar_icons">
+    <x-svg.big.star id="icon-star"/>
+    <x-svg.big.globe id="icon-globe"/>
+</div>
+<div id="left_sidebar_websites">
+    <p><x-svg.star class="icon-sm text-yellow-400"/> Mes sites préférés</p>
+    <div id="favorites">
+        <div class="dashed_square">
+            +
         </div>
-        <div>
-            Liste des sites
+        <div class="dashed_square">
         </div>
-        <div>
-            Mon chrono
+        <div class="dashed_square">
+        </div>
+        <div class="dashed_square">
+        </div>
+        <div class="dashed_square">
         </div>
     </div>
 </div>

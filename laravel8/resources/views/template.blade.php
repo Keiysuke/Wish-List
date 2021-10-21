@@ -109,7 +109,8 @@
             }
         }
 
-        document.querySelector('#icon-globe_alt').addEventListener('click', (event) => {
+        document.querySelector('#icon-star').addEventListener('click', (event) => {
+            document.querySelector('#icon-star').classList.toggle('active');
             document.querySelector('#left_sidebar_websites').classList.toggle('open');
         });
 

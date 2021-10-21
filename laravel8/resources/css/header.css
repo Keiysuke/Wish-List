@@ -60,7 +60,7 @@ form#fast_search div:first-of-type svg {
 #icon-msg,
 #icon-profil,
 #icon-sidebar,
-#icon-globe_alt,
+#icon-star,
 #icon-globe {
     @apply h-6;
     @apply text-gray-400;
@@ -96,7 +96,7 @@ form#fast_search div:first-of-type svg {
 }
 
 #icon-sidebar:hover,
-#icon-globe_alt:hover,
+#icon-star:hover,
 #icon-globe:hover {
     color: #ed8936;
 }

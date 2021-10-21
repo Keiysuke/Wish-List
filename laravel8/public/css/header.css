@@ -73,16 +73,16 @@ form#fast_search div:first-of-type svg {
 
 /* Icons */
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-globe {
   height: 1.5rem;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-globe {
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-globe {
   cursor: pointer;
 }
 
@@ -90,16 +90,16 @@ form#fast_search div:first-of-type svg {
 #icon-msg,
 #icon-profil,
 #icon-sidebar,
-#icon-globe_alt,
+#icon-star,
 #icon-globe {
   transition: color;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-globe {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-globe {
   transition-duration: 300ms;
 }
 
@@ -131,7 +131,7 @@ form#fast_search div:first-of-type svg {
 }
 
 #icon-sidebar:hover,
-#icon-globe_alt:hover,
+#icon-star:hover,
 #icon-globe:hover {
   color: #ed8936;
 }
