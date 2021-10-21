@@ -16,7 +16,7 @@ class AddDiscountToGroupBuysTable extends Migration
     public function down()
     {
         Schema::table('group_buys', function (Blueprint $table) {
-            $table->dropForeign(['discount']);
+            $table->dropColumn('discount');
         });
     }
 }

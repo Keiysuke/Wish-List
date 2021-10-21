@@ -16,7 +16,7 @@ class AddDiscountToPurchasesTable extends Migration
     public function down()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            $table->dropForeign(['discount']);
+            $table->dropColumn('discount');
         });
     }
 }

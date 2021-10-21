@@ -26,7 +26,7 @@ class AddCanSellToWebsitesTable extends Migration
     public function down()
     {
         Schema::table('websites', function (Blueprint $table) {
-            $table->dropForeign(['can_sell']);
+            $table->dropColumn('can_sell');
         });
     }
 }
