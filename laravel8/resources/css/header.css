@@ -59,7 +59,9 @@ form#fast_search div:first-of-type svg {
 #icon-bell,
 #icon-msg,
 #icon-profil,
-#icon-sidebar {
+#icon-sidebar,
+#icon-globe_alt,
+#icon-globe {
     @apply h-6;
     @apply text-gray-400;
     @apply cursor-pointer;
@@ -69,7 +71,7 @@ form#fast_search div:first-of-type svg {
 }
 
 #icon-sidebar {
-    @apply left-4;
+    @apply left-3;
     @apply absolute;
 }
 
@@ -93,7 +95,9 @@ form#fast_search div:first-of-type svg {
     @apply text-red-400;
 }
 
-#icon-sidebar:hover {
+#icon-sidebar:hover,
+#icon-globe_alt:hover,
+#icon-globe:hover {
     color: #ed8936;
 }
 

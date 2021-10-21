@@ -53,6 +53,26 @@
         </div>
     </div>
 </nav>
+
+<div id="left_sidebar">
+    <div class="icons">
+        <x-svg.big.globe_alt id="icon-globe_alt"/>
+        <x-svg.big.globe id="icon-globe"/>
+    </div>
+    
+    <div id="left_sidebar_websites">
+        <div>
+            Test de contenu
+        </div>
+        <div>
+            Liste des sites
+        </div>
+        <div>
+            Mon chrono
+        </div>
+    </div>
+</div>
+
 <nav id="submenu">
     <div id="submenu_my_datas" class="submenu" onMouseOver="submenu(true, 'my_datas');" onMouseOut="submenu(false, 'my_datas');">
         <a href="{{ route('my_products') }}">{{ __('My products') }}</a>

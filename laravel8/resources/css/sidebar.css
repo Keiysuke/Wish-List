@@ -1,0 +1,39 @@
+#left_sidebar {
+    z-index: 9;
+    @apply h-full;
+    @apply fixed;
+    @apply top-12;
+    @apply left-0;
+    @apply flex;
+    @apply text-white;
+    @apply pt-1.5;
+}
+
+#left_sidebar .icons {
+    z-index: 10;
+    @apply bg-gray-900;
+    width: 3em;
+    @apply flex;
+    @apply flex-col;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-6;
+    @apply pt-6;
+}
+
+#left_sidebar_websites {
+    @apply bg-gray-700;
+    @apply flex;
+    @apply flex-col;
+    @apply justify-start;
+    @apply items-center;
+    width: 12em;
+    @apply pt-4;
+    transform-origin: 0 0;
+    transition: all 0.5s ease-out;
+    transform: translate(-100%, 0);
+}
+
+#left_sidebar_websites.open {
+    transform: translate(0%, 0);
+}

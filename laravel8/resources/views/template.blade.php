@@ -11,6 +11,7 @@
         <link href="{{ asset('css/custom_app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
     @yield('css')
@@ -107,6 +108,10 @@
                 }
             }
         }
+
+        document.querySelector('#icon-globe_alt').addEventListener('click', (event) => {
+            document.querySelector('#left_sidebar_websites').classList.toggle('open');
+        });
 
         //We stop the propagation of an event for each element that has the class "no-propagate"
         Array.from(document.getElementsByClassName('no-propagate')).forEach(el => { el.addEventListener('click', stopPropagate); });

@@ -73,36 +73,38 @@ form#fast_search div:first-of-type svg {
 
 /* Icons */
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
   height: 1.5rem;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
   --tw-text-opacity: 1;
   color: rgba(156, 163, 175, var(--tw-text-opacity));
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
   cursor: pointer;
 }
 
 #icon-bell,
 #icon-msg,
 #icon-profil,
-#icon-sidebar {
+#icon-sidebar,
+#icon-globe_alt,
+#icon-globe {
   transition: color;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-globe_alt, #icon-globe {
   transition-duration: 300ms;
 }
 
 #icon-sidebar {
-  left: 1rem;
+  left: 0.75rem;
   position: absolute;
 }
 
@@ -128,7 +130,9 @@ form#fast_search div:first-of-type svg {
   color: rgba(248, 113, 113, var(--tw-text-opacity));
 }
 
-#icon-sidebar:hover {
+#icon-sidebar:hover,
+#icon-globe_alt:hover,
+#icon-globe:hover {
   color: #ed8936;
 }
 
@@ -185,17 +189,17 @@ form#fast_search div:first-of-type svg {
 }
 
 #submenu_my_datas {
-  left: 19.5rem;
+  left: 21rem;
   top: 3.3rem;
 }
 
 #submenu_create {
-  left: 26rem;
+  left: 27.5rem;
   top: 3.3rem;
 }
 
 #submenu_externals {
-  left: 44.5rem;
+  left: 46rem;
   top: 3.3rem;
 }
 

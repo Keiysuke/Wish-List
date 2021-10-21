@@ -21005,6 +21005,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/sidebar.css":
+/*!***********************************!*\
+  !*** ./resources/css/sidebar.css ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/pagination.css":
 /*!**************************************!*\
   !*** ./resources/css/pagination.css ***!
@@ -21394,6 +21407,7 @@ process.umask = function() { return 0; };
 /******/ 			["./resources/css/admin.css"],
 /******/ 			["./resources/css/header.css"],
 /******/ 			["./resources/css/footer.css"],
+/******/ 			["./resources/css/sidebar.css"],
 /******/ 			["./resources/css/pagination.css"],
 /******/ 			["./resources/css/products_search.css"],
 /******/ 			["./resources/css/list_products.css"]
