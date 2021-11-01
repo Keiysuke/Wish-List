@@ -34,6 +34,14 @@
                     <x-form.radio name="purchased" value="resold"></x-form.radio>
                     <x-form.label for="resold">Re/vendus</x-form.label>
                 </div>
+                <div class="inline-flex">
+                    <x-form.radio name="purchased" value="discount"></x-form.radio>
+                    <x-form.label for="discount">En réduction</x-form.label>
+                </div>
+                <div class="inline-flex">
+                    <x-form.radio name="purchased" value="free"></x-form.radio>
+                    <x-form.label for="free">Gratuits</x-form.label>
+                </div>
             </div>
         </div>
         <div class="filter_block flex flex-col items-center gap-2">

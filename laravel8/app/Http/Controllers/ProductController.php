@@ -18,7 +18,7 @@ use EloquentBuilder;
 
 class ProductController extends Controller
 {
-    private $nb_page_results = 5;
+    private $nb_page_results = 15;
 
     public function get_picture(Request $request){
         if ($request->ajax()) {
@@ -174,8 +174,16 @@ class ProductController extends Controller
                         $query->whereNull('date_send');
                     });
                     break;
-                    case 'resold': $buildRequest->whereHas('sellings', function($query){
+                case 'resold': $buildRequest->whereHas('sellings', function($query){
                         $query->whereNotNull('date_send');
+                    });
+                    break;
+                case 'discount': $buildRequest->whereHas('purchases', function($query){
+                        $query->where('discount', '>', '0');
+                    });
+                    break;
+                case 'free': $buildRequest->whereHas('purchases', function($query){
+                        $query->whereRaw('cost - discount <= 1');
                     });
                     break;
                 default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
