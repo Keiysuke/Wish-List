@@ -4,12 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use App\Models\Product;
-use App\Models\ProductPhoto;
 use App\Models\Website;
-use App\Models\ProductWebsite;
-use App\Models\Purchase;
-use App\Models\Selling;
+use App\Models\UserWebsite;
 use App\Models\ProductState;
 use App\Models\SellState;
 use App\Models\User;
@@ -23,6 +19,9 @@ class ViewServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        View::composer(['*'], function ($view) {
+            $view->with('user_websites', UserWebsite::where('user_id', '=', \Auth::user()->id)->orderBy('favorite_order')->get());
+        });
         View::composer(['products.websites.create', 'products.websites.edit', 'products.create'], function ($view) {
             $view->with('websites', Website::orderBy('label')->get());
         });

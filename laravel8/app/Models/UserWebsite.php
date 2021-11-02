@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Website;
 
-class GroupBuyPurchase extends Model{
+class UserWebsite extends Model{
     use HasFactory;
     protected $fillable = ['user_id', 'website_id', 'favorite_order'];
 

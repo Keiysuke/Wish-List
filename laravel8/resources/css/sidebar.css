@@ -69,6 +69,7 @@
     @apply flex;
     @apply items-center;
     @apply justify-center;
+    @apply overflow-hidden;
     @apply text-5xl;
     @apply pb-1;
 }

@@ -117,9 +117,9 @@ class ProductController extends Controller
             ]);
             switch($request->sort_by){
                 case 'alpha': $sort_by = 'label';
-                break;
+                    break;
                 case 'price': $sort_by = 'real_cost';
-                break;
+                    break;
                 default: $sort_by = 'created_at';
             }
 

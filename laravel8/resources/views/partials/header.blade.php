@@ -61,16 +61,13 @@
 <div id="left_sidebar_websites">
     <p><x-svg.star class="icon-sm text-yellow-400"/> Mes sites préférés</p>
     <div id="favorites">
+        @foreach($user_websites as $w)
+            <div class="dashed_square">
+                <a href="{{ $w->website->url }}" target="_blank"><img src="{{ asset(config('images.path_websites_icons')).'/'.$w->website->id.'.'.$w->website->icon }}"/></a>
+            </div>
+        @endforeach
         <div class="dashed_square">
             +
-        </div>
-        <div class="dashed_square">
-        </div>
-        <div class="dashed_square">
-        </div>
-        <div class="dashed_square">
-        </div>
-        <div class="dashed_square">
         </div>
     </div>
 </div>
