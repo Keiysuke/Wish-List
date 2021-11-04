@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url('/css/recto_verso.css') }}">
 @endsection
 @section('js')
+<script type="text/javascript" src="{{ URL::asset('js/clipboard.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     window.onload = function(){
@@ -26,7 +27,7 @@
             el.onclick();
         });
     }
-
+    
     function toggle_thumbnail(id){
         document.getElementById('thumbnail_'+id).classList.toggle('mode-recto');
         document.getElementById('thumbnail_'+id).classList.toggle('mode-verso');
@@ -105,6 +106,7 @@
     <x-notification type="success" msg="{{ session('info') }}"/>
     
     <div class="relative flex justify-center border-b-2 mb-4">
+        <x-svg.folder class="absolute left-0 bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
             @if($product->created)
