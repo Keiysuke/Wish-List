@@ -112,6 +112,15 @@
         document.querySelector('#icon-star').addEventListener('click', (event) => {
             document.querySelector('#icon-star').classList.toggle('active');
             document.querySelector('#left_sidebar_websites').classList.toggle('open');
+            document.querySelector('#icon-globe').classList.remove('active');
+            document.querySelector('#left_sidebar_externals').classList.remove('open');
+        });
+
+        document.querySelector('#icon-globe').addEventListener('click', (event) => {
+            document.querySelector('#icon-globe').classList.toggle('active');
+            document.querySelector('#left_sidebar_externals').classList.toggle('open');
+            document.querySelector('#icon-star').classList.remove('active');
+            document.querySelector('#left_sidebar_websites').classList.remove('open');
         });
 
         //We stop the propagation of an event for each element that has the class "no-propagate"
