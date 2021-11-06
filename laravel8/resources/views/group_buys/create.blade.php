@@ -112,11 +112,11 @@
             </div>
             <div class="w-1/12">
                 <x-form.label for="shipping_fees" block required>Frais de port</x-form.label>
-                <x-form.input name="shipping_fees" placeholder="49.99" value="{{ old('shipping_fees') }}"/>
+                <x-form.input name="shipping_fees" placeholder="49.99" value="{{ old('shipping_fees', 0) }}"/>
             </div>
             <div class="w-1/12">
                 <x-form.label for="discount" block>Réduction (€)</x-form.label>
-                <x-form.input name="discount" placeholder="0" value="{{ old('discount') }}"/>
+                <x-form.input name="discount" placeholder="0" value="{{ old('discount', 0) }}"/>
             </div>
             <div class="w-2/12">
                 <x-form.label for="date" block required>Date d'achat</x-form.label>

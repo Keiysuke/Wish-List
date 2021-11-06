@@ -6,6 +6,18 @@
 
 @section('js')
 <script>
+    function updateNbPhotos(add = true, v = -1){ //Change nb_photos in the "select"
+        var nb_photos = document.querySelector('#nb_photos');
+        if(v >= 0 && v <= 9){
+            nb_photos.selectedIndex = v;
+            upload_photos(nb_photos.value);
+        }else{
+            if(add) nb_photos.selectedIndex = ((nb_photos.value >= 10)? 9 : nb_photos.value++);
+            else nb_photos.selectedIndex = ((nb_photos.value <= 1)? 0 : (nb_photos.value - 2));
+            upload_photos(nb_photos.value);
+        }
+    }
+    
     function upload_photos(nb){
         for(var i = 1; i <= 10; i++){
             if(i <= nb){
@@ -40,11 +52,15 @@
         <div class="flex justify-center">
             <div class="w-1/3">
                 <x-form.label for="nb_photos" block>Nombre de photos à lier</x-form.label>
-                <select name="nb_photos" id="nb_photos" value="{{ $nb_photos }}" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent" onChange="upload_photos(this.value)">
-                    @for ($i = 1; $i <= 10; $i++)
-                        <option value="{{ $i }}" @if($nb_photos == $i) selected @endif>{{ $i }}</option>
-                    @endfor
-                </select>
+                <div class="flex gap-2">
+                    <x-svg.minus_circle class="icon-xs icon-clickable" onClick="updateNbPhotos(false);"/>
+                    <select name="nb_photos" id="nb_photos" value="{{ $nb_photos }}" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent" onChange="upload_photos(this.value)">
+                        @for ($i = 1; $i <= 10; $i++)
+                            <option value="{{ $i }}" @if($nb_photos == $i) selected @endif>{{ $i }}</option>
+                        @endfor
+                    </select>
+                    <x-svg.plus_circle class="icon-xs icon-clickable" onClick="updateNbPhotos();"/>
+                </div>
             </div>
         </div>
         <div class="grid grid-cols-5 my-4">
