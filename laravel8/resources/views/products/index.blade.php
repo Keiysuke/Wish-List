@@ -32,6 +32,13 @@
         document.getElementById('title_order_by').title = (order_by === 'asc')? 'Ordre croissant' : 'Ordre décroissant';
         search_products();
     }
+    function toggle_archived(){
+        show = document.getElementById('show_archived');
+        document.getElementById('show_archived').value = (show.value == 0)? 1 : 0;
+        document.getElementById('title_show_archived').title = (show.value == 0)? "{{ __('Show archived') }}" : "{{ __('Hide archived') }}";
+        document.getElementById('icon_show_archived').classList.toggle('active');
+        search_products();
+    }
     function display_result(kind){
         document.getElementById('result_icon_list').classList.toggle('hidden');
         document.getElementById('result_icon_grid').classList.toggle('hidden');
@@ -55,6 +62,7 @@
             sort_by: document.getElementById('sort_by').value,
             order_by: document.getElementById('order_by').value,
             list: document.getElementById('list').value,
+            show_archived: document.getElementById('show_archived').value,
             page: document.getElementById('page').value,
             url: document.getElementById('url').value,
             websites: websites,

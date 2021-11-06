@@ -74,7 +74,7 @@ class ProductController extends Controller
         //Si la mise à jour des notifications n'a pas été faite
         app('App\Http\Controllers\NotificationsController')->checkProductNotifications();
 
-        $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid'];
+        $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid', 'show_archived' => 0];
         $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'f_nb_results' => $this->nb_page_results];
         $search = $request->search;
 
@@ -90,6 +90,7 @@ class ProductController extends Controller
         }
 
         if(!is_null($search)) $buildRequest->where('label', 'like', '%'.$search.'%');
+        $buildRequest->where('archived', '=', $sortBy->show_archived);
         $products = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
         // dd($products);
         // \DB::enableQueryLog();
@@ -110,6 +111,7 @@ class ProductController extends Controller
                 'sort_by' => 'bail|required|string',
                 'order_by' => 'bail|required|string',
                 'list' => 'bail|required|string',
+                'show_archived' => 'bail|required|int',
                 'page' => 'bail|required|int',
                 'stock' => 'bail|required|string',
                 'purchased' => 'bail|required|string',
@@ -211,6 +213,7 @@ class ProductController extends Controller
                     break;
                 default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
             }
+            $buildRequest->where('archived', '=', $request->show_archived);
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
             $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
                         

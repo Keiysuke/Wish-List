@@ -99,3 +99,14 @@ input#search_text, input#search_text:focus {
   outline-offset: 2px;
 }
 
+#icon_show_archived:hover {
+  cursor: pointer;
+  --tw-text-opacity: 1;
+  color: rgba(180, 83, 9, var(--tw-text-opacity));
+}
+
+#icon_show_archived.active {
+  --tw-text-opacity: 1;
+  color: rgba(180, 83, 9, var(--tw-text-opacity));
+}
+

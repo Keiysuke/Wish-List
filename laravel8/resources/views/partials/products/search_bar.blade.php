@@ -24,6 +24,11 @@
         <x-svg.filter onClick="toggle_filters();" class="icon-xs icon-clickable mx-3"/>
     </div>
     
+    <div class="flex justify-center items-center border-l-2" id="title_show_archived" title="{{ !$sortBy->show_archived ? __('Show archived') : __('Hide archived') }}">
+        <input type="hidden" name="show_archived" id="show_archived" value="{{ $sortBy->show_archived }}"/>
+        <x-svg.archive id="icon_show_archived" onClick="toggle_archived();" class="icon-sm mx-3 pt-1"/>
+    </div>
+    
     <div id="icon_list" class="flex justify-center items-center border-l-2" title="{{ __('Grid') }}">
         <input type="hidden" name="list" id="list" value="{{ $sortBy->list }}"/>
         <x-svg.grid title="{{ __('Grid') }}" id="result_icon_grid" onClick="display_result('grid');" class="icon-xs icon-clickable mx-3 hidden"/>

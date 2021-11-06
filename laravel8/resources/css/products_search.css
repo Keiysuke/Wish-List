@@ -85,3 +85,12 @@ input#search_text:focus {
     @apply border-none;
     @apply outline-none;
 }
+
+#icon_show_archived:hover {
+    @apply cursor-pointer;
+    @apply text-yellow-700;
+}
+
+#icon_show_archived.active {
+    @apply text-yellow-700;
+}
