@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+@php($dir = config('images.path_products').'/'.$selling->product_id.'/')
 <x-notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
@@ -12,7 +13,10 @@
         @csrf
         @method('put')
         <div class="relative flex">
-            <h1>Edition d'une vente</h1>
+            <div class="flex align-start gap-1">
+                <x-svg.big.truck class="w-7"/>
+                <h1>Edition d'une vente</h1>
+            </div>
             <div class="absolute right-0 bottom-0">
                 <a href="{{ route('sellings.destroy', $selling->id) }}" title="Supprimer la vente" class="title-icon heart cursor-pointer inline-flex" onClick="return confirm('Supprimer la vente ?');">
                     <x-svg.trash class="icon-xs"/>
@@ -23,10 +27,15 @@
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
-            <div class="w-1/2">
-                <x-form.label for="product_id" block required>Produit à vendre</x-form.label>
-                <div class="p-2">{{ $selling->product->label }}</div>
-                <input type="hidden" name="product_id" id="product_id" value="{{ $selling->product_id }}"/>
+            <div class="flex gap-4 w-1/2">
+                <div class="w-1/10">
+                    <img src="{{ asset($dir.$selling->product->photos->firstWhere('ordered', 1)->label) }}" class="h-20"/>
+                </div>
+                <div class="w-9/10">
+                    <x-form.label for="product_id" block required>Produit à vendre</x-form.label>
+                    <div class="p-2">{{ $selling->product->label }}</div>
+                    <input type="hidden" name="product_id" id="product_id" value="{{ $selling->product_id }}"/>
+                </div>
             </div>
             <div class="grid grid-cols-2 gap-4 w-1/2">
                 <div>

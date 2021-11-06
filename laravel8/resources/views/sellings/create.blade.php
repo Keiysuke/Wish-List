@@ -5,21 +5,30 @@
 @endsection
 
 @section('content')
+@php($dir = config('images.path_products').'/'.$purchase->product_id.'/')
 <x-notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('sellings.store') }}" method="POST">
         @csrf
-        <h1>Nouvelle vente</h1>
+        <div class="flex align-start gap-1">
+            <x-svg.big.truck class="w-7"/>
+            <h1>Nouvelle vente</h1>
+        </div>
         <hr/>
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
-            <div class="w-1/2">
-                <x-form.label for="product_id" block required>Produit à vendre</x-form.label>
-                <div class="p-2">{{ $purchase->product->label }}</div>
-                <input type="hidden" name="purchase_id" id="purchase_id" value="{{ $purchase->id }}"/>
-                <input type="hidden" name="product_id" id="product_id" value="{{ $purchase->product_id }}"/>
+            <div class="flex gap-4 w-1/2">
+                <div class="w-1/10">
+                    <img src="{{ asset($dir.$purchase->product->photos->firstWhere('ordered', 1)->label) }}" class="h-20"/>
+                </div>
+                <div class="w-9/10">
+                    <x-form.label for="product_id" block required>Produit à vendre</x-form.label>
+                    <div class="p-2">{{ $purchase->product->label }}</div>
+                    <input type="hidden" name="purchase_id" id="purchase_id" value="{{ $purchase->id }}"/>
+                    <input type="hidden" name="product_id" id="product_id" value="{{ $purchase->product_id }}"/>
+                </div>
             </div>
             <div class="grid grid-cols-2 gap-4 w-1/2">
                 <div>

@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+@php($dir = config('images.path_products').'/'.$purchase->product_id.'/')
 <x-notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
@@ -12,7 +13,10 @@
         @csrf
         @method('put')
         <div class="relative flex">
-            <h1>Edition d'un achat</h1>
+            <div class="flex align-start gap-1">
+                <x-svg.big.cart class="w-7"/>
+                <h1>Edition d'un achat</h1>
+            </div>
             <div class="absolute right-0 bottom-0">
                 <a href="{{ route('purchases.destroy', $purchase->id) }}" title="Supprimer l'achat" class="title-icon heart cursor-pointer inline-flex" onClick="return confirm('Supprimer l\'achat ?');">
                     <x-svg.trash class="icon-xs"/>
@@ -23,9 +27,14 @@
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex justify-between gap-4 mb-4">
-            <div class="w-2/5">
-                <x-form.label for="product_id" block>Produit acheté</x-form.label>
-                <div class="pl-2 pt-2">{{ $purchase->product->label }}</div>
+            <div class="flex gap-4 w-2/5">
+                <div class="w-1/10">
+                    <img src="{{ asset($dir.$purchase->product->photos->firstWhere('ordered', 1)->label) }}" class="h-20"/>
+                </div>
+                <div class="w-9/10">
+                    <x-form.label for="product_id" block>Produit acheté</x-form.label>
+                    <div class="pl-2 pt-2">{{ $purchase->product->label }}</div>
+                </div>
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-2/3">
