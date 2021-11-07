@@ -32,6 +32,7 @@ Route::post('user/historic', [UserController::class, 'filter_historic'])->name('
 Route::get('user/historic/{kind}', [UserController::class, 'historic'])->name('user_historic');
 
 Route::post('products/follow', [ProductController::class, 'follow'])->name('follow_product');
+Route::post('products/archive', [ProductController::class, 'archive'])->name('archive_product');
 Route::get('products/filter', [ProductController::class, 'index'])->name('products_search');
 Route::post('products/filter', [ProductController::class, 'filter'])->name('products_search');
 Route::post('products/bookmark', [ProductController::class, 'bookmark'])->name('product_bookmark');

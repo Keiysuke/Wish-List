@@ -125,6 +125,21 @@ a.link:hover {
   background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 
+.title-icon.archive.on {
+  --tw-text-opacity: 1;
+  color: rgba(180, 83, 9, var(--tw-text-opacity));
+}
+
+.title-icon.archive.on:hover {
+  --tw-text-opacity: 1;
+  color: rgba(245, 158, 11, var(--tw-text-opacity));
+}
+
+.title-icon.archive:hover {
+  --tw-text-opacity: 1;
+  color: rgba(180, 83, 9, var(--tw-text-opacity));
+}
+
 li.li_website.expired {
   text-decoration: line-through;
 }

@@ -110,6 +110,18 @@ a.link:hover {
     @apply bg-red-500;
 }
 
+.title-icon.archive.on {
+    @apply text-yellow-700;
+}
+
+.title-icon.archive.on:hover {
+    @apply text-yellow-500;
+}
+
+.title-icon.archive:hover {
+    @apply text-yellow-700;
+}
+
 li.li_website.expired {
     text-decoration: line-through;
 }

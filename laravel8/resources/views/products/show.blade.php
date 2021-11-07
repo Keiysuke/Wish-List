@@ -77,9 +77,19 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(res => {
-            document.querySelector('#follow_product').setAttribute('title', 'Suivre');
-            document.querySelector('#follow_product').setAttribute('title', 'Ne plus suivre');
+            document.querySelector('#follow_product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
             document.querySelector('#follow_product').classList.toggle('on');
+        });
+    });
+
+    document.querySelector('#archive_product').addEventListener('click', () => {
+        my_fetch('{{ route('archive_product') }}', {method: 'post', csrf: true}, {
+            id: document.getElementById('product_id').value
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            document.querySelector('#archive_product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
+            document.querySelector('#archive_product').classList.toggle('on');
         });
     });
 
@@ -122,6 +132,9 @@
             </span>
             <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow_product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.heart class="icon-xs"/>
+            </span>
+            <span title="{{ $product->archived? 'Retirer des archives' : 'Archiver le produit' }}" id="archive_product" class="title-icon archive {{ $product->archived? 'on' : '' }} cursor-pointer inline-flex">
+                <x-svg.archive class="icon-xs"/>
             </span>
         </div>
     </div>

@@ -232,9 +232,18 @@ class ProductController extends Controller
     function follow(Request $request){
         if ($request->ajax()) {
             $this->validate($request, ['id' => 'bail|required|int']);
-            
             User::find(auth()->user()->id)->products()->toggle($request->id);
             return response()->json(['success' => true, 'product' => ['follow' => $user->products()->find($request->id)]]);
+        }
+    }
+
+    function archive(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['id' => 'bail|required|int']);
+            $product = Product::find($request->id);
+            $product->archived = !$product->archived;
+            $product->save();
+            return response()->json(['success' => true, 'product' => ['archived' => $product->archived]]);
         }
     }
 
