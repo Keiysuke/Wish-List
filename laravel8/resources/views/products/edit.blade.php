@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <x-form.label for="description" block required>Description</x-form.label>
+            <x-form.label for="description" block>Description</x-form.label>
             <x-form.textarea name="description">{{ old('description', $product->description) }}</x-form.textarea>
         </div>
         <div class="flex items-center justify-between">

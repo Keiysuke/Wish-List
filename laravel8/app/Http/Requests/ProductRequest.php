@@ -13,7 +13,7 @@ class ProductRequest extends FormRequest
     public function rules(){
         $rules = [
             'label' => 'string|required|max:100',
-            'description' => 'string|required|max:1000',
+            'description' => 'string|nullable|max:1000',
             'limited_edition' => 'nullable|digits_between:1,5',
             'real_cost' => 'required',
         ];

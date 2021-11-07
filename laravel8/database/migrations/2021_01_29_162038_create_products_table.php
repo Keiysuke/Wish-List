@@ -12,7 +12,7 @@ class CreateProductsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->longText('label');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->integer('limited_edition')->nullable();
             $table->decimal('real_cost', $precision = 10, $scale = 2);
             $table->timestamps();

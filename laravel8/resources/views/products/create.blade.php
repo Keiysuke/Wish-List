@@ -61,7 +61,7 @@
             </div>
         </div>
         <div class="my-4">
-            <x-form.label for="description" block required>Description</x-form.label>
+            <x-form.label for="description" block>Description</x-form.label>
             <x-form.textarea name="description">{{ old('description') }}</x-form.textarea>
         </div>
         
