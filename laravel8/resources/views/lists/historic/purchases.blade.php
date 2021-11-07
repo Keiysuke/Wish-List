@@ -49,7 +49,7 @@
                             <div class="flex justify-center gap-4 border-1 border-gray-300" id="purchase_{{ $purchase->id }}">
                                 <div class="flex flex-col items-center relative">
                                     <a href="{{ route('products.show', $purchase->product_id) }}">
-                                        <img class="{{ (count($data->purchases) > 1)? 'h-60' : 'h-40' }} transform hover:scale-75 transition ease-in-out duration-200" src="{{ $img }}"/>
+                                        <img class="{{ (count($data->purchases) > 1)? 'h-52' : 'h-40' }} transform hover:scale-75 transition ease-in-out duration-200" src="{{ $img }}"/>
                                         <p class="absolute top-6 left-0 border-l-0 p-2 px-4 bg-{{ ($purchase->cost > 0 && !$purchase->discount)? 'red' : 'green' }}-500 text-white font-semibold border-2 border-white">{{ $purchase->nb * ($purchase->cost - $purchase->discount) }} €</p>
                                         @if($purchase->nb > 1)
                                             <p class="absolute top-6 right-0 border-r-0 p-2 px-4 bg-blue-600 text-white font-semibold border-2 border-white">{{ 'x'.$purchase->nb }}</p>

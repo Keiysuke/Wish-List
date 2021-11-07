@@ -106,10 +106,10 @@
                 <x-form.label for="label" block>Nommer l'achat groupé ?</x-form.label>
                 <x-form.input name="label" placeholder="Fête des pères" value="{{ old('label') }}"/>
             </div>
-            <div class="w-2/12">
+            {{-- <div class="w-2/12">
                 <x-form.label for="global_cost" block required>Coût global € (sans les Fdp)</x-form.label>
                 <x-form.input name="global_cost" placeholder="350" value="{{ old('global_cost') }}"/>
-            </div>
+            </div> --}}
             <div class="w-1/12">
                 <x-form.label for="shipping_fees" block required>Frais de port</x-form.label>
                 <x-form.input name="shipping_fees" placeholder="49.99" value="{{ old('shipping_fees', 0) }}"/>

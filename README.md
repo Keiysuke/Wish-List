@@ -6,9 +6,9 @@ This website will help you recover all the purchases/and sells you made with tim
 As it's not automatically adding products/purchases from other websites, you'll have to add the products and other datas by yourself.
 
 New functionalities :
-- Update/Delete your grouped purchases - Plus you can delete selected purchase from a "grouped purchase" when editing one.
-- You can now filter on an entered period when visualizing your historic of purchases/sellings.
-- You can now set a customs price for any of your purchase.
+- Left Sidebar is now available with the list of your favorites websites
+- New filter for your products on "Discount", or "Free" (price was <= 1€)
+- Possibility to archive your products & filter on archived/non archived products
 
 Here are the current functionnalities (see upside for last ones) :
 - Register/Log in website
@@ -19,11 +19,15 @@ Here are the current functionnalities (see upside for last ones) :
 - Manage datas with the Dashboard - Add new websites / product states / sell states
 - Follow a product created by other users and link purchases/sells - You can't edit that kind of product
 - Follow a product and be notified when some of its offers are soon available/expired (from 3 to 0 days before).
-Last ones were : 
 - Create your own lists (wish, purchases) and add products (multiple copy if needed) - Global cost for all the products is visible from a list.
 - You have to go on a product to add it to a previously created list.
 - You purchased multiple products at once ? - Create a grouped purchase, link each purchase (previously or automatically created) for each product.
 - Go to "My products / My purchases" - You'll have a look of all your previous purchases/sells - Grouped purchases have a slightly different look.
+
+Last ones were : 
+- Update/Delete your grouped purchases - Plus you can delete selected purchase from a "grouped purchase" when editing one.
+- You can now filter on an entered period when visualizing your historic of purchases/sellings.
+- You can now set a customs price for any of your purchase.
 
 And more :
 - Add up to 10 pictures on a product. Zoom on them.
@@ -31,6 +35,7 @@ And more :
 - See all products on Home page and filter or search by text to see only what you're looking for.
 - Pagination available on Home page with at least 16 products.
 - Get notified when a product's offer will soon expire/be available.
+- Empty "grouped purchase" are automatically deleted
 
 In future
 - Notification for sells informations maybe too.

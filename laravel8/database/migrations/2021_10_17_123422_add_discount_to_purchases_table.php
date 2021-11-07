@@ -9,7 +9,7 @@ class AddDiscountToPurchasesTable extends Migration
     public function up()
     {
         Schema::table('purchases', function (Blueprint $table) {
-            $table->tinyInteger('discount')->after('cost')->default('0');
+            $table->decimal('discount', $precision = 10, $scale = 2)->after('cost')->default('0');
         });
     }
 

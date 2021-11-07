@@ -9,7 +9,9 @@
             </x-form.label>
         </div>
         <div class="flex justify-center w-1/12">
-            <img id="product_bought_img_{{ $nb }}" class="h-20" src="{{ asset(config('images.path_products').'/'.$first->id.'/'.$first->photos()->first()->label) }}"/>
+            <a href="{{ route('products.show', $first->id) }}" target="_blank">
+                <img id="product_bought_img_{{ $nb }}" class="h-20" src="{{ asset(config('images.path_products').'/'.$first->id.'/'.$first->photos()->first()->label) }}"/>
+            </a>
         </div>
         <div class="w-6/12">
             <x-form.label for="product_bought_id_{{ $nb }}" block required class="relative">

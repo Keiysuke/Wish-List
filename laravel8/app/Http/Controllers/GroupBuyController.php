@@ -72,16 +72,19 @@ class GroupBuyController extends Controller
             'user_id' => $request->user_id,
             'label' => $request->label,
             'date' => $request->date,
-            'global_cost' => $request->global_cost,
+            'global_cost' => 0,
             'discount' => $request->discount,
             'shipping_fees' => $request->shipping_fees,
         ]);
         $group_buy->save();
         
-        for($i = 0; $i < $request->max_product_nb; $i++){
-            if($request->has('product_bought_existing_'.$i)){
+        for($i = 0; $i < $request->max_product_nb; $i++){ //We loop on all the products
+            if($request->has('product_bought_existing_'.$i)){ //An existing purchase was selected
                 $this->link_purchase($group_buy->id, $request->input('product_bought_purchase_id_'.$i));
-            }else{
+                $p = Purchase::find($request->input('product_bought_purchase_id_'.$i));
+                $group_buy->global_cost += ($p->cost - $p->discount);
+
+            }else{ //An existing offer was selected
                 for($j = 0; $j < $request->input('product_bought_nb_'.$i); $j++){
                     //On récupère l'offre choisie
                     $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
@@ -97,9 +100,12 @@ class GroupBuyController extends Controller
                     ]);
                     $purchase->save();
                     $this->link_purchase($group_buy->id, $purchase->id);
+                    
+                    $group_buy->global_cost += ($purchase->price - $purchase->discount);
                 }
             }
         }
+        $group_buy->save();
         
         $info = __('The group buy has been created.');
         return redirect()->route('user_historic', 'purchases')->with('info', $info);
@@ -114,7 +120,7 @@ class GroupBuyController extends Controller
         $group_buy->update($request->merge([
             'label' => $request->label,
             'date' => $request->date,
-            'global_cost' => $request->global_cost,
+            'global_cost' => 0,
             'discount' => $request->discount,
             'shipping_fees' => $request->shipping_fees,])
             ->all()
@@ -128,6 +134,8 @@ class GroupBuyController extends Controller
             if($request->has('product_bought_existing_'.$i)){
                 $this->link_purchase($group_buy->id, $request->input('product_bought_purchase_id_'.$i));
                 $purchases_to_link[] = $group_buy->id.'_'.$request->input('product_bought_purchase_id_'.$i);
+                $p = Purchase::find($request->input('product_bought_purchase_id_'.$i));
+                $group_buy->global_cost += ($p->cost - $p->discount);
             }else{
                 for($j = 0; $j < $request->input('product_bought_nb_'.$i); $j++){
                     //On récupère l'offre choisie
@@ -145,8 +153,11 @@ class GroupBuyController extends Controller
                     $purchase->save();
                     $this->link_purchase($group_buy->id, $purchase->id);
                     $purchases_to_link[] = $group_buy->id.'_'.$purchase->id;
+
+                    $group_buy->global_cost += ($purchase->price - $purchase->discount);
                 }
             }
+            $group_buy->save();
         }
 
         //We delete the previous linked purchases that has been edited/replaced

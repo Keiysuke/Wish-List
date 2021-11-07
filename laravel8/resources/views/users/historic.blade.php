@@ -35,7 +35,7 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
-            document.getElementById('content_results').innerHTML = results.html;
+            document.getElementById('content_results').innerHTML = results.html; //lists/historic/purchases
             document.querySelector('#btn-go-up').click();
         });
     }

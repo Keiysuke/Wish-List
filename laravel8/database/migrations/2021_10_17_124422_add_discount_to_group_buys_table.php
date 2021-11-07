@@ -9,7 +9,7 @@ class AddDiscountToGroupBuysTable extends Migration
     public function up()
     {
         Schema::table('group_buys', function (Blueprint $table) {
-            $table->tinyInteger('discount')->after('global_cost')->default('0');
+            $table->decimal('discount', $precision = 10, $scale = 2)->after('global_cost')->default('0');
         });
     }
 

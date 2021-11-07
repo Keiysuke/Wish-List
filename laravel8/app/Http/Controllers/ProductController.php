@@ -15,6 +15,7 @@ use App\Models\ListingProduct;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -81,11 +82,11 @@ class ProductController extends Controller
         $buildRequest = Product::query();
         if($request->path() === 'products/user'){
             $buildRequest->whereHas('users', function($query){
-                $query->where('user_id', '=', \Auth::user()->id);
+                $query->where('user_id', '=', Auth::user()->id);
             });
         }else{
             $buildRequest->whereHas('users', function($query){
-                $query->where('user_id', '<>', \Auth::user()->id);
+                $query->where('user_id', '<>', Auth::user()->id);
             });
         }
 
@@ -135,12 +136,12 @@ class ProductController extends Controller
 
             if($request->url === 'products/user'){
                 $buildRequest->whereHas('users', function($query){
-                    $query->where('user_id', '=', \Auth::user()->id);
+                    $query->where('user_id', '=', Auth::user()->id);
                 });
             }else{
                 $buildRequest->whereHas('users', function($query){
                     $query->whereNotIn('product_id', function($query){
-                        $query->select('product_id')->from('product_users')->where('user_id', '=', \Auth::user()->id);
+                        $query->select('product_id')->from('product_users')->where('user_id', '=', Auth::user()->id);
                     });
                 })->orWheredoesntHave('users');
             }
@@ -232,7 +233,8 @@ class ProductController extends Controller
     function follow(Request $request){
         if ($request->ajax()) {
             $this->validate($request, ['id' => 'bail|required|int']);
-            User::find(auth()->user()->id)->products()->toggle($request->id);
+            $user = User::find(auth()->user()->id);
+            $user->products()->toggle($request->id);
             return response()->json(['success' => true, 'product' => ['follow' => $user->products()->find($request->id)]]);
         }
     }

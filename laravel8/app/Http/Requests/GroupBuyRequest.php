@@ -14,7 +14,6 @@ class GroupBuyRequest extends FormRequest
             'user_id' => 'int|required',
             'label' => 'string|nullable|max:100',
             'date' => 'date|required',
-            'global_cost' => 'required',
             'shipping_fees' => 'required',
             'max_product_nb' => 'int|required|min:1',
         ];
