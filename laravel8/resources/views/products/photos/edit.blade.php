@@ -72,7 +72,7 @@
                             <x-svg.big.picture class="icon"/>
                             <label class="custom-file-label cursor-pointer" for="photo_{{ $i }}" data-browse="Parcourir">{{ (count($photos) >= $i)? 'Changer l\'image' : 'Choisissez une image' }}</label>
                         </div>
-                        <label for="photo_{{ $i }}" class="cursor-pointer"><img id="img_{{ $i }}" class="border w-40" src="{{ (count($photos) >= $i)? asset($dir.$photos->firstWhere('ordered', $i)->label) : 'https://place-hold.it/160x120' }}"/></label>
+                        <label for="photo_{{ $i }}" class="cursor-pointer"><img id="img_{{ $i }}" class="border max-w-40 max-h-52" src="{{ (count($photos) >= $i)? asset($dir.$photos->firstWhere('ordered', $i)->label) : 'https://place-hold.it/160x120' }}"/></label>
                         @if(count($photos) >= $i && $i > 1)
                             <div class="inline-flex items-center gap-1">
                                 <input type="checkbox" name="del_photo_{{ $i }}" id="del_photo_{{ $i }}" {{ old('del_photo_'.$i) === 'on' ? 'checked' : '' }}/>

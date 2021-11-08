@@ -29,16 +29,18 @@
 
     function get_products(event){ //Ajoute un nouveau produit sélectionnable pour l'achat groupé
         event.preventDefault();
-        my_fetch('{{ route('group_buys.get_products') }}', {method: 'post', csrf: true}, {
-            nb: document.querySelector('#max_product_nb').value++,
-            user_id: document.querySelector('#user_id').value,
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
-            document.getElementById('all_products_bought').innerHTML += res.html;
-        }).then(() => {
-            setListeners();
-        });
+        for(let i = 0; i < document.querySelector('#nb_add_product').value; i++){
+            my_fetch('{{ route('group_buys.get_products') }}', {method: 'post', csrf: true}, {
+                nb: document.querySelector('#max_product_nb').value++,
+                user_id: document.querySelector('#user_id').value,
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(res => {
+                document.getElementById('all_products_bought').innerHTML += res.html;
+            }).then(() => {
+                setListeners();
+            });
+        }
     }
     
     function handle_product_change(event){ //Met à jour l'affichage lorsque l'on sélectionne un produit dans la liste
@@ -153,7 +155,14 @@
             @endfor
         </div>
 
-        <x-form.btn_plus id="add_product">Lier un produit</x-form.btn_plus>
+        <div class="flex gap-4 items-center mb-4">
+            <select name="nb_add_product" id="nb_add_product" class="pl-2 h-10 block rounded-md bg-gray-100 border-transparent">
+                @for($i = 1; $i <= 10; $i++)
+                    <option value="{{ $i }}">{{ $i }}</option>
+                @endfor
+            </select>
+            <x-form.btn_plus id="add_product" mb="0">Lier un produit</x-form.btn_plus>
+        </div>
 
         <div class="flex items-center justify-between">
             <x-form.btn type="submit">Editer l'achat groupé</x-form.btn>
