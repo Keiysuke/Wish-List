@@ -285,6 +285,8 @@ class ProductController extends Controller
                 'product_state_id' => $request->product_state_id,
                 'website_id' => $request->website_id,
                 'cost' => str_replace(',', '.', $request->cost),
+                'discount' => str_replace(',', '.', $request->discount),
+                'customs' => str_replace(',', '.', $request->customs),
                 'date' => $request->date,
             ]);
             $purchase->save();

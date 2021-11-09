@@ -53,7 +53,7 @@
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         <label class="custom-file-label cursor-pointer" for="photo_1" data-browse="Parcourir">Choisissez une image <span class="required">*</span></label>
                     </div>
-                    <label for="photo_1" class="cursor-pointer"><img id="img" class="border w-20" src="https://place-hold.it/80x60"/></label>
+                    <label for="photo_1" class="cursor-pointer"><img id="img" class="border max-w-20 max-h-32" src="https://place-hold.it/80x60"/></label>
                     @error('photo_1')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -107,23 +107,33 @@
             <hr class="border-red-500"/>
             
             <div class="flex gap-4 mb-4">
-                <div class="w-1/2">
-                    <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
-                    <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
-                        @foreach($product_states as $product_state)
-                            <option value="{{ $product_state->id }}" @if(old('product_state_id') == $product_state->id) selected @endif>{{ $product_state->label }}</option>
-                        @endforeach
-                    </select>
-                    @error('product_state_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
                 <div class="flex justify-around gap-4 w-1/2">
+                    <div class="w-1/2">
+                        <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
+                        <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                            @foreach($product_states as $product_state)
+                                <option value="{{ $product_state->id }}" @if(old('product_state_id') == $product_state->id) selected @endif>{{ $product_state->label }}</option>
+                            @endforeach
+                        </select>
+                        @error('product_state_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="w-1/2">
                         <x-form.label for="cost" block required>Coût (€)</x-form.label>
                         <x-form.input name="cost" type="text" placeholder="Ce produit m'a coûté..." value="{{ old('cost') }}"/>
                     </div>
-                    <div class="w-1/2">
+                </div>
+                <div class="flex justify-around gap-4 w-1/2">
+                    <div class="w-1/4">
+                        <x-form.label for="discount" block required>Réduction (€)</x-form.label>
+                        <x-form.input name="discount" type="text" placeholder="0" value="{{ old('discount', 0) }}"/>
+                    </div>
+                    <div class="w-1/4">
+                        <x-form.label for="customs" block required>Douane (€)</x-form.label>
+                        <x-form.input name="customs" type="text" placeholder="0" value="{{ old('customs', 0) }}"/>
+                    </div>
+                    <div class="w-2/4">
                         <x-form.label for="date" block required>Date d'achat</x-form.label>
                         <x-form.date name="date" type="date" value="{{ old('date') }}"/>
                     </div>
