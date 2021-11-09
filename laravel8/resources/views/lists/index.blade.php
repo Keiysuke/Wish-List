@@ -11,10 +11,30 @@
 @section('css')
     <link href="{{ asset('css/list_products.css') }}" rel="stylesheet">
 @endsection
-
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script type="text/javascript">
+    function toggle_filters(){
+        document.querySelector('#content_filters').classList.toggle('hidden');
+    }
+
+    Array.from(document.getElementsByClassName('delete_list')).forEach(e => {
+        e.addEventListener('click', (e) => {
+            console.log(e.target)
+            my_fetch('{{ route('destroy_list') }}', {method: 'post', csrf: true}, {
+                id: e.target.dataset.list_id
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(res => {
+                document.querySelector("#list_"+res.deleted_id).remove();
+                if(res.list_id > 0) document.onload = get_products(res.list_id); //There's still one other list
+                else{ //No more list for the user
+                    document.querySelector("#my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
+                }
+            });
+        });
+    });
+
     function toggle_list(list_id, product_id){
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
             list_id: list_id,
@@ -38,14 +58,14 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(products => {
-            if(document.querySelector('#list_selected').value != '')
+            if(document.querySelector('#list_selected').value != '' && document.querySelector('#list_'+document.querySelector('#list_selected').value) != undefined)
                 document.querySelector('#list_'+document.querySelector('#list_selected').value).classList.toggle('selected');
             document.querySelector('#list_selected').value = list_id;
             document.querySelector('#list_'+list_id).classList.toggle('selected');
-            document.getElementById('content_results').innerHTML = products.html;
+            document.querySelector('#content_results').innerHTML = products.html;
         });
     }
-    document.onload = get_products({{ $lists->first()->id }});
+    document.onload = get_products({{ empty($lists->first())? 0 : $lists->first()->id }});
 </script>
 @endsection
 
@@ -63,8 +83,17 @@
                 <a title="Nouvelle liste" href="{{ route('lists.create') }}" class="title-icon inline-flex">
                     <x-svg.plus class="icon-xs"/>
                 </a>
+                <span onClick="toggle_filters();">
+                    <span class="title-icon cursor-pointer inline-flex">
+                        <x-svg.filter class="icon-xs"/>
+                    </span>
+                </span>
             </div>
         </div>
+
+        <form id="filter_historic">
+            @include("partials.lists.filter")
+        </form>
         
         <input id="list_selected" type="hidden" value=""/>
         <div id="my_lists" class="flex justify-center h-full gap-2 divide-x-2 mt-4">
@@ -77,14 +106,15 @@
                             <div class="flex w-full justify-between hover:text-red-500 hover:underline" onClick="get_products({{ $list->id }});">
                                 <span class="inline-flex">{{ $list->label }}
                                     @if($list->secret)
-                                        <x-svg.big.gift class="icon-xs ml-1"/>
+                                        <x-svg.big.gift class="icon-xs ml-1 text-red-400"/>
                                     @endif
                                 </span>
-                                <span class="font-light">{{ count($list->users) > 0 ? 'Partagée' : 'Privée' }}</span>
+                                <span class="font-light">{{ !$list->users? 'Partagée' : 'Privée' }}</span>
                             </div>
                             <a title="Editer la liste" href="{{ route('lists.edit', $list->id) }}">
                                 <x-svg.edit class="icon-xs icon-clickable"/>
                             </a>
+                            <x-svg.trash title="Supprimer la liste ?" class="delete_list icon-xs icon-clickable hover:text-red-600" data-list_id="{{ $list->id }}"/>
                         </div>
                     @endforeach
                 </div>

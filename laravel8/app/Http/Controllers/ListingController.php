@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use App\Models\ListingProduct;
+use App\Models\ListingUser;
 use App\Models\User;
 use App\Http\Requests\ListingRequest;
 use Illuminate\Http\Request;
@@ -90,9 +91,20 @@ class ListingController extends Controller
         return redirect()->route('lists.index')->with('info', __('The list has been edited.'));
     }
 
-    public function destroy(Listing $list){
-        //Suppression des associations aux produits de la liste
-
-        //Suppression des associations aux utilisateurs ayant accès à la liste
+    public function destroy(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['id' => 'bail|required|int']);
+            $list = Listing::find($request->id);
+            foreach($list->products as $product){ //Suppression des associations aux produits de la liste
+                ListingProduct::where('listing_id', '=', $list->id)->where('product_id', '=', $product->id)->delete();
+            }
+            foreach($list->users as $user){ //Suppression des associations aux utilisateurs ayant accès à la liste
+                ListingUser::where('listing_id', '=', $list->id)->where('user_id', '=', $user->id)->delete();
+            }
+            $list->delete();
+            $first_list = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
+            $list_id = is_null($first_list)? -1 : $first_list->id;
+            return response()->json(['success' => true, 'deleted_id' => $request->id, 'list_id' => $list_id]);
+        }
     }
 }
