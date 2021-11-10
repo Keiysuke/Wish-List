@@ -9,7 +9,7 @@
             </x-form.label>
         </div>
         <div class="flex justify-center w-1/12">
-            <a href="{{ route('products.show', $first->id) }}" target="_blank">
+            <a href="{{ route('products.show', $first->id) }}" target="_blank" id="product_link_{{ $nb }}">
                 <img id="product_bought_img_{{ $nb }}" class="h-20" src="{{ asset(config('images.path_products').'/'.$first->id.'/'.$first->photos()->first()->label) }}"/>
             </a>
         </div>

@@ -28,7 +28,7 @@ class ProductController extends Controller
 
             $photo = ProductPhoto::where('product_id', '=', $product_id)->first();
             $returnHTML = asset(config('images.path_products').'/'.$product_id.'/'.$photo->label);
-            return response()->json(['success' => true, 'html' => $returnHTML]);
+            return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $product_id)]);
         }
     }
 

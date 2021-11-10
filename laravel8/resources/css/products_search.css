@@ -94,3 +94,7 @@ input#search_text:focus {
 #icon_show_archived.active {
     @apply text-yellow-700;
 }
+
+#icon_filter.on {
+    @apply text-blue-500;
+}

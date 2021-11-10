@@ -9,6 +9,6 @@
         <span>Montant total : {{ $products->total_price }} €</span>
     </div>
 </div>
-<h2 id="nb_results" data-nb="{{ count($products) }}">{{ count($products) }} Résultat(s)</h2>
+<h2 class="mb-2" id="nb_results" data-nb="{{ count($products) }}">{{ count($products) }} Résultat(s)</h2>
 
 @include('lists.products.details', $products)

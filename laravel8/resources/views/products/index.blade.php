@@ -19,6 +19,7 @@
     search_products();
 
     function toggle_filters(){
+        document.querySelector('#icon_filter').classList.toggle('on');
         if(window.scrollY >= '40'){
             window.scrollTo(0, 0);
             if(document.getElementById('content_filters').classList.contains('hidden')) document.getElementById('content_filters').classList.remove('hidden');

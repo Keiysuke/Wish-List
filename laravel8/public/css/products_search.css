@@ -110,3 +110,8 @@ input#search_text, input#search_text:focus {
   color: rgba(180, 83, 9, var(--tw-text-opacity));
 }
 
+#icon_filter.on {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+

@@ -97,4 +97,14 @@ class Product extends Model
     public function createdBy(){
         $this->created = $this->created_by == \Auth::user()->id;
     }
+
+    public function bestWebsiteOffer(){
+        $res = ['price' => $this->real_cost, 'url' => null];
+        foreach($this->getAvailableWebsites() as $offer){
+            if($offer->price <= $res['price']){
+                $res = ['price' => $offer->price, 'url' => $offer->url];
+            }
+        }
+        return array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);
+    }
 }

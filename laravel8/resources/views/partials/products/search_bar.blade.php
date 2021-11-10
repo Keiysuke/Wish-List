@@ -21,7 +21,7 @@
     </div>
     
     <div class="flex justify-center items-center border-l-2" title="{{ __('Edit filters') }}">
-        <x-svg.filter onClick="toggle_filters();" class="icon-xs icon-clickable mx-3"/>
+        <x-svg.filter onClick="toggle_filters();" class="icon-xs icon-clickable mx-3" id="icon_filter"/>
     </div>
     
     <div class="flex justify-center items-center border-l-2" id="title_show_archived" title="{{ !$sortBy->show_archived ? __('Show archived') : __('Hide archived') }}">

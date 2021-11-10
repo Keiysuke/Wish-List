@@ -53,6 +53,7 @@
             if (response.ok) return response.json();
         }).then(res => {
             document.getElementById('product_bought_img_'+nb).src = res.html;
+            document.getElementById('product_link_'+nb).href = res.link;
         })
         
         get_product_datas(product_id, nb);
