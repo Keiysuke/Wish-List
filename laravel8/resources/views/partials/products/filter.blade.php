@@ -1,8 +1,12 @@
 <div id="content_filters" class="flex flex-col gap-4 mb-8 hidden">
     <div class="flex flex-grow justify-center gap-4">
-        <div class="filter_block flex flex-col items-center gap-2">
-            <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Tags <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input id="check_all_tags" type="checkbox" checked/></label></p>
-            <div class="grid grid-cols-{{ (count($tags) >= 12)? 3 : 2 }} gap-x-12 px-8">
+        <div class="filter_block flex flex-col w-1/2 items-center gap-2">
+            <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">
+                <label class="absolute top-2 left-2 text-xs" for="no_tag">Aucun <input id="no_tag" name="no_tag" type="checkbox"/></label>
+                Tags
+                <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input id="check_all_tags" type="checkbox" checked/></label>
+            </p>
+            <div class="grid grid-cols-{{ (count($tags) >= 12)? 4 : 3 }} gap-x-12 gap-y-2 px-8">
                 @foreach ($tags as $tag)
                     <div class="inline-flex">
                         <x-form.checkbox class="mr-2 mt-1 filter_tag" name="tag_{{ $tag->id }}"></x-form.checkbox>
@@ -11,7 +15,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="filter_block flex flex-col items-center gap-2">
+        <div class="filter_block flex flex-col w-1/2 items-center gap-2">
             <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Sites de vente <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input id="check_all_websites" type="checkbox"/></label></p>
             <div class="grid grid-cols-5 gap-x-12 px-8">
                 @foreach ($websites as $website)

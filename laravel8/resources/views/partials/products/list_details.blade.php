@@ -21,6 +21,8 @@
                             <p class="font-semibold">Edition limitée : <span class="font-normal">{{ is_null($product->limited_edition)? 'Non' : $product->limited_edition.' ex.' }}</span></p>
                             <x-utils.v_line />
                             <x-products.bought_details :product="$product"/>
+                            <x-utils.v_line />
+                            <x-products.tags_details :tags="$product->tags"/>
                             {{-- <p class="text-xs text-gray-400">{{ (count($product->purchases) >= 1)? 'Acheté le '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date)) : 'Pas acheté' }}</p> --}}
                         </div>
                         
