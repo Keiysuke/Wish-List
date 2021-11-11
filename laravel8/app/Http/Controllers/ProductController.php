@@ -171,7 +171,10 @@ class ProductController extends Controller
                 });
             }
             //Filter on tags
-            if(count($filter_tag) > 0){
+            if($request->no_tag){
+                $buildRequest->wheredoesntHave('tags');
+                
+            }elseif(count($filter_tag) > 0){
                 $buildRequest->whereHas('tags', function($query) use ($filter_tag){
                     $query->whereIn('tag_id', $filter_tag);
                 });

@@ -71,6 +71,7 @@
             page: document.getElementById('page').value,
             url: document.getElementById('url').value,
             websites: websites,
+            no_tag: document.getElementById('no_tag').checked,
             tags: tags,
             purchased: document.querySelector('input[name="purchased"]:checked').value,
             stock: document.querySelector('input[name="stock"]:checked').value,
