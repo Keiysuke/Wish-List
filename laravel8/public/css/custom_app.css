@@ -163,3 +163,13 @@ a.sitemap_link:hover span {
   color: #ed8936;
 }
 
+span.tag {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  border-width: 2px;
+  padding: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 9999px;
+}
+

@@ -9,6 +9,8 @@ use App\Models\UserWebsite;
 use App\Models\ProductState;
 use App\Models\SellState;
 use App\Models\User;
+use App\Models\Tag;
+use App\Models\CssColor;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -41,11 +43,19 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['products.create'], function ($view) {
             $view->with('product_states', ProductState::all());
         });
+        View::composer(['products.create', 'products.edit', 'products.index'], function ($view) {
+            $view->with('tags', Tag::all());
+        });
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('product_states', ProductState::all());
         });
         View::composer(['group_buys.create', 'group_buys.edit'], function ($view) {
             $view->with('products', User::find(\Auth::user()->id)->products()->orderBy('label')->get());
+        });
+        
+        //Admin
+        View::composer(['partials.tags.edit_colors'], function ($view) {
+            $view->with('unique_colors', CssColor::unique_colors());
         });
     }
 }

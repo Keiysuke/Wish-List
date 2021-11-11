@@ -145,10 +145,15 @@
         <div class="{{ (count($photos) > 1)? 'w-2/3' : 'w-3/4' }}">
             <div class="flex flex-col justify-between h-full gap-8 p-4 pt-0">
                 <div class="flex gap-4 h-full">
-                    <div class="flex flex-col gap-4 w-9/12">
+                    <div class="flex flex-col justify-around gap-4 w-9/12">
                         <div>
                             <p class="text-lg font-semibold">Description</p>
                             <p class="text-sm ml-4 italic">{!! nl2br($product->description) !!}</p>
+                        </div>
+                        <div class="flex inline-flex gap-2">
+                            @foreach($product->tags as $tag)
+                                <x-tags.tag :tag="$tag"/>
+                            @endforeach
                         </div>
                     </div>
                     <div class="flex flex-col w-3/12 justify-center items-center gap-8 text-2xl font-semibold">

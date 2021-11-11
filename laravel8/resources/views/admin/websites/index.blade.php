@@ -18,7 +18,7 @@
             <div class="listing flex flex-col gap-4">
                 @foreach($websites as $website)
                     <div class="item_list flex flex-between gap-4 p-2 shadow rounded border-l-4 border-indigo-400 hover:shadow-lg transform hover:scale-105">
-                        <div class="flex w-full gap-8">
+                        <div class="flex w-full items-center gap-8">
                             <span class="font-bold"># {{ $website->id }}</span>
                             <x-utils.v_line />
                             <span class="inline-flex gap-2">{{ $website->label }}

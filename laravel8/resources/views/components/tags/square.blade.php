@@ -1,0 +1,1 @@
+<div title="{{ $slot }}" class="bg-{{ $slot }} h-{{ $s?? '5' }} w-{{ $s?? '5' }}"></div>

@@ -10,6 +10,7 @@ use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\ProductPhoto;
 use App\Models\Listing;
+use App\Models\Tag;
 
 class Product extends Model
 {
@@ -26,6 +27,18 @@ class Product extends Model
     
     public function productWebsites(){
         return $this->hasMany(ProductWebsite::class);
+    }
+    
+    public function tags(){
+        return $this->belongsToMany(Tag::class, 'product_tags')->withTimestamps();
+    }
+
+    public function tag_ids(){
+        $res = [];
+        foreach($this->tags as $tag){
+            $res[] = $tag->id;
+        }
+        return $res;
     }
     
     public function creator(){

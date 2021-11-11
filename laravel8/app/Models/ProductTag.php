@@ -1,21 +1,22 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Listing;
 use App\Models\Product;
+use App\Models\Tag;
 
-class ListingProduct extends Model
+class ProductTag extends Model
 {
     use HasFactory;
-    protected $fillable = ['listing_id', 'product_id', 'nb'];
+    protected $fillable = ['product_id', 'tag_id'];
 
     public function product(){
         return $this->belongsTo(Product::class);
     }
-    
-    public function list(){
-        return $this->belongsTo(Listing::class);
+
+    public function tag(){
+        return $this->belongsTo(Tag::class);
     }
 }

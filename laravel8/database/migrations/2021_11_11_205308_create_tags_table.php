@@ -4,28 +4,26 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateListingsTable extends Migration
+class CreateTagsTable extends Migration
 {
     public function up()
     {
-        Schema::create('listings', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
+            $table->string('label', 50)->unique();
+            $table->unsignedInteger('css_color_id');
+            $table->foreign('css_color_id')
                 ->references('id')
-                ->on('users')
+                ->on('css_colors')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->longText('label');
-            $table->longText('description')->nullable();
-            $table->tinyInteger('secret')->default(0);
             $table->timestamps();
         });
     }
-    
+
     public function down()
     {
-        Schema::dropIfExists('listings');
+        Schema::dropIfExists('tags');
     }
 }

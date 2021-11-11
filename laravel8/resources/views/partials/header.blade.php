@@ -99,6 +99,7 @@
         <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
         <hr class="py-1 border-black"/>
         <a href="{{ route('websites.create') }}">{{ __('Website') }}</a>
+        <a href="{{ route('tags.create') }}">{{ __('Tag') }}</a>
         <a href="{{ route('states.products.create') }}">{{ __("Product's state") }}</a>
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>
     </div>

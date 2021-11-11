@@ -13,6 +13,7 @@
             <span>{{ __('Dashboard') }}</span>
             <ul>
                 <li><a href="{{ route('websites.index') }}">{{ __('Websites') }}</a></li>
+                <li><a href="{{ route('tags.index') }}">{{ __('Tags') }}</a></li>
                 <li><a href="{{ route('states.products.index') }}">{{ __("Products' states") }}</a></li>
                 <li><a href="{{ route('states.sells.index') }}">{{ __("Sellings' states") }}</a></li>
             </ul>

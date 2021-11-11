@@ -11,6 +11,7 @@
     <div class="w-full">
         @if($menu === 'database')
             <a href="{{ route('websites.index') }}" class="sub {{ $sub === 'websites' ? 'active' : '' }}">{{ __('Websites') }}</a>
+            <a href="{{ route('tags.index') }}" class="sub {{ $sub === 'tags' ? 'active' : '' }}">{{ __('Tags') }}</a>
             <a href="{{ route('states.products.index') }}" class="sub {{ $sub === 'product_states' ? 'active' : '' }}">{{ __("Products' states") }}</a>
             <a href="{{ route('states.sells.index') }}" class="sub {{ $sub === 'sell_states' ? 'active' : '' }}">{{ __("Sellings' states") }}</a>
         @endif

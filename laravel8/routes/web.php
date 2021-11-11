@@ -15,6 +15,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPhotoController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\ProductWebsiteController;
 use App\Http\Controllers\PurchaseController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\ProductStateController;
 use App\Http\Controllers\SellStateController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CssColorController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -73,9 +75,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+
+Route::post('color/variants', [CssColorController::class, 'get_variants'])->name('get_color_variants');
+
+
 //Admin routes
 Route::prefix('admin')->group(function () {
     Route::resource('websites', WebsiteController::class);
+    Route::resource('tags', TagController::class);
     
     Route::resource('states/products', ProductStateController::class)
         ->parameters(['products' => 'product_state'])
