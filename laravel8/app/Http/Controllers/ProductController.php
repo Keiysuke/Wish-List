@@ -12,6 +12,7 @@ use App\Models\ProductWebsite;
 use App\Models\Purchase;
 use App\Models\Listing;
 use App\Models\ListingProduct;
+use App\Models\ProductTag;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
@@ -127,11 +128,16 @@ class ProductController extends Controller
             }
 
             $buildRequest = Product::query();
-            $filter_pw = [];
+            $filter_pw = $filter_tag = [];
             //Filtrés par sites
             foreach($request->websites as $product_website){
                 $r = explode('_', $product_website);
                 $filter_pw[] = intval($r[1]);
+            }
+            //Filtrés par tags
+            foreach($request->tags as $tag){
+                $r = explode('_', $tag);
+                $filter_tag[] = intval($r[1]);
             }
 
             if($request->url === 'products/user'){
@@ -164,7 +170,13 @@ class ProductController extends Controller
                     $query->whereIn('website_id', $filter_pw);
                 });
             }
-
+            //Filter on tags
+            if(count($filter_tag) > 0){
+                $buildRequest->whereHas('tags', function($query) use ($filter_tag){
+                    $query->whereIn('tag_id', $filter_tag);
+                });
+            }
+            
             //Filtrés par produits achetés ou non, vendus ou non
             switch($request->purchased){
                 case 'purchased_yes': $buildRequest->whereHas('purchases', function($query){
@@ -264,6 +276,8 @@ class ProductController extends Controller
         //Adding the photo
         app('App\Http\Controllers\UploadController')->storePhoto($request, 1, $product);
         $info = __('The product has been created.');
+        //Adding the potential tags
+        $this->update_tags($request->tag_ids, $product->tag_ids(), $product->id);
 
         //We link it to the current user
         $product->users()->attach($request->user_id);
@@ -356,8 +370,21 @@ class ProductController extends Controller
                 'cost' => str_replace(',', '.', $request->cost)
             ]);
         }
+        $this->update_tags($request->tag_ids, $product->tag_ids(), $product->id);
+
         $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
         $product->update($request->all());
         return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
+    }
+
+    public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
+        foreach($old_tags as $old_id){ //Delete old and no more selected tags
+            if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
+        }
+        foreach($new_tags as $new_id){ //Adding new tags not previously selected
+            if(!in_array($new_id, $old_tags)){
+                (new ProductTag(['product_id' => $product_id, 'tag_id' => $new_id]))->save();
+            }
+        }
     }
 }

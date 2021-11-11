@@ -54,8 +54,12 @@
 
     function search_products(){
         let websites = Array();
+        let tags = Array();
         Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
             if(el.checked) websites.push(el.name);
+        });
+        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
+            if(el.checked) tags.push(el.name);
         });
         
         my_fetch('{{ route('products_search') }}', {method: 'post', csrf: true}, {
@@ -67,6 +71,7 @@
             page: document.getElementById('page').value,
             url: document.getElementById('url').value,
             websites: websites,
+            tags: tags,
             purchased: document.querySelector('input[name="purchased"]:checked').value,
             stock: document.querySelector('input[name="stock"]:checked').value,
             f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
@@ -101,6 +106,12 @@
 
     document.querySelector('#check_all_websites').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+            el.checked = !event.target.checked;
+        });
+    });
+
+    document.querySelector('#check_all_tags').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
