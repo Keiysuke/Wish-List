@@ -1,5 +1,5 @@
 @if(count($variants) === 1 && empty($variants[0]))
-    <option value="">Aucune</option>
+    <option value="none">Aucune</option>
 @else
     @foreach($variants as $variant)
         <option value="{{ $variant }}" @if(isset($selected) && $selected === $variant) selected @endif>{{ $variant }}</option>

@@ -31,9 +31,6 @@ class CssColor extends Model
 
     public function class_details(){
         $details = explode('-', $this->css_class);
-        return (Object)['color' => $details[0], 'variant' => $details[1]];
-    }
-
-    public function variant(){
+        return (Object)['color' => $details[0], 'variant' => $details[1] ?? 'none'];
     }
 }

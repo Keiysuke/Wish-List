@@ -44,7 +44,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('product_states', ProductState::all());
         });
         View::composer(['products.create', 'products.edit', 'products.index'], function ($view) {
-            $view->with('tags', Tag::all());
+            $view->with('tags', Tag::orderBy('label')->get());
         });
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('product_states', ProductState::all());

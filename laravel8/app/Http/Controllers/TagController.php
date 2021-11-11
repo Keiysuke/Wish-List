@@ -42,7 +42,7 @@ class TagController extends Controller
     public function update(TagRequest $request, Tag $tag){
         if($this->exists($request->label, $tag->id))
             return back()->withErrors(['label' => __('That tag already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
-
+        
         $tag->update($request
             ->merge([
                 'label' => $request->label,
@@ -61,7 +61,7 @@ class TagController extends Controller
 
     public function getCssClassId(TagRequest $request){
         $css_class = (Object)[
-            'border_class' => $request->border_color.(empty($request->border_variant)? '' : ('-'.$request->border_variant)), 
+            'border_class' => $request->border_color.(($request->border_variant === 'none')? '' : ('-'.$request->border_variant)), 
             'text_color' => null
         ];
         return CssColor::where('css_class', '=', $css_class->border_class)->first()->id;

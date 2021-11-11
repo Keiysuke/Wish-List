@@ -30,7 +30,7 @@
             <select name="border_color" id="border_color" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                 @php($found = [])
                 @foreach($unique_colors as $color)
-                    <option value="{{ $color }}" @if($color === old('border_color', (isset($tag)? $tag->border_details()->color : -1)))) selected @endif>{{ ucFirst($color) }}</option>
+                    <option value="{{ $color }}" @if($color === old('border_color', (isset($tag)? $tag->border_details()->color : -1))) selected @endif>{{ ucFirst($color) }}</option>
                 @endforeach
             </select>
         </div>
