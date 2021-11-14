@@ -280,13 +280,14 @@ class ProductController extends Controller
         app('App\Http\Controllers\UploadController')->storePhoto($request, 1, $product);
         $info = __('The product has been created.');
         //Adding the potential tags
-        $this->update_tags($request->tag_ids, $product->tag_ids(), $product->id);
-
+        $tag_ids = $request->tag_ids ?? [];
+        $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
+        
         //We link it to the current user
         $product->users()->attach($request->user_id);
         
         if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
-
+            
             $product_website = new ProductWebsite([
                 'product_id' => $product->id,
                 'website_id' => $request->website_id,
@@ -310,7 +311,7 @@ class ProductController extends Controller
             
             $info = __('The product & the related purchase have been created.');
         }
-
+        
         return redirect()->route('products.show', $product->id)->with('info', $info);
     }
     
@@ -331,7 +332,7 @@ class ProductController extends Controller
                 $purchase->display_type = 'buy';
             }
         }
-
+        
         foreach($product_websites as $pw){
             $pw->expired = !is_null($pw->expiration_date) && ($pw->expiration_date < Carbon::now());
             $pw->available_soon = !is_null($pw->available_date) && ($pw->available_date >= Carbon::now());
@@ -349,7 +350,7 @@ class ProductController extends Controller
                 $pw->date_show = __('Available').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->available_date);
             }
         }
-
+        
         $lists = Listing::where('user_id', '=', auth()->user()->id)->get();
         foreach($lists as $list){
             $list->hasProduct = $list->products()->find($product->id);
@@ -357,7 +358,7 @@ class ProductController extends Controller
         }
         return view('products.show', compact('product', 'photos', 'product_websites', 'purchases', 'lists'));
     }
-
+    
     public function showFromNotification(Product $product, DatabaseNotification $notification){
         $notification->markAsRead();
         return $this->show($product);
@@ -370,21 +371,22 @@ class ProductController extends Controller
     public function update(ProductRequest $request, Product $product){
         if($request->add_purchase){
             $request->merge(['price' => str_replace(',', '.', $request->price),
-                'cost' => str_replace(',', '.', $request->cost)
-            ]);
-        }
-        $this->update_tags($request->tag_ids, $product->tag_ids(), $product->id);
-
-        $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
-        $product->update($request->all());
-        return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
+            'cost' => str_replace(',', '.', $request->cost)
+        ]);
     }
+    $tag_ids = $request->tag_ids ?? [];
+    $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
+    
+    $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
+    $product->update($request->all());
+    return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
+}
 
-    public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
-        foreach($old_tags as $old_id){ //Delete old and no more selected tags
-            if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
-        }
-        foreach($new_tags as $new_id){ //Adding new tags not previously selected
+public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
+    foreach($old_tags as $old_id){ //Delete old and no more selected tags
+        if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
+    }
+    foreach($new_tags as $new_id){ //Adding new tags not previously selected
             if(!in_array($new_id, $old_tags)){
                 (new ProductTag(['product_id' => $product_id, 'tag_id' => $new_id]))->save();
             }
