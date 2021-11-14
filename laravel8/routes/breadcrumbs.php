@@ -1,8 +1,10 @@
 <?php
+use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
+use Illuminate\Support\Facades\Route;
 
 // Home
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Accueil', route('products.index'));
+    $trail->push('Accueil', route('my_products'));
 });
 
 //Sitemap
@@ -15,7 +17,7 @@ Breadcrumbs::for('sitemap', function ($trail) {
 Breadcrumbs::for('list', function ($trail, $elem) {
     $trail->parent('home');
     $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes'];
-    $trail->push(str_replace($elem, $elem, $all[$elem]), route($elem.'s.index'));
+    $trail->push(str_replace($elem, $elem, $all[$elem]), route((!strcmp($elem, 'product')? 'my_products' : $elem.'s.index')));
 });
 
 //Home > Sites > Amazon
