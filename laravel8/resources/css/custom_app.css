@@ -115,11 +115,12 @@ a.link:hover {
 }
 
 .title-icon.archive.on:hover {
-    @apply text-yellow-500;
+    @apply text-white;
+    @apply bg-yellow-700;
 }
 
 .title-icon.archive:hover {
-    @apply text-yellow-700;
+    @apply bg-yellow-700;
 }
 
 li.li_website.expired {
