@@ -41,7 +41,7 @@
             <div class="flex justify-around w-7/12 gap-4">
                 <div class="w-2/5">
                     <x-form.label for="tag_ids" block required>Tags associés</x-form.label>
-                    <select multiple name="tag_ids[]" id="tag_ids" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                    <select multiple name="tag_ids[]" id="tag_ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', []))) selected @endif>{{ $tag->label }}</option>
                         @endforeach

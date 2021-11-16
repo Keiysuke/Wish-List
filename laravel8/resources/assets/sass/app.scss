@@ -1,17 +1,5 @@
 @import 'variables';
 
-.text-orange-500 {
-    color: $orange-500;
-}
-
-.bg-orange-500 {
-    background-color: $orange-500;
-}
-
-.border-orange-500 {
-    border-color: $orange-500;
-}
-
 @each $side in $sides {
     .border-#{$side}-only {
         border-width: 1px;
@@ -35,7 +23,7 @@ $i: 3;
 }
 
 .icon-clickable:hover {
-    color: $blue-500;
+    color: color-blue-500;
     transition: ease-in-out;
     transition-duration: 150ms;
     cursor: pointer;
@@ -43,12 +31,12 @@ $i: 3;
 
 .btn_show_product:hover {
     p {
-        background-color: $blue-400;
+        background-color: color-blue-400;
         transition: 0.1s;
     }
 
     div {
-        background-color: $blue-500;
+        background-color: color-blue-500;
         transition: 0.1s;
     }
 

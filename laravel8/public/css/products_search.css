@@ -14,7 +14,7 @@ div.grid_product div.top.no-offer div.product_price {
 
 div.grid_product div.down.no-offer p {
   --tw-text-opacity: 1;
-  color: rgba(156, 163, 175, var(--tw-text-opacity));
+  color: rgba(161, 161, 170, var(--tw-text-opacity));
 }
 
 div.grid_product div.down.no-offer div p {
@@ -70,7 +70,7 @@ div.grid_product div.down.offer-soon div p {
   align-items: center;
   border-bottom-width: 2px;
   --tw-border-opacity: 1;
-  border-color: rgba(107, 114, 128, var(--tw-border-opacity));
+  border-color: rgba(113, 113, 122, var(--tw-border-opacity));
   --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
   position: fixed;
@@ -102,12 +102,12 @@ input#search_text, input#search_text:focus {
 #icon_show_archived:hover {
   cursor: pointer;
   --tw-text-opacity: 1;
-  color: rgba(180, 83, 9, var(--tw-text-opacity));
+  color: rgba(161, 98, 7, var(--tw-text-opacity));
 }
 
 #icon_show_archived.active {
   --tw-text-opacity: 1;
-  color: rgba(180, 83, 9, var(--tw-text-opacity));
+  color: rgba(161, 98, 7, var(--tw-text-opacity));
 }
 
 #icon_filter.on {

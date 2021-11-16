@@ -22,7 +22,7 @@
 #left_sidebar_icons {
   z-index: 10;
   --tw-bg-opacity: 1;
-  background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
+  background-color: rgba(24, 24, 27, var(--tw-bg-opacity));
   width: 3em;
   left: 0px;
   display: flex;
@@ -53,7 +53,7 @@
 
 #left_sidebar_websites, #left_sidebar_externals {
   --tw-bg-opacity: 1;
-  background-color: rgba(55, 65, 81, var(--tw-bg-opacity));
+  background-color: rgba(63, 63, 70, var(--tw-bg-opacity));
 }
 
 #left_sidebar_websites, #left_sidebar_externals {
