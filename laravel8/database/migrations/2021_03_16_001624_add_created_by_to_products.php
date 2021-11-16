@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddCreatedByToProducts extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
@@ -22,16 +17,12 @@ class AddCreatedByToProducts extends Migration
                 ->onUpdate('cascade');
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['created_by']);
+            $table->dropColumn('created_by');
         });
     }
 }

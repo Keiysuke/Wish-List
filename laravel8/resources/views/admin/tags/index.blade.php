@@ -23,8 +23,6 @@
                             <x-utils.v_line />
                             <span>{{ $tag->label }}</span>
                             <x-utils.v_line />
-                            <x-tags.square>{{ $tag->color() }}</x-tags.square>
-                            <x-utils.v_line />
                             <x-tags.tag :tag="$tag"/>
                         </div>
                         <div class="flex flex-around gap-4 text-sm">

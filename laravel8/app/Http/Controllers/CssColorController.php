@@ -10,19 +10,35 @@ class CssColorController extends Controller
 {
     function get_variants(Request $request){
         if ($request->ajax()) {
-            $this->validate($request, ['color' => 'bail|required|string']); //New selected color
-            $variants = CssColor::select('css_class')->where('css_class', 'like', $request->color.'%')->get();
+            $this->validate($request, [
+                'border_color' => 'bail|required|string',
+                'text_color' => 'bail|required|string',
+                'bg_color' => 'bail|required|string',
+                'kind' => 'bail|required|string'
+            ]); //New selected color
+            $kinds = ['border', 'text', 'bg'];
+            $css_classes = [];
+            foreach($kinds as $kind){
+                $variants = CssColor::select('css_class')->where('css_class', 'like', $request->{$kind.'_color'}.'%')->get();
+                $res = [];
+                foreach($variants as $variant){
+                    $details = explode('-', $variant);
+                    $res[] = (count($details) > 1)? substr($details[1], 0, -2) : '';
+                }
+                $variant = $request->{$kind.'_cur_variant'} ?? '';
+                $variant = in_array($variant, $res)? $variant : $res[0];
+                $css_classes[$kind] = $request->{$kind.'_color'}.(empty($variant)? '' : '-'.$variant);
 
-            $res = [];
-            foreach($variants as $variant){
-                $details = explode('-', $variant);
-                $res[] = (count($details) > 1)? substr($details[1], 0, -2) : '';
+                if($kind === $request->kind)
+                    $returnHTML = view('partials.tags.select_variants')->with(['variants' => $res, 'selected' => $variant])->render();
             }
-            $variant = $request->cur_variant ?? '';
-            $variant = in_array($variant, $res)? $variant : $res[0];
-            $returnHTML = view('partials.tags.select_variants')->with(['variants' => $res, 'selected' => $variant])->render();
-            $css_class = $request->color.(empty($variant)? '' : '-'.$variant);
-            $returnTag = view('components.tags.tag')->with(['tag' => Tag::getExample(CssColor::where('css_class', '=', $css_class)->first()->id)])->render();
+            //Set the tag
+            $ex_tag = Tag::getExample(
+                CssColor::where('css_class', '=', $css_classes['border'])->first()->id,
+                CssColor::where('css_class', '=', $css_classes['text'])->first()->id,
+                CssColor::where('css_class', '=', $css_classes['bg'])->first()->id
+            );
+            $returnTag = view('components.tags.tag')->with(['tag' => $ex_tag])->render();
             
             return response()->json(['success' => true, 'html' => $returnHTML, 'tag' => $returnTag]);
         }

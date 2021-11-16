@@ -29,7 +29,9 @@ class TagController extends Controller
 
         $tag = new Tag([
             'label' => $request->label, 
-            'css_color_id' => $this->getCssClassId($request),
+            'border_css_color_id' => $this->getCssClassId($request),
+            'text_css_color_id' => $this->getCssClassId($request),
+            'bg_css_color_id' => $this->getCssClassId($request),
         ]);
         $tag->save();
         return redirect()->route('tags.index')->with('info', __('The tag has been created.'));
@@ -46,7 +48,9 @@ class TagController extends Controller
         $tag->update($request
             ->merge([
                 'label' => $request->label,
-                'css_color_id' => $this->getCssClassId($request),
+                'border_css_color_id' => $this->getCssClassId($request, 'border'),
+                'text_css_color_id' => $this->getCssClassId($request, 'text'),
+                'bg_css_color_id' => $this->getCssClassId($request, 'bg'),
             ])
             ->all()
         );
@@ -59,11 +63,11 @@ class TagController extends Controller
         return redirect()->route('tags.index')->with('info', __('The tag has been deleted.'));
     }
 
-    public function getCssClassId(TagRequest $request){
+    public function getCssClassId(TagRequest $request, $kind = 'border'){
         $css_class = (Object)[
-            'border_class' => $request->border_color.(($request->border_variant === 'none')? '' : ('-'.$request->border_variant)), 
+            'class' => $request->{$kind.'_color'}.(($request->{$kind.'_variant'} === 'none')? '' : ('-'.$request->{$kind.'_variant'})), 
             'text_color' => null
         ];
-        return CssColor::where('css_class', '=', $css_class->border_class)->first()->id;
+        return CssColor::where('css_class', '=', $css_class->class)->first()->id;
     }
 }

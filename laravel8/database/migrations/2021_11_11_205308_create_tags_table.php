@@ -12,8 +12,8 @@ class CreateTagsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('label', 50)->unique();
-            $table->unsignedInteger('css_color_id');
-            $table->foreign('css_color_id')
+            $table->unsignedInteger('border_css_color_id');
+            $table->foreign('border_css_color_id')
                 ->references('id')
                 ->on('css_colors')
                 ->onDelete('cascade')
