@@ -26,6 +26,7 @@ use App\Http\Controllers\SellStateController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CssColorController;
+use App\Http\Controllers\UtilsController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -75,8 +76,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-
 Route::post('color/variants', [CssColorController::class, 'get_variants'])->name('get_color_variants');
+
+//Help sidebar
+Route::post('benefit', [UtilsController::class, 'simulate_benefit'])->name('simulate_benefit');
 
 
 //Admin routes

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\UtilsController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -39,15 +40,15 @@ class Purchase extends Model
     public function group_buy_purchases(){
         return $this->hasMany(GroupBuyPurchase::class);
     }
+    
+    public function price(){
+        return $this->cost - $this->discount;
+    }
 
     public function getBenefice(){
         $s = $this->selling()->first();
         $price_sold = ($s->confirmed_price + $s->shipping_fees);
-        //Old
-        // $price_sold -= ($price_sold*3.05)/100;
-        // $price_sold -= (((($s->confirmed_price* 8) / 100)* 20) / 100) + (($s->confirmed_price* 8) / 100);
-        //New
-        $price_sold -= ($price_sold*11.08)/100;
+        $price_sold -= UtilsController::getCommission($price_sold);
         return $price_sold - ($this->cost - $this->discount + $s->shipping_fees_payed + $this->customs);
     }
 }

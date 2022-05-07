@@ -5,7 +5,6 @@ use App\Http\Requests\PurchaseRequest;
 use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\Product;
-use App\Models\GroupBuy;
 
 class PurchaseController extends Controller
 {

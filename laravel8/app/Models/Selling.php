@@ -10,6 +10,7 @@ use App\Models\Website;
 use App\Models\ProductState;
 use App\Models\SellState;
 use App\Models\Purchase;
+use App\Models\HistoSellingOffer;
 
 class Selling extends Model
 {
@@ -37,10 +38,18 @@ class Selling extends Model
     }
 
     public function purchase(){
-        return $this->hasOne(Purchase::class);
+        return $this->belongsTo(Purchase::class);
+    }
+
+    public function histo_offers(){
+        return $this->hasMany(HistoSellingOffer::class);
     }
 
     public function resold(){
         return $this->sellState()->first()->label === 'Terminée';
+    }
+
+    public function price(){
+        return is_null($this->confirmed_price)? $this->price : $this->confirmed_price;
     }
 }

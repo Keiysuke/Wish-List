@@ -108,6 +108,14 @@
             change_checked:change_checked
         });
     }
+
+    function simulate_benef(payed, sold) {
+        if (!document.querySelector('#left_sidebar_help').classList.contains('open')) {
+            document.querySelector('#icon-help').dispatchEvent(new CustomEvent('click'));
+        }
+        document.querySelector('#ls_benefit_payed').value = payed;
+        document.querySelector('#ls_benefit_sold').value = sold;
+    }
 </script>
 @endsection
 
