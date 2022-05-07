@@ -54,37 +54,10 @@
     </div>
 </nav>
 
-<div id="left_sidebar_icons">
-    <x-svg.big.star id="icon-star"/>
-    <x-svg.big.globe id="icon-globe"/>
-</div>
-<div id="left_sidebar_websites">
-    <p><x-svg.star class="icon-sm text-yellow-400"/> Mes sites préférés</p>
-    <div id="ls_favorites">
-        @foreach($user_websites as $w)
-            <div class="square">
-                <a href="{{ $w->website->url }}" title="{{ $w->website->label }}" target="_blank"><img src="{{ asset(config('images.path_websites_icons')).'/'.$w->website->id.'.'.$w->website->icon }}"/></a>
-            </div>
-        @endforeach
-        <div class="square dashed">
-            +
-        </div>
-    </div>
-</div>
-<div id="left_sidebar_externals">
-    <p><x-svg.globe class="icon-sm text-blue-400"/> Liens externes</p>
-    <div id="ls_externals">
-        <div class="rectangle">
-            <a href="https://tinypng.com/" title="Tiny PNG" target="_blank"><img src="{{ asset(config('images.path_externals_icons')).'/tinypng.png' }}"/></a>
-        </div>
-        <div class="rectangle">
-            <a href="https://tinyjpg.com/" title="Tiny JPG" target="_blank"><img src="{{ asset(config('images.path_externals_icons')).'/tinyjpg.png' }}"/></a>
-        </div>
-        <div class="link">
-            <a class="link" href="https://www.amazon.fr/gp/your-account/order-history?opt=ab&digitalOrders=1&unifiedOrders=1&returnTo=&__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&orderFilter=year-2013" target="_blank">Commandes Amazon</a>
-        </div>
-    </div>
-</div>
+@include('partials.sidebars.left.icons')
+@include('partials.sidebars.left.websites')
+@include('partials.sidebars.left.help')
+@include('partials.sidebars.left.externals')
 
 <nav id="submenu">
     <div id="submenu_my_datas" class="submenu" onMouseOver="submenu(true, 'my_datas');" onMouseOut="submenu(false, 'my_datas');">

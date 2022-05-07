@@ -1,6 +1,5 @@
 #left_sidebar_icons,
-#left_sidebar_websites,
-#left_sidebar_externals {
+.sidebar_content {
     @apply h-full;
     @apply fixed;
     @apply top-12;
@@ -22,13 +21,13 @@
 }
 
 #icon-star.active,
+#icon-help.active,
 #icon-globe.active {
     @apply fill-current;
     color: #ed8936;
 }
 
-#left_sidebar_websites,
-#left_sidebar_externals {
+.sidebar_content {
     z-index: 9;
     @apply left-12;
     @apply bg-gray-700;
@@ -36,20 +35,19 @@
     @apply flex-col;
     @apply justify-start;
     @apply items-center;
-    width: 16em;
+    width: 18em;
     @apply pt-4;
     transform-origin: 0 0;
     transition: all 0.3s ease-out;
     transform: translate(-100%, 0);
 }
 
-#left_sidebar_websites.open,
-#left_sidebar_externals.open {
+.sidebar_content.open {
     transform: translate(0%, 0);
 }
 
-#ls_favorites {
-    @apply mt-4;
+#ls_favorites,
+#ls_mes_applis {
     @apply grid;
     @apply grid-cols-3;
     @apply gap-3;
@@ -57,7 +55,6 @@
 }
 
 #ls_externals {
-    @apply mt-4;
     @apply grid;
     @apply grid-cols-2;
     @apply justify-items-center;
@@ -65,8 +62,9 @@
     @apply gap-y-5;
 }
 
-#left_sidebar_websites p:first-of-type,
-#left_sidebar_externals p:first-of-type {
+.sidebar_content p:first-of-type,
+.sidebar_content p.ls_title {
+    @apply mb-4;
     @apply text-lg;
     @apply flex;
     @apply gap-1;
@@ -101,4 +99,11 @@ div.dashed {
 
 div.link {
     @apply col-span-2;
+}
+
+.sidebar_content label {
+    @apply text-sm;
+    @apply p-0;
+    @apply pl-1;
+    @apply text-white;
 }

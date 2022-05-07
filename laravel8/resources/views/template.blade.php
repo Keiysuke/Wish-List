@@ -6,6 +6,7 @@
         <title>Wish list - Garder une trace de vos achats & re/ventes</title>
         <meta name="description" content="Ce site vous permet de gérer vos achats et ventes effectués sur Internet.">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         @yield('metas')
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom_app.css') }}" rel="stylesheet">
@@ -33,6 +34,7 @@
     </body>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
     <script>
         $(document).ready(function () { bsCustomFileInput.init() })
         
@@ -109,19 +111,43 @@
             }
         }
 
-        document.querySelector('#icon-star').addEventListener('click', (event) => {
-            document.querySelector('#icon-star').classList.toggle('active');
-            document.querySelector('#left_sidebar_websites').classList.toggle('open');
-            document.querySelector('#icon-globe').classList.remove('active');
-            document.querySelector('#left_sidebar_externals').classList.remove('open');
-        });
+        let SIDEBAR = {
+            'icon-star': 'left_sidebar_websites',
+            'icon-help': 'left_sidebar_help',
+            'icon-globe': 'left_sidebar_externals',
+        };
 
-        document.querySelector('#icon-globe').addEventListener('click', (event) => {
-            document.querySelector('#icon-globe').classList.toggle('active');
-            document.querySelector('#left_sidebar_externals').classList.toggle('open');
-            document.querySelector('#icon-star').classList.remove('active');
-            document.querySelector('#left_sidebar_websites').classList.remove('open');
-        });
+        for (var icon in SIDEBAR) { //Gestion de left sidebar
+            document.querySelector('#'+icon).addEventListener('click', (event) => {
+                let icon_clicked = event.target.closest('[data-type="ls_icon"]').id;
+                for (var o_icon in SIDEBAR) {
+                    if (icon_clicked === o_icon) document.querySelector('#'+icon_clicked).classList.toggle('active');
+                    else document.querySelector('#'+o_icon).classList.remove('active');
+                    let content = SIDEBAR[icon_clicked];
+                    let o_content = SIDEBAR[o_icon];
+                    if (content === o_content) document.querySelector('#'+content).classList.toggle('open');
+                    else document.querySelector('#'+o_content).classList.remove('open');
+                };
+            });
+        };
+
+        function ls_benefit_help(){
+            my_fetch('{{ route('simulate_benefit') }}', {method: 'post', csrf: true}, {
+                payed: document.querySelector('#ls_benefit_payed').value,
+                sold: document.querySelector('#ls_benefit_sold').value,
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                document.querySelector('#ls_benefit_results_benef').innerHTML = results.benefit + ' €';
+                if (results.benefit >= 0) {
+                    document.querySelector('#ls_benefit_results_benef').classList.add('text-green-400');
+                    document.querySelector('#ls_benefit_results_benef').classList.remove('text-red-400');
+                } else {
+                    document.querySelector('#ls_benefit_results_benef').classList.add('text-red-400');
+                    document.querySelector('#ls_benefit_results_benef').classList.remove('text-green-400');
+                }
+            });
+        }
 
         //We stop the propagation of an event for each element that has the class "no-propagate"
         Array.from(document.getElementsByClassName('no-propagate')).forEach(el => { el.addEventListener('click', stopPropagate); });
