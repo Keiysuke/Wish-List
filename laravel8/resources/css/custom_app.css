@@ -61,6 +61,10 @@ h3 {
     line-height: 1.75rem;
 }
 
+.icon-on {
+    @apply text-blue-500;
+}
+
 a.link {
     @apply text-blue-500;
 }

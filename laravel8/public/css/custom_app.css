@@ -65,6 +65,11 @@ h3 {
   line-height: 1.75rem;
 }
 
+.icon-on {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
 a.link {
   --tw-text-opacity: 1;
   color: rgba(59, 130, 246, var(--tw-text-opacity));
