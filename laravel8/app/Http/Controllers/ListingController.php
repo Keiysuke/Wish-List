@@ -27,13 +27,17 @@ class ListingController extends Controller
             
             if($request->change_checked) Listing::find($request->list_id)->products()->toggle([$request->product_id]);
             //Setting nb only if the product is still linked to that list
-            $hasProduct = Listing::find($request->list_id)->products()->find($request->product_id);
+            $products = Listing::find($request->list_id)->products()->get();
+            $hasProduct = $products->find($request->product_id);
             if($hasProduct && isset($request->nb)){
                 ListingProduct::where('listing_id', '=', $request->list_id)
                     ->where('product_id', '=', $request->product_id)
                     ->update(['nb' => $request->nb]);
             }
-            return response()->json(array('success' => true));
+            
+            foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
+            $this->setProductsDatas($products);
+            return response()->json(array('success' => true, 'total_price' => $products->total_price));
         }
     }
 

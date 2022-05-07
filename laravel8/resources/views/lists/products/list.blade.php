@@ -6,7 +6,7 @@
     </span>
     <span class="font-light" style="margin-top:0.10rem;"> - {{ count($list->users) > 0 ? 'Partagée' : 'Privée' }}</span>
     <div class="absolute right-2">
-        <span>Montant total : {{ $products->total_price }} €</span>
+        <span id="total_price">Montant total : {{ $products->total_price }} €</span>
     </div>
 </div>
 <h2 class="mb-2" id="nb_results" data-nb="{{ count($products) }}">{{ count($products) }} Résultat(s)</h2>

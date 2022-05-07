@@ -36,7 +36,7 @@
     });
 
     function toggle_list(list_id, product_id){
-        my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
+            my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
             list_id: list_id,
             product_id: product_id,
             change_checked:true
@@ -48,6 +48,7 @@
             if(nb_results > 0){
                 document.querySelector('#nb_results').setAttribute('data-nb', nb_results);
                 document.querySelector('#nb_results').innerHTML = nb_results+' Résultat(s)';
+                document.querySelector('#total_price').innerHTML = 'Montant total : ' + res.total_price + ' €';
             }else get_products(list_id);
         });
     }
