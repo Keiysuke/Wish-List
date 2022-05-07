@@ -93,6 +93,11 @@
         });
     });
 
+    function show_histo(e){
+        document.querySelector('[id="histo_offers_'+e.getAttribute("data-id")+'"]').classList.toggle("icon-on");
+        document.querySelector('[id="content_histo_offers_'+e.getAttribute("data-id")+'"]').classList.toggle("hidden");
+    }
+
     //Lists Functions
     function toggleShowLists(){
         event.stopPropagation();
