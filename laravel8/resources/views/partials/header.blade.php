@@ -27,7 +27,7 @@
             </x-menu.ext_link>
         </div>
         <!-- Fast menu search -->
-        <form id="fast_search" action="{{ route('my_products') }}" method="POST">
+        <form id="fast_search" action="{{ route('my_products', ['fast_search' => true]) }}" method="POST">
             @method("GET")
             <div class="relative flex inline-flex justify-end" onMouseOver="open_search();" onMouseOut="open_search(false);">
                 <input id="fast_search_text" class="{{ isset($search)? 'focus_search' : '' }}" type="search" name="search" placeholder="{{ __('Search products...') }}" value="{{ isset($search)? $search : '' }}" onFocus="open_search();" onFocusOut="open_search(false);">

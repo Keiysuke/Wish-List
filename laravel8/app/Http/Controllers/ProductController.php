@@ -94,6 +94,10 @@ class ProductController extends Controller
         if(!is_null($search)) $buildRequest->where('label', 'like', '%'.$search.'%');
         $buildRequest->where('archived', '=', $sortBy->show_archived);
         $products = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
+
+        if ($request->query('fast_search') && count($products) === 1) {
+            return redirect()->route('products.show', $products->first()->id);
+        }
         // dd($products);
         // \DB::enableQueryLog();
         // dd(\DB::getQueryLog());
