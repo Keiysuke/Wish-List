@@ -29,9 +29,9 @@ class TagController extends Controller
 
         $tag = new Tag([
             'label' => $request->label, 
-            'border_css_color_id' => $this->getCssClassId($request),
-            'text_css_color_id' => $this->getCssClassId($request),
-            'bg_css_color_id' => $this->getCssClassId($request),
+            'border_css_color_id' => $this->getCssClassId($request, 'border'),
+            'text_css_color_id' => $this->getCssClassId($request, 'text'),
+            'bg_css_color_id' => $this->getCssClassId($request, 'bg'),
         ]);
         $tag->save();
         return redirect()->route('tags.index')->with('info', __('The tag has been created.'));

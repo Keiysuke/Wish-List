@@ -15,14 +15,24 @@
                         <x-form.label for="label" block required>Nom du tag</x-form.label>
                         <x-form.input name="label" placeholder="Nom du tag" value="{{ old('label') }}"/>
                     </div>
-                    <div class="w-1/2">
-                        @include('partials.tags.edit_colors')
+                    <div class="flex w-1/2 justify-center items-end pb-2 gap-4">
+                        <div id="content_ex_tag"><x-tags.tag id="ex_tag" :tag="\App\Models\Tag::getExample()" /></div>
+                    </div>
+                </div>
+                <div class="flex gap-12 mb-4">
+                    <div class="w-1/3">
+                        @include('partials.tags.edit_colors', ['kind_css_color' => 'border'])
+                    </div>
+                    <div class="w-1/3">
+                        @include('partials.tags.edit_colors', ['kind_css_color' => 'text'])
+                    </div>
+                    <div class="w-1/3">
+                        @include('partials.tags.edit_colors', ['kind_css_color' => 'bg'])
                     </div>
                 </div>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center block gap-4">
                         <x-form.btn type="submit">Ajouter le tag</x-form.btn>
-                        <div id="content_ex_tag"><x-tags.tag id="ex_tag" :tag="\App\Models\Tag::getExample()" /></div>
                     </div>
                     <x-form.cancel href="{{ route('tags.index') }}"/>
                 </div>
