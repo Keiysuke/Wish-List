@@ -10,6 +10,13 @@
             </ul>
         </div>
         <div>
+            <span>{{ __('Video Games') }}</span>
+            <ul>
+                <li><a href="#">{{ __('List') }}</a></li>
+                <li><a href="{{ route('vg_supports.index') }}">{{ __('Supports list') }}</a></li>
+            </ul>
+        </div>
+        <div>
             <span>{{ __('Dashboard') }}</span>
             <ul>
                 <li><a href="{{ route('websites.index') }}">{{ __('Websites') }}</a></li>

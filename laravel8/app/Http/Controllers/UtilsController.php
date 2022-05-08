@@ -25,4 +25,8 @@ class UtilsController extends Controller
         //New
         return ($price*11.08)/100;
     }
+
+    public static function getDate($date, $format = 'd/m/Y'){
+        return is_null($date)? '' : date($format, strtotime($date));
+    }
 }

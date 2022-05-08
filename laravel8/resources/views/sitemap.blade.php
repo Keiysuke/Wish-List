@@ -36,4 +36,21 @@
             <x-sitemap.link label="Add a selling's state" url="{{ route('states.sells.create') }}" ml="8"/>
         </div>
     </div>
+    <h1 class="text-red-400">{{ __('Video Games Section') }}</h1>
+    <hr class="mb-4"/>
+    <div class="grid grid-cols-4 gap-8">
+        <div class="flex flex-col gap-4">
+            <h2>{{ __('The website') }}</h2>
+            <hr />
+            <x-sitemap.link label="Home" url="{{ route('products.index') }}"/>
+            <x-sitemap.link label="Video games list" url="#" ml="4"/>
+        </div>
+        <div class="flex flex-col gap-4">
+            <h2>{{ __('Database') }}</h2>
+            <hr />
+            <x-sitemap.link label="Dashboard" url="{{ route('websites.index') }}"/>
+            <x-sitemap.link label="Supports list" url="{{ route('vg_supports.index') }}" ml="4"/>
+            <x-sitemap.link label="Add a support" url="{{ route('vg_supports.create') }}" ml="8"/>
+        </div>
+    </div>
 @endsection

@@ -45,6 +45,10 @@ class Purchase extends Model
         return $this->cost - $this->discount;
     }
 
+    public function date($format = 'd/m/Y'){
+        return UtilsController::getDate($this->date, $format);
+    }
+
     public function getBenefice(){
         $s = $this->selling()->first();
         $price_sold = ($s->confirmed_price + $s->shipping_fees);

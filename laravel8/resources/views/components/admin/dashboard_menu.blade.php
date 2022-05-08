@@ -14,6 +14,7 @@
             <a href="{{ route('tags.index') }}" class="sub {{ $sub === 'tags' ? 'active' : '' }}">{{ __('Tags') }}</a>
             <a href="{{ route('states.products.index') }}" class="sub {{ $sub === 'product_states' ? 'active' : '' }}">{{ __("Products' states") }}</a>
             <a href="{{ route('states.sells.index') }}" class="sub {{ $sub === 'sell_states' ? 'active' : '' }}">{{ __("Sellings' states") }}</a>
+            <a href="{{ route('vg_supports.index') }}" class="sub {{ $sub === 'vg_supports' ? 'active' : '' }}">{{ __("Supports list") }}</a>
         @endif
     </div>
     <a href="{{ route('profile.show') }}" class="{{ $menu === 'profil' ? 'active' : '' }}">

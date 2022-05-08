@@ -23,6 +23,7 @@ use App\Http\Controllers\GroupBuyController;
 use App\Http\Controllers\SellingController;
 use App\Http\Controllers\ProductStateController;
 use App\Http\Controllers\SellStateController;
+use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CssColorController;
@@ -109,5 +110,17 @@ Route::prefix('admin')->group(function () {
         'edit' => 'states.sells.edit',
         'update' => 'states.sells.update',
         'destroy' => 'states.sells.destroy',
+    ]);
+    
+    Route::resource('video_games/supports', VgSupportController::class)
+        ->parameters(['supports' => 'vg_support'])
+        ->except(['show'])
+        ->names([
+        'index' => 'vg_supports.index',
+        'create' => 'vg_supports.create',
+        'store' => 'vg_supports.store',
+        'edit' => 'vg_supports.edit',
+        'update' => 'vg_supports.update',
+        'destroy' => 'vg_supports.destroy',
     ]);
 });

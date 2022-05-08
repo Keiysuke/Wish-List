@@ -25,7 +25,7 @@
         @if(!is_null($purchase->customs))
             <p class="text-sm text-red-400"><span class="font-semibold">Douane :</span> {{ $purchase->customs }} €</p>
         @endif
-        <p class="text-sm text-gray-500">via <a class="link no-propagate" href="{{ $purchase->website->url }}" target="_blank">{{ $purchase->website->label }}</a>{{ is_null($purchase->date)? '' : ', le '.date('d/m/Y', strtotime($purchase->date)) }}</p>
+        <p class="text-sm text-gray-500">via <a class="link no-propagate" href="{{ $purchase->website->url }}" target="_blank">{{ $purchase->website->label }}</a>{{ ', le '.$purchase->date() }}</p>
     </div>
     <div class="absolute bottom-1 right-1 cursor-pointer">
         <x-svg.reply class="icon-xs text-green-500 hover:transform hover:scale-150 hover:rotate-180 transform rotate-180 transition ease-in-out duration-200"/>
