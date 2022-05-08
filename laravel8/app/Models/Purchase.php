@@ -15,7 +15,7 @@ use App\Models\GroupBuyPurchase;
 class Purchase extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'product_id', 'product_state_id', 'website_id', 'cost', 'discount', 'date', 'customs'];
+    protected $fillable = ['user_id', 'product_id', 'product_state_id', 'website_id', 'cost', 'discount', 'date', 'date_received', 'customs'];
 
     public function user(){
         return $this->belongsTo(User::class);

@@ -187,10 +187,14 @@ class ProductController extends Controller
             //Filtrés par produits achetés ou non, vendus ou non
             switch($request->purchased){
                 case 'purchased_yes': $buildRequest->whereHas('purchases', function($query){
-                    $query->doesntHave('selling');
-                });
+                        $query->doesntHave('selling');
+                    });
                     break;
                 case 'purchased_no': $buildRequest->doesntHave('purchases');
+                    break;
+                case 'not_received': $buildRequest->whereHas('purchases', function($query){
+                        $query->whereNull('date_received');
+                    });
                     break;
                 case 'selling': $buildRequest->whereHas('sellings', function($query){
                         $query->whereNull('date_send');

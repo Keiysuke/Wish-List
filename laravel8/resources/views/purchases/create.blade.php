@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="flex gap-4 w-3/5">
-                <div class="w-2/3">
+                <div class="w-1/3">
                     <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
                     <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($product_states as $product_state)
@@ -54,6 +54,10 @@
                 <div class="w-1/3">
                     <x-form.label for="date" block required>Date d'achat</x-form.label>
                     <x-form.date name="date" type="date" value="{{ old('date') }}"/>
+                </div>
+                <div class="w-1/3">
+                    <x-form.label for="date_received" block required>Date de réception</x-form.label>
+                    <x-form.date name="date_received" value="{{ old('date_received') }}"/>
                 </div>
             </div>
         </div>

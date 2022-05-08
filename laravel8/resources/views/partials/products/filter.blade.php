@@ -34,6 +34,7 @@
                 <x-filter.radio name="purchased" value="purchased_all" checked>Tous</x-filter.radio>
                 <x-filter.radio name="purchased" value="purchased_yes">Achetés</x-filter.radio>
                 <x-filter.radio name="purchased" value="purchased_no">Pas achetés</x-filter.radio>
+                <x-filter.radio name="purchased" value="not_received">Pas reçu</x-filter.radio>
                 <x-filter.radio name="purchased" value="selling">En vente</x-filter.radio>
                 <x-filter.radio name="purchased" value="resold">Re/vendus</x-filter.radio>
                 <x-filter.radio name="purchased" value="discount">En réduction</x-filter.radio>

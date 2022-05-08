@@ -25,7 +25,8 @@ class PurchaseController extends Controller
             'product_state_id' => $request->product_state_id,
             'website_id' => $request->website_id,
             'cost' => str_replace(',', '.', $request->cost),
-            'date' => $request->date
+            'date' => $request->date,
+            'date_received' => $request->date_received,
         ]);
         $purchase->save();
         
