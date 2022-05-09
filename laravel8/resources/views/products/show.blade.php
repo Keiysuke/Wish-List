@@ -129,15 +129,17 @@
     <x-notification type="success" msg="{{ session('info') }}"/>
     
     <div class="relative flex justify-center border-b-2 mb-4">
-        <x-svg.folder class="absolute left-0 bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
+        <div class="absolute left-0 flex inline-flex gap-2">
+            <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
+                <x-svg.picture class="icon-xs"/>
+            </a>
+            <x-svg.folder class="bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
+        </div>
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
             @if($product->created)
                 <a title="Editer le produit" href="{{ route('products.edit', $product->id) }}" class="title-icon inline-flex">
                     <x-svg.edit class="icon-xs"/>
-                </a>
-                <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
-                    <x-svg.picture class="icon-xs"/>
                 </a>
             @endif
             <span title="Ajouter à une liste" id="add_to_list" class="title-icon add_to_list cursor-pointer inline-flex" onClick="toggleShowLists();">

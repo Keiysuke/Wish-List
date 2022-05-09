@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\VgSupport;
-use Illuminate\Http\Request;
 use App\Http\Requests\VgSupportRequest;
 
 class VgSupportController extends Controller

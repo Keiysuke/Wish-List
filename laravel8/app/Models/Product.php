@@ -111,6 +111,10 @@ class Product extends Model
         $this->created = $this->created_by == \Auth::user()->id;
     }
 
+    public function description($length = 1000){
+        return substr($this->description, 0, $length) . (($length >= 1000)?: '...');
+    }
+    
     public function bestWebsiteOffer(){
         $res = ['price' => $this->real_cost, 'url' => null];
         foreach($this->getAvailableWebsites() as $offer){
