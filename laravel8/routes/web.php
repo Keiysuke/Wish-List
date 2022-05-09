@@ -23,11 +23,12 @@ use App\Http\Controllers\GroupBuyController;
 use App\Http\Controllers\SellingController;
 use App\Http\Controllers\ProductStateController;
 use App\Http\Controllers\SellStateController;
-use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CssColorController;
 use App\Http\Controllers\UtilsController;
+use App\Http\Controllers\VgSupportController;
+use App\Http\Controllers\VgDeveloperController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -122,5 +123,17 @@ Route::prefix('admin')->group(function () {
         'edit' => 'vg_supports.edit',
         'update' => 'vg_supports.update',
         'destroy' => 'vg_supports.destroy',
+    ]);
+
+    Route::resource('video_games/developers', VgDeveloperController::class)
+        ->parameters(['developers' => 'vg_developer'])
+        ->except(['show'])
+        ->names([
+        'index' => 'vg_developers.index',
+        'create' => 'vg_developers.create',
+        'store' => 'vg_developers.store',
+        'edit' => 'vg_developers.edit',
+        'update' => 'vg_developers.update',
+        'destroy' => 'vg_developers.destroy',
     ]);
 });

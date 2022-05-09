@@ -14,6 +14,7 @@
             <ul>
                 <li><a href="#">{{ __('List') }}</a></li>
                 <li><a href="{{ route('vg_supports.index') }}">{{ __('Supports list') }}</a></li>
+                <li><a href="{{ route('vg_developers.index') }}">{{ __('Developers list') }}</a></li>
             </ul>
         </div>
         <div>
