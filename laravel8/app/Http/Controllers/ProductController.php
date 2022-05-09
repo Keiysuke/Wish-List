@@ -13,6 +13,7 @@ use App\Models\Purchase;
 use App\Models\Listing;
 use App\Models\ListingProduct;
 use App\Models\ProductTag;
+use App\Models\Tag;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
@@ -132,16 +133,18 @@ class ProductController extends Controller
             }
 
             $buildRequest = Product::query();
-            $filter_pw = $filter_tag = [];
+            $filter_pw = [];
+            $filter_tag = ['in' => [], 'out' => []];
             //Filtrés par sites
             foreach($request->websites as $product_website){
                 $r = explode('_', $product_website);
                 $filter_pw[] = intval($r[1]);
             }
+            $tags = Tag::all();
             //Filtrés par tags
-            foreach($request->tags as $tag){
-                $r = explode('_', $tag);
-                $filter_tag[] = intval($r[1]);
+            foreach($tags as $tag){
+                if(in_array('tag_'.$tag->id, $request->tags)) $filter_tag['in'][] = $tag->id;
+                else $filter_tag['out'][] = $tag->id;
             }
 
             if($request->url === 'products/user'){
@@ -178,10 +181,15 @@ class ProductController extends Controller
             if($request->no_tag){
                 $buildRequest->wheredoesntHave('tags');
                 
-            }elseif(count($filter_tag) > 0){
+            }elseif(count($filter_tag['in']) > 0){
                 $buildRequest->whereHas('tags', function($query) use ($filter_tag){
-                    $query->whereIn('tag_id', $filter_tag);
+                    $query->whereIn('tag_id', $filter_tag['in']);
                 });
+                if($request->exclusive_tags){
+                    $buildRequest->whereDoesntHave('tags', function($query) use ($filter_tag){
+                        $query->whereIn('tag_id', $filter_tag['out']);
+                    });
+                }
             }
             
             //Filtrés par produits achetés ou non, vendus ou non

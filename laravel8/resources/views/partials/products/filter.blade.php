@@ -1,11 +1,14 @@
 <div id="content_filters" class="flex flex-col gap-4 mb-8 hidden">
     <div class="flex flex-grow justify-center gap-4">
         <div class="filter_block flex flex-col w-1/2 items-center gap-2">
-            <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">
-                <label class="absolute top-2 left-2 text-xs" for="no_tag">Aucun <input id="no_tag" name="no_tag" type="checkbox"/></label>
+            <div class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">
+                <div class="flex inline-flex gap-2 absolute top-2 left-2 text-xs">
+                    <label for="no_tag">Aucun <input class="ml-1" id="no_tag" name="no_tag" type="checkbox"/></label>
+                    <label for="exclusive_tags">Exclusif <input class="ml-1" id="exclusive_tags" name="exclusive_tags" type="checkbox"/></label>
+                </div>
                 Tags
-                <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input id="check_all_tags" type="checkbox" checked/></label>
-            </p>
+                <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input class="ml-1" id="check_all_tags" type="checkbox" checked/></label>
+            </div>
             <div class="grid grid-cols-{{ (count($tags) >= 12)? 4 : 3 }} gap-x-12 gap-y-2 px-8">
                 @foreach ($tags as $tag)
                     <div class="inline-flex">
@@ -16,7 +19,7 @@
             </div>
         </div>
         <div class="filter_block flex flex-col w-1/2 items-center gap-2">
-            <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Sites de vente <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input id="check_all_websites" type="checkbox"/></label></p>
+            <p class="relative w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Sites de vente <label class="absolute top-2 right-2 text-xs">Dé/cocher tout <input class="ml-1" id="check_all_websites" type="checkbox"/></label></p>
             <div class="grid grid-cols-5 gap-x-12 px-8">
                 @foreach ($websites as $website)
                     <div class="inline-flex">
