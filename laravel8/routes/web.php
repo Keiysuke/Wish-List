@@ -83,6 +83,7 @@ Route::post('color/variants', [CssColorController::class, 'get_variants'])->name
 //Help sidebar
 Route::post('benefit', [UtilsController::class, 'simulate_benefit'])->name('simulate_benefit');
 
+Route::get('autocomplete', [SearchController::class, 'autocomplete'])->name('autocomplete');
 
 //Admin routes
 Route::prefix('admin')->group(function () {

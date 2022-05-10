@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Listing;
 use App\Models\Product;
+use App\Models\VgSupport;
+use App\Models\VideoGame;
 
 class SearchController extends Controller
 {
@@ -32,5 +34,25 @@ class SearchController extends Controller
 
             return response()->json(['success' => true, 'result' => $products]);
         }
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $data = [];
+        if($request->filled('q')){
+            switch($request->searchDataType){
+                case 'video_game':
+                    $data = VideoGame::select("label", "id")
+                        ->where('label', 'LIKE', '%'. $request->get('q'). '%')
+                        ->get();
+                    break;
+                case 'vg_support':
+                    $data = VgSupport::select("label", "id")
+                        ->where('label', 'LIKE', '%'. $request->get('q'). '%')
+                        ->get();
+                    break;
+            }
+        }
+        return response()->json($data);
     }
 }

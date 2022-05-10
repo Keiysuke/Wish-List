@@ -18,6 +18,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use EloquentBuilder;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProductTemplateController;
 
 class ProductController extends Controller
 {
@@ -386,26 +387,38 @@ class ProductController extends Controller
     
     public function update(ProductRequest $request, Product $product){
         if($request->add_purchase){
-            $request->merge(['price' => str_replace(',', '.', $request->price),
-            'cost' => str_replace(',', '.', $request->cost)
-        ]);
-    }
-    $tag_ids = $request->tag_ids ?? [];
-    $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
-    
-    $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
-    $product->update($request->all());
-    return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
-}
+            $request->merge([
+                'price' => str_replace(',', '.', $request->price),
+                'cost' => str_replace(',', '.', $request->cost)
+            ]);
+        }
+        $tag_ids = $request->tag_ids ?? [];
+        $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
+        
+        $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
+        $product->update($request->all());
+        
+        //Updating product's template
+        $template = new ProductTemplateController($product->id);
+        $templates = [
+            'video_game' => $request->lk_video_game,
+            'vg_support' => $request->lk_vg_support,
+            'none' => null,
+        ];
+        $template->update($product, $request->template_type, $templates);
 
-public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
-    foreach($old_tags as $old_id){ //Delete old and no more selected tags
-        if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
+        return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
     }
-    foreach($new_tags as $new_id){ //Adding new tags not previously selected
+
+    public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
+        foreach($old_tags as $old_id){ //Delete old and no more selected tags
+            if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
+        }
+        foreach($new_tags as $new_id){ //Adding new tags not previously selected
             if(!in_array($new_id, $old_tags)){
                 (new ProductTag(['product_id' => $product_id, 'tag_id' => $new_id]))->save();
             }
         }
     }
 }
+

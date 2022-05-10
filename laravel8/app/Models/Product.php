@@ -16,7 +16,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = ['label', 'description', 'img_ext', 'limited_edition', 'real_cost'];
-    
+
     public function users(){
         return $this->belongsToMany(User::class, 'product_users')->withPivot('archive')->withTimestamps();
     }
@@ -123,5 +123,15 @@ class Product extends Model
             }
         }
         return array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);
+    }
+
+    public function get_template(): object{
+        $video_game = ProductAsVideoGame::where('product_id', '=', $this->id)->first();
+        if(!is_null($video_game)) return (object)['type' => 'video_game', 'id' => $video_game->id];
+
+        $support = VgSupport::where('product_id', '=', $this->id)->first();
+        if(!is_null($support)) return (object)['type' => 'vg_support', 'id' => $support->id];
+
+        return (object)['type' => 'none', 'id' => null];
     }
 }
