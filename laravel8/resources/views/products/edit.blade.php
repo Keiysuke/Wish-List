@@ -145,7 +145,7 @@
                     </div>
                 </div>
                 <div class="w-2/3">
-                    <x-form.label for="tag_ids" block required>Tags associés</x-form.label>
+                    <x-form.label for="tag_ids" block required create="{{ route('tags.create') }}">Tags associés</x-form.label>
                     <select multiple name="tag_ids[]" id="tag_ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', $product->tag_ids()))) selected @endif>{{ $tag->label }}</option>

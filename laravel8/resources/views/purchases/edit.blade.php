@@ -38,7 +38,7 @@
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
-                    <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
+                    <x-form.label for="product_state_id" block required create="{{ route('states.products.create') }}">Etat du produit</x-form.label>
                     <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($product_states as $product_state)
                             <option value="{{ $product_state->id }}" @if(strcmp(old('product_state_id', $purchase->product_state_id), $product_state->id) === 0) selected @endif>{{ $product_state->label }}</option>
@@ -62,7 +62,7 @@
         
         <div class="flex gap-4 mb-4">
             <div class="w-2/5">
-                <x-form.label for="website_id" block required>Site web</x-form.label>
+                <x-form.label for="website_id" block required create="{{ route('websites.create') }}">Site web</x-form.label>
                 <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($websites as $website)
                         <option value="{{ $website->id }}" @if(strcmp(old('website_id', $purchase->website_id), $website->id) === 0) selected @endif>{{ $website->label }}</option>

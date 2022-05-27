@@ -40,7 +40,7 @@
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
-                    <x-form.label for="product_state_id" block required>Etat du produit</x-form.label>
+                    <x-form.label for="product_state_id" block required create="{{ route('states.products.create') }}">Etat du produit</x-form.label>
                     <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($product_states as $product_state)
                             <option value="{{ $product_state->id }}" @if(old('product_state_id') === $product_state->id) selected @endif>{{ $product_state->label }}</option>
@@ -64,7 +64,7 @@
         
         <div class="flex gap-4 mb-4">
             <div class="w-2/5">
-                <x-form.label for="website_id" block required>Site web</x-form.label>
+                <x-form.label for="website_id" block required create="{{ route('websites.create') }}">Site web</x-form.label>
                 <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($websites as $website)
                         <option value="{{ $website->id }}" @if(old('website_id') === $website->id) selected @endif>{{ $website->label }}</option>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="grid grid-cols-2 gap-4 w-1/2">
                     <div>
-                        <x-form.label for="sell_product_state_id" block required>Etat du produit</x-form.label>
+                        <x-form.label for="sell_product_state_id" block required create="{{ route('states.products.create') }}">Etat du produit</x-form.label>
                         <select name="sell_product_state_id" id="sell_product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                             @foreach($product_states as $product_state)
                                 <option value="{{ $product_state->id }}" @if(old('sell_product_state_id') == $product_state->id) selected @endif>{{ $product_state->label }}</option>

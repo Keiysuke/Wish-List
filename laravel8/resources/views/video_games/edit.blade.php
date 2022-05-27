@@ -31,7 +31,7 @@
                 <x-form.input name="label" placeholder="Uncharted : Lost Legacy" value="{{ old('label', $video_game->label) }}"/>
             </div>
             <div class="w-2/5">
-                <x-form.label for="developer_id" block required>Studio de développement</x-form.label>
+                <x-form.label for="developer_id" block required create="{{ route('vg_developers.create') }}">Studio de développement</x-form.label>
                 <select name="developer_id" id="developer_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($developers as $developer)
                         <option value="{{ $developer->id }}" @if(strcmp(old('developer_id', $video_game->developer_id), $developer->id) === 0) selected @endif>{{ $developer->label }}</option>
