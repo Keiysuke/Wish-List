@@ -26,6 +26,7 @@ use App\Http\Controllers\SellStateController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CssColorController;
+use App\Http\Controllers\ScriptsController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
@@ -145,3 +146,5 @@ Route::prefix('admin')->group(function () {
         'destroy' => 'vg_developers.destroy',
     ]);
 });
+
+Route::get('scripts/video_games/product/link', [ScriptsController::class, 'lk_all_vg_to_product'])->name('script_lk_all_vg');

@@ -70,7 +70,7 @@
                     return {
                         results:  $.map(data, function (item) {
                             return {
-                                text: item.label,
+                                text: item.alias + ' - ' + item.label,
                                 id: item.id
                             }
                         })

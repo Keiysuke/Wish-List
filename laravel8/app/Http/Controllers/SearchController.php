@@ -47,8 +47,9 @@ class SearchController extends Controller
                         ->get();
                     break;
                 case 'vg_support':
-                    $data = VgSupport::select("label", "id")
+                    $data = VgSupport::select("label", "alias", "id")
                         ->where('label', 'LIKE', '%'. $request->get('q'). '%')
+                        ->Orwhere('alias', 'LIKE', '%'. $request->get('q'). '%')
                         ->get();
                     break;
             }

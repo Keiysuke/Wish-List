@@ -45,7 +45,9 @@ class VideoGame extends Model
      * @return array
     */
     public function fast_link_product($support_id = null){
-        $products = Product::where('label', 'like', '%'.$this->label.'%')->get();
+        $products = Product::where('label', 'like', '%'.$this->label.'%')
+            ->orWhere('label', 'like', '%'.str_replace(': ', '%', $this->label).'%')
+            ->get();
         if(count($products) === 1){
             $product = $products->first();
 
@@ -64,7 +66,12 @@ class VideoGame extends Model
                     ->get();
                 
                 if (count($pvg) > 0) { //Already linked to a product
-                    return ['success' => true, 'msg' => 'Altready linked to product(s)'];
+                    $pvg = $pvg->first();
+                    if ($pvg->video_game_id !== $this->id) {
+                        return ['success' => true, 'msg' => 'Linked to another product : '.$pvg->video_game_id];
+                    } else {
+                        return ['success' => true, 'msg' => 'Already linked to that product'];
+                    }
                 } else { //Linking to the product found
                     $pvg = new ProductAsVideoGame([
                         'product_id' => $product->id, 
