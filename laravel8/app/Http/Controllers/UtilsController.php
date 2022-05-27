@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\VideoGame;
 use Illuminate\Http\Request;
 
 class UtilsController extends Controller
@@ -28,5 +29,21 @@ class UtilsController extends Controller
 
     public static function getDate($date, $format = 'd/m/Y'){
         return is_null($date)? '' : date($format, strtotime($date));
+    }
+
+    public static function psthc($search, $support = 'ps4') {
+        $replace = [
+            ' ' => '-', 
+            "&#039;s" => '', 
+            ':' => '',
+            'of ' => '',
+        ];
+        $search = strtolower(strtr($search, $replace));
+        $s = '';
+        foreach(explode('-', $search) as $term){
+            if(!strcmp($term, intval($term))) $s .= $term;
+            else $s .= $term.'-';
+        }
+        return 'https://www.psthc.fr/unjeu/' . $s . strtolower($support);
     }
 }

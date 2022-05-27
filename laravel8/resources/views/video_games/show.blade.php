@@ -59,6 +59,8 @@
             <a title="Editer le jeu vidéo" href="{{ route('video_games.edit', $video_game->id) }}" class="title-icon inline-flex">
                 <x-svg.edit class="icon-xs"/>
             </a>
+            <x-utils.yt.title_icon search="{{ $video_game->label }} Soundtrack"/>
+            <x-utils.psthc.title_icon search="{{ $video_game->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
         </div>
     </div>
     <div class="flex justify-between h-full divide-x-2 pb-12">

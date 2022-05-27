@@ -147,6 +147,29 @@ a.link:hover {
   background-color: rgba(161, 98, 7, var(--tw-bg-opacity));
 }
 
+.title-icon.music {
+  --tw-text-opacity: 1;
+  color: rgba(168, 85, 247, var(--tw-text-opacity));
+}
+
+.title-icon.music:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(168, 85, 247, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.title-icon.trophy {
+  --tw-text-opacity: 1;
+  color: rgba(161, 98, 7, var(--tw-text-opacity));
+}
+
+.title-icon.trophy:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(253, 224, 71, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
 li.li_website.expired {
   text-decoration: line-through;
 }

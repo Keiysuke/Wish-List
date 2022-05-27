@@ -127,6 +127,23 @@ a.link:hover {
     @apply bg-yellow-700;
 }
 
+.title-icon.music {
+    @apply text-purple-500;
+}
+
+.title-icon.music:hover {
+    @apply bg-purple-500;
+    @apply text-white;
+}
+
+.title-icon.trophy {
+    @apply text-yellow-700;
+}
+
+.title-icon.trophy:hover {
+    @apply bg-yellow-300;
+    @apply text-black;
+}
 li.li_website.expired {
     text-decoration: line-through;
 }
