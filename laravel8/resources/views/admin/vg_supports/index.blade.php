@@ -38,6 +38,11 @@
                     </div>
                 @endforeach
             </div>
+            @if(count($vg_supports) > 0)
+            <footer id="paginate" class="card-footer flex justify-center p-4">
+                {{ $vg_supports->links() }}
+            </footer>
+            @endif
         </div>
     </div>
 </x-app-layout>

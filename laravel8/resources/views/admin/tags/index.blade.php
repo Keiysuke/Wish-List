@@ -25,7 +25,7 @@
                             <x-utils.v_line />
                             <x-tags.tag :tag="$tag"/>
                         </div>
-                        <div class="flex flex-around gap-4 text-sm">
+                        <div class="flex flex-around items-center gap-4 text-sm">
                             <a class="bg-indigo-600 text-gray-200 rounded p-1 px-4 hover:bg-indigo-400 hover:text-white" href="{{ route('tags.edit', $tag->id) }}">Editer</a>
                             <form action="{{ route('tags.destroy', $tag->id) }}" method="post">
                                 @csrf
