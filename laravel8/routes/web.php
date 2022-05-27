@@ -89,6 +89,8 @@ Route::get('autocomplete', [SearchController::class, 'autocomplete'])->name('aut
 Route::resource('video_games', VideoGameController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 Route::get('video_games/filter', [VideoGameController::class, 'index'])->name('video_games_search');
 Route::post('video_games/filter', [VideoGameController::class, 'filter'])->name('video_games_search');
+Route::post('video_games/products/link', [UtilsController::class, 'lk_vg_to_product'])->name('vg_link_product');
+Route::post('video_games/products/unlink', [VideoGameController::class, 'unlink_product'])->name('vg_unlink_product');
 
 //Admin routes
 Route::prefix('admin')->group(function () {

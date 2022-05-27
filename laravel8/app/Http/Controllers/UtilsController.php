@@ -46,4 +46,13 @@ class UtilsController extends Controller
         }
         return 'https://www.psthc.fr/unjeu/' . $s . strtolower($support);
     }
+
+    public function lk_vg_to_product(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['video_game_id' => 'bail|required|int', 'vg_support_id' => 'bail|nullable|int']);
+            
+            $vg = VideoGame::find($request->video_game_id);
+            return response()->json($vg->fast_link_product($request->vg_support_id));
+        }
+    }
 }

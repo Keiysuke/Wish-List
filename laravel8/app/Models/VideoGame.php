@@ -38,4 +38,44 @@ class VideoGame extends Model
         $products = $this->products;
         return (count($products) > 0)? $products->first()->support : null;
     }
+
+    /** 
+     * Return an array containing datas corresponding if the JV has successfully been linked to a product/support
+     * @param int $support_id
+     * @return array
+    */
+    public function fast_link_product($support_id = null){
+        $products = Product::where('label', 'like', '%'.$this->label.'%')->get();
+        if(count($products) === 1){
+            $product = $products->first();
+
+            if (is_null($support_id)) {
+                $supports = VgSupport::all();
+                foreach($supports as $support){
+                    if(strpos($product->label, $support->alias) === false) continue;
+                    $support_id = $support->id;
+                }
+            }
+
+            if (!is_null($support_id)) { //If it's still null, we can't link
+                $pvg = ProductAsVideoGame::where('video_game_id', '=', $this->id)
+                    ->where('vg_support_id', '=', $support_id)
+                    ->where('product_id', '=', $product->id)
+                    ->get();
+                
+                if (count($pvg) > 0) { //Already linked to a product
+                    return ['success' => true, 'msg' => 'Altready linked to product(s)'];
+                } else { //Linking to the product found
+                    $pvg = new ProductAsVideoGame([
+                        'product_id' => $product->id, 
+                        'video_game_id' => $this->id, 
+                        'vg_support_id' => $support_id, 
+                    ]);
+                    $pvg->save();
+                }
+                return ['success' => true, 'msg' => 'Correctly linked to product'];
+            }
+        }
+        return ['success' => false, 'msg' => 'No product found'];
+    }
 }

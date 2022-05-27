@@ -144,6 +144,16 @@ a.link:hover {
     @apply bg-yellow-300;
     @apply text-black;
 }
+
+.title-icon.refresh {
+    @apply text-green-500;
+}
+
+.title-icon.refresh:hover {
+    @apply bg-green-500;
+    @apply text-white;
+}
+
 li.li_website.expired {
     text-decoration: line-through;
 }
@@ -171,4 +181,16 @@ span.tag {
     @apply p-1;
     @apply px-2;
     @apply rounded-full;
+}
+
+a#show_video_game:hover{
+    @apply bg-red-700;
+}
+
+a#show_video_game svg{
+    @apply text-red-700;
+}
+
+a#show_video_game:hover svg{
+    @apply text-white;
 }

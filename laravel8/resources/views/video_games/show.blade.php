@@ -38,6 +38,33 @@
         document.getElementById('content_picture_zoomed').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
+
+    document.querySelector('#fast_lk_product').addEventListener('click', () => {
+        my_fetch('{{ route('vg_link_product') }}', {method: 'post', csrf: true}, {
+            video_game_id: document.getElementById('video_game_id').value,
+            vg_support_id: null
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            console.log(res); //TODO Flash Message
+            if (res.success) location.reload();
+        });
+    });
+    
+    Array.from(document.getElementsByClassName('unlink_product')).forEach(el => { el.addEventListener('click', unlinkProduct); });
+    function unlinkProduct(e){
+        let id = e.target.dataset.id
+        my_fetch('{{ route('vg_unlink_product') }}', {method: 'post', csrf: true}, {
+            id: id
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            if (res.success) {
+                document.querySelector('#product_link_'+id).remove()
+            }
+        });
+    }
+</script>
 @endsection
 
 @php($support = $video_game->support())
@@ -80,6 +107,23 @@
                             <p class="text-sm ml-4 italic">{!! nl2br($video_game->description) !!}</p>
                         </div>
                     </div>
+                </div>
+                <div class="h-full">
+                    <div class="relative flex justify-between border-b-2 mb-4">
+                        <div class="flex align-start gap-1">
+                            <x-svg.big.shop_bag class="w-7"/>
+                            <h2>Produits associées :</h2>
+                        </div>
+                        <div class="absolute right-0 -top-1">
+                            <span id="fast_lk_product" title="Association auto" class="title-icon refresh cursor-pointer inline-flex">
+                                <x-svg.refresh class="icon-xs"/>
+                            </span>
+                            <a title="Associer un produit" href="{{ route('my_products', ['search' => $video_game->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
+                                <x-svg.search class="icon-xs"/>
+                            </a>
+                        </div>
+                    </div>
+                    @include('partials.video_games.list.products', $products)
                 </div>
             </div>
         </div>

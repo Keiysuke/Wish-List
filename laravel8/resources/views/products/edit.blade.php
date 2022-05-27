@@ -54,6 +54,7 @@
 
         $('#lk_vg_support').select2({
             placeholder: 'Sélectionnez un support de jv...',
+            allowClear: true,
             ajax: {
                 url: "{{ route('autocomplete') }}",
                 dataType: 'json',
@@ -87,7 +88,7 @@
 <x-notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
-    <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('products.update', $product) }}" method="POST">
+    <form id="my_form" class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('products.update', $product) }}" method="POST">
         @csrf
         @method('put')
         <div class="relative flex">

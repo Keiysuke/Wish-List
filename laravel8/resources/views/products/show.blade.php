@@ -137,6 +137,11 @@
         </div>
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
+            @if($product->video_game)
+                <a id="show_video_game" title="Voir le jeu vidéo" href="{{ route('video_games.show', $product->video_game->video_game_id) }}" class="title-icon inline-flex">
+                    <x-svg.big.vg_controller class="icon-xs"/>
+                </a>
+            @endif
             @if($product->created)
                 <a title="Editer le produit" href="{{ route('products.edit', $product->id) }}" class="title-icon inline-flex">
                     <x-svg.edit class="icon-xs"/>
