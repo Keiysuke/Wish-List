@@ -16,7 +16,7 @@ Breadcrumbs::for('sitemap', function ($trail) {
 //Home > Produits
 Breadcrumbs::for('list', function ($trail, $elem) {
     $trail->parent('home');
-    $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes'];
+    $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes', 'video_game' => 'Jeux Vidéo'];
     $trail->push(str_replace($elem, $elem, $all[$elem]), route((!strcmp($elem, 'product')? 'my_products' : $elem.'s.index')));
 });
 

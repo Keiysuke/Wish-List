@@ -29,6 +29,7 @@ use App\Http\Controllers\CssColorController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
+use App\Http\Controllers\VideoGameController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -84,6 +85,10 @@ Route::post('color/variants', [CssColorController::class, 'get_variants'])->name
 Route::post('benefit', [UtilsController::class, 'simulate_benefit'])->name('simulate_benefit');
 
 Route::get('autocomplete', [SearchController::class, 'autocomplete'])->name('autocomplete');
+
+Route::resource('video_games', VideoGameController::class)->middleware(['auth', 'verified'])->except(['destroy']);
+Route::get('video_games/filter', [VideoGameController::class, 'index'])->name('video_games_search');
+Route::post('video_games/filter', [VideoGameController::class, 'filter'])->name('video_games_search');
 
 //Admin routes
 Route::prefix('admin')->group(function () {

@@ -21044,6 +21044,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/video_games_search.css":
+/*!**********************************************!*\
+  !*** ./resources/css/video_games_search.css ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/list_products.css":
 /*!*****************************************!*\
   !*** ./resources/css/list_products.css ***!
@@ -21410,6 +21423,7 @@ process.umask = function() { return 0; };
 /******/ 			["./resources/css/sidebar.css"],
 /******/ 			["./resources/css/pagination.css"],
 /******/ 			["./resources/css/products_search.css"],
+/******/ 			["./resources/css/video_games_search.css"],
 /******/ 			["./resources/css/list_products.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading

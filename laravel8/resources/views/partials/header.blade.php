@@ -65,11 +65,14 @@
         <a href="{{ route('lists.index') }}">{{ __("My lists") }}</a>
         <a href="{{ route('user_historic', 'purchases') }}">{{ __('My purchases') }}</a>
         <a href="{{ route('user_historic', 'sellings') }}">{{ __('My sells') }}</a>
+        <a href="{{ route('video_games.index') }}">{{ __('My video games') }}</a>
     </div>
     <div id="submenu_create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
         <a href="{{ route('products.create') }}">{{ __('Product') }}</a>
         <a href="{{ route('group_buys.create') }}">{{ __('Group purchase') }}</a>
         <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
+        <hr class="py-1 border-red-600"/>
+        <a href="{{ route('video_games.create') }}">{{ __("Video Games") }}</a>
         <hr class="py-1 border-black"/>
         <a href="{{ route('websites.create') }}">{{ __('Website') }}</a>
         <a href="{{ route('tags.create') }}">{{ __('Tag') }}</a>

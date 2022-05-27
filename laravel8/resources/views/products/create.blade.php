@@ -33,41 +33,60 @@
 
         <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
         <div class="flex gap-4">
-            <div class="w-5/12">
-                <x-form.label for="label" block required>Nom du produit</x-form.label>
-                <x-form.input name="label" placeholder="Uncharted 4" value="{{ old('label') }}"/>
+            <div class="flex flex-col items-center w-2/12">
+                <input type="file" accept="image/*" id="photo_1" name="photo_1" class="hidden" onchange="loadFile(event)">
+                <div class="inline-flex">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <label class="custom-file-label cursor-pointer" for="photo_1" data-browse="Parcourir">Choisissez une image <span class="required">*</span></label>
+                </div>
+                <label for="photo_1" class="cursor-pointer"><img id="img" class="border max-w-20 max-h-32" src="{{ asset('resources/images/no_pict.png') }}"/></label>
+                @error('photo_1')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="flex flex-col w-7/12 gap-4">
+                <div>
+                    <x-form.label for="label" block required>Nom du produit</x-form.label>
+                    <x-form.input name="label" placeholder="Uncharted 4" value="{{ old('label') }}"/>
+                </div>
+                <div class="flex gap-4">
+                    <div class="w-1/5">
+                        <x-form.label for="template_type" block>Type du produit</x-form.label>
+                        <select name="template_type" id="template_type" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                            <option value="none">Aucun</option>
+                            <option value="video_game" @if(strcmp(old('template_type'), 'video_game') === 0) selected @endif>Jeu Vidéo</option>
+                            <option value="vg_support" @if(strcmp(old('template_type'), 'vg_support') === 0) selected @endif>Support de JV</option>
+                        </select>
+                        @error('template_type')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="w-4/5">
+                        <x-form.label for="product_type_linked" block>Associer avec l'existant</x-form.label>
+                        <x-form.input name="product_type_linked" placeholder="Commencez à saisir le nom..." value="{{ old('product_type_linked') }}"/>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex justify-around w-7/12 gap-4">
-                <div class="w-2/5">
-                    <x-form.label for="tag_ids" block required>Tags associés</x-form.label>
+            <div class="flex justify-around w-3/12 gap-4">
+                <div class="flex flex-col w-1/3 gap-4">
+                    <div>
+                        <x-form.label for="limited_edition" block>Edition limitée ?</x-form.label>
+                        <x-form.input name="limited_edition" placeholder="3000" value="{{ old('limited_edition') }}"/>
+                    </div>
+                    <div>
+                        <x-form.label for="real_cost" block required>Prix neuf (€)</x-form.label>
+                        <x-form.input name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
+                    </div>
+                </div>
+                <div class="w-2/3">
+                    <x-form.label for="tag_ids" block required create="{{ route('tags.create') }}">Tags associés</x-form.label>
                     <select multiple name="tag_ids[]" id="tag_ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', []))) selected @endif>{{ $tag->label }}</option>
                         @endforeach
                     </select>
                     @error('product_state_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="flex w-2/5 gap-4">
-                    <div class="w-1/2">
-                        <x-form.label for="limited_edition" block>Edition limitée ?</x-form.label>
-                        <x-form.input name="limited_edition" placeholder="3000" value="{{ old('limited_edition') }}"/>
-                    </div>
-                    <div class="w-1/2">
-                        <x-form.label for="real_cost" block required>Prix neuf (€)</x-form.label>
-                        <x-form.input name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
-                    </div>
-                </div>
-                <div class="flex flex-col items-center w-1/5">
-                    <input type="file" accept="image/*" id="photo_1" name="photo_1" class="hidden" onchange="loadFile(event)">
-                    <div class="inline-flex">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <label class="custom-file-label cursor-pointer" for="photo_1" data-browse="Parcourir">Choisissez une image <span class="required">*</span></label>
-                    </div>
-                    <label for="photo_1" class="cursor-pointer"><img id="img" class="border max-w-20 max-h-32" src="https://place-hold.it/80x60"/></label>
-                    @error('photo_1')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

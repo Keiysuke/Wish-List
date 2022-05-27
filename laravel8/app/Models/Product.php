@@ -11,6 +11,7 @@ use App\Models\Selling;
 use App\Models\ProductPhoto;
 use App\Models\Listing;
 use App\Models\Tag;
+use App\Models\VideoGame;
 
 class Product extends Model
 {
@@ -27,6 +28,10 @@ class Product extends Model
     
     public function productWebsites(){
         return $this->hasMany(ProductWebsite::class);
+    }
+
+    public function video_game(){
+        return $this->hasOne(ProductAsVideoGame::class);
     }
     
     public function tags(){
@@ -122,7 +127,7 @@ class Product extends Model
                 $res = ['price' => $offer->price, 'url' => $offer->url];
             }
         }
-        return array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);
+        return (Object)array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);
     }
 
     public function get_template(): object{

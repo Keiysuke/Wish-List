@@ -90,7 +90,14 @@
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('products.update', $product) }}" method="POST">
         @csrf
         @method('put')
-        <h1>Edition du produit</h1>
+        <div class="relative flex">
+            <h1>Edition du produit</h1>
+            <div class="absolute right-0 bottom-0">
+                <a href="{{ route('products.create') }}" title="Créer un nouveau produit" class="title-icon cursor-pointer inline-flex">
+                    <x-svg.plus class="icon-xs"/>
+                </a>
+            </div>
+        </div>
         <hr/>
         
         <div class="flex gap-4 mb-4">

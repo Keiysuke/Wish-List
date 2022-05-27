@@ -11,7 +11,7 @@ use App\Models\VgSupport;
 class ProductAsVideoGame extends Model
 {
     use HasFactory;
-    protected $fillable = ['product_id', 'video_game_id', 'vg_support_id', 'label', 'ordered'];
+    protected $fillable = ['product_id', 'video_game_id', 'vg_support_id'];
 
     public function product(){
         return $this->belongsTo(Product::class);

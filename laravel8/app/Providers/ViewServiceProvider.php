@@ -11,6 +11,8 @@ use App\Models\SellState;
 use App\Models\User;
 use App\Models\Tag;
 use App\Models\CssColor;
+use App\Models\VgDeveloper;
+use App\Models\VgSupport;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -51,6 +53,15 @@ class ViewServiceProvider extends ServiceProvider
         });
         View::composer(['group_buys.create', 'group_buys.edit'], function ($view) {
             $view->with('products', User::find(\Auth::user()->id)->products()->orderBy('label')->get());
+        });
+        
+        //Video Games Section
+        View::composer(['video_games.create', 'video_games.edit', 'video_games.index'], function ($view) {
+            $view->with('developers', VgDeveloper::orderBy('label')->get());
+        });
+        View::composer(['video_games.index'], function ($view) {
+            $view->with('developers', VgDeveloper::orderBy('label')->get());
+            $view->with('vg_supports', VgSupport::orderBy('label')->get());
         });
         
         //Admin
