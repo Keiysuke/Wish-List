@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class AddCanSellToWebsitesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::table('websites', function (Blueprint $table) {
@@ -18,11 +13,6 @@ class AddCanSellToWebsitesTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::table('websites', function (Blueprint $table) {

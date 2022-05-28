@@ -67,7 +67,7 @@ div.grid_product div.down.offer-soon div p {
     @apply shadow;
     @apply fixed;
     @apply py-2;
-    @apply pl-8;
+    @apply pl-14;
     @apply pr-12;
     @apply w-screen;
     @apply left-0;

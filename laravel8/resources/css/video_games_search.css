@@ -38,13 +38,13 @@
     @apply shadow;
     @apply fixed;
     @apply py-2;
-    @apply pl-8;
+    @apply pl-14;
     @apply pr-12;
     @apply w-screen;
     @apply left-0;
     z-index: 8;
     top: 3.4rem;
-    background-color: bisque;
+    background-color: lightsalmon;
 }
 
 .sticky_search_bar div#search_bar {

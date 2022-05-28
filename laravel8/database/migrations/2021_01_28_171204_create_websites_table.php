@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateWebsitesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('websites', function (Blueprint $table) {
@@ -21,12 +16,7 @@ class CreateWebsitesTable extends Migration
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    
     public function down()
     {
         Schema::dropIfExists('websites');

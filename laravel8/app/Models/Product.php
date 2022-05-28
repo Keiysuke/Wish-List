@@ -117,7 +117,8 @@ class Product extends Model
     }
 
     public function description($length = 1000){
-        return substr($this->description, 0, $length) . (($length >= 1000)?: '...');
+        $desc = substr($this->description, 0, $length) . (($length >= 1000)? '' : '...');
+        return $desc;
     }
     
     public function bestWebsiteOffer(){

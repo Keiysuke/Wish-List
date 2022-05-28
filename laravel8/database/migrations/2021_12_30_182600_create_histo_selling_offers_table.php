@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateHistoSellingOffersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('histo_selling_offers', function (Blueprint $table) {
@@ -28,11 +23,6 @@ class CreateHistoSellingOffersTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('histo_selling_offers');

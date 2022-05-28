@@ -25,8 +25,8 @@
                     <p class="italic py-2 px-3 text-xs mb-1">{{ $product->description }}</p>
                     <div class="flex h-full items-end text-xs px-3">
                         <div class="flex pb-1">
-                            <p class="flex inline-flex gap-2 font-semibold">Prix : <span class="font-normal text-{{ $offer['color'] }}-400">{{ $offer['price'] }} €</span>
-                                <x-svg.external_link href="{{ $offer['url'] }}" target="_blank" class="icon-xs icon-clickable text-blue-400"/>
+                            <p class="flex inline-flex gap-2 font-semibold">Prix : <span class="font-normal text-{{ $offer->color }}-400">{{ $offer->price }} €</span>
+                                <x-svg.external_link href="{{ $offer->url }}" target="_blank" class="icon-xs icon-clickable text-blue-400"/>
                             </p>
                             <x-utils.v_line height="4" />
                             <p class="font-semibold">Edition limitée : <span class="font-normal">{{ is_null($product->limited_edition)? 'Non' : $product->limited_edition.' ex.' }}</span></p>
