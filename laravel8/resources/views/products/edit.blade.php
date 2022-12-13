@@ -123,11 +123,11 @@
                         @enderror
                     </div>
                     <div id="wrap_lk_video_game" class="w-2/5">
-                        <x-form.label for="lk_video_game" block>Associer l'existant</x-form.label>
+                        <x-form.label for="lk_video_game" required block>Associer le jeu vidéo</x-form.label>
                         <select name="lk_video_game" id="lk_video_game" value="{{ old('lk_video_game') }}" class="w-full"></select>
                     </div>
                     <div id="wrap_lk_vg_support" class="w-2/5">
-                        <x-form.label for="lk_vg_support" block>Associer l'existant</x-form.label>
+                        <x-form.label for="lk_vg_support" required block>Associer le support</x-form.label>
                         <select name="lk_vg_support" id="lk_vg_support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
                     </div>
                 </div>

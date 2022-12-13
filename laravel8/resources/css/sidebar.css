@@ -72,7 +72,7 @@
 }
 
 .sidebar_content p:not(:first-child) {
-    @apply mt-12;
+    @apply mt-10;
 }
 
 div.square {
