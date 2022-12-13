@@ -1,6 +1,7 @@
 <div class="sidebar_content text-sm" id="left_sidebar_websites">
-    @foreach($user_website_sections as $section_label => $user_websites)
-        <p><x-svg.star class="icon-sm text-yellow-400"/> {{ $section_label }}</p>
+    @foreach($user_website_sections as $section_id => $user_websites)
+        @php($section = \App\Models\UserWebsiteSection::find($section_id))
+        <p><x-dynamic-component :component="$section->icon" class="icon-sm text-{{ $section->color('bg') }}"/> {{ $section->label }}</p>
         <div class="ls_grid-3">
             @foreach($user_websites as $w)
                 <div class="square">
