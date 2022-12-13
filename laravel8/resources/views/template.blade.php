@@ -13,6 +13,7 @@
         <link href="{{ asset('css/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
         <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/my_templates/'.($kind ?? 'default').'.css') }}" rel="stylesheet">
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
     @yield('css')
