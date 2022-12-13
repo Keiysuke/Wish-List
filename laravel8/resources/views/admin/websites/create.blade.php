@@ -11,14 +11,18 @@
                 <hr/>
 
                 <div class="flex gap-4 mb-4">
-                    <div class="w-10/12">
+                    <div class="w-9/12">
                         <x-form.label for="label" block required>Nom du site</x-form.label>
                         <x-form.input name="label" placeholder="Nom du site" value="{{ old('label') }}"/>
                     </div>
-                    <div class="flex w-2/12 justify-center">
+                    <div class="flex w-3/12 justify-around">
                         <div class="pt-9">
                             <x-form.checkbox class="mr-1" name="can_sell">{{ old('can_sell')? 'checked' : '' }}</x-form.checkbox>
-                            <x-form.label class="ml-1" for="can_sell">Site de vente ?</x-form.label>
+                            <x-form.label class="ml-1" for="can_sell">de vente ?</x-form.label>
+                        </div>
+                        <div class="pt-9">
+                            <x-form.checkbox class="mr-1" name="is_vg">{{ old('is_vg')? 'checked' : '' }}</x-form.checkbox>
+                            <x-form.label class="ml-1" for="is_vg">de JV ?</x-form.label>
                         </div>
                     </div>
                 </div>

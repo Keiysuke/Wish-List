@@ -24,7 +24,17 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(['*'], function ($view) {
-            $view->with('user_websites', UserWebsite::where('user_id', '=', \Auth::user()->id)->orderBy('favorite_order')->get());
+            $user_websites = UserWebsite::where('user_id', '=', \Auth::user()->id)->orderBy('user_website_section_id')->orderBy('ordered')->get();
+            $sections = [];
+            foreach ($user_websites as $user_website) {
+                $section_label = $user_website->user_website_section->label;
+                if (array_key_exists($section_label, $sections)) {
+                    $sections[$section_label][] = $user_website;
+                } else {
+                    $sections[$section_label] = [$user_website];
+                }
+            }
+            $view->with('user_website_sections', $sections);
         });
         View::composer(['products.websites.create', 'products.websites.edit', 'products.create'], function ($view) {
             $view->with('websites', Website::orderBy('label')->get());

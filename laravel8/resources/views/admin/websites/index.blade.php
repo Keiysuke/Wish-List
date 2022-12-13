@@ -21,9 +21,13 @@
                         <div class="flex w-full items-center gap-8">
                             <span class="font-bold"># {{ $website->id }}</span>
                             <x-utils.v_line />
-                            <span class="inline-flex gap-2">{{ $website->label }}
+                            <span class="inline-flex gap-2">
+                                {{ $website->label }}
                                 @if($website->can_sell)
                                     <x-svg.truck class="icon-xs text-green-500"/>
+                                @endif
+                                @if($website->is_vg)
+                                    <x-svg.big.vg_controller class="icon-xs text-red-500"/>
                                 @endif
                             </span>
                             <x-utils.v_line />

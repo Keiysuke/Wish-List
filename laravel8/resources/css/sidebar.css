@@ -62,14 +62,17 @@
     @apply justify-items-center;
 }
 
-.sidebar_content p:first-of-type,
-.sidebar_content p.ls_title {
+.sidebar_content p {
     @apply mb-4;
     @apply text-lg;
     @apply flex;
     @apply gap-1;
     @apply underline;
     @apply font-bold;
+}
+
+.sidebar_content p:not(:first-child) {
+    @apply mt-12;
 }
 
 div.square {

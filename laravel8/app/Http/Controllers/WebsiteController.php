@@ -30,6 +30,7 @@ class WebsiteController extends Controller
             'label' => $request->label, 
             'url' => $request->url,
             'can_sell' => $request->has('can_sell')? 1 : 0,
+            'is_vg' => $request->has('is_vg')? 1 : 0,
         ]);
         $website->save();
         return redirect()->route('websites.index')->with('info', __('The website has been created.'));
@@ -44,7 +45,10 @@ class WebsiteController extends Controller
             return back()->withErrors(['label' => __('That website already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
 
         $website->update($request
-            ->merge(['can_sell' => ($request->has('can_sell')? 1 : 0)])
+            ->merge([
+                'can_sell' => ($request->has('can_sell')? 1 : 0),
+                'is_vg' => ($request->has('is_vg')? 1 : 0),
+            ])
             ->all()
         );
         return redirect()->route('websites.index')->with('info', __('The website has been edited.'));
