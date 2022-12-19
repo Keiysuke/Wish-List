@@ -79,7 +79,7 @@ class ProductController extends Controller
         app('App\Http\Controllers\NotificationsController')->checkProductNotifications();
 
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid', 'show_archived' => 0];
-        $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'f_nb_results' => $this->nb_page_results];
+        $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'tag_in' => request('tag_in', 0), 'f_nb_results' => $this->nb_page_results];
         $search = $request->search;
 
         $buildRequest = Product::query();
@@ -124,6 +124,7 @@ class ProductController extends Controller
                 'stock' => 'bail|required|string',
                 'purchased' => 'bail|required|string',
                 'f_nb_results' => 'bail|required|int',
+                'tag_in' => 'bail|int',
             ]);
             switch($request->sort_by){
                 case 'alpha': $sort_by = 'label';
@@ -146,6 +147,13 @@ class ProductController extends Controller
             foreach($tags as $tag){
                 if(in_array('tag_'.$tag->id, $request->tags)) $filter_tag['in'][] = $tag->id;
                 else $filter_tag['out'][] = $tag->id;
+            }
+            //Ajout des tags filtrés
+            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filter_tag['in'])) {
+                $filter_tag['in'][] = $request->tag_in;
+            }
+            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filter_tag['out'])) {
+                $filter_tag['out'][] = $request->tag_out;
             }
 
             if($request->url === 'products/user'){

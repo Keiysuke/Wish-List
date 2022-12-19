@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\ListingType;
 
 class Listing extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'label', 'description', 'secret'];
+    protected $fillable = ['user_id', 'listing_type_id', 'label', 'description', 'secret'];
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function listing_type(){
+        return $this->belongsTo(ListingType::class);
     }
     
     public function products(){
