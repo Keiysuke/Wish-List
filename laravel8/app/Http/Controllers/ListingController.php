@@ -69,6 +69,7 @@ class ListingController extends Controller
     public function store(ListingRequest $request){
         $list = new Listing([
             'user_id' => $request->user_id,
+            'listing_type_id' => $request->listing_type_id,
             'label' => $request->label,
             'description' => $request->description,
             'secret' => $request->has('secret')? 1 : 0,
@@ -87,7 +88,8 @@ class ListingController extends Controller
 
     public function update(Request $request, Listing $list){
         $list->update($request
-            ->merge(['label' => $request->label,
+            ->merge(['listing_type_id' => $request->listing_type_id,
+                'label' => $request->label,
                 'description' => $request->description,
                 'secret' => ($request->has('secret')? 1 : 0)])
             ->all()

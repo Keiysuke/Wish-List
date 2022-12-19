@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\Website;
 use App\Models\UserWebsite;
 use App\Models\ProductState;
+use App\Models\ListingType;
 use App\Models\SellState;
 use App\Models\User;
 use App\Models\Tag;
@@ -56,6 +57,9 @@ class ViewServiceProvider extends ServiceProvider
         });
         View::composer(['products.create', 'products.edit', 'products.index'], function ($view) {
             $view->with('tags', Tag::orderBy('label')->get());
+        });
+        View::composer(['lists.create', 'lists.edit', 'lists.index'], function ($view) {
+            $view->with('listing_types', ListingType::orderBy('label')->get());
         });
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('product_states', ProductState::all());

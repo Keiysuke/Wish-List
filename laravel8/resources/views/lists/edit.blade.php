@@ -15,11 +15,21 @@
         <hr/>
 
         <div class="flex gap-4">
-            <div class="w-10/12">
+            <div class="w-8/12">
                 <x-form.label for="label" block required>Nom de la liste</x-form.label>
                 <x-form.input name="label" placeholder="Liste d'envies" value="{{ old('label', $list->label) }}"/>
             </div>
-
+            <div class="w-2/2">
+                <x-form.label for="listing_type_id" block required>Type de liste</x-form.label>
+                <select name="listing_type_id" id="listing_type_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                    @foreach($listing_types as $listing_type)
+                        <option value="{{ $listing_type->id }}" @if(old('listing_type_id', $list->listing_type_id) == $listing_type->id) selected @endif>{{ $listing_type->label }}</option>
+                    @endforeach
+                </select>
+                @error('listing_type_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="w-2/12 flex justify-center">
                 <div class="pt-9">
                     <x-form.checkbox name="secret">{{ old('secret', $list->secret)? 'checked' : '' }}</x-form.checkbox>
