@@ -20,7 +20,6 @@
 
     Array.from(document.getElementsByClassName('delete_list')).forEach(e => {
         e.addEventListener('click', (e) => {
-            console.log(e.target)
             my_fetch('{{ route('destroy_list') }}', {method: 'post', csrf: true}, {
                 id: e.target.dataset.list_id
             }).then(response => {
@@ -102,20 +101,28 @@
             <span>Vous n'avez pas encore créé de liste...</span>
             @else
                 <div id="left" class="w-1/5 flex flex-col gap-2">
-                    @foreach ($lists as $list)
-                        <div id="list_{{ $list->id }}" class="flex w-full gap-2 cursor-pointer text-sm">
-                            <div class="flex w-full justify-between hover:text-red-500 hover:underline" onClick="get_products({{ $list->id }});">
-                                <span class="inline-flex">{{ $list->label }}
-                                    @if($list->secret)
-                                        <x-svg.big.gift class="icon-xs ml-1 text-red-400"/>
-                                    @endif
-                                </span>
-                                <span class="font-light">{{ !$list->users? 'Partagée' : 'Privée' }}</span>
+                    @foreach ($listing_types as $listing_type_id => $lists)
+                    <div id="list_type_{{ $listing_type_id }}" class="list_type">
+                        @php($listing_type = \App\Models\ListingType::find($listing_type_id))
+                        <div class="label">{{ $listing_type->label }}</div>
+                        <div id="content_list_type_{{ $listing_type_id }}" class="all_lists">
+                        @foreach ($lists as $list)
+                            <div id="list_{{ $list->id }}" class="flex w-full gap-2 cursor-pointer text-sm">
+                                <div class="flex w-full justify-between hover:text-red-500 hover:underline" onClick="get_products({{ $list->id }});">
+                                    <span class="inline-flex">{{ $list->label }}
+                                        @if($list->secret)
+                                            <x-svg.big.gift class="icon-xs ml-1 text-red-400"/>
+                                        @endif
+                                    </span>
+                                    <span class="font-light">{{ !$list->users? 'Partagée' : 'Privée' }}</span>
+                                </div>
+                                <a title="Editer la liste" href="{{ route('lists.edit', $list->id) }}">
+                                    <x-svg.edit class="icon-xs icon-clickable"/>
+                                </a>
+                                <x-svg.trash title="Supprimer la liste ?" class="delete_list icon-xs icon-clickable hover:text-red-600" data-list_id="{{ $list->id }}"/>
                             </div>
-                            <a title="Editer la liste" href="{{ route('lists.edit', $list->id) }}">
-                                <x-svg.edit class="icon-xs icon-clickable"/>
-                            </a>
-                            <x-svg.trash title="Supprimer la liste ?" class="delete_list icon-xs icon-clickable hover:text-red-600" data-list_id="{{ $list->id }}"/>
+                        @endforeach
+                            </div>
                         </div>
                     @endforeach
                 </div>
