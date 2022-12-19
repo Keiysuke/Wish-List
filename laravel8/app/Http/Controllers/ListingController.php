@@ -58,7 +58,10 @@ class ListingController extends Controller
     }
 
     public function index(){
-        $lists = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->get();
+        $lists = Listing::where('user_id', '=', auth()->user()->id)
+            ->orderBy('listing_type_id')
+            ->orderBy('label')
+            ->get();
         return view('lists.index', compact('lists'));
     }
 

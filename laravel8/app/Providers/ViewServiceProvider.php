@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use App\Models\Website;
 use App\Models\UserWebsite;
 use App\Models\ProductState;
+use App\Models\Listing;
 use App\Models\ListingType;
 use App\Models\SellState;
 use App\Models\User;
@@ -58,8 +59,20 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['products.create', 'products.edit', 'products.index'], function ($view) {
             $view->with('tags', Tag::orderBy('label')->get());
         });
-        View::composer(['lists.create', 'lists.edit', 'lists.index'], function ($view) {
+        View::composer(['lists.create', 'lists.edit'], function ($view) {
             $view->with('listing_types', ListingType::orderBy('label')->get());
+        });
+        View::composer(['lists.index'], function ($view) {
+            $lists = Listing::where('user_id', '=', \Auth::user()->id)->orderBy('listing_type_id')->orderBy('label')->get();
+            $list_types = [];
+            foreach ($lists as $list) {
+                if (array_key_exists($list->listing_type_id, $list_types)) {
+                    $list_types[$list->listing_type_id][] = $list;
+                } else {
+                    $list_types[$list->listing_type_id] = [$list];
+                }
+            }
+            $view->with('listing_types', $list_types);
         });
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('product_states', ProductState::all());

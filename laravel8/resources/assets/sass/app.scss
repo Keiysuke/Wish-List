@@ -45,3 +45,17 @@ $i: 3;
         transition: 0.3s;
     }
 }
+
+.list_type{
+    div.label{
+        background-color: burlywood;
+        padding-left: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+
+    div.all_lists{
+        border: 1px solid burlywood;
+        padding: 0.25rem;
+    }
+}
