@@ -128,6 +128,14 @@ a.link:hover {
 }
 
 .title-icon.music {
+.title-icon.excel {
+    color: #22c55e;
+}
+
+.title-icon.excel:hover {
+    @apply bg-green-500;
+    @apply text-black;
+}
     @apply text-purple-500;
 }
 

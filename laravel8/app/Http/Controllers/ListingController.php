@@ -11,11 +11,6 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
-    public function setProductsDatas(&$products){
-        $products->total_price = 0;
-        foreach($products as $product) $products->total_price += $product->real_cost * $product->nb;
-    }
-
     public function toggle_product(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
@@ -24,10 +19,11 @@ class ListingController extends Controller
                 'nb' => 'bail|nullable|int',
                 'change_checked' => 'bail|nullable|boolean'
             ]);
-            
-            if($request->change_checked) Listing::find($request->list_id)->products()->toggle([$request->product_id]);
+
+            $list = Listing::find($request->list_id);
+            if($request->change_checked) $list->products()->toggle([$request->product_id]);
             //Setting nb only if the product is still linked to that list
-            $products = Listing::find($request->list_id)->products()->get();
+            $products = $list->getProducts(false);
             $hasProduct = $products->find($request->product_id);
             if($hasProduct && isset($request->nb)){
                 ListingProduct::where('listing_id', '=', $request->list_id)
@@ -35,8 +31,7 @@ class ListingController extends Controller
                     ->update(['nb' => $request->nb]);
             }
             
-            foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
-            $this->setProductsDatas($products);
+            $products = $list->getProducts();
             return response()->json(array('success' => true, 'total_price' => $products->total_price));
         }
     }
@@ -46,13 +41,8 @@ class ListingController extends Controller
             $this->validate($request, ['list_id' => 'bail|required|int']);
 
             $list = Listing::find($request->list_id);
-            $products = app('App\Http\Controllers\ProductController')->get_products($list->products()->paginate());
-            
-            foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
-
-            //Set the total price of all products in list
-            $this->setProductsDatas($products);
-            $returnHTML = view('lists.products.list')->with(['products' => $products, 'list' => $list])->render();
+            $products = $list->getProducts();
+            $returnHTML = view('lists.products.list')->with(compact('products', 'list'))->render();
             return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
         }
     }
@@ -114,6 +104,14 @@ class ListingController extends Controller
             $first_list = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
             $list_id = is_null($first_list)? -1 : $first_list->id;
             return response()->json(['success' => true, 'deleted_id' => $request->id, 'list_id' => $list_id]);
+        }
+    }
+
+    public function download(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['id' => 'bail|required|int']);
+            $products = Listing::find($request->id)->getProducts();
+            return response()->json(['success' => true, 'blob' => view('exports.list', compact('products'))->render()]);
         }
     }
 }

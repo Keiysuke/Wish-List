@@ -148,6 +148,16 @@ a.link:hover {
 }
 
 .title-icon.music {
+.title-icon.excel {
+  color: #22c55e;
+}
+
+.title-icon.excel:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(34, 197, 94, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
   --tw-text-opacity: 1;
   color: rgba(168, 85, 247, var(--tw-text-opacity));
 }

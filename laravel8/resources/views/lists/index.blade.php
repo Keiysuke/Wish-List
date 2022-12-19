@@ -33,9 +33,22 @@
             });
         });
     });
-
+    
+    function download_list(list_id){
+        my_fetch('{{ route('download_list') }}', {method: 'post', csrf: true}, {
+            id: list_id
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(new Blob([res.blob]));
+            link.setAttribute('download', 'file.csv');
+            document.body.appendChild(link);
+            link.click();
+        });
+    }
     function toggle_list(list_id, product_id){
-            my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
+        my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
             list_id: list_id,
             product_id: product_id,
             change_checked:true

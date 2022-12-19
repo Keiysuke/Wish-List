@@ -75,6 +75,7 @@ Route::post('lists/search_products', [SearchController::class, 'search_products'
 Route::post('lists/toggle_product', [ListingController::class, 'toggle_product'])->name('toggle_product_on_list');
 Route::resource('lists', ListingController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 Route::post('lists/destroy', [ListingController::class, 'destroy'])->name('destroy_list');
+Route::post('lists/download', [ListingController::class, 'download'])->name('download_list');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
