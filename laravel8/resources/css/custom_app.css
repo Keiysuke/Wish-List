@@ -127,7 +127,6 @@ a.link:hover {
     @apply bg-yellow-700;
 }
 
-.title-icon.music {
 .title-icon.excel {
     color: #22c55e;
 }
@@ -136,19 +135,21 @@ a.link:hover {
     @apply bg-green-500;
     @apply text-black;
 }
+
+.music {
     @apply text-purple-500;
 }
 
-.title-icon.music:hover {
+.music:hover {
     @apply bg-purple-500;
     @apply text-white;
 }
 
-.title-icon.trophy {
+.trophy {
     @apply text-yellow-700;
 }
 
-.title-icon.trophy:hover {
+.trophy:hover {
     @apply bg-yellow-300;
     @apply text-black;
 }

@@ -147,7 +147,6 @@ a.link:hover {
   background-color: rgba(161, 98, 7, var(--tw-bg-opacity));
 }
 
-.title-icon.music {
 .title-icon.excel {
   color: #22c55e;
 }
@@ -158,23 +157,25 @@ a.link:hover {
   --tw-text-opacity: 1;
   color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
+
+.music {
   --tw-text-opacity: 1;
   color: rgba(168, 85, 247, var(--tw-text-opacity));
 }
 
-.title-icon.music:hover {
+.music:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(168, 85, 247, var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
-.title-icon.trophy {
+.trophy {
   --tw-text-opacity: 1;
   color: rgba(161, 98, 7, var(--tw-text-opacity));
 }
 
-.title-icon.trophy:hover {
+.trophy:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(253, 224, 71, var(--tw-bg-opacity));
   --tw-text-opacity: 1;

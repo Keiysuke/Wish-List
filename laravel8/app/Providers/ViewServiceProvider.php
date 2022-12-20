@@ -15,6 +15,7 @@ use App\Models\Tag;
 use App\Models\CssColor;
 use App\Models\VgDeveloper;
 use App\Models\VgSupport;
+use App\Http\Controllers\DesignController;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -93,6 +94,15 @@ class ViewServiceProvider extends ServiceProvider
         //Admin
         View::composer(['partials.tags.edit_colors'], function ($view) {
             $view->with('unique_colors', CssColor::unique_colors());
+        });
+
+        //Pages
+        View::composer(['pages.design_system'], function ($view) {
+            $icons = [
+                'min' => DesignController::getIconsAsComponent(),
+                'big' => DesignController::getIconsAsComponent('big')
+            ];
+            $view->with('icons', $icons);
         });
     }
 }

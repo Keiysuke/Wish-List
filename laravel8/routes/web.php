@@ -149,3 +149,8 @@ Route::prefix('admin')->group(function () {
 });
 
 Route::get('scripts/video_games/product/link', [ScriptsController::class, 'lk_all_vg_to_product'])->name('script_lk_all_vg');
+
+//Simple pages
+Route::get('design-system', function() {
+    return view("pages.design_system")->render();
+})->name('design_system');

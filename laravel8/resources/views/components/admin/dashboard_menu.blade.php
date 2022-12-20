@@ -34,6 +34,10 @@
         <x-svg.big.stats class="icon"/>
         {{ __('Statistics') }}
     </a>
+    <a href="{{ route('design_system') }}"  class="{{ $menu === 'design' ? 'active' : '' }}">
+        <x-svg.big.screen class="icon"/>
+        {{ __('Design') }}
+    </a>
     @if($menu === 'stats')
         <a href="#" class="sub">{{ __('Global') }}</a>
         <a href="#" class="sub">{{ __('Purchases') }}</a>
