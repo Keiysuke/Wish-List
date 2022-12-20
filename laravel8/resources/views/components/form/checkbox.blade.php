@@ -1,1 +1,1 @@
-<input type="checkbox" class="{{ $class ?? '' }}" {{ $attributes }} name="{{ $name }}" id="{{ $id ?? $name }}" {{ $slot }}>
+<input type="checkbox" {{ (isset($check) && 'tag_'.$check == $name) ? 'checked' : '' }} class="{{ $class ?? '' }}" {{ $attributes }} name="{{ $name }}" id="{{ $id ?? $name }}" {{ $slot }}>
