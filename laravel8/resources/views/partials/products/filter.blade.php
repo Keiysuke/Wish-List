@@ -12,7 +12,7 @@
             <div class="grid grid-cols-{{ (count($tags) >= 12)? 4 : 3 }} gap-x-12 gap-y-2 px-8">
                 @foreach ($tags as $tag)
                     <div class="inline-flex">
-                        <x-form.checkbox class="mr-2 mt-1 filter_tag" name="tag_{{ $tag->id }}"></x-form.checkbox>
+                        <x-form.checkbox class="mr-2 mt-1 filter_tag" name="tag_{{ $tag->id }}" :check="$filters->tag_in"></x-form.checkbox>
                         <x-form.label for="tag_{{ $tag->id }}"><x-tags.tag :tag="$tag"/></x-form.label>
                     </div>
                 @endforeach
