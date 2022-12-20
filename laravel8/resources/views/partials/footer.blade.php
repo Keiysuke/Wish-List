@@ -40,6 +40,7 @@
             <ul>
                 <li><a href="{{ route('products.index') }}">{{ __('Home') }}</a></li>
                 <li><a href="https://www.linkedin.com/in/thomas-chazelles-30491a8b/" target="_blank">{{ __('Contact-me') }}</a></li>
+                <li><a href="{{ route('design_system') }}">{{ __('Design') }}</a></li>
                 <li><a href="{{ route('sitemap') }}">{{ __('Sitemap') }}</a></li>
             </ul>
         </div>
