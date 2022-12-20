@@ -85,6 +85,61 @@ a.link:hover {
     @apply text-red-500;
 }
 
+.icon-xs {
+    @apply w-4;
+}
+
+.icon-sm {
+    @apply w-5;
+}
+
+.icon {
+    @apply w-6;
+}
+
+.icon-lg {
+    @apply w-7;
+}
+
+.icon-xl {
+    @apply w-8;
+}
+
+.border-t-only {
+    border-width: 1px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+}
+
+.border-r-only {
+    border-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+}
+
+.border-b-only {
+    border-width: 1px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+}
+
+.border-l-only {
+    border-width: 1px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 0px;
+}
+
+.icon-clickable:hover {
+    color: color-blue-500;
+    transition: ease-in-out;
+    transition-duration: 150ms;
+    cursor: pointer;
+}
+
 .title-icon {
     @apply text-gray-700;
     @apply border-2;
@@ -202,4 +257,32 @@ a#show_video_game svg{
 
 a#show_video_game:hover svg{
     @apply text-white;
+}
+
+.btn_show_product:hover p {
+    @apply bg-blue-400;
+    transition: 0.1s;
+}
+
+.btn_show_product:hover div {
+    @apply bg-blue-500;
+    transition: 0.1s;
+}
+
+.btn_show_product:hover div {
+    transform: translate(10px, 0);
+    transition: 0.3s;
+}
+
+.list_type div.label {
+    background-color: burlywood;
+    @apply p-1;
+    text-align: center;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.list_type div.all_lists {
+    border: 1px solid burlywood;
+    @apply p-1;
 }
