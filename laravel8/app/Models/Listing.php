@@ -40,4 +40,9 @@ class Listing extends Model
         }
         return $products;
     }
+
+    static function getFileName($id) {
+        $list = Listing::find($id);
+        return ($list->listing_type_id <= 1 ? '' : ' ['.$list->listing_type->label.'] ').$list->label;
+    }
 }

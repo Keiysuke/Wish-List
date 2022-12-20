@@ -111,7 +111,11 @@ class ListingController extends Controller
         if ($request->ajax()) {
             $this->validate($request, ['id' => 'bail|required|int']);
             $products = Listing::find($request->id)->getProducts();
-            return response()->json(['success' => true, 'blob' => view('exports.list', compact('products'))->render()]);
+            return response()->json([
+                'success' => true, 
+                'blob' => view('exports.list', compact('products'))->render(), 
+                'filename' => Listing::getFileName($request->id)
+            ]);
         }
     }
 }

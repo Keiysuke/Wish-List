@@ -42,7 +42,7 @@
         }).then(res => {
             let link = document.createElement('a');
             link.href = window.URL.createObjectURL(new Blob([res.blob]));
-            link.setAttribute('download', 'file.csv');
+            link.setAttribute('download', res.filename + '.csv');
             document.body.appendChild(link);
             link.click();
         });
