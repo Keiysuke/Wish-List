@@ -1,6 +1,6 @@
 <x-app-layout>
     <div id="dashboard_table">
-        <x-admin.dashboard_menu menu="database" sub="vg_developers"/>
+        <x-admin.dashboard_menu menu="design"/>
         
         <div class="right">
             <x-notification type="success" msg="{{ session('info') }}"/>
