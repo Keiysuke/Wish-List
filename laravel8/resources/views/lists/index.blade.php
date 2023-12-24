@@ -105,7 +105,7 @@
         </div>
 
         <form id="filter_historic">
-            @include("partials.lists.filter")
+            @include("partials.filters.lists")
         </form>
         
         <input id="list_selected" type="hidden" value=""/>

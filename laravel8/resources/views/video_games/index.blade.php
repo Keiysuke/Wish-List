@@ -104,7 +104,7 @@
         </div>
         
         <hr class="mt-2"/>
-        @include('partials.video_games.filter')
+        @include('partials.filters.video_games')
     </form>
     
     <div id="content_results">

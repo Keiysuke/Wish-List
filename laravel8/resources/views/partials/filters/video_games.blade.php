@@ -20,19 +20,14 @@
         <div class="filter_block flex flex-col items-center gap-2">
             <p class="w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Jeux Vidéo achetés</p>
             <div class="grid grid-cols-2 gap-2 gap-x-12 px-8">
-                <x-filter.radio name="purchased" value="purchased_all" checked>Tous</x-filter.radio>
-                <x-filter.radio name="purchased" value="purchased_yes">Achetés</x-filter.radio>
-                <x-filter.radio name="purchased" value="purchased_no">Pas achetés</x-filter.radio>
-                <x-filter.radio name="purchased" value="resold">Re/vendus</x-filter.radio>
+                <x-filters.utils.radio name="purchased" value="purchased_all" checked>Tous</x-filters.utils.radio>
+                <x-filters.utils.radio name="purchased" value="purchased_yes">Achetés</x-filters.utils.radio>
+                <x-filters.utils.radio name="purchased" value="purchased_no">Pas achetés</x-filters.utils.radio>
+                <x-filters.utils.radio name="purchased" value="resold">Re/vendus</x-filters.utils.radio>
             </div>
         </div>
         <div class="filter_block flex flex-col items-center gap-2">
-            <p class="w-full text-center px-4 border-b-only border-gray-300 bg-gray-200 font-semibold p-1">Nombre de Résultats</p>
-            <div class="grid grid-cols-2 gap-2 gap-x-12 px-8">
-                <x-filter.radio name="f_nb_results" id="few_results" value="24" checked>24 Résultats</x-filter.radio>
-                <x-filter.radio name="f_nb_results" id="mid_results" value="48">48 Résultats</x-filter.radio>
-                <x-filter.radio name="f_nb_results" id="big_results" value="80">80 Résultats</x-filter.radio>
-            </div>
+            <x-filters.nb_results :values="[24, 48, 80]"/>
         </div>
     </div>
     <div class="flex justify-center">

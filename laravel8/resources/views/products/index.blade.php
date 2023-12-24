@@ -128,7 +128,7 @@
         </div>
         
         <hr class="mt-2"/>
-        @include('partials.products.filter')
+        @include('partials.filters.products')
     </form>
     
     <div id="content_results">

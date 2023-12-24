@@ -98,11 +98,13 @@ class UserController extends Controller
                 'user_id' => 'bail|required|int',
                 'date_from' => 'bail|nullable|date',
                 'date_to' => 'bail|nullable|date',
+                'nb_results' => 'bail|required',
             ]);
             
             $date_from = is_null($request->date_from)? '1970-01-01' : $request->date_from;
             $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
             $user_id = $request->user_id;
+            $nb_results = $request->nb_results === 'all' ? -1 : $request->nb_results;
             $totals = [
                 'paid' => 0,
                 'sold' => 0,
@@ -115,6 +117,7 @@ class UserController extends Controller
                     $query->where('sell_state_id', '=', SellState::CLOSED);
                 })
                 ->orderBy('date', 'desc')
+                ->limit($nb_results)
                 ->get();
 
             foreach($datas as $data){
@@ -133,7 +136,7 @@ class UserController extends Controller
                     $totals['benefits'] += $data->benefits;
                 }
             }
-            $datas = $datas->sortBy(['website_id'], 1, true)->paginate(-1);
+            $datas = $datas->sortBy(['website_id'], 1, true)->paginate($nb_results);
             $paginator = (object)['cur_page' => $datas->links()->paginator->currentPage()];
             $datas->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
 

@@ -73,7 +73,7 @@
     <hr/>
 
     <form id="filter_historic">
-        @include("partials.group_buy.filter")
+        @include("partials.filters.group_buy")
     </form>
 
     <input id="user_id" type="hidden" value="{{ auth()->user()->id }}"/>
