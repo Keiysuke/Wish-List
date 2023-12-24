@@ -7,6 +7,12 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.my_scrollbar {
+    @apply scrollbar-thin;
+    @apply scrollbar-thumb-gray-700;
+    @apply scrollbar-track-gray-400;
+}
+
 div.notification {
     @apply w-full;
     @apply border-2;

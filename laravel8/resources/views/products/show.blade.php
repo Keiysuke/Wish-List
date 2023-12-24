@@ -119,7 +119,7 @@
             document.querySelector('#icon-help').dispatchEvent(new CustomEvent('click'));
         }
         document.querySelector('#ls_benefit_payed').value = payed;
-        document.querySelector('#ls_benefit_sold').value = sold;
+        document.querySelector('#ls_benefit_sold').value = ((sold === undefined) ? 0 : sold);
     }
 </script>
 @endsection

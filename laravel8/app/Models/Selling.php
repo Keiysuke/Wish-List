@@ -45,8 +45,8 @@ class Selling extends Model
         return $this->hasMany(HistoSellingOffer::class);
     }
 
-    public function resold(){
-        return $this->sellState()->first()->label === 'Terminée';
+    public function isSold(){
+        return $this->sellState()->first()->id === SellState::CLOSED;
     }
 
     public function price(){

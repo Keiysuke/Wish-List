@@ -21,7 +21,7 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-400">
+    <body class="font-sans antialiased my_scrollbar">
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">

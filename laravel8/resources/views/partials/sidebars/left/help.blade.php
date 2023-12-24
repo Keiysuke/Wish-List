@@ -1,6 +1,12 @@
 <div class="sidebar_content" id="left_sidebar_help">
     <p><x-svg.help class="icon-sm text-green-400"/> Simuler un bénéfice</p>
     <div id="ls_help_benefit" class="w-full px-4">
+        <div class="flex flex-col w-full">
+            <div class="pb-2">
+                <x-form.checkbox class="mr-1" name="ls_benefit_commission">{{ old('commission')? 'checked' : '' }}</x-form.checkbox>
+                <x-form.label class="ml-1" for="ls_benefit_commission">Commission ?</x-form.label>
+            </div>
+        </div>
         <div class="flex flex-col w-full gap-2">
             <div class="flex inline-flex gap-2">
                 <div class="flex flex-col">

@@ -12,8 +12,10 @@ class UtilsController extends Controller
             $this->validate($request, [
                 'payed' => 'bail|numeric',
                 'sold' => 'bail|numeric',
+                'commission' => 'bail|nullable|boolean',
             ]);
-            $benefit = ($request->sold - self::getCommission($request->sold)) - $request->payed;
+            $benefit = $request->sold - $request->payed;
+            if($request->commission) $benefit -= self::getCommission($request->sold);
             return response()->json(['success' => true, 'req' => $request->all(), 'benefit' => round($benefit, 4)]);
         }
         abort(404);

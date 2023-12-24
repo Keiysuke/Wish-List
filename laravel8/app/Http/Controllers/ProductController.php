@@ -67,7 +67,7 @@ class ProductController extends Controller
             $product->nb_purchases = count($product->purchases);
             $product->nb_resells = 0;
             foreach($product->sellings as $selling){
-                if($selling->resold()) $product->nb_resells++;
+                if($selling->isSold()) $product->nb_resells++;
             }
             $product->nb_sellings = count($product->sellings)-$product->nb_resells;
         }
@@ -349,7 +349,7 @@ class ProductController extends Controller
         $product_websites->nb_expired = 0;
         //On ajoute des infos pour l'affichage
         foreach($purchases as $purchase){
-            if(!is_null($purchase->selling) && $purchase->selling->resold()){
+            if(!is_null($purchase->selling) && $purchase->selling->isSold()){
                 $purchase->display_type = 'benef';
             }elseif(!is_null($purchase->selling)){
                 $purchase->display_type = 'sell';

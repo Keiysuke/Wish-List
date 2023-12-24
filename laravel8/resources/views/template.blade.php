@@ -17,7 +17,7 @@
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
     @yield('css')
-    <body id="top_page" class="scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-400">
+    <body id="top_page" class="my_scrollbar">
         @yield('absolute_content')
 
         @include('partials.header')
@@ -136,6 +136,7 @@
             my_fetch('{{ route('simulate_benefit') }}', {method: 'post', csrf: true}, {
                 payed: document.querySelector('#ls_benefit_payed').value,
                 sold: document.querySelector('#ls_benefit_sold').value,
+                commission: document.querySelector('#ls_benefit_commission').checked,
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {

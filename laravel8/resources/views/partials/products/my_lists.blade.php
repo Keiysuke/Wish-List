@@ -4,7 +4,7 @@
             <h3>{{ __("Save in") }}...</h3>
             <x-svg.close class="icon-lg icon-clickable hover:text-blue-500" onClick="toggleShowLists();"/>
         </div>
-        <div class="h-full flex flex-col gap-2 p-3 pl-6 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-400 scrollbar-thumb-rounded">
+        <div class="h-full flex flex-col gap-2 p-3 pl-6 overflow-x-hidden overflow-y-auto overscroll-contain my_scrollbar scrollbar-thumb-rounded">
             @if(count($lists) === 0)
                 Vous n'avez aucune liste...
             @else
