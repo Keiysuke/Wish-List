@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\GroupBuy;
 use App\Models\Selling;
-use App\Models\Product;
 use App\Models\SellState;
+use App\Models\Tag;
 use Illuminate\Http\Request;
-use EloquentBuilder;
-use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -91,6 +89,11 @@ class UserController extends Controller
         $purchases = $kind === 'purchases';
         return view('users/historic', compact('kind', 'purchases'));
     }
+    
+    public function benefits(Request $request){
+        $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'tag_in' => request('tag_in', 0)];
+        return view('users/benefits', compact('filters'));
+    }
 
     public function filter_benefits(Request $request){
         if ($request->ajax()) {
@@ -105,18 +108,82 @@ class UserController extends Controller
             $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
             $user_id = $request->user_id;
             $nb_results = $request->nb_results === 'all' ? -1 : $request->nb_results;
+            
             $totals = [
                 'paid' => 0,
                 'sold' => 0,
                 'benefits' => 0,
             ];
-            $datas = Purchase::where('user_id', '=', $user_id)
+
+            /* Managing filters sent */
+            $filter_pw = [];
+            $filter_tag = ['in' => [], 'out' => []];
+            //Filtrés par sites
+            foreach($request->websites as $product_website){
+                $r = explode('_', $product_website);
+                $filter_pw[] = intval($r[1]);
+            }
+            $tags = Tag::all();
+            //Filtrés par tags
+            foreach($tags as $tag){
+                if(in_array('tag_'.$tag->id, $request->tags)) $filter_tag['in'][] = $tag->id;
+                else $filter_tag['out'][] = $tag->id;
+            }
+            //Ajout des tags filtrés
+            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filter_tag['in'])) {
+                $filter_tag['in'][] = $request->tag_in;
+            }
+            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filter_tag['out'])) {
+                $filter_tag['out'][] = $request->tag_out;
+            }
+
+            /* Creating the query */
+            $buildRequest = Purchase::query();
+            $buildRequest->where('user_id', '=', $user_id)
                 ->where('date', '>=', $date_from)
-                ->where('date', '<=', $date_to)
-                ->whereHas('selling', function($query) {
-                    $query->where('sell_state_id', '=', SellState::CLOSED);
-                })
-                ->orderBy('date', 'desc')
+                ->where('date', '<=', $date_to);
+            
+            //Filter on tags
+            if($request->no_tag){
+                $buildRequest->whereHas('product', function($query) {
+                    $query->wheredoesntHave('tags');
+                });
+                
+            }elseif(count($filter_tag['in']) > 0){
+                $buildRequest->whereHas('product', function($query) use ($filter_tag){
+                    $query->whereHas('tags', function($q) use ($filter_tag) {
+                        $q->whereIn('tag_id', $filter_tag['in']);
+                    });
+                });
+                if($request->exclusive_tags){
+                    $buildRequest->whereDoesntHave('product', function($query) use ($filter_tag){
+                        $query->whereHas('tags', function($q) use ($filter_tag) {
+                            $q->whereIn('tag_id', $filter_tag['out']);
+                        });
+                    });
+                }
+            }
+            
+            //Filtrés par produits achetés ou vendus
+            switch($request->purchased){
+                case 'purchased_all': break;
+                case 'purchased_yes': $buildRequest->doesntHave('selling');
+                    break;
+                case 'selling': $buildRequest->whereHas('selling', function($query){
+                        $query->whereNull('date_send');
+                    });
+                    break;
+                default: $buildRequest->whereHas('selling', function($query) {
+                        $query->where('sell_state_id', '=', SellState::CLOSED);
+                    });
+            }
+
+            //Filter on Websites
+            $buildRequest->whereHas('website', function($query) use ($filter_pw){
+                $query->whereIn('website_id', $filter_pw);
+            });
+
+            $datas = $buildRequest->orderBy('date', 'desc')
                 ->limit($nb_results)
                 ->get();
 
@@ -129,9 +196,10 @@ class UserController extends Controller
                 $data->shipping_fees = is_null($sell) ? '-' : $sell->shipping_fees;
                 $data->shipping_fees_payed = is_null($sell) ? '-' : $sell->shipping_fees_payed;
                 $data->benefits = is_null($sell) ? '-' : $data->getBenefits();
+
+                $totals['paid'] += $data->cost;
                 //Adding to the Total if it has been sold
                 if (!is_null($sell)) {
-                    $totals['paid'] += $data->cost;
                     $totals['sold'] += ($data->sold_price + $data->fees) - $data->fees_payed;
                     $totals['benefits'] += $data->benefits;
                 }

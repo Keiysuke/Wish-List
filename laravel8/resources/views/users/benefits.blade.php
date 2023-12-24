@@ -26,12 +26,26 @@
     }
 
     function get_benefits(){
+        let websites = Array();
+        let tags = Array();
+        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+            if(el.checked) websites.push(el.name);
+        });
+        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
+            if(el.checked) tags.push(el.name);
+        });
+        
         my_fetch('{{ route('post_user_benefits') }}', {method: 'post', csrf: true}, {
             user_id: document.querySelector('#user_id').value,
             date_from: document.querySelector('#date_from').value,
             date_to: document.querySelector('#date_to').value,
             nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
             page: document.getElementById('page').value,
+            websites: websites,
+            no_tag: document.getElementById('no_tag').checked,
+            exclusive_tags: document.getElementById('exclusive_tags').checked,
+            tags: tags,
+            purchased: document.querySelector('input[name="purchased"]:checked').value,
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
@@ -45,6 +59,18 @@
         document.getElementById('page').value = 1;
         get_benefits();
     }
+
+    document.querySelector('#check_all_websites').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+            el.checked = !event.target.checked;
+        });
+    });
+
+    document.querySelector('#check_all_tags').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
+            el.checked = !event.target.checked;
+        });
+    });
 
     document.querySelector('#reset_benefits_filters').addEventListener('click', reset_filters);
     
@@ -75,7 +101,7 @@
     <hr/>
 
     <form id="filter_benefits">
-        @include("partials.products.benefits_filter")
+        @include("partials.filters.benefits")
     </form>
 
     <input id="user_id" type="hidden" value="{{ auth()->user()->id }}"/>

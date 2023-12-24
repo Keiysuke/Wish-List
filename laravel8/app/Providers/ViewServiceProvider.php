@@ -51,13 +51,13 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('product_states', ProductState::all());
             $view->with('sell_states', SellState::all());
         });
-        View::composer(['products.index'], function ($view) {
+        View::composer(['products.index', 'users.benefits'], function ($view) {
             $view->with('websites', Website::orderBy('label')->get());
         });
         View::composer(['products.create'], function ($view) {
             $view->with('product_states', ProductState::all());
         });
-        View::composer(['products.create', 'products.edit', 'products.index'], function ($view) {
+        View::composer(['products.create', 'products.edit', 'products.index', 'users.benefits'], function ($view) {
             $view->with('tags', Tag::orderBy('label')->get());
         });
         View::composer(['lists.create', 'lists.edit'], function ($view) {

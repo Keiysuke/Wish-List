@@ -35,10 +35,7 @@ use App\Http\Controllers\VideoGameController;
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
 
-// Route::get('user/benefits', [UserController::class, 'benefits'])->name('user_benefits');
-Route::get('user/benefits', function() {
-    return view("users.benefits")->render();
-})->name('user_benefits');
+Route::get('user/benefits', [UserController::class, 'benefits'])->name('user_benefits');
 Route::post('user/benefits', [UserController::class, 'filter_benefits'])->name('post_user_benefits');
 
 Route::post('user/historic', [UserController::class, 'filter_historic'])->name('post_user_historic');
