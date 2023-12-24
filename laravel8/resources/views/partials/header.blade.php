@@ -65,6 +65,7 @@
         <a href="{{ route('lists.index') }}">{{ __("My lists") }}</a>
         <a href="{{ route('user_historic', 'purchases') }}">{{ __('My purchases') }}</a>
         <a href="{{ route('user_historic', 'sellings') }}">{{ __('My sells') }}</a>
+        <a href="{{ route('user_benefits') }}">{{ __('My benefits') }}</a>
         <a href="{{ route('video_games.index') }}">{{ __('My video games') }}</a>
     </div>
     <div id="submenu_create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
@@ -82,6 +83,7 @@
     <div id="submenu_externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
         <a href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
         <a href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
+        <a href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
     </div>
     <div id="subicon_bell" class="subicon flex justify-end gap-1">
         @if(auth()->user()->unreadNotifications->isEmpty())

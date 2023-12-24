@@ -10,6 +10,7 @@ class SellState extends Model
 {
     use HasFactory;
     protected $fillable = ['label'];
+    const CLOSED = 5;
     
     public function sellings(){
         return $this->hasMany(Selling::class);

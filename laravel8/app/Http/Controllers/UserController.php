@@ -6,6 +6,7 @@ use App\Models\Purchase;
 use App\Models\GroupBuy;
 use App\Models\Selling;
 use App\Models\Product;
+use App\Models\SellState;
 use Illuminate\Http\Request;
 use EloquentBuilder;
 use Illuminate\Support\Facades\DB;
@@ -89,5 +90,56 @@ class UserController extends Controller
 
         $purchases = $kind === 'purchases';
         return view('users/historic', compact('kind', 'purchases'));
+    }
+
+    public function filter_benefits(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'user_id' => 'bail|required|int',
+                'date_from' => 'bail|nullable|date',
+                'date_to' => 'bail|nullable|date',
+            ]);
+            
+            $date_from = is_null($request->date_from)? '1970-01-01' : $request->date_from;
+            $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
+            $user_id = $request->user_id;
+            $totals = [
+                'paid' => 0,
+                'sold' => 0,
+                'benefits' => 0,
+            ];
+            $datas = Purchase::where('user_id', '=', $user_id)
+                ->where('date', '>=', $date_from)
+                ->where('date', '<=', $date_to)
+                ->whereHas('selling', function($query) {
+                    $query->where('sell_state_id', '=', SellState::CLOSED);
+                })
+                ->orderBy('date', 'desc')
+                ->get();
+
+            foreach($datas as $data){
+                $data->kind = 'purchase';
+                $data->cost = $data->cost - $data->discount;
+                //Selling datas
+                $sell = (isset($data->selling) && $data->selling->isSold()) ? $data->selling : null;
+                $data->sold_price = is_null($sell) ? '-' : $sell->confirmed_price;
+                $data->shipping_fees = is_null($sell) ? '-' : $sell->shipping_fees;
+                $data->shipping_fees_payed = is_null($sell) ? '-' : $sell->shipping_fees_payed;
+                $data->benefits = is_null($sell) ? '-' : $data->getBenefits();
+                //Adding to the Total if it has been sold
+                if (!is_null($sell)) {
+                    $totals['paid'] += $data->cost;
+                    $totals['sold'] += ($data->sold_price + $data->fees) - $data->fees_payed;
+                    $totals['benefits'] += $data->benefits;
+                }
+            }
+            $datas = $datas->sortBy(['website_id'], 1, true)->paginate(-1);
+            $paginator = (object)['cur_page' => $datas->links()->paginator->currentPage()];
+            $datas->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+
+            $returnHTML = view('lists.historic.benefits')->with(compact('datas', 'totals', 'paginator'))->render();
+            return response()->json(['success' => true, 'html' => $returnHTML]);
+        }
+        abort(404);
     }
 }

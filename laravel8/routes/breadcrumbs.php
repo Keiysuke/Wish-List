@@ -85,10 +85,16 @@ Breadcrumbs::for('edit_selling', function ($trail, $selling, $product) {
 });
 
 //Home > Mon historique
-Breadcrumbs::for('historic', function ($trail, $kind) {
+Breadcrumbs::for('historic', function ($trail, $kind = 'purchases') {
     $trail->parent('home');
     $end_link = $kind === 'purchases' ? "d'achats" : "de ventes";
     $trail->push('Mon historique '.$end_link, route('user_historic', $kind));
+});
+
+//Home > Mon historique > Mes bénéfices
+Breadcrumbs::for('benefits', function ($trail) {
+    $trail->parent('historic');
+    $trail->push('Mes bénéfices ', route('user_benefits'));
 });
 
 //Home > Mes achats > Nouvel achat groupé

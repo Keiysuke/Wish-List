@@ -25,6 +25,13 @@
             <x-sitemap.link label="Logout" url="{{ route('logout') }}" ml="4"/>
         </div>
         <div class="flex flex-col gap-4">
+            <h2>{{ __('My historic') }}</h2>
+            <hr />
+            <x-sitemap.link label="My purchases" url="{{ route('user_historic', 'purchases') }}"/>
+            <x-sitemap.link label="My sells" url="{{ route('user_historic', 'sellings') }}"/>
+            <x-sitemap.link label="My benefits" url="{{ route('user_benefits') }}"/>
+        </div>
+        <div class="flex flex-col gap-4">
             <h2>{{ __('Database') }}</h2>
             <hr />
             <x-sitemap.link label="Dashboard" url="{{ route('websites.index') }}"/>

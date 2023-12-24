@@ -33,6 +33,7 @@
                 <li><a href="{{ route('lists.index') }}">{{ __('My lists') }}</a></li>
                 <li><a href="{{ route('user_historic', 'purchases') }}">{{ __("My purchases") }}</a></li>
                 <li><a href="{{ route('user_historic', 'sellings') }}">{{ __("My sells") }}</a></li>
+                <li><a href="{{ route('user_benefits') }}">{{ __("My benefits") }}</a></li>
             </ul>
         </div>
         <div>
@@ -45,5 +46,5 @@
             </ul>
         </div>
     </div>
-    <div class="copyright">Copyright <img class="icon-xs inline-flex" src="{{ asset('copyright.png') }}"/> Keiysuke21. {{ __('All rights reserved.') }}</div>
+    <div class="copyright">Copyright <img class="icon-xs inline-flex" src="{{ asset('copyright.png') }}"/> <i>Créé par Keiysuke21 avec <a class="link" href="https://tailwindcss.com/" target="_blank">Tailwind</a> & <a class="link" href="https://laravel.com/" target="_blank">Laravel</a></i>. {{ __('All rights reserved.') }}</div>
 </footer>
