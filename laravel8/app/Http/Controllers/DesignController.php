@@ -64,6 +64,7 @@ class DesignController extends Controller
         ['name' => 'user', 'sizes' => [true, true]],
         ['name' => 'user_group', 'sizes' => [true, true]],
         ['name' => 'users', 'sizes' => [true, true]],
+        ['name' => 'user_minus', 'sizes' => [true, true]],
         ['name' => 'user_plus', 'sizes' => [true, true]],
         ['name' => 'upper', 'sizes' => [true, false]],
         ['name' => 'vg_controller', 'sizes' => [false, true]],

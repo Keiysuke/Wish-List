@@ -36,8 +36,10 @@ use App\Http\Controllers\VideoGameController;
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
 
+Route::post('user/profile', [FriendUserController::class, 'get_profile'])->name('get_user_profile');
 Route::get('user/friends', [FriendUserController::class, 'index'])->name('my_friends');
 Route::post('friends/requesting', [FriendUserController::class, 'requesting'])->name('friend_requesting');
+Route::post('friends/remove', [FriendUserController::class, 'remove'])->name('remove_friend');
 Route::post('friends/request/{status}/end', [FriendUserController::class, 'end_request'])->name('friend_request_end');
 Route::post('friends/filter', [FriendUserController::class, 'filter'])->name('friends_search');
 Route::get('user/friends/add', [FriendUserController::class, 'create'])->name('user_add_friend');

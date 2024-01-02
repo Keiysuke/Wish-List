@@ -42,6 +42,20 @@ class FriendUserController extends Controller
         return back()->with('info', __('The website has been deleted.'));
     }
 
+    function get_profile(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'user_id' => 'bail|required|int',
+            ]);
+            $user = User::find($request->user_id);
+            $user->is_friend = $user->is_friend();
+
+            $returnHTML = view('partials.friends.profile', compact('user'))->render();
+            return response()->json(['success' => true, 'html' => $returnHTML, 'is_friend' => $user->is_friend]);
+        }
+        abort(404);
+    }
+
     function requesting(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
@@ -51,11 +65,31 @@ class FriendUserController extends Controller
             $user = User::find(auth()->user()->id);
             $friend = User::find($friend_id);
 
-            if($this->already_friend($user->id, $friend_id))
+            if($friend->is_friend())
                 return response()->json(['success' => false, 'notyf' => Notyf::get('He\'s already your friend')]);
 
             $friend->notify(new FriendRequest($user, $friend));
             return response()->json(['success' => true, 'notyf' => Notyf::get('Friend request send', Notyf::SUCCESS)]);
+        }
+        abort(404);
+    }
+
+    function remove(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'friend_id' => 'bail|required|int',
+            ]);
+            $friend_id = $request->friend_id;
+            $user_id = auth()->user()->id;
+
+            if(!User::find($friend_id)->is_friend())
+                return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
+            
+            FriendUser::whereIn('user_id', [$user_id, $friend_id])
+                ->whereIn('friend_id', [$user_id, $friend_id])
+                ->delete();
+
+            return response()->json(['success' => true, 'notyf' => Notyf::get('Friend removed', Notyf::SUCCESS), 'user_id' => $friend_id]);
         }
         abort(404);
     }
@@ -71,7 +105,7 @@ class FriendUserController extends Controller
             
             //Checking this request is for the current user
             if ($friend_id != auth()->user()->id)
-                return response()->json(['success' => false, 'notyf' => Notyf::get('That request does not concern you')]);
+                return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
 
             //Removing the Notification
             $user = User::find($friend_id);

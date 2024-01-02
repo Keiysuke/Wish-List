@@ -1,12 +1,42 @@
-div#sidebar_friends {
-  --tw-bg-opacity: 1;
-  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
+div#wrap_sidebar_friends {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
+  display: flex;
+  gap: 1rem;
+}
+
+div#wrap_sidebar_friends div#user_profile, div#wrap_sidebar_friends div#sidebar_friends {
+  --tw-bg-opacity: 1;
+  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
+}
+
+div#wrap_sidebar_friends div#user_profile, div#wrap_sidebar_friends div#sidebar_friends {
   width: 20%;
+}
+
+div#wrap_sidebar_friends div#user_profile, div#wrap_sidebar_friends div#sidebar_friends {
+  border-radius: 0.375rem;
+}
+
+div#wrap_sidebar_friends div#user_profile, div#wrap_sidebar_friends div#sidebar_friends {
+  --tw-border-opacity: 1;
+  border-color: rgba(82, 82, 91, var(--tw-border-opacity));
+}
+
+div#wrap_sidebar_friends div#user_profile, div#wrap_sidebar_friends div#sidebar_friends {
+  border-width: 2px;
+}
+
+div#wrap_sidebar_friends div#user_profile {
+  position: relative;
+  flex-direction: column;
+  padding: 1rem;
+  height: 15rem;
+}
+
+div#sidebar_friends {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  border-radius: 0.25rem;
   min-height: 100vh;
 }
 
@@ -123,4 +153,18 @@ div.friend_row div.name, div.friend_request_row div.name {
 div.friend_row div.name, div.friend_request_row div.name {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.btn_close {
+  position: absolute;
+  right: 1rem;
+  padding: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
+  border-radius: 0.375rem;
+}
+
+.btn_close:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(82, 82, 91, var(--tw-bg-opacity));
 }

@@ -1,9 +1,27 @@
-div#sidebar_friends {
-    @apply bg-gray-800;
+div#wrap_sidebar_friends {
     @apply text-white;
+    @apply flex;
+    @apply gap-4;
+}
+
+div#wrap_sidebar_friends div#user_profile,
+div#wrap_sidebar_friends div#sidebar_friends {
+    @apply bg-gray-800;
     @apply w-1/5;
+    @apply rounded-md;
+    @apply border-gray-600;
+    @apply border-2;
+}
+
+div#wrap_sidebar_friends div#user_profile {
+    @apply relative;
+    @apply flex-col;
+    @apply p-4;
+    @apply h-60;
+}
+
+div#sidebar_friends {
     @apply py-4;
-    @apply rounded;
     @apply min-h-screen;
 }
 
@@ -14,7 +32,7 @@ div#sidebar_friends div#sb_head_friends {
     @apply px-4;
 }
 
-div.icons {
+div#sbh_friends_icons {
     @apply flex;
     @apply justify-center;
     @apply w-1/3;
@@ -82,4 +100,16 @@ div.friend_request_row div.name {
     @apply flex;
     @apply flex-col;
     @apply text-sm;
+}
+
+.btn_close {
+    @apply absolute;
+    @apply right-4;
+    @apply p-1;
+    @apply bg-gray-800;
+    @apply rounded-md;
+}
+
+.btn_close:hover {
+    @apply bg-gray-600;
 }
