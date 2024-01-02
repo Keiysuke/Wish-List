@@ -6,9 +6,10 @@ This website will help you recover all the purchases/and sells you made with tim
 As it's not automatically adding products/purchases from other websites, you'll have to add the products and other datas by yourself.
 
 New functionalities :
+- New page "My Friends" where you're able to search on other Users and add them as a Friend
+- You can now see all your benefits on "My benefits" page. All filters are available too.
 - Left Sidebar is now available with the list of your favorites websites
 - New filter for your products on "Discount", or "Free" (price was <= 1€)
-- Possibility to archive your products & filter on archived/non archived products
 
 Here are the current functionnalities (see upside for last ones) :
 - Register/Log in website
@@ -27,6 +28,7 @@ Here are the current functionnalities (see upside for last ones) :
 Last ones were : 
 - Update/Delete your grouped purchases - Plus you can delete selected purchase from a "grouped purchase" when editing one.
 - You can now filter on an entered period when visualizing your historic of purchases/sellings.
+- Possibility to archive your products & filter on archived/non archived products
 - You can now set a customs price for any of your purchase.
 
 And more :
@@ -39,6 +41,6 @@ And more :
 
 In future
 - Notification for sells informations maybe too.
-- Add other users as friend and tchat with them.
+- Tchat with your friends (in private, shared lists).
 - Share lists with friends for future present bought (anniversary ? Christmas ?).
 

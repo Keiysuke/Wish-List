@@ -73,4 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function purchases(){
         return $this->hasMany(Purchase::class);
     }
+
+    public function users(){
+        return $this->belongsToMany(User::class, 'friend_users', 'user_id', 'user_id')->withPivot('favorite')->withTimestamps();
+    }
+
+    public function friends(){
+        return $this->belongsToMany(User::class, 'friend_users', 'user_id', 'friend_id')->withPivot('favorite')->withTimestamps();
+    }
 }

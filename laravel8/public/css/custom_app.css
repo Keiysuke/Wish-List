@@ -62,6 +62,10 @@ div.notification div {
   padding: 1rem;
 }
 
+.notyf {
+  top: 3rem;
+}
+
 #page-container {
   display: flex;
   justify-content: center;

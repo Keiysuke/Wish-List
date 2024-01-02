@@ -35,6 +35,10 @@ div.notification div {
     @apply p-4;
 }
 
+.notyf {
+    @apply top-12;
+}
+
 #page-container {
     @apply flex;
     @apply justify-center;

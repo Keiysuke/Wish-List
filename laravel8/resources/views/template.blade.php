@@ -8,11 +8,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @yield('metas')
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom_app.css') }}" rel="stylesheet">
         <link href="{{ asset('css/header.css') }}" rel="stylesheet">
         <link href="{{ asset('css/footer.css') }}" rel="stylesheet">
         <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/sidebar_friends.css') }}" rel="stylesheet">
         <link href="{{ asset('css/my_templates/'.($kind ?? 'default').'.css') }}" rel="stylesheet">
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
@@ -33,6 +35,7 @@
 
         @include('partials.footer')
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
     <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
@@ -147,6 +150,38 @@
                 } else {
                     document.querySelector('#ls_benefit_results_benef').classList.add('text-red-400');
                     document.querySelector('#ls_benefit_results_benef').classList.remove('text-green-400');
+                }
+            });
+        }
+
+                                                            /* Friend Requests */
+
+        Array.from(document.getElementsByClassName('accept_friend_request')).forEach(el => { el.addEventListener('click', acceptFriendRequest); });
+        Array.from(document.getElementsByClassName('delete_friend_request')).forEach(el => { el.addEventListener('click', deleteFriendRequest); });
+        function acceptFriendRequest(e) {
+            my_fetch('{{ route('friend_request_end', ['status' => 'accept']) }}', {method: 'post', csrf: true}, {
+                user_id: parseInt(e.target.dataset.userId),
+                friend_id: parseInt(e.target.dataset.friendId),
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                if (results.notyf) {
+                    var notyf = new Notyf();
+                    notyf.open(results.notyf);
+                }
+            });
+        }
+
+        function deleteFriendRequest(e) {
+            my_fetch('{{ route('friend_request_end', ['status' => 'delete']) }}', {method: 'post', csrf: true}, {
+                user_id: parseInt(e.target.dataset.userId),
+                friend_id: parseInt(e.target.dataset.friendId),
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                if (results.notyf) {
+                    var notyf = new Notyf();
+                    notyf.open(results.notyf);
                 }
             });
         }

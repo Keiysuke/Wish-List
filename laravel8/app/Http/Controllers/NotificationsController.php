@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Notifications\ProductSoonAvailable;
 use App\Notifications\ProductSoonExpire;
 use Carbon\Carbon;
-use EloquentBuilder;
 
 class NotificationsController extends Controller
 {
@@ -21,13 +19,9 @@ class NotificationsController extends Controller
 
         $today = Carbon::now();
         $check_date = Carbon::now()->addDays(3);
-        // echo $today."<br />";
-        // echo $check_date."<br />";
         foreach($products as $product){
             foreach($product->productWebsites as $pw){
                 //Notif all users if current date is 3 days or less, before the available/expired date
-                // echo $pw->product->label."<br />";
-                // echo $pw->available_date."<br />";
                 if(!is_null($pw->available_date) && ($pw->available_date >= $today && $pw->available_date <= $check_date)){
                     foreach($product->users as $user){
                         $exist = $user->notifications()->where('type', '=', 'App\Notifications\ProductSoonAvailable')->whereJsonContains('data->product_website_id', $pw->id)->first();
@@ -49,6 +43,5 @@ class NotificationsController extends Controller
                 }
             }
         }
-        // die();
     }
 }

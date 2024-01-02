@@ -94,7 +94,7 @@ Breadcrumbs::for('historic', function ($trail, $kind = 'purchases') {
 //Home > Mon historique > Mes bénéfices
 Breadcrumbs::for('benefits', function ($trail) {
     $trail->parent('historic');
-    $trail->push('Mes bénéfices ', route('user_benefits'));
+    $trail->push('Mes bénéfices', route('user_benefits'));
 });
 
 //Home > Mes achats > Nouvel achat groupé
@@ -107,4 +107,13 @@ Breadcrumbs::for('create_group_buy', function ($trail) {
 Breadcrumbs::for('edit_group_buy', function ($trail, $group_buy) {
     $trail->parent('historic', 'purchases');
     $trail->push('Edition d\'un achat groupé', route('group_buys.edit', $group_buy));
+});
+
+//Home > Mon compte
+
+
+//Home > Mon compte > Mes amis
+Breadcrumbs::for('my_friends', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Mes amis', route('my_friends'));
 });

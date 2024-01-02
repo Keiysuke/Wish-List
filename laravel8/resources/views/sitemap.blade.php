@@ -21,8 +21,10 @@
             <h2>{{ __('Your account') }}</h2>
             <hr />
             <x-sitemap.link label="My profile" url="{{ route('profile.show') }}"/>
-            <x-sitemap.link label="Login" url="{{ route('login') }}" ml="4"/>
-            <x-sitemap.link label="Logout" url="{{ route('logout') }}" ml="4"/>
+            <x-sitemap.link label="My lists" url="{{ route('show_list_products') }}" ml="4"/>
+            <x-sitemap.link label="My friends" url="{{ route('my_friends') }}" ml="4"/>
+            <x-sitemap.link label="Login" url="{{ route('login') }}"/>
+            <x-sitemap.link label="Logout" url="{{ route('logout') }}"/>
         </div>
         <div class="flex flex-col gap-4">
             <h2>{{ __('My historic') }}</h2>

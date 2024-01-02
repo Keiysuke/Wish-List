@@ -25,6 +25,7 @@ use App\Http\Controllers\ProductStateController;
 use App\Http\Controllers\SellStateController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FriendUserController;
 use App\Http\Controllers\CssColorController;
 use App\Http\Controllers\ScriptsController;
 use App\Http\Controllers\UtilsController;
@@ -35,11 +36,17 @@ use App\Http\Controllers\VideoGameController;
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
 
+Route::get('user/friends', [FriendUserController::class, 'index'])->name('my_friends');
+Route::post('friends/requesting', [FriendUserController::class, 'requesting'])->name('friend_requesting');
+Route::post('friends/request/{status}/end', [FriendUserController::class, 'end_request'])->name('friend_request_end');
+Route::post('friends/filter', [FriendUserController::class, 'filter'])->name('friends_search');
+Route::get('user/friends/add', [FriendUserController::class, 'create'])->name('user_add_friend');
+
 Route::get('user/benefits', [UserController::class, 'benefits'])->name('user_benefits');
 Route::post('user/benefits', [UserController::class, 'filter_benefits'])->name('post_user_benefits');
 
 Route::post('user/historic', [UserController::class, 'filter_historic'])->name('post_user_historic');
-Route::get('user/historic/{kind}', [UserController::class, 'historic'])->name('user_historic');
+Route::get('user/historic/{kind}', [UserController::class, 'historic'])->middleware(['auth', 'verified'])->name('user_historic');
 
 Route::post('products/follow', [ProductController::class, 'follow'])->name('follow_product');
 Route::post('products/archive', [ProductController::class, 'archive'])->name('archive_product');
