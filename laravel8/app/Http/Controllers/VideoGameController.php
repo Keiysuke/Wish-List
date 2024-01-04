@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\VideoGameRequest;
+use App\Models\Notyf;
 use App\Models\ProductAsVideoGame;
 use App\Models\VgSupport;
 use App\Models\VideoGame;
@@ -183,11 +184,8 @@ class VideoGameController extends Controller
         return redirect()->route('video_games.edit', $video_game)->with('info', __('The video game has been edited.'));
     }
 
-    public function unlink_product(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['id' => 'bail|required|int']);
-            ProductAsVideoGame::where('product_id', '=', $request->id)->delete();
-            return response()->json(['success' => true]);
-        }
+    public function unlink_product(int $id){
+        ProductAsVideoGame::where('product_id', '=', $id)->delete();
+        return response()->json(['success' => true, 'notyf' => Notyf::success('The product has been unlinked')]);
     }
 }

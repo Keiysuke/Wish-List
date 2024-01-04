@@ -22,12 +22,11 @@
 
     Array.from(document.getElementsByClassName('delete_list')).forEach(e => {
         e.addEventListener('click', (e) => {
-            my_fetch('{{ route('destroy_list') }}', {method: 'post', csrf: true}, {
-                id: e.target.dataset.list_id
-            }).then(response => {
-                if (response.ok) return response.json();
-            }).then(res => {
+            const id = e.target.dataset.list_id;
+            get_fetch('lists/' + id + '/destroy')
+            .then(res => {
                 document.querySelector("#list_"+res.deleted_id).remove();
+                my_notyf(res);
                 if(res.list_id > 0) document.onload = get_products(res.list_id); //There's still one other list
                 else{ //No more list for the user
                     document.querySelector("#my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
@@ -37,11 +36,8 @@
     });
     
     function download_list(list_id){
-        my_fetch('{{ route('download_list') }}', {method: 'post', csrf: true}, {
-            id: list_id
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        get_fetch('lists/' + list_id + '/download')
+        .then(res => {
             let link = document.createElement('a');
             link.href = window.URL.createObjectURL(new Blob([res.blob]));
             link.setAttribute('download', res.filename + '.csv');
@@ -57,11 +53,8 @@
     }
 
     function showShareList(list_id){
-        my_fetch('{{ route('show_share_list') }}', {method: 'post', csrf: true}, {
-            list_id: list_id,
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        get_fetch('shared/lists/' + list_id + '/show')
+        .then(res => {
             if (res.success) {
                 document.getElementById('content_share_lists').innerHTML = res.html;
                 document.getElementById('content_share_lists').classList.toggle('hidden');
@@ -77,7 +70,7 @@
             if(el.checked) friends.push(parseInt(el.dataset.friendId));
         });
         if (friends.length === 0) {
-            my_notyf('Veuillez sélectionner au moins l\'un de vos amis', 'error');
+            notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error');
             return;
         }
         my_fetch('{{ route('share_list') }}', {method: 'post', csrf: true}, {
@@ -113,11 +106,8 @@
     }
 
     function get_products(list_id){
-        my_fetch('{{ route('show_list_products') }}', {method: 'post', csrf: true}, {
-            list_id: list_id
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(products => {
+        get_fetch('lists/' + list_id + '/products/show')
+        .then(products => {
             if(document.querySelector('#list_selected').value != '' && document.querySelector('#list_'+document.querySelector('#list_selected').value) != undefined)
                 document.querySelector('#list_'+document.querySelector('#list_selected').value).classList.toggle('selected');
             document.querySelector('#list_selected').value = list_id;

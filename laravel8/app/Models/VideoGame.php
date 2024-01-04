@@ -68,9 +68,9 @@ class VideoGame extends Model
                 if (count($pvg) > 0) { //Already linked to a product
                     $pvg = $pvg->first();
                     if ($pvg->video_game_id !== $this->id) {
-                        return ['success' => true, 'msg' => 'Linked to another product : '.$pvg->video_game_id];
+                        return ['success' => true, 'notyf' => Notyf::error('Linked to another product : '.$pvg->video_game_id)];
                     } else {
-                        return ['success' => true, 'msg' => 'Already linked to that product'];
+                        return ['success' => true, 'notyf' => Notyf::warning('Already linked to that product')];
                     }
                 } else { //Linking to the product found
                     $pvg = new ProductAsVideoGame([
@@ -80,9 +80,9 @@ class VideoGame extends Model
                     ]);
                     $pvg->save();
                 }
-                return ['success' => true, 'msg' => 'Correctly linked to product'];
+                return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product')];
             }
         }
-        return ['success' => false, 'msg' => 'No product found'];
+        return ['success' => false, 'notyf' => Notyf::warning('No product found')];
     }
 }

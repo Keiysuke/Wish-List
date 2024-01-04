@@ -41,15 +41,12 @@
         w.dataset.userId = new_id;
         //On actualise seulement lorsqu'on affiche un autre user
         if (w.classList.contains('flex')) {
-            my_fetch('{{ route('get_user_profile') }}', {method: 'post', csrf: true}, {
-                user_id: parseInt(new_id),
-            }).then(response => {
-                if (response.ok) return response.json();
-            }).then(results => {
+
+            get_fetch('user/' + new_id + '/profile')
+            .then(results => {
                 document.getElementById('user_datas').innerHTML = results.html;
                 if (results.is_friend) {
                     document.getElementById('delete_friend').addEventListener('click', removeFriend);
-
                 } else {
                     document.getElementById('add_friend').addEventListener('click', addFriend);
                 }
@@ -58,21 +55,15 @@
     }
 
     function addFriend(e) {
-        my_fetch('{{ route('friend_requesting') }}', {method: 'post', csrf: true}, {
-            friend_id: parseInt(e.target.dataset.id),
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(results => {
+        get_fetch('user/request/user/' + e.target.dataset.id + '/befriend')
+        .then(results => {
             my_notyf(results);
         });
     }
     
     function removeFriend(e) {
-        my_fetch('{{ route('remove_friend') }}', {method: 'post', csrf: true}, {
-            friend_id: parseInt(e.target.dataset.id),
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(results => {
+        get_fetch('user/friends/' + e.target.dataset.id + '/remove')
+        .then(results => {
             my_notyf(results);
             if (results.success) {
                 closeUserProfile()

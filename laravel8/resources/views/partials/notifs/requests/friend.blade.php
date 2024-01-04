@@ -8,10 +8,10 @@
         </div>
     </div>
     <div class="flex justify-center w-full text-xs gap-4">
-        <x-notifs.btn data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="delete_friend_request" title="Refuser la demande d'ami">
+        <x-notifs.btn data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" data-answer="refuse" class="friend_request" title="Refuser la demande d'ami">
             Refuser
         </x-notifs.btn>
-        <x-notifs.btn important color="blue" data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="accept_friend_request" title="Accepter la demande d'ami">
+        <x-notifs.btn important color="blue" data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" data-answer="accept" class="friend_request" title="Accepter la demande d'ami">
             Accepter
         </x-notifs.btn>
     </div>

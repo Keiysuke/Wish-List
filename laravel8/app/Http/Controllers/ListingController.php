@@ -39,20 +39,16 @@ class ListingController extends Controller
         }
     }
 
-    public function show_products(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['list_id' => 'bail|required|int']);
-
-            $list = Listing::find($request->list_id);
-            $products = $list->getProducts();
-            $friends = $list->getFriendsNotShared();
-            $returnHTML = view('lists.products.list')->with(compact('products', 'list', 'friends'))->render();
-            return response()->json([
-                'success' => true, 
-                'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
-                'html' => $returnHTML
-            ]);
-        }
+    public function show_products(int $id){
+        $list = Listing::find($id);
+        $products = $list->getProducts();
+        $friends = $list->getFriendsNotShared();
+        $returnHTML = view('lists.products.list')->with(compact('products', 'list', 'friends'))->render();
+        return response()->json([
+            'success' => true, 
+            'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
+            'html' => $returnHTML
+        ]);
     }
 
     public function index(){
@@ -98,48 +94,43 @@ class ListingController extends Controller
         return redirect()->route('lists.index')->with('info', __('The list has been edited.'));
     }
 
-    public function destroy(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['id' => 'bail|required|int']);
-            $list = Listing::find($request->id);
-            foreach($list->products as $product){ //Suppression des associations aux produits de la liste
-                ListingProduct::where('listing_id', '=', $list->id)->where('product_id', '=', $product->id)->delete();
-            }
-            foreach($list->users as $user){ //Suppression des associations aux utilisateurs ayant accès à la liste
-                ListingUser::where('listing_id', '=', $list->id)->where('user_id', '=', $user->id)->delete();
-            }
-            $list->delete();
-            $first_list = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
-            $list_id = is_null($first_list)? -1 : $first_list->id;
-            return response()->json(['success' => true, 'deleted_id' => $request->id, 'list_id' => $list_id]);
+    public function destroy(int $id){
+        $list = Listing::find($id);
+        foreach($list->products as $product){ //Suppression des associations aux produits de la liste
+            ListingProduct::where('listing_id', '=', $list->id)->where('product_id', '=', $product->id)->delete();
         }
+        foreach($list->users as $user){ //Suppression des associations aux utilisateurs ayant accès à la liste
+            ListingUser::where('listing_id', '=', $list->id)->where('user_id', '=', $user->id)->delete();
+        }
+        $list->delete();
+        $first_list = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
+        $list_id = is_null($first_list)? -1 : $first_list->id;
+        return response()->json([
+            'success' => true, 
+            'deleted_id' => $id, 
+            'list_id' => $list_id,
+            'notyf' => Notyf::success('The list has been deleted')
+        ]);
     }
 
-    public function download(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['id' => 'bail|required|int']);
-            $products = Listing::find($request->id)->getProducts();
-            return response()->json([
-                'success' => true, 
-                'blob' => view('exports.list', compact('products'))->render(), 
-                'filename' => Listing::getFileName($request->id)
-            ]);
-        }
+    public function download(int $id){
+        $products = Listing::find($id)->getProducts();
+        return response()->json([
+            'success' => true, 
+            'blob' => view('exports.list', compact('products'))->render(), 
+            'filename' => Listing::getFileName($id)
+        ]);
     }
 
-    public function show_share(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['list_id' => 'bail|required|int']);
-            
-            $list = Listing::find($request->list_id);
-            $friends = $list->getFriendsNotShared();
+    public function show_share(int $id){
+        $list = Listing::find($id);
+        $friends = $list->getFriendsNotShared();
 
-            $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
-            return response()->json([
-                'success' => true, 
-                'html' => $returnHTML
-            ]);
-        }
+        $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
+        return response()->json([
+            'success' => true, 
+            'html' => $returnHTML
+        ]);
     }
 
     public function share(Request $request){
@@ -177,40 +168,30 @@ class ListingController extends Controller
         }
     }
 
-    function join(Request $request, $status){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'user_id' => 'bail|required|int',
-                'list_id' => 'bail|required|int',
-            ]);
-            $user_id = $request->user_id;
-            $list_id = $request->list_id;
-
-            //Removing the Notification
-            $auth_user = User::find(auth()->user()->id);
-            $auth_user->notifications()->where('type', '=', 'App\Notifications\ShareList')
-                ->whereJsonContains('data->user_id', $user_id)
-                ->whereJsonContains('data->list_id', $list_id)
-                ->first()
-                ->delete();
-            
-            if ($status === 'accept') {
-                (new ListingUser([
-                    'listing_id' => $list_id,
-                    'user_id' => $auth_user->id,
-                    ]))->save();
-                $notif = Notyf::success('List joined');
-                //Notifying the requester in return
-                (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id)));
-            } else {
-                $notif = Notyf::get('Invitation refused');
-                (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id), false));
-            }
-            return response()->json([
-                'success' => true,
-                'notyf' => $notif
-            ]);
+    function join(int $user_id, int $list_id, string $joined){
+        //Removing the Notification
+        $auth_user = User::find(auth()->user()->id);
+        $auth_user->notifications()->where('type', '=', 'App\Notifications\ShareList')
+            ->whereJsonContains('data->user_id', $user_id)
+            ->whereJsonContains('data->list_id', $list_id)
+            ->first()
+            ->delete();
+        
+        if ($joined === 'join') {
+            (new ListingUser([
+                'listing_id' => $list_id,
+                'user_id' => $auth_user->id,
+                ]))->save();
+            $notif = Notyf::success('List joined');
+            //Notifying the requester in return
+            (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id)));
+        } else {
+            $notif = Notyf::get('Invitation refused');
+            (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id), false));
         }
-        abort(404);
+        return response()->json([
+            'success' => true,
+            'notyf' => $notif
+        ]);
     }
 }

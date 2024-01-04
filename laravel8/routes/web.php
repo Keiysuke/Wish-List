@@ -37,11 +37,11 @@ use App\Http\Controllers\VideoGameController;
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
 
-Route::post('user/profile', [FriendUserController::class, 'get_profile'])->name('get_user_profile');
+Route::get('user/{id}/profile', [FriendUserController::class, 'get_profile'])->name('get_user_profile');
 Route::get('user/friends', [FriendUserController::class, 'index'])->name('my_friends');
-Route::post('friends/requesting', [FriendUserController::class, 'requesting'])->name('friend_requesting');
-Route::post('friends/remove', [FriendUserController::class, 'remove'])->name('remove_friend');
-Route::post('friends/request/{status}/end', [FriendUserController::class, 'end_request'])->name('friend_request_end');
+Route::get('user/request/user/{id}/befriend', [FriendUserController::class, 'requesting'])->name('friend_requesting');
+Route::get('user/friends/{id}/remove', [FriendUserController::class, 'remove'])->name('remove_friend');
+Route::get('user/{user_id}/request/friend/{friend_id}/{status}', [FriendUserController::class, 'end_request'])->name('friend_request_end');
 Route::post('friends/filter', [FriendUserController::class, 'filter'])->name('friends_search');
 Route::get('user/friends/add', [FriendUserController::class, 'create'])->name('user_add_friend');
 
@@ -51,12 +51,11 @@ Route::post('user/benefits', [UserController::class, 'filter_benefits'])->name('
 Route::post('user/historic', [UserController::class, 'filter_historic'])->name('post_user_historic');
 Route::get('user/historic/{kind}', [UserController::class, 'historic'])->middleware(['auth', 'verified'])->name('user_historic');
 
-Route::post('products/follow', [ProductController::class, 'follow'])->name('follow_product');
-Route::post('products/archive', [ProductController::class, 'archive'])->name('archive_product');
-Route::get('products/filter', [ProductController::class, 'index'])->name('products_search');
+Route::get('products/{id}/follow', [ProductController::class, 'follow'])->name('follow_product');
+Route::get('products/{id}/archive', [ProductController::class, 'archive'])->name('archive_product');
 Route::post('products/filter', [ProductController::class, 'filter'])->name('products_search');
 Route::post('products/bookmark', [ProductController::class, 'bookmark'])->name('product_bookmark');
-Route::post('products/picture', [ProductController::class, 'get_picture'])->name('products.get_picture');
+Route::get('products/{id}/picture', [ProductController::class, 'get_picture'])->name('products.get_picture');
 
 Route::get('products/user', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('my_products');
 Route::resource('products', ProductController::class)->middleware(['auth', 'verified'])->except(['destroy']);
@@ -76,24 +75,23 @@ Route::get('products/{product?}/purchase/create', [PurchaseController::class, 'c
 Route::get('purchases/{purchase}/destroy', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
 
 Route::resource('group_buys', GroupBuyController::class)->except(['index', 'show', 'destroy']);
-Route::post('group_buys/product/get_datas', [GroupBuyController::class, 'get_product_datas'])->name('group_buys.get_product_datas');
-Route::post('group_buys/get_products', [GroupBuyController::class, 'get_products'])->name('group_buys.get_products');
+Route::get('group_buys/offer/{nb}/product/{id}/datas', [GroupBuyController::class, 'get_product_datas'])->name('group_buys.get_product_datas');
+Route::get('user/{user_id}/group_buys/products/{nb}', [GroupBuyController::class, 'get_products'])->name('group_buys.get_products');
 Route::get('group_buys/{group_buy}/destroy', [GroupBuyController::class, 'destroy'])->name('group_buys.destroy');
 
 Route::resource('sellings', SellingController::class)->except(['index', 'create', 'destroy']);
 Route::get('sellings/purchase/{purchase}/create', [SellingController::class, 'create'])->name('sellings.create');
 Route::get('sellings/{selling}/destroy', [SellingController::class, 'destroy'])->name('sellings.destroy');
 
-Route::post('lists/show_products', [ListingController::class, 'show_products'])->name('show_list_products');
-Route::post('lists/search_products', [SearchController::class, 'search_products'])->name('list_search_products');
+Route::get('lists/{id}/products/show', [ListingController::class, 'show_products'])->name('show_list_products');
+Route::post('lists/products/search', [SearchController::class, 'search_products'])->name('list_search_products');
 Route::post('lists/toggle_product', [ListingController::class, 'toggle_product'])->name('toggle_product_on_list');
 Route::resource('lists', ListingController::class)->middleware(['auth', 'verified'])->except(['destroy']);
-Route::post('lists/destroy', [ListingController::class, 'destroy'])->name('destroy_list');
-Route::post('lists/download', [ListingController::class, 'download'])->name('download_list');
-// Route::get('lists/{id}/share', [ListingController::class, 'toggle_share'])->name('share_list');
-Route::post('lists/share/show', [ListingController::class, 'show_share'])->name('show_share_list');
+Route::get('lists/{id}/destroy', [ListingController::class, 'destroy'])->name('destroy_list');
+Route::get('lists/{id}/download', [ListingController::class, 'download'])->name('download_list');
+Route::get('shared/lists/{id}/show', [ListingController::class, 'show_share'])->name('show_share_list');
 Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
-Route::post('lists/join/{status}/end', [ListingController::class, 'join'])->name('join_friend_list_request_end');
+Route::get('user/{user_id}/lists/{list_id}/{joined}', [ListingController::class, 'join'])->name('join_friend_list_request_end');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -107,10 +105,9 @@ Route::post('benefit', [UtilsController::class, 'simulate_benefit'])->name('simu
 Route::get('autocomplete', [SearchController::class, 'autocomplete'])->name('autocomplete');
 
 Route::resource('video_games', VideoGameController::class)->middleware(['auth', 'verified'])->except(['destroy']);
-Route::get('video_games/filter', [VideoGameController::class, 'index'])->name('video_games_search');
 Route::post('video_games/filter', [VideoGameController::class, 'filter'])->name('video_games_search');
-Route::post('video_games/products/link', [UtilsController::class, 'lk_vg_to_product'])->name('vg_link_product');
-Route::post('video_games/products/unlink', [VideoGameController::class, 'unlink_product'])->name('vg_unlink_product');
+Route::get('video_games/{vg_id}/vg_support/{vg_support_id?}/products/link', [UtilsController::class, 'lk_vg_to_product'])->name('vg_link_product');
+Route::get('video_games/products/{id}/unlink', [VideoGameController::class, 'unlink_product'])->name('vg_unlink_product');
 
 //Admin routes
 Route::prefix('admin')->group(function () {

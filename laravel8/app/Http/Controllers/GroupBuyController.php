@@ -28,39 +28,21 @@ class GroupBuyController extends Controller
         GroupBuyPurchase::where('group_buy_id', '=', $group_buy_id)->where('purchase_id', '=', $purchase_id)->delete();
     }
 
-    public function get_products(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'nb' => 'bail|required|int',
-                'user_id' => 'bail|required|int',
-            ]);
-            $nb = $request->nb;
-            $user_id = $request->user_id;
-
-            $products = User::find($user_id)->products()->orderBy('label')->get();
-            $returnHTML = view('partials.group_buy.select_product', compact('nb', 'products'))->render();
-            return response()->json(['success' => true, 'html' => $returnHTML]);
-        }
+    public function get_products(int $user_id, int $nb){
+        $products = User::find($user_id)->products()->orderBy('label')->get();
+        $returnHTML = view('partials.group_buy.select_product', compact('nb', 'products'))->render();
+        return response()->json(['success' => true, 'html' => $returnHTML]);
     }
     
-    public function get_product_datas(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'nb' => 'bail|required|int',
-                'product_id' => 'bail|required|int',
-            ]);
-            $nb = $request->nb;
-            $product_id = $request->product_id;
+    public function get_product_datas(int $product_id, int $nb){
+        //On récupère les offres du produit
+        $offers = ProductWebsite::where('product_id', '=', $product_id)->orderBy('price')->get();
+        $offers = view('partials.group_buy.select_offer', compact('nb', 'offers'))->render();
 
-            //On récupère les offres du produit
-            $offers = ProductWebsite::where('product_id', '=', $product_id)->orderBy('price')->get();
-            $offers = view('partials.group_buy.select_offer', compact('nb', 'offers'))->render();
-
-            //puis les potentiels achats effectués
-            $purchases = Purchase::where('product_id', '=', $product_id)->orderBy('date')->get();
-            $purchases = view('partials.group_buy.select_purchase', compact('nb', 'purchases'))->render();
-            return response()->json(['success' => true, 'html' => compact('offers', 'purchases')]);
-        }
+        //puis les potentiels achats effectués
+        $purchases = Purchase::where('product_id', '=', $product_id)->orderBy('date')->get();
+        $purchases = view('partials.group_buy.select_purchase', compact('nb', 'purchases'))->render();
+        return response()->json(['success' => true, 'html' => compact('offers', 'purchases')]);
     }
     
     public function create(){

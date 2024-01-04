@@ -30,12 +30,10 @@
     function get_products(event){ //Ajoute un nouveau produit sélectionnable pour l'achat groupé
         event.preventDefault();
         for(let i = 0; i < document.querySelector('#nb_add_product').value; i++){
-            my_fetch('{{ route('group_buys.get_products') }}', {method: 'post', csrf: true}, {
-                nb: document.querySelector('#max_product_nb').value++,
-                user_id: document.querySelector('#user_id').value,
-            }).then(response => {
-                if (response.ok) return response.json();
-            }).then(res => {
+            let nb = document.querySelector('#max_product_nb').value++;
+            let user_id = document.querySelector('#user_id').value;
+            get_fetch('user/' + user_id + '/group_buys/products/' + nb)
+            .then(res => {
                 document.getElementById('all_products_bought').innerHTML += res.html;
             }).then(() => {
                 setListeners();
@@ -47,11 +45,8 @@
         event.preventDefault();
         const product_id = event.target.value;
         const nb = event.target.dataset.nb;
-        my_fetch('{{ route('products.get_picture') }}', {method: 'post', csrf: true}, {
-            product_id: event.target.value,
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        get_fetch('products/' + product_id + '/picture')
+        .then(res => {
             document.getElementById('product_bought_img_'+nb).src = res.html;
             document.getElementById('product_link_'+nb).href = res.link;
         })
@@ -78,12 +73,8 @@
     }
 
     function get_product_datas(product_id, nb){ //Récupère les données (offres, achats existants) du produit passé
-        my_fetch('{{ route('group_buys.get_product_datas') }}', {method: 'post', csrf: true}, {
-            product_id: product_id,
-            nb: nb,
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        get_fetch('group_buys/offer/' + nb + '/product/' + product_id + '/datas/')
+        .then(res => {
             document.getElementById('product_bought_offer_'+nb).innerHTML = res.html.offers;
             document.getElementById('product_bought_purchase_'+nb).innerHTML = res.html.purchases;
         }).then(() => {

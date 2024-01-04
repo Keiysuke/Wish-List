@@ -72,22 +72,18 @@
     }
 
     document.querySelector('#follow_product').addEventListener('click', () => {
-        my_fetch('{{ route('follow_product') }}', {method: 'post', csrf: true}, {
-            id: document.getElementById('product_id').value
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        const id = document.getElementById('product_id').value
+        get_fetch('products/' + id + '/follow')
+        .then(res => {
             document.querySelector('#follow_product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
             document.querySelector('#follow_product').classList.toggle('on');
         });
     });
 
     document.querySelector('#archive_product').addEventListener('click', () => {
-        my_fetch('{{ route('archive_product') }}', {method: 'post', csrf: true}, {
-            id: document.getElementById('product_id').value
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        const id = document.getElementById('product_id').value
+        get_fetch('products/' + id + '/archive')
+        .then(res => {
             document.querySelector('#archive_product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
             document.querySelector('#archive_product').classList.toggle('on');
         });

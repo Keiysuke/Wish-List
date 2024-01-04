@@ -15,10 +15,7 @@ class NotificationsController extends Controller
         $user = User::find(auth()->user()->id);
         $user->notifications()->find($id)->delete();
 
-        return response()->json([
-            'success' => true, 
-            'notyf' => Notyf::success('Notification supprimée')
-        ]);
+        return response()->json(['success' => true]);
     }
 
     public function checkProductNotifications(){

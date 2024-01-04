@@ -2,7 +2,7 @@
 /*!**********************************!*\
   !*** ./resources/js/my_notyf.js ***!
   \**********************************/
-window.my_notyf = function (msg, kind) {
+window.notyfJS = function (msg, kind) {
   var notyf = new Notyf();
   notyf[kind]({
     'position': {

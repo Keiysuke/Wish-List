@@ -1,4 +1,4 @@
-window.my_notyf = function (msg, kind){
+window.notyfJS = function (msg, kind){
     let notyf = new Notyf();
     notyf[kind]({
         'position': {

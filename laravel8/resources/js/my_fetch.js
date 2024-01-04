@@ -10,3 +10,12 @@ window.my_fetch = function (url, headers, datas){
         body: JSON.stringify(datas)
     });
 }
+
+window.get_fetch = function (url){
+    return fetch('http://localhost/00%20-%20API/products-managing/laravel8/public/' + url, {
+        headers: {"X-Requested-With": "XMLHttpRequest"},
+        method: 'get'
+    }).then(response => {
+        if (response.ok) return response.json();
+    });
+}

@@ -13,10 +13,10 @@
         </div>
     </div>
     <div class="flex justify-center w-full text-xs gap-4">
-        <x-notifs.btn data-user-id="{{ $notif->data['user_id'] }}" data-list-id="{{ $notif->data['list_id'] }}" class="unjoin_friend_list" title="Refuser l'invitation">
+        <x-notifs.btn data-user-id="{{ $notif->data['user_id'] }}" data-list-id="{{ $notif->data['list_id'] }}" data-answer="unjoin" class="join_list" title="Refuser l'invitation">
             Refuser
         </x-notifs.btn>
-        <x-notifs.btn important color="blue" data-user-id="{{ $notif->data['user_id'] }}" data-list-id="{{ $notif->data['list_id'] }}" class="join_friend_list" title="Accepter l'invitation">
+        <x-notifs.btn important color="blue" data-user-id="{{ $notif->data['user_id'] }}" data-list-id="{{ $notif->data['list_id'] }}" data-answer="join" class="join_list" title="Accepter l'invitation">
             Accepter
         </x-notifs.btn>
     </div>

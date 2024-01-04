@@ -42,93 +42,63 @@ class FriendUserController extends Controller
         return back()->with('info', __('The website has been deleted.'));
     }
 
-    function get_profile(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'user_id' => 'bail|required|int',
-            ]);
-            $user = User::find($request->user_id);
-            $user->is_friend = $user->is_friend();
+    function get_profile(int $user_id){
+        $user = User::find($user_id);
+        $user->is_friend = $user->is_friend();
 
-            $returnHTML = view('partials.friends.profile', compact('user'))->render();
-            return response()->json(['success' => true, 'html' => $returnHTML, 'is_friend' => $user->is_friend]);
-        }
-        abort(404);
+        $returnHTML = view('partials.friends.profile', compact('user'))->render();
+        return response()->json(['success' => true, 'html' => $returnHTML, 'is_friend' => $user->is_friend]);
     }
 
-    function requesting(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'friend_id' => 'bail|required|int',
-            ]);
-            $friend_id = $request->friend_id;
-            $user = User::find(auth()->user()->id);
-            $friend = User::find($friend_id);
+    function requesting(int $friend_id){
+        $user = User::find(auth()->user()->id);
+        $friend = User::find($friend_id);
 
-            if($friend->is_friend())
-                return response()->json(['success' => false, 'notyf' => Notyf::get('He\'s already your friend')]);
+        if($friend->is_friend())
+            return response()->json(['success' => false, 'notyf' => Notyf::get('He\'s already your friend')]);
 
-            $friend->notify(new FriendRequest($user, $friend));
-            return response()->json(['success' => true, 'notyf' => Notyf::success('Friend request send')]);
-        }
-        abort(404);
+        $friend->notify(new FriendRequest($user, $friend));
+        return response()->json(['success' => true, 'notyf' => Notyf::success('Friend request send')]);
     }
 
-    function remove(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'friend_id' => 'bail|required|int',
-            ]);
-            $friend_id = $request->friend_id;
-            $user_id = auth()->user()->id;
+    function remove(int $friend_id){
+        $user_id = auth()->user()->id;
 
-            if(!User::find($friend_id)->is_friend())
-                return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
-            
-            FriendUser::whereIn('user_id', [$user_id, $friend_id])
-                ->whereIn('friend_id', [$user_id, $friend_id])
-                ->delete();
+        if(!User::find($friend_id)->is_friend())
+            return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
+        
+        FriendUser::whereIn('user_id', [$user_id, $friend_id])
+            ->whereIn('friend_id', [$user_id, $friend_id])
+            ->delete();
 
-            return response()->json(['success' => true, 'notyf' => Notyf::success('Friend removed'), 'user_id' => $friend_id]);
-        }
-        abort(404);
+        return response()->json(['success' => true, 'notyf' => Notyf::success('Friend removed'), 'user_id' => $friend_id]);
     }
     
-    function end_request(Request $request, $status){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'user_id' => 'bail|required|int',
-                'friend_id' => 'bail|required|int',
-            ]);
-            $user_id = $request->user_id;
-            $friend_id = $request->friend_id;
-            
-            //Checking this request is for the current user
-            if ($friend_id != auth()->user()->id)
-                return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
+    function end_request(int $user_id, int $friend_id, string $status) {
+        //Checking this request is for the current user
+        if ($friend_id != auth()->user()->id)
+            return response()->json(['success' => false, 'notyf' => Notyf::get('Incorrect action')]);
 
-            //Removing the Notification
-            $user = User::find($friend_id);
-            $user->notifications()->where('type', '=', 'App\Notifications\FriendRequest')
-                ->whereJsonContains('data->user_id', $user_id)
-                ->whereJsonContains('data->friend_id', $friend_id)
-                ->first()
-                ->delete();
-            
-            $notif = Notyf::get('Friend request refused');
-            if ($status === 'accept') {
-                (new FriendUser([
-                    'user_id' => $user_id,
-                    'friend_id' => $friend_id,
-                    ]))->save();
-                $notif = Notyf::success('Friend request accepted');
-            }
-            return response()->json([
-                'success' => true,
-                'notyf' => $notif
-            ]);
+        //Removing the Notification
+        $user = User::find($friend_id);
+        $user->notifications()->where('type', '=', 'App\Notifications\FriendRequest')
+            ->whereJsonContains('data->user_id', $user_id)
+            ->whereJsonContains('data->friend_id', $friend_id)
+            ->first()
+            ->delete();
+        
+        $notif = Notyf::get('Friend request refused');
+        if ($status === 'accept') {
+            (new FriendUser([
+                'user_id' => $user_id,
+                'friend_id' => $friend_id,
+                ]))->save();
+            $notif = Notyf::success('Friend request accepted');
         }
-        abort(404);
+        return response()->json([
+            'success' => true,
+            'notyf' => $notif
+        ]);
     }
 
     function filter(Request $request) {

@@ -16,6 +16,7 @@
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/clipboard.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/my_notyf.js') }}"></script>
 <script>
     function onPicture(on){
         if(on){
@@ -40,27 +41,22 @@
     }
 
     document.querySelector('#fast_lk_product').addEventListener('click', () => {
-        my_fetch('{{ route('vg_link_product') }}', {method: 'post', csrf: true}, {
-            video_game_id: document.getElementById('video_game_id').value,
-            vg_support_id: null
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
-            console.log(res); //TODO Flash Message
+        const vg_id = document.getElementById('video_game_id').value;
+        get_fetch('video_games/' + vg_id + '/vg_support/0/products/link')
+        .then(res => {
+            my_notyf(res);
             if (res.success) location.reload();
         });
     });
     
     Array.from(document.getElementsByClassName('unlink_product')).forEach(el => { el.addEventListener('click', unlinkProduct); });
     function unlinkProduct(e){
-        let id = e.target.dataset.id
-        my_fetch('{{ route('vg_unlink_product') }}', {method: 'post', csrf: true}, {
-            id: id
-        }).then(response => {
-            if (response.ok) return response.json();
-        }).then(res => {
+        let product_id = e.target.dataset.id
+        get_fetch('video_games/products/' + product_id + '/unlink')
+        .then(res => {
             if (res.success) {
-                document.querySelector('#product_link_'+id).remove()
+                my_notyf(res);
+                document.querySelector('#product_link_'+product_id).remove()
             }
         });
     }
@@ -118,7 +114,7 @@
                             <span id="fast_lk_product" title="Association auto" class="title-icon refresh cursor-pointer inline-flex">
                                 <x-svg.refresh class="icon-xs"/>
                             </span>
-                            <a title="Associer un produit" href="{{ route('my_products', ['search' => $video_game->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
+                            <a title="Rechercher un produit" href="{{ route('my_products', ['search' => $video_game->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
                                 <x-svg.search class="icon-xs"/>
                             </a>
                         </div>

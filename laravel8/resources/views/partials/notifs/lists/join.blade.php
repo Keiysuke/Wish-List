@@ -1,5 +1,5 @@
 @php($ok = $notif->data['status'])
-<x-notif :notif="$notif" kind="{{ $ok ? 'success' : 'error' }}" title="{{ $ok ? 'Liste rejointe' : 'Liste non rejointe' }}">
+<x-notif :notif="$notif" kind="{{ $ok ? 'success' : 'error' }}" title="Liste {{ $ok ? '' : 'non' }} rejointe par">
     <div class="flex flex-col content-center">
         <div class="friend_request_row text-black" data-id="{{ $notif->data['user_id'] }}">
             <div class="avatar">

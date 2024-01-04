@@ -19,20 +19,16 @@ use Carbon\Carbon;
 use EloquentBuilder;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductTemplateController;
+use App\Models\Notyf;
 
 class ProductController extends Controller
 {
     private $nb_page_results = 15;
 
-    public function get_picture(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['product_id' => 'bail|required|int']);
-            $product_id = $request->product_id;
-
-            $photo = ProductPhoto::where('product_id', '=', $product_id)->first();
-            $returnHTML = asset(config('images.path_products').'/'.$product_id.'/'.$photo->label);
-            return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $product_id)]);
-        }
+    public function get_picture(int $product_id){
+        $photo = ProductPhoto::where('product_id', '=', $product_id)->first();
+        $returnHTML = asset(config('images.path_products').'/'.$product_id.'/'.$photo->label);
+        return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $product_id)]);
     }
 
     public function setProductWebsites(&$products){
@@ -270,23 +266,23 @@ class ProductController extends Controller
         return $products;
     }
 
-    function follow(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['id' => 'bail|required|int']);
-            $user = User::find(auth()->user()->id);
-            $user->products()->toggle($request->id);
-            return response()->json(['success' => true, 'product' => ['follow' => $user->products()->find($request->id)]]);
-        }
+    function follow(int $id){
+        $user = User::find(auth()->user()->id);
+        $user->products()->toggle($id);
+        return response()->json([
+            'success' => true, 
+            'product' => ['follow' => $user->products()->find($id)],
+        ]);
     }
 
-    function archive(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['id' => 'bail|required|int']);
-            $product = Product::find($request->id);
-            $product->archived = !$product->archived;
-            $product->save();
-            return response()->json(['success' => true, 'product' => ['archived' => $product->archived]]);
-        }
+    function archive(int $id){
+        $product = Product::find($id);
+        $product->archived = !$product->archived;
+        $product->save();
+        return response()->json([
+            'success' => true, 
+            'product' => ['archived' => $product->archived],
+        ]);
     }
 
     public function create(){
