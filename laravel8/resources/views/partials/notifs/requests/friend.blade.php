@@ -1,0 +1,18 @@
+<x-notif :notif="$notif" icon="svg.user" kind="message" title="{{ __('Friend request') }}">
+    <div class="friend_request_row text-black" data-id="{{ $notif->data['user_id'] }}">
+        <div class="avatar">
+            {{ ($notif->data['user_name'])[0] }}
+        </div>
+        <div class="name">
+            {{ $notif->data['user_name'] }}
+        </div>
+    </div>
+    <div class="flex justify-center w-full text-xs gap-4">
+        <x-notifs.btn data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="delete_friend_request" title="Refuser la demande d'ami">
+            Refuser
+        </x-notifs.btn>
+        <x-notifs.btn important color="blue" data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="accept_friend_request" title="Accepter la demande d'ami">
+            Accepter
+        </x-notifs.btn>
+    </div>
+</x-notif>

@@ -85,35 +85,8 @@
         <a href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
         <a href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
     </div>
-    <div id="subicon_bell" class="subicon flex justify-end gap-1">
-        @if(auth()->user()->unreadNotifications->isEmpty())
-            <span class="px-2">Aucune notification</span>
-        @else
-            @foreach(auth()->user()->unreadNotifications as $notif)
-                @if(in_array($notif->type, ['App\Notifications\ProductSoonAvailable', 'App\Notifications\ProductSoonExpire']))
-                    <a href="{{ route('products.showFromNotification', ['product' => $notif->data['product_id'], 'notification' => $notif->id]) }}" class="flex items-center mx-1 bg-white" title="{{ $notif->data['product_label'] }}">
-                        <img class="w-2/6 h-20" src="{{ asset(config('images.path_products').'/'.$notif->data['product_id'].'/'.$notif->data['product_photo']) }}"/>
-                        <span class="w-4/6 flex justify-center text-black text-sm">{{ !strcmp($notif->type, 'App\Notifications\ProductSoonExpire')? __('Expire') : __('Disponible') }} dans {{ $notif->data['days'] }} jour(s)</span>
-                    </a>
-                @elseif(in_array($notif->type, ['App\Notifications\FriendRequest']))
-                    <div class="flex flex-col items-center m-2 pt-2 bg-gray-700 text-white text-sm rounded-t-md">
-                        <span class="flex gap-2"><x-svg.user />Demande d'ami reçue de :</span>
-                        <div class="friend_request_row my-1" data-id="{{ $notif->data['user_id'] }}">
-                            <div class="avatar">
-                                {{ ($notif->data['user_name'])[0] }}
-                            </div>
-                            <div class="name">
-                                {{ $notif->data['user_name'] }}
-                            </div>
-                        </div>
-                        <div class="flex w-full">
-                            <x-utils.buttons.valid data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="accept_friend_request flex py-2 justify-center w-full rounded-bl-md bg-green-500" title="Accepter la demande d'ami"/>
-                            <x-utils.buttons.delete data-user-id="{{ $notif->data['user_id'] }}" data-friend-id="{{ $notif->data['friend_id'] }}" class="delete_friend_request flex py-2 justify-center w-full rounded-br-md bg-red-500" title="Refuser la demande d'ami"/>
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-        @endif
+    <div id="subicon_bell" class="subicon flex justify-end gap-2">
+        @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])
     </div>
     <div id="subicon_user" class="subicon menu">
         <span>

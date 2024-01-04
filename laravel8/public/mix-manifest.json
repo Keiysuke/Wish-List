@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/js/my_fetch.js": "/js/my_fetch.js",
     "/js/clipboard.js": "/js/clipboard.js",
+    "/js/my_notyf.js": "/js/my_notyf.js",
     "/css/app.css": "/css/app.css",
     "/css/header.css": "/css/header.css",
     "/css/admin.css": "/css/admin.css",

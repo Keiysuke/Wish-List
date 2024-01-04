@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\FriendUserController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
@@ -44,5 +45,22 @@ class Listing extends Model
     static function getFileName($id) {
         $list = Listing::find($id);
         return ($list->listing_type_id <= 1 ? '' : ' ['.$list->listing_type->label.'] ').$list->label;
+    }
+
+    function isShared() {
+        return (count($this->users) > 0);
+    }
+    
+    public function getFriendsNotShared() {
+        $user = auth()->user();
+        $buildRequest = User::query()
+            ->where('id', '!=', $user->id);
+        FriendUserController::whereIsFriend($buildRequest, $user);
+        $friends = $buildRequest->whereDoesntHave('listing_users', function($query) {
+                $query->where('listing_id', '=', $this->id);
+            })
+            ->get();
+
+        return $friends;
     }
 }

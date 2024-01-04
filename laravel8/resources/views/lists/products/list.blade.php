@@ -4,9 +4,12 @@
             <x-svg.big.gift class="icon-xs ml-1"/>
         @endif
     </span>
-    <span class="font-light" style="margin-top:0.10rem;"> - {{ count($list->users) > 0 ? 'Partagée' : 'Privée' }}</span>
+    <span class="font-light" style="margin-top:0.10rem;"> - {{ $list->isShared() ? 'Partagée' : 'Privée' }}</span>
     <div class="absolute right-0">
         <span id="total_price">Montant total : {{ $products->total_price }} €</span>
+        <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShareList({{ $list->id }});">
+            <x-svg.share title="Partager la liste ?" class="icon-xs"/>
+        </span>
         <span class="title-icon excel cursor-pointer inline-flex ml-1" onClick="if(confirm('Télécharger la liste ?')){ download_list({{ $list->id }}); }">
             <x-svg.excel title="Télécharger la liste ?" class="icon-xs"/>
         </span>

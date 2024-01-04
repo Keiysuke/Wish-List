@@ -11,7 +11,9 @@
 @section('css')
     <link href="{{ asset('css/list_products.css') }}" rel="stylesheet">
 @endsection
+
 @section('js')
+<script type="text/javascript" src="{{ URL::asset('js/my_notyf.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script type="text/javascript">
     function toggle_filters(){
@@ -47,6 +49,51 @@
             link.click();
         });
     }
+    
+    function toggleShareList(list_id){
+        event.stopPropagation();
+        document.getElementById('content_share_lists').classList.toggle('hidden');
+        document.getElementById('main').classList.toggle('pointer-events-none');
+    }
+
+    function showShareList(list_id){
+        my_fetch('{{ route('show_share_list') }}', {method: 'post', csrf: true}, {
+            list_id: list_id,
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            if (res.success) {
+                document.getElementById('content_share_lists').innerHTML = res.html;
+                document.getElementById('content_share_lists').classList.toggle('hidden');
+                document.getElementById('main').classList.toggle('pointer-events-none');
+            }
+        });
+    }
+
+    function shareList(list_id){
+        event.stopPropagation();
+        let friends = Array();
+        Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(el => {
+            if(el.checked) friends.push(parseInt(el.dataset.friendId));
+        });
+        if (friends.length === 0) {
+            my_notyf('Veuillez sélectionner au moins l\'un de vos amis', 'error');
+            return;
+        }
+        my_fetch('{{ route('share_list') }}', {method: 'post', csrf: true}, {
+            list_id: list_id,
+            friends: friends,
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            my_notyf(res);
+            if (res.success) {
+                document.getElementById('content_share_lists').classList.toggle('hidden');
+                document.getElementById('main').classList.toggle('pointer-events-none');
+            }
+        });
+    }
+
     function toggle_list(list_id, product_id){
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
             list_id: list_id,
@@ -80,6 +127,11 @@
     }
     document.onload = get_products({{ empty($lists->first())? 0 : $lists->first()->id }});
 </script>
+@endsection
+
+@section('absolute_content')
+    <div id="content_share_lists" class="absolute flex justify-center items-center w-full h-full hidden">
+    </div>
 @endsection
 
 @section('content')
@@ -127,7 +179,7 @@
                                             <x-svg.big.gift class="icon-xs ml-1 text-red-400"/>
                                         @endif
                                     </span>
-                                    <span class="font-light">{{ !$list->users? 'Partagée' : 'Privée' }}</span>
+                                    <span class="font-light">{{ $list->isShared() ? 'Partagée' : 'Privée' }}</span>
                                 </div>
                                 <a title="Editer la liste" href="{{ route('lists.edit', $list->id) }}">
                                     <x-svg.edit class="icon-xs icon-clickable"/>

@@ -27,6 +27,7 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendUserController;
 use App\Http\Controllers\CssColorController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ScriptsController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
@@ -60,6 +61,7 @@ Route::post('products/picture', [ProductController::class, 'get_picture'])->name
 Route::get('products/user', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('my_products');
 Route::resource('products', ProductController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 Route::get('products/{product}/notifications/{notification}', [ProductController::class, 'showFromNotification'])->middleware(['auth', 'verified'])->name('products.showFromNotification');
+Route::get('notifications/{id}/delete', [NotificationsController::class, 'delete'])->middleware(['auth', 'verified'])->name('delete_notif');
 
 Route::get('products/{product}/photos/edit', [ProductPhotoController::class, 'edit'])->name('product_photos.edit');
 Route::put('products/{product}/photos', [ProductPhotoController::class, 'update'])->name('product_photos.update');
@@ -88,6 +90,10 @@ Route::post('lists/toggle_product', [ListingController::class, 'toggle_product']
 Route::resource('lists', ListingController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 Route::post('lists/destroy', [ListingController::class, 'destroy'])->name('destroy_list');
 Route::post('lists/download', [ListingController::class, 'download'])->name('download_list');
+// Route::get('lists/{id}/share', [ListingController::class, 'toggle_share'])->name('share_list');
+Route::post('lists/share/show', [ListingController::class, 'show_share'])->name('show_share_list');
+Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
+Route::post('lists/join/{status}/end', [ListingController::class, 'join'])->name('join_friend_list_request_end');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

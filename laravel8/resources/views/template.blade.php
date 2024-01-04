@@ -154,6 +154,17 @@
             });
         }
 
+        function deleteNotif(id) {
+            my_fetch('notifications/' + id + '/delete', {method: 'get'}
+            ).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                my_notyf(results);
+                document.getElementById('notif_' + id).remove();
+                document.getElementById('nb_notifs').innerHTML -= 1;
+            });
+        }
+
                                                             /* Friend Requests */
 
         Array.from(document.getElementsByClassName('accept_friend_request')).forEach(el => { el.addEventListener('click', acceptFriendRequest); });
@@ -165,10 +176,7 @@
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {
-                if (results.notyf) {
-                    var notyf = new Notyf();
-                    notyf.open(results.notyf);
-                }
+                my_notyf(results);
             });
         }
 
@@ -179,10 +187,34 @@
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {
-                if (results.notyf) {
-                    var notyf = new Notyf();
-                    notyf.open(results.notyf);
-                }
+                my_notyf(results);
+            });
+        }
+        
+        /* Friend Requests on a list */
+        
+        Array.from(document.getElementsByClassName('join_friend_list')).forEach(el => { el.addEventListener('click', joinFriendList); });
+        Array.from(document.getElementsByClassName('unjoin_friend_list')).forEach(el => { el.addEventListener('click', unjoinFriendList); });
+        function joinFriendList(e) {
+            my_fetch('{{ route('join_friend_list_request_end', ['status' => 'accept']) }}', {method: 'post', csrf: true}, {
+                user_id: parseInt(e.target.dataset.userId),
+                list_id: parseInt(e.target.dataset.listId),
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                my_notyf(results);
+            });
+        }
+
+        function unjoinFriendList(e) {
+            console.log(e.target.dataset);
+            my_fetch('{{ route('join_friend_list_request_end', ['status' => 'delete']) }}', {method: 'post', csrf: true}, {
+                user_id: parseInt(e.target.dataset.userId),
+                list_id: parseInt(e.target.dataset.listId),
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                my_notyf(results);
             });
         }
 

@@ -2,13 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notyf;
 use App\Models\Product;
+use App\Models\User;
 use App\Notifications\ProductSoonAvailable;
 use App\Notifications\ProductSoonExpire;
 use Carbon\Carbon;
 
 class NotificationsController extends Controller
 {
+    public function delete($id){
+        $user = User::find(auth()->user()->id);
+        $user->notifications()->find($id)->delete();
+
+        return response()->json([
+            'success' => true, 
+            'notyf' => Notyf::success('Notification supprimée')
+        ]);
+    }
+
     public function checkProductNotifications(){
         $buildRequest = Product::query();
         $buildRequest->whereHas('productWebsites', function($query){

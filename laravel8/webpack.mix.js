@@ -14,6 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/my_fetch.js', 'public/js')
     .js('resources/js/clipboard.js', 'public/js')
+    .js('resources/js/my_notyf.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

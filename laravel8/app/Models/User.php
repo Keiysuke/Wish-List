@@ -62,6 +62,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Listing::class, 'listing_products')->withTimestamps();
     }
 
+    public function listing_users(){
+        return $this->belongsToMany(Listing::class, 'listing_users')->withTimestamps();
+    }
+
     public function createdProducts(){
         return $this->hasMany(Product::class);
     }
@@ -79,7 +83,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function friends(){
-        return $this->belongsToMany(User::class, 'friend_users', 'user_id', 'friend_id')->withPivot('favorite')->withTimestamps();
+        return $this->belongsToMany(User::class, 'friend_users', 'friend_id', 'user_id')->withPivot('favorite')->withTimestamps();
     }
 
     public function is_friend() {

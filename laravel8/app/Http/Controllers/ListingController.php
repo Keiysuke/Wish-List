@@ -7,6 +7,9 @@ use App\Models\ListingProduct;
 use App\Models\ListingUser;
 use App\Models\User;
 use App\Http\Requests\ListingRequest;
+use App\Models\Notyf;
+use App\Notifications\ListJoined;
+use App\Notifications\ShareList;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
@@ -42,8 +45,13 @@ class ListingController extends Controller
 
             $list = Listing::find($request->list_id);
             $products = $list->getProducts();
-            $returnHTML = view('lists.products.list')->with(compact('products', 'list'))->render();
-            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
+            $friends = $list->getFriendsNotShared();
+            $returnHTML = view('lists.products.list')->with(compact('products', 'list', 'friends'))->render();
+            return response()->json([
+                'success' => true, 
+                'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
+                'html' => $returnHTML
+            ]);
         }
     }
 
@@ -117,5 +125,92 @@ class ListingController extends Controller
                 'filename' => Listing::getFileName($request->id)
             ]);
         }
+    }
+
+    public function show_share(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['list_id' => 'bail|required|int']);
+            
+            $list = Listing::find($request->list_id);
+            $friends = $list->getFriendsNotShared();
+
+            $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
+            return response()->json([
+                'success' => true, 
+                'html' => $returnHTML
+            ]);
+        }
+    }
+
+    public function share(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, ['list_id' => 'bail|required|int']);
+            $list_id = $request->list_id;
+            $user = auth()->user();
+
+            $notifs = 0;
+            foreach ($request->friends as $friend_id) {
+                $friend = User::find($friend_id);
+                //Check if the friend has already been notified or not
+                $exist = $friend->notifications()
+                    ->where('type', '=', 'App\Notifications\ShareList')
+                    ->whereJsonContains('data->list_id', $list_id)
+                    ->whereJsonContains('data->user_id', $user->id)
+                    ->first();
+                if (!$exist) {
+                    $notifs++;
+                    $friend->notify(new ShareList($user, Listing::find($list_id)));
+                }
+            }
+
+            if ($notifs > 0) {
+                return response()->json([
+                    'success' => true, 
+                    'notyf' => Notyf::success('A sharing request has been sent to your friends')
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false, 
+                    'notyf' => Notyf::warning('These friends have already been requested for that list')
+                ]);
+            }
+        }
+    }
+
+    function join(Request $request, $status){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'user_id' => 'bail|required|int',
+                'list_id' => 'bail|required|int',
+            ]);
+            $user_id = $request->user_id;
+            $list_id = $request->list_id;
+
+            //Removing the Notification
+            $auth_user = User::find(auth()->user()->id);
+            $auth_user->notifications()->where('type', '=', 'App\Notifications\ShareList')
+                ->whereJsonContains('data->user_id', $user_id)
+                ->whereJsonContains('data->list_id', $list_id)
+                ->first()
+                ->delete();
+            
+            if ($status === 'accept') {
+                (new ListingUser([
+                    'listing_id' => $list_id,
+                    'user_id' => $auth_user->id,
+                    ]))->save();
+                $notif = Notyf::success('List joined');
+                //Notifying the requester in return
+                (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id)));
+            } else {
+                $notif = Notyf::get('Invitation refused');
+                (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id), false));
+            }
+            return response()->json([
+                'success' => true,
+                'notyf' => $notif
+            ]);
+        }
+        abort(404);
     }
 }

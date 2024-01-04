@@ -69,7 +69,7 @@ class FriendUserController extends Controller
                 return response()->json(['success' => false, 'notyf' => Notyf::get('He\'s already your friend')]);
 
             $friend->notify(new FriendRequest($user, $friend));
-            return response()->json(['success' => true, 'notyf' => Notyf::get('Friend request send', Notyf::SUCCESS)]);
+            return response()->json(['success' => true, 'notyf' => Notyf::success('Friend request send')]);
         }
         abort(404);
     }
@@ -89,7 +89,7 @@ class FriendUserController extends Controller
                 ->whereIn('friend_id', [$user_id, $friend_id])
                 ->delete();
 
-            return response()->json(['success' => true, 'notyf' => Notyf::get('Friend removed', Notyf::SUCCESS), 'user_id' => $friend_id]);
+            return response()->json(['success' => true, 'notyf' => Notyf::success('Friend removed'), 'user_id' => $friend_id]);
         }
         abort(404);
     }
@@ -121,7 +121,7 @@ class FriendUserController extends Controller
                     'user_id' => $user_id,
                     'friend_id' => $friend_id,
                     ]))->save();
-                $notif = Notyf::get('Friend request accepted', Notyf::SUCCESS);
+                $notif = Notyf::success('Friend request accepted');
             }
             return response()->json([
                 'success' => true,
@@ -131,7 +131,7 @@ class FriendUserController extends Controller
         abort(404);
     }
 
-    function filter(Request $request){
+    function filter(Request $request) {
         if ($request->ajax()) {
             $this->validate($request, [
                 'name' => 'bail|nullable|string',
@@ -144,16 +144,10 @@ class FriendUserController extends Controller
                 ->where('name', 'like', '%'.$request->name.'%');
 
             if ($request->is_friend) {// He must be a friend of the user
-                $buildRequest->whereHas('friends', function($query) use($user) {
-                    $query->where('friend_id', '=', $user->id)
-                        ->orWhere('user_id', '=', $user->id);
-                });
+                self::whereIsFriend($buildRequest, $user);
 
             } else {// He can be anyone
-                $buildRequest->whereDoesntHave('friends', function($query) use($user) {
-                    $query->where('friend_id', '=', $user->id)
-                        ->orWhere('user_id', '=', $user->id);
-                });
+                self::whereIsNotFriend($buildRequest, $user);
             }
             $friends = $buildRequest->orderBy('name', 'asc')->get();
             
@@ -165,5 +159,29 @@ class FriendUserController extends Controller
             return response()->json(['success' => true, 'html' => $returnHTML, 'nb_results' => count($friends)]);
         }
         abort(404);
+    }
+
+    static function whereIsFriend(&$buildRequest, $user) {
+        $buildRequest->where(function($query) use($user) {
+            $query->whereHas('friends', function($q) use($user) {
+                $q->where('friend_id', '=', $user->id)
+                    ->orWhere('user_id', '=', $user->id);
+            })
+            ->orWhereHas('users', function($q) use($user) {
+                $q->where('friend_id', '=', $user->id)
+                    ->orWhere('user_id', '=', $user->id);
+            });
+        });
+    }
+
+    static function whereIsNotFriend(&$buildRequest, $user) {
+        $buildRequest->whereDoesntHave('friends', function($q) use($user) {
+            $q->where('friend_id', '=', $user->id)
+                ->orWhere('user_id', '=', $user->id);
+        })
+        ->whereDoesntHave('users', function($q) use($user) {
+            $q->where('friend_id', '=', $user->id)
+                ->orWhere('user_id', '=', $user->id);
+        });
     }
 }

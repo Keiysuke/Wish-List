@@ -49,17 +49,12 @@
                 document.getElementById('user_datas').innerHTML = results.html;
                 if (results.is_friend) {
                     document.getElementById('delete_friend').addEventListener('click', removeFriend);
-                    document.getElementById('add_on_list').addEventListener('click', showSharedLists);
 
                 } else {
                     document.getElementById('add_friend').addEventListener('click', addFriend);
                 }
             });
         }
-    }
-    
-    function showSharedLists(e) {
-
     }
 
     function addFriend(e) {
@@ -68,10 +63,7 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
-            if (results.notyf) {
-                var notyf = new Notyf();
-                notyf.open(results.notyf);
-            }
+            my_notyf(results);
         });
     }
     
@@ -81,10 +73,7 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
-            if (results.notyf) {
-                var notyf = new Notyf();
-                notyf.open(results.notyf);
-            }
+            my_notyf(results);
             if (results.success) {
                 closeUserProfile()
                 document.getElementById('sb_friend_row_' + results.user_id).remove();

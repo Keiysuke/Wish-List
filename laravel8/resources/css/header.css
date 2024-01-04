@@ -192,8 +192,10 @@ form#fast_search div:first-of-type svg {
     @apply flex-col;
     @apply w-72;
     @apply py-1;
+    @apply px-2;
     @apply text-white;
     @apply right-6;
+    @apply rounded-b-md;
     top: 3.3rem;
     transform-origin: 0 0;
     transition: transform 0.2s ease;
