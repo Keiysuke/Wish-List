@@ -13,10 +13,10 @@
     <p><x-svg.globe class="icon-sm text-orange-400"/> Mes applis</p>
     <div class="ls_grid-3">
         <div class="square bg-white">
-            <a href="http://localhost/00-Petits_projets/00-sommaire/" title="Mes applis" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/mes_applis.png' }}"/></a>
+            <a href="http://localhost/00 - API/warframe/laravel8/public/weapons" title="Warframe Codex" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/warframe.png' }}"/></a>
         </div>
         <div class="square bg-white">
-            <a href="http://localhost/00 - API/warframe/laravel8/public/weapons" title="Warframe Codex" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/warframe.png' }}"/></a>
+            <a href="http://localhost/00-Petits_projets/00-sommaire/utils.php" title="Mes cartes Yu-Gi-Oh" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/yugioh.jpg' }}"/></a>
         </div>
         <div class="square bg-white">
             <a href="http://localhost/00-Petits_projets/0-les_series" title="Renommer ses fichiers" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/les_series.png' }}"/></a>

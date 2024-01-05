@@ -67,6 +67,7 @@ Route::put('products/{product}/photos', [ProductPhotoController::class, 'update'
 
 Route::get('products/{product}/website/create', [ProductWebsiteController::class, 'create'])->name('product_websites.create');
 Route::post('products/{product}/website', [ProductWebsiteController::class, 'store'])->name('product_websites.store');
+Route::post('product_website/url/find', [ProductWebsiteController::class, 'find_by_url'])->name('find_by_url');
 Route::get('product_website/{product_website}/edit', [ProductWebsiteController::class, 'edit'])->name('product_websites.edit');
 Route::put('product_website/{product_website}', [ProductWebsiteController::class, 'update'])->name('product_websites.update');
 

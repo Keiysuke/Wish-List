@@ -13,7 +13,8 @@ class SellingController extends Controller
     }
     
     public function create(Purchase $purchase){
-        return view('sellings.create', compact('purchase'));
+        $today = UtilsController::today();
+        return view('sellings.create', compact('purchase', 'today'));
     }
 
     public function store(SellingRequest $request){

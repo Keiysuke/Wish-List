@@ -5,8 +5,28 @@
 @endsection
 
 @section('js')
+<script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
-    function set_purchase(v){
+    document.getElementById('ws_url').addEventListener('change', (e) => {
+        const url = e.target.value;
+        if (url === '') return;
+        my_fetch('{{ route('find_by_url') }}', {method: 'post', csrf: true}, {
+            url: url,
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(res => {
+            document.getElementById('website_id').value = res.id;
+        });
+    });
+    
+    document.getElementById('real_cost').addEventListener('focusout', (e) => {
+        if (document.getElementById('price').value === '') document.getElementById('price').value = e.target.value;
+        if (document.getElementById('cost').value === '') document.getElementById('cost').value = e.target.value;
+    });
+
+    function set_purchase(v) {
         document.getElementById('section_product_website').classList.toggle('hidden');
         document.getElementById('section_product_website').classList.toggle('block');
         document.getElementById('section_purchase').classList.toggle('hidden');
@@ -76,7 +96,7 @@
                     </div>
                     <div>
                         <x-form.label for="real_cost" block required>Prix neuf (€)</x-form.label>
-                        <x-form.input name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
+                        <x-form.input id="real_cost" name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
                     </div>
                 </div>
                 <div class="w-2/3">
@@ -108,7 +128,7 @@
                     <x-form.label for="website_id" block required create="{{ route('websites.create') }}">Site de vente</x-form.label>
                     <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($websites as $website)
-                            <option value="{{ $website->id }}" @if(old('website_id') == $website->id) selected @endif>{{ $website->label }}</option>
+                            <option value="{{ $website->id }}" @if(old('website_id', auth()->user()->getFavWebsite()) == $website->id) selected @endif>{{ $website->label }}</option>
                         @endforeach
                     </select>
                     @error('website_id')
@@ -128,7 +148,7 @@
             </div>
             <div class="my-4">
                 <x-form.label for="url" block>Url</x-form.label>
-                <x-form.input name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
+                <x-form.input id="ws_url" name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
             </div>
         </div>
         
@@ -167,7 +187,7 @@
                     </div>
                     <div class="w-2/4">
                         <x-form.label for="date" block required>Date d'achat</x-form.label>
-                        <x-form.date name="date" type="date" value="{{ old('date') }}"/>
+                        <x-form.date name="date" type="date" value="{{ old('date', $today) }}"/>
                     </div>
                 </div>
             </div>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProductWebsiteRequest;
 use App\Models\Product;
 use App\Models\ProductWebsite;
+use App\Models\Website;
 use Carbon\Carbon;
 
 class ProductWebsiteController extends Controller
@@ -55,5 +57,16 @@ class ProductWebsiteController extends Controller
         $request->merge(['price' => str_replace(',', '.', $request->price)]);
         $product_website->update($request->all());
         return redirect()->route('products.show', $product_website->product_id)->with('info', __('The linked website has been edited.'));
+    }
+
+    public function find_by_url(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'url' => 'bail|required|string',
+            ]);
+            $url = Website::parseUrl($request->url);
+            $ws = Website::where('url', '=', $url)->first();
+            return response()->json(['success' => true, 'id' => (is_null($ws) ? 0 : $ws->id)]);
+        }
     }
 }

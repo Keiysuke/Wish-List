@@ -30,6 +30,28 @@ div.grid_product div.down.offer-soon div p {
   background-color: #ed8936;
 }
 
+div.grid_product div.top.vg_icons {
+  display: flex;
+  flex-direction: column;
+  right: 0;
+  width: 2rem;
+  background-color: white;
+  position: absolute;
+  z-index: 1;
+}
+
+div.grid_product div.top.vg_icons a {
+  border: none;
+}
+
+div.grid_product div.top.vg_icons a:not(:last-child) {
+  border-bottom: 1px solid #e4e4e7;
+}
+
+div.grid_product div.top.vg_icons a:last-child {
+  border-bottom-left-radius: 0.25rem;
+}
+
 .product_price {
   position: absolute;
   top: 1rem;

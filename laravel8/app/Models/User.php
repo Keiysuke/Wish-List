@@ -92,4 +92,8 @@ class User extends Authenticatable implements MustVerifyEmail
             ->get();
         return count($link) > 0;
     }
+
+    public function getFavWebsite($type = 'buy') {
+        return ($type === 'buy') ? 1 : 2;
+    }
 }

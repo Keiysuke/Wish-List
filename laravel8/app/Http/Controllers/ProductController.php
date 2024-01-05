@@ -286,7 +286,7 @@ class ProductController extends Controller
     }
 
     public function create(){
-        return view('products.create');
+        return view('products.create', ['today' => UtilsController::today()]);
     }
 
     public function store(ProductRequest $request){

@@ -14,7 +14,9 @@ class PurchaseController extends Controller
     }
 
     public function create(Product $product){
-        return view('purchases.create', compact('product'));
+        $product->best_offer = $product->bestWebsiteOffer();
+        $today = UtilsController::today();
+        return view('purchases.create', compact('product', 'today'));
     }
 
     public function store(PurchaseRequest $request){

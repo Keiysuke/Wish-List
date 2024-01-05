@@ -99,7 +99,7 @@
         <div class="flex gap-4 mb-4">
             <div class="w-1/3">
                 <x-form.label for="date_begin" block>Date de début de la vente</x-form.label>
-                <x-form.date name="date_begin" value="{{ old('date_begin') }}"/>
+                <x-form.date name="date_begin" value="{{ old('date_begin', $today) }}"/>
             </div>
             <div class="w-1/3">
                 <x-form.label for="date_sold" block>Date de confirmation de vente</x-form.label>

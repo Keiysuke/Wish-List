@@ -4,6 +4,24 @@
     {{ Breadcrumbs::render('create_product_website', $product) }}
 @endsection
 
+@section('js')
+<script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
+<script>
+    document.getElementById('ws_url').addEventListener('change', (e) => {
+        const url = e.target.value;
+        my_fetch('{{ route('find_by_url') }}', {method: 'post', csrf: true}, {
+            url: url,
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(res => {
+            document.getElementById('website_id').value = res.id;
+        });
+    });
+</script>
+@endsection
+
 @section('content')
 <x-notification type="success" msg="{{ session('info') }}"/>
 
@@ -42,7 +60,7 @@
         </div>
         <div class="mb-4">
             <x-form.label for="url" block>Url</x-form.label>
-            <x-form.input name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
+            <x-form.input id="ws_url" name="url" placeholder="http://Amazon.fr" value="{{ old('url') }}"/>
         </div>
         <div class="flex items-center justify-between">
             <x-form.btn type="submit">Lier le site de vente</x-form.btn>

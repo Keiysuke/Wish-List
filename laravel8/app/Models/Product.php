@@ -51,12 +51,12 @@ class Product extends Model
     }
     
     public function purchases(){
-        if(\Auth::user()) return $this->hasMany(Purchase::class)->where('user_id', '=', \Auth::user()->id);
+        if(auth()->user()) return $this->hasMany(Purchase::class)->where('user_id', '=', auth()->user()->id);
         else return $this->hasMany(Purchase::class);
     }
     
     public function sellings(){
-        if(\Auth::user()) return $this->hasMany(Selling::class)->where('user_id', '=', \Auth::user()->id);
+        if(auth()->user()) return $this->hasMany(Selling::class)->where('user_id', '=', auth()->user()->id);
         else return $this->hasMany(Selling::class);
     }
     
@@ -122,10 +122,10 @@ class Product extends Model
     }
     
     public function bestWebsiteOffer(){
-        $res = ['price' => $this->real_cost, 'url' => null];
+        $res = ['price' => $this->real_cost, 'url' => null, 'website_id' => null];
         foreach($this->getAvailableWebsites() as $offer){
             if($offer->price <= $res['price']){
-                $res = ['price' => $offer->price, 'url' => $offer->url];
+                $res = ['price' => $offer->price, 'url' => $offer->url, 'website_id' => $offer->website_id];
             }
         }
         return (Object)array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);

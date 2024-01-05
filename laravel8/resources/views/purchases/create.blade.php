@@ -17,6 +17,7 @@
 @php($dir = config('images.path_products').'/'.$product->id.'/')
 <x-notification type="success" msg="{{ session('info') }}"/>
 
+@php($best_cost = $product->best_offer->price)
 <div class="min-w-full max-w-xs">
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('purchases.store') }}" method="POST">
         @csrf
@@ -53,7 +54,7 @@
                 
                 <div class="w-1/3">
                     <x-form.label for="date" block required>Date d'achat</x-form.label>
-                    <x-form.date name="date" type="date" value="{{ old('date') }}"/>
+                    <x-form.date name="date" type="date" value="{{ old('date', $today) }}"/>
                 </div>
                 <div class="w-1/3">
                     <x-form.label for="date_received" block required>Date de réception</x-form.label>
@@ -66,8 +67,9 @@
             <div class="w-2/5">
                 <x-form.label for="website_id" block required create="{{ route('websites.create') }}">Site web</x-form.label>
                 <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                    @php($best_website_id = $product->best_offer->website_id)
                     @foreach($websites as $website)
-                        <option value="{{ $website->id }}" @if(old('website_id') === $website->id) selected @endif>{{ $website->label }}</option>
+                        <option value="{{ $website->id }}" @if(old('website_id', $best_website_id) == $website->id) selected @endif>{{ $website->label }}</option>
                     @endforeach
                 </select>
                 @error('website_id')
@@ -77,7 +79,7 @@
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
                     <x-form.label for="cost" block required>Coût (€)</x-form.label>
-                    <x-form.input name="cost" placeholder="Ce produit m'a coûté..." value="{{ old('cost') }}"/>
+                    <x-form.input name="cost" placeholder="Ce produit m'a coûté..." value="{{ old('cost', $best_cost) }}"/>
                 </div>
                 <div class="w-1/3">
                     <x-form.label for="discount" block>Réduction (€)</x-form.label>
@@ -124,7 +126,7 @@
                     <x-form.label for="sell_website_id" block required>Vendu sur</x-form.label>
                     <select name="sell_website_id" id="sell_website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($websites as $website)
-                            <option value="{{ $website->id }}" @if(old('sell_website_id') == $website->id) selected @endif>{{ $website->label }}</option>
+                            <option value="{{ $website->id }}" @if(old('sell_website_id', auth()->user()->getFavWebsite('sell')) == $website->id) selected @endif>{{ $website->label }}</option>
                         @endforeach
                     </select>
                     @error('sell_website_id')
@@ -170,7 +172,7 @@
             <div class="flex gap-4 mb-4">
                 <div class="w-1/3">
                     <x-form.label for="date_begin" block>Date de début de la vente</x-form.label>
-                    <x-form.date name="date_begin" value="{{ old('date_begin') }}"/>
+                    <x-form.date name="date_begin" value="{{ old('date_begin', $today) }}"/>
                 </div>
                 <div class="w-1/3">
                     <x-form.label for="date_sold" block>Date de confirmation de vente</x-form.label>

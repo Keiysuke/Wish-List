@@ -55,8 +55,8 @@ class GroupBuyController extends Controller
             'label' => $request->label,
             'date' => $request->date,
             'global_cost' => 0,
-            'discount' => $request->discount,
-            'shipping_fees' => $request->shipping_fees,
+            'discount' => str_replace(',', '.', $request->discount),
+            'shipping_fees' => str_replace(',', '.', $request->shipping_fees),
         ]);
         $group_buy->save();
         
@@ -103,9 +103,9 @@ class GroupBuyController extends Controller
             'label' => $request->label,
             'date' => $request->date,
             'global_cost' => 0,
-            'discount' => $request->discount,
-            'shipping_fees' => $request->shipping_fees,])
-            ->all()
+            'discount' => str_replace(',', '.', $request->discount),
+            'shipping_fees' => str_replace(',', '.', $request->shipping_fees),
+            ])->all()
         );
         
         $purchases_to_link = [];

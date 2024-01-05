@@ -21,6 +21,7 @@ class PurchaseRequest extends FormRequest
                 'website_id' => 'int|required',
                 'cost' => 'required',
                 'date' => 'required|date',
+                'date_received' => 'required|date',
                 'sell_product_state_id' => 'int|required',
                 'sell_website_id' => 'int|required',
                 'sell_state_id' => 'int|required',
@@ -40,6 +41,7 @@ class PurchaseRequest extends FormRequest
                 'website_id' => 'int|required',
                 'cost' => 'required',
                 'date' => 'required|date',
+                'date_received' => 'required|date',
             ];
         }
     }

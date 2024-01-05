@@ -24,4 +24,14 @@ class Website extends Model
     public function sellings(){
         return $this->hasMany(Selling::class);
     }
+
+    public static function parseUrl($url){
+        $parsedUrl = parse_url($url);
+
+        if (isset($parsedUrl['path'])) {// Vérifier si le chemin existe
+            $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . '/';
+            return $newUrl;
+        }
+        return null;
+    }
 }
