@@ -20992,6 +20992,19 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
+/***/ "./resources/css/header.css":
+/*!**********************************!*\
+  !*** ./resources/css/header.css ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/css/footer.css":
 /*!**********************************!*\
   !*** ./resources/css/footer.css ***!
@@ -21122,10 +21135,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/admin.css":
-/*!*********************************!*\
-  !*** ./resources/css/admin.css ***!
-  \*********************************/
+/***/ "./resources/css/admin/admin.css":
+/*!***************************************!*\
+  !*** ./resources/css/admin/admin.css ***!
+  \***************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21135,10 +21148,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/css/header.css":
-/*!**********************************!*\
-  !*** ./resources/css/header.css ***!
-  \**********************************/
+/***/ "./resources/css/admin/design_system.css":
+/*!***********************************************!*\
+  !*** ./resources/css/admin/design_system.css ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21430,7 +21443,8 @@ process.umask = function() { return 0; };
 /******/ 			["./resources/assets/sass/app.scss"],
 /******/ 			["./resources/css/app.css"],
 /******/ 			["./resources/css/custom_app.css"],
-/******/ 			["./resources/css/admin.css"],
+/******/ 			["./resources/css/admin/admin.css"],
+/******/ 			["./resources/css/admin/design_system.css"],
 /******/ 			["./resources/css/header.css"],
 /******/ 			["./resources/css/footer.css"],
 /******/ 			["./resources/css/sidebar.css"],

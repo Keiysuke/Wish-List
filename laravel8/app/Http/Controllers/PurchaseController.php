@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseRequest;
+use App\Services\DateService;
 use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\Product;
@@ -15,7 +16,7 @@ class PurchaseController extends Controller
 
     public function create(Product $product){
         $product->best_offer = $product->bestWebsiteOffer();
-        $today = UtilsController::today();
+        $today = DateService::today();
         return view('purchases.create', compact('product', 'today'));
     }
 

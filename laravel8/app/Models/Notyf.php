@@ -10,6 +10,7 @@ class Notyf extends Model
     const WARNING = 'warning';
     const SUCCESS = 'success';
     const ERROR = 'error';
+    const KINDS = [self::SUCCESS, self::ERROR];
     const DURATION = 3000;
 
     /** 

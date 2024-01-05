@@ -179,18 +179,6 @@
                 my_notyf(results);
             });
         }
-        
-        Array.from(document.getElementsByClassName('join_list')).forEach(el => { el.addEventListener('click', (el) => {
-                const {listId, userId, answer} = el.target.dataset;
-                joinFriendList(listId, userId, answer);
-            }); 
-        });
-        function joinFriendList(list_id, user_id, answer) {
-            get_fetch('user/' + user_id + '/lists/' + list_id + '/' + answer)
-            .then(results => {
-                my_notyf(results);
-            });
-        }
 
         //We stop the propagation of an event for each element that has the class "no-propagate"
         Array.from(document.getElementsByClassName('no-propagate')).forEach(el => { el.addEventListener('click', stopPropagate); });

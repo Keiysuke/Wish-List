@@ -16,10 +16,8 @@ use App\Models\ProductTag;
 use App\Models\Tag;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
-use EloquentBuilder;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductTemplateController;
-use App\Models\Notyf;
+use App\Services\DateService;
 
 class ProductController extends Controller
 {
@@ -286,7 +284,7 @@ class ProductController extends Controller
     }
 
     public function create(){
-        return view('products.create', ['today' => UtilsController::today()]);
+        return view('products.create', ['today' => DateService::today()]);
     }
 
     public function store(ProductRequest $request){

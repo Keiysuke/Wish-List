@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SellingRequest;
+use App\Services\DateService;
 use App\Models\Selling;
 use App\Models\Purchase;
 
@@ -13,7 +14,7 @@ class SellingController extends Controller
     }
     
     public function create(Purchase $purchase){
-        $today = UtilsController::today();
+        $today = DateService::today();
         return view('sellings.create', compact('purchase', 'today'));
     }
 

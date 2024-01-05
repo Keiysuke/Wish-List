@@ -54,6 +54,15 @@ div.notification.is-success {
   color: rgba(22, 163, 74, var(--tw-text-opacity));
 }
 
+div.notification.is-error {
+  --tw-border-opacity: 1;
+  border-color: rgba(239, 68, 68, var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(254, 202, 202, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(220, 38, 38, var(--tw-text-opacity));
+}
+
 div.notification div {
   display: inline-flex;
   width: 100%;
@@ -315,17 +324,17 @@ span.tag {
   border-radius: 9999px;
 }
 
-a#show_video_game:hover{
+#show_video_game:hover{
   --tw-bg-opacity: 1;
   background-color: rgba(185, 28, 28, var(--tw-bg-opacity));
 }
 
-a#show_video_game svg{
+#show_video_game svg{
   --tw-text-opacity: 1;
   color: rgba(185, 28, 28, var(--tw-text-opacity));
 }
 
-a#show_video_game:hover svg{
+#show_video_game:hover svg{
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }

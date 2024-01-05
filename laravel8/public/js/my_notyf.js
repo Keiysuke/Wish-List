@@ -4,11 +4,12 @@
   \**********************************/
 window.notyfJS = function (msg, kind) {
   var notyf = new Notyf();
-  notyf[kind]({
+  notyf.open({
     'position': {
       'x': 'right',
       'y': 'top'
     },
+    'type': kind,
     'message': msg,
     'duration': 3000,
     'dismissible': true

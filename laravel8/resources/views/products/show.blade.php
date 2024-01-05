@@ -191,6 +191,7 @@
                             <a title="Lier un site de vente" href="{{ route('product_websites.create', $product->id) }}" class="title-icon inline-flex">
                                 <x-svg.plus class="icon-xs"/>
                             </a>
+                            <x-products.search_offer id="icon_find_offer" search="{{ $product->label }}"/>
                             @if($product_websites->nb_expired > 0)
                             <span class="title-icon inline-flex cursor-pointer" title="Afficher les liens expirés" onClick="showExpired(this);">
                             @else

@@ -92,7 +92,7 @@ Route::get('lists/{id}/destroy', [ListingController::class, 'destroy'])->name('d
 Route::get('lists/{id}/download', [ListingController::class, 'download'])->name('download_list');
 Route::get('shared/lists/{id}/show', [ListingController::class, 'show_share'])->name('show_share_list');
 Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
-Route::get('user/{user_id}/lists/{list_id}/{joined}', [ListingController::class, 'join'])->name('join_friend_list_request_end');
+Route::get('user/{user_id}/lists/{list_id}', [ListingController::class, 'left'])->name('join_friend_list_request_end');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

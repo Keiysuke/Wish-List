@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 
-class ListJoined extends Notification
+class ListLeft extends Notification
 {
     use Queueable;
 
@@ -34,7 +34,6 @@ class ListJoined extends Notification
             'user_name' => $this->user->name,
             'list_id' => $this->list->id,
             'list_name' => $this->list->label,
-            'status' => $this->status,
         ];
     }
 }

@@ -15,7 +15,9 @@ use App\Models\Tag;
 use App\Models\CssColor;
 use App\Models\VgDeveloper;
 use App\Models\VgSupport;
-use App\Http\Controllers\DesignController;
+use App\Services\NotificationService;
+use App\Models\Notyf;
+use App\Services\DesignService;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -28,8 +30,8 @@ class ViewServiceProvider extends ServiceProvider
     {
         View::composer(['*'], function ($view) {
             $user_websites = [];
-            if (\Auth::check()) {
-                $user_websites = UserWebsite::where('user_id', '=', \Auth::user()->id)->orderBy('user_website_section_id')->orderBy('ordered')->get();
+            if (auth()->check()) {
+                $user_websites = UserWebsite::where('user_id', '=', auth()->user()->id)->orderBy('user_website_section_id')->orderBy('ordered')->get();
             }
             $sections = [];
             foreach ($user_websites as $user_website) {
@@ -40,6 +42,9 @@ class ViewServiceProvider extends ServiceProvider
                 }
             }
             $view->with('user_website_sections', $sections);
+        });
+        View::composer(['components.notif'], function ($view) {
+            $view->with(['kinds' => NotificationService::KINDS]);
         });
         View::composer(['products.websites.create', 'products.websites.edit', 'products.create'], function ($view) {
             $view->with('websites', Website::orderBy('label')->get());
@@ -67,7 +72,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('listing_types', ListingType::orderBy('label')->get());
         });
         View::composer(['lists.index'], function ($view) {
-            $lists = Listing::where('user_id', '=', \Auth::user()->id)->orderBy('listing_type_id')->orderBy('label')->get();
+            $lists = Listing::where('user_id', '=', auth()->user()->id)->orderBy('listing_type_id')->orderBy('label')->get();
             $list_types = [];
             foreach ($lists as $list) {
                 if (array_key_exists($list->listing_type_id, $list_types)) {
@@ -82,7 +87,7 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('product_states', ProductState::all());
         });
         View::composer(['group_buys.create', 'group_buys.edit'], function ($view) {
-            $view->with('products', User::find(\Auth::user()->id)->products()->orderBy('label')->get());
+            $view->with('products', User::find(auth()->user()->id)->products()->orderBy('label')->get());
         });
         
         //Video Games Section
@@ -102,10 +107,15 @@ class ViewServiceProvider extends ServiceProvider
         //Pages
         View::composer(['pages.design_system'], function ($view) {
             $icons = [
-                'min' => DesignController::getIconsAsComponent(),
-                'big' => DesignController::getIconsAsComponent('big')
+                'min' => DesignService::getIconsAsComponent(),
+                'big' => DesignService::getIconsAsComponent('big')
             ];
-            $view->with('icons', $icons);
+            $notifications = NotificationService::getExistingNotifications();
+            $notyfs = [];
+            foreach (Notyf::KINDS as $kind) {
+                $notyfs[$kind] = (Object)['id' => $kind, 'label' => $kind];
+            }
+            $view->with(compact('icons', 'notifications', 'notyfs'));
         });
     }
 }
