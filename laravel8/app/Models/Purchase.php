@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\UtilsController;
+use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -46,7 +47,7 @@ class Purchase extends Model
     }
 
     public function date($format = 'd/m/Y'){
-        return UtilsController::getDate($this->date, $format);
+        return DateService::getDate($this->date, $format);
     }
 
     public function getBenefits(){

@@ -26,7 +26,7 @@ class ProductStateController extends Controller
         $this->validate($request, ['label' => new StateLabel]);
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That state already exists')])->withInput(); //Redirect back with a custom error and older Inputs
-            
+        
         $product_state = new ProductState(['label' => $request->label]);
         $product_state->save();
         return redirect()->route('states.products.index')->with('info', __('The state has been saved.'));

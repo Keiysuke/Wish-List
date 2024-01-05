@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\UtilsController;
+use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
@@ -26,7 +26,7 @@ class VideoGame extends Model
     }
 
     public function date_released($format = 'd/m/Y'){
-        return UtilsController::getDate($this->date_released, $format);
+        return DateService::getDate($this->date_released, $format);
     }
 
     public function product(){

@@ -1,0 +1,38 @@
+.wrap_h1 {
+    @apply relative;
+    @apply flex;
+    @apply justify-center;
+    @apply border-b-2;
+    @apply mb-4;
+    @apply gap-2;
+}
+
+h3 {
+    @apply underline;
+    @apply font-bold;
+    @apply mt-6;
+    @apply mb-4;
+}
+
+.help_block {
+    @apply border-2;
+    @apply border-blue-800;
+    @apply rounded-md;
+    @apply mb-4;
+}
+
+.icon_help {
+    @apply absolute;
+    @apply text-blue-800;
+}
+
+.components_list {
+    @apply my-4;
+    @apply flex;
+    @apply flex-wrap;
+    @apply gap-x-20;
+    @apply gap-y-4;
+    @apply justify-center;
+    @apply italic;
+    @apply font-semibold;
+}

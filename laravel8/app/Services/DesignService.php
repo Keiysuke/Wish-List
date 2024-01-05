@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
-class DesignController extends Controller
+class DesignService
 {
     const ICONS = [
         ['name' => 'add_to_list', 'sizes' => [true, false]],
@@ -10,6 +10,7 @@ class DesignController extends Controller
         ['name' => 'arrow', 'sizes' => [false, true]],
         ['name' => 'asc', 'sizes' => [true, false]],
         ['name' => 'bell', 'sizes' => [false, true]],
+        ['name' => 'box', 'sizes' => [false, true]],
         ['name' => 'cart', 'sizes' => [true, true]],
         ['name' => 'circle_search', 'sizes' => [false, true]],
         ['name' => 'clock', 'sizes' => [true, true]],

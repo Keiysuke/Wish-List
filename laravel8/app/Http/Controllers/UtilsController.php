@@ -3,19 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\VideoGame;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UtilsController extends Controller
 {
-    public static function today($format = 'Y-m-d'){
-        return Carbon::now()->format($format);
-    }
-
-    public static function getDate($date, $format = 'd/m/Y'){
-        return is_null($date)? '' : date($format, strtotime($date));
-    }
-
     public function simulate_benefit(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [

@@ -28,6 +28,12 @@ div.notification.is-success {
     @apply text-green-600;
 }
 
+div.notification.is-error {
+    @apply border-red-500;
+    @apply bg-red-200;
+    @apply text-red-600;
+}
+
 div.notification div {
     @apply inline-flex;
     @apply w-full;
@@ -257,15 +263,15 @@ span.tag {
     @apply rounded-full;
 }
 
-a#show_video_game:hover{
+#show_video_game:hover{
     @apply bg-red-700;
 }
 
-a#show_video_game svg{
+#show_video_game svg{
     @apply text-red-700;
 }
 
-a#show_video_game:hover svg{
+#show_video_game:hover svg{
     @apply text-white;
 }
 

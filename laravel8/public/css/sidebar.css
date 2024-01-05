@@ -33,8 +33,12 @@
   padding-top: 1.5rem;
 }
 
-#icon-star.active, #icon-help.active, #icon-globe.active {
+#icon-star.active {
   fill: currentColor;
+}
+
+#icon-help.active, #icon-globe.active {
+  stroke: currentColor;
 }
 
 #icon-star.active,

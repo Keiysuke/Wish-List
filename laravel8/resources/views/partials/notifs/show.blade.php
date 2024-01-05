@@ -9,7 +9,7 @@
             @include("partials.notifs.requests.friend", $notif)
         @elseif(in_array($notif->type, ['App\Notifications\ShareList']))
             @include("partials.notifs.lists.share", $notif)
-        @elseif(in_array($notif->type, ['App\Notifications\ListJoined']))
+        @elseif(in_array($notif->type, ['App\Notifications\ListLeft']))
             @include("partials.notifs.lists.join", $notif)
         @endif
     @endforeach
