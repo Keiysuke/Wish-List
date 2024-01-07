@@ -5,16 +5,16 @@
     @parent
     <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
     <script>
-        document.querySelector('#{{ $kind_css_color }}_color').addEventListener('change', change_{{ $kind_css_color }}_color);
-        document.querySelector('#{{ $kind_css_color }}_variant').addEventListener('change', change_{{ $kind_css_color }}_color);
+        document.getElementById('{{ $kind_css_color }}_color').addEventListener('change', change_{{ $kind_css_color }}_color);
+        document.getElementById('{{ $kind_css_color }}_variant').addEventListener('change', change_{{ $kind_css_color }}_color);
         
         function change_{{ $kind_css_color }}_color() {
-            let border_color = document.querySelector('#border_color').value
-            let border_cur_variant = document.querySelector('#border_variant').value
-            let text_color = document.querySelector('#text_color').value
-            let text_cur_variant = document.querySelector('#text_variant').value
-            let bg_color = document.querySelector('#bg_color').value
-            let bg_cur_variant = document.querySelector('#bg_variant').value
+            let border_color = document.getElementById('border_color').value
+            let border_cur_variant = document.getElementById('border_variant').value
+            let text_color = document.getElementById('text_color').value
+            let text_cur_variant = document.getElementById('text_variant').value
+            let bg_color = document.getElementById('bg_color').value
+            let bg_cur_variant = document.getElementById('bg_variant').value
             my_fetch('{{ route('get_color_variants') }}', {method: 'post', csrf: true}, {
                 border_color: border_color,
                 border_cur_variant: border_cur_variant,
@@ -26,8 +26,8 @@
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(res => {
-                document.querySelector('#{{ $kind_css_color }}_variant').innerHTML = res.html;
-                document.querySelector('#content_ex_tag').innerHTML = res.tag;
+                document.getElementById('{{ $kind_css_color }}_variant').innerHTML = res.html;
+                document.getElementById('content_ex_tag').innerHTML = res.tag;
             });
         }
         change_{{ $kind_css_color }}_color();

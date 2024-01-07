@@ -123,34 +123,34 @@
         };
 
         for (var icon in SIDEBAR) { //Gestion de left sidebar
-            document.querySelector('#'+icon).addEventListener('click', (event) => {
+            document.getElementById(''+icon).addEventListener('click', (event) => {
                 let icon_clicked = event.target.closest('[data-type="ls_icon"]').id;
                 for (var o_icon in SIDEBAR) {
-                    if (icon_clicked === o_icon) document.querySelector('#'+icon_clicked).classList.toggle('active');
-                    else document.querySelector('#'+o_icon).classList.remove('active');
+                    if (icon_clicked === o_icon) document.getElementById(''+icon_clicked).classList.toggle('active');
+                    else document.getElementById(''+o_icon).classList.remove('active');
                     let content = SIDEBAR[icon_clicked];
                     let o_content = SIDEBAR[o_icon];
-                    if (content === o_content) document.querySelector('#'+content).classList.toggle('open');
-                    else document.querySelector('#'+o_content).classList.remove('open');
+                    if (content === o_content) document.getElementById(''+content).classList.toggle('open');
+                    else document.getElementById(''+o_content).classList.remove('open');
                 };
             });
         };
 
         function ls_benefit_help(){
             my_fetch('{{ route('simulate_benefit') }}', {method: 'post', csrf: true}, {
-                payed: document.querySelector('#ls_benefit_payed').value,
-                sold: document.querySelector('#ls_benefit_sold').value,
-                commission: document.querySelector('#ls_benefit_commission').checked,
+                payed: document.getElementById('ls_benefit_payed').value,
+                sold: document.getElementById('ls_benefit_sold').value,
+                commission: document.getElementById('ls_benefit_commission').checked,
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {
-                document.querySelector('#ls_benefit_results_benef').innerHTML = results.benefit + ' €';
+                document.getElementById('ls_benefit_results_benef').innerHTML = results.benefit + ' €';
                 if (results.benefit >= 0) {
-                    document.querySelector('#ls_benefit_results_benef').classList.add('text-green-400');
-                    document.querySelector('#ls_benefit_results_benef').classList.remove('text-red-400');
+                    document.getElementById('ls_benefit_results_benef').classList.add('text-green-400');
+                    document.getElementById('ls_benefit_results_benef').classList.remove('text-red-400');
                 } else {
-                    document.querySelector('#ls_benefit_results_benef').classList.add('text-red-400');
-                    document.querySelector('#ls_benefit_results_benef').classList.remove('text-green-400');
+                    document.getElementById('ls_benefit_results_benef').classList.add('text-red-400');
+                    document.getElementById('ls_benefit_results_benef').classList.remove('text-green-400');
                 }
             });
         }

@@ -40,7 +40,7 @@
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    document.querySelector('#fast_lk_product').addEventListener('click', () => {
+    document.getElementById('fast_lk_product').addEventListener('click', () => {
         const vg_id = document.getElementById('video_game_id').value;
         get_fetch('video_games/' + vg_id + '/vg_support/0/products/link')
         .then(res => {
@@ -56,7 +56,7 @@
         .then(res => {
             if (res.success) {
                 my_notyf(res);
-                document.querySelector('#product_link_'+product_id).remove()
+                document.getElementById('product_link_'+product_id).remove()
             }
         });
     }

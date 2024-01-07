@@ -17,7 +17,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     function toggle_filters(){
-        document.querySelector('#content_filters').classList.toggle('hidden');
+        document.getElementById('content_filters').classList.toggle('hidden');
     }
 
     function change_page(nb){
@@ -36,9 +36,9 @@
         });
         
         my_fetch('{{ route('post_user_benefits') }}', {method: 'post', csrf: true}, {
-            user_id: document.querySelector('#user_id').value,
-            date_from: document.querySelector('#date_from').value,
-            date_to: document.querySelector('#date_to').value,
+            user_id: document.getElementById('user_id').value,
+            date_from: document.getElementById('date_from').value,
+            date_to: document.getElementById('date_to').value,
             nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
             page: document.getElementById('page').value,
             websites: websites,
@@ -50,7 +50,7 @@
             if (response.ok) return response.json();
         }).then(results => {
             document.getElementById('content_results').innerHTML = results.html; //lists/historic/purchases
-            document.querySelector('#btn-go-up').click();
+            document.getElementById('btn-go-up').click();
         });
     }
 
@@ -60,24 +60,24 @@
         get_benefits();
     }
 
-    document.querySelector('#check_all_websites').addEventListener('change', (event) => {
+    document.getElementById('check_all_websites').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
 
-    document.querySelector('#check_all_tags').addEventListener('change', (event) => {
+    document.getElementById('check_all_tags').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
 
-    document.querySelector('#reset_benefits_filters').addEventListener('click', reset_filters);
+    document.getElementById('reset_benefits_filters').addEventListener('click', reset_filters);
     
     function reset_filters(){
-        document.querySelector('#date_from').value = '';
-        document.querySelector('#date_to').value = '';
-        document.querySelector('#page').value = 1;
+        document.getElementById('date_from').value = '';
+        document.getElementById('date_to').value = '';
+        document.getElementById('page').value = 1;
         get_benefits();
     }
     

@@ -19,7 +19,7 @@
     search_video_games();
 
     function toggle_filters(){
-        document.querySelector('#icon_filter').classList.toggle('on');
+        document.getElementById('icon_filter').classList.toggle('on');
         if(window.scrollY >= '40'){
             window.scrollTo(0, 0);
             if(document.getElementById('content_filters').classList.contains('hidden')) document.getElementById('content_filters').classList.remove('hidden');
@@ -77,7 +77,7 @@
         });
     }
     
-    document.querySelector('#check_all_vg_supports').addEventListener('change', (event) => {
+    document.getElementById('check_all_vg_supports').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_vg_support')).forEach(el => {
             el.checked = !event.target.checked;
         });

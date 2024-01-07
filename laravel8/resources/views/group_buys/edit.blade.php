@@ -11,7 +11,7 @@
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
-    document.querySelector('#add_product').addEventListener('click', get_products);
+    document.getElementById('add_product').addEventListener('click', get_products);
     setListeners();
 
     function setListeners(){
@@ -29,9 +29,9 @@
 
     function get_products(event){ //Ajoute un nouveau produit sélectionnable pour l'achat groupé
         event.preventDefault();
-        for(let i = 0; i < document.querySelector('#nb_add_product').value; i++){
-            let nb = document.querySelector('#max_product_nb').value++;
-            let user_id = document.querySelector('#user_id').value;
+        for(let i = 0; i < document.getElementById('nb_add_product').value; i++){
+            let nb = document.getElementById('max_product_nb').value++;
+            let user_id = document.getElementById('user_id').value;
             get_fetch('user/' + user_id + '/group_buys/products/' + nb)
             .then(res => {
                 document.getElementById('all_products_bought').innerHTML += res.html;

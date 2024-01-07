@@ -71,21 +71,21 @@
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    document.querySelector('#follow_product').addEventListener('click', () => {
+    document.getElementById('follow_product').addEventListener('click', () => {
         const id = document.getElementById('product_id').value
         get_fetch('products/' + id + '/follow')
         .then(res => {
-            document.querySelector('#follow_product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
-            document.querySelector('#follow_product').classList.toggle('on');
+            document.getElementById('follow_product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
+            document.getElementById('follow_product').classList.toggle('on');
         });
     });
 
-    document.querySelector('#archive_product').addEventListener('click', () => {
+    document.getElementById('archive_product').addEventListener('click', () => {
         const id = document.getElementById('product_id').value
         get_fetch('products/' + id + '/archive')
         .then(res => {
-            document.querySelector('#archive_product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
-            document.querySelector('#archive_product').classList.toggle('on');
+            document.getElementById('archive_product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
+            document.getElementById('archive_product').classList.toggle('on');
         });
     });
 
@@ -105,17 +105,17 @@
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
             list_id: list_id,
             product_id: product_id,
-            nb: document.querySelector('#list_nb_'+list_id).value,
+            nb: document.getElementById('list_nb_'+list_id).value,
             change_checked:change_checked
         });
     }
 
     function simulate_benef(payed, sold) {
-        if (!document.querySelector('#left_sidebar_help').classList.contains('open')) {
-            document.querySelector('#icon-help').dispatchEvent(new CustomEvent('click'));
+        if (!document.getElementById('left_sidebar_help').classList.contains('open')) {
+            document.getElementById('icon-help').dispatchEvent(new CustomEvent('click'));
         }
-        document.querySelector('#ls_benefit_payed').value = payed;
-        document.querySelector('#ls_benefit_sold').value = ((sold === undefined) ? 0 : sold);
+        document.getElementById('ls_benefit_payed').value = payed;
+        document.getElementById('ls_benefit_sold').value = ((sold === undefined) ? 0 : sold);
     }
 </script>
 @endsection

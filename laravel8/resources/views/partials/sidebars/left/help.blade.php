@@ -27,7 +27,7 @@
 
     <p class="ls_title mt-4"><x-svg.euro class="icon-sm text-green-400"/> Convertisseur $ -> €</p>
     <div id="ls_help_convert" class="w-full px-4 flex inline-flex gap-2">
-        <x-form.input name="ls_convert_text" placeholder="30 $" onChange="document.querySelector('#ls_convert_result').value = (this.value * 0.94814).toFixed(4);"/>
+        <x-form.input name="ls_convert_text" placeholder="30 $" onChange="document.getElementById('ls_convert_result').value = (this.value * 0.94814).toFixed(4);"/>
         <x-form.input readonly name="ls_convert_result" placeholder="28.4442 €"/>
     </div>
 </div>

@@ -7,7 +7,7 @@
 @section('js')
 <script>
     function updateNbPhotos(add = true, v = -1){ //Change nb_photos in the "select"
-        var nb_photos = document.querySelector('#nb_photos');
+        var nb_photos = document.getElementById('nb_photos');
         if(v >= 0 && v <= 9){
             nb_photos.selectedIndex = v;
             upload_photos(nb_photos.value);

@@ -19,7 +19,7 @@
     search_products();
 
     function toggle_filters(){
-        document.querySelector('#icon_filter').classList.toggle('on');
+        document.getElementById('icon_filter').classList.toggle('on');
         if(window.scrollY >= '40'){
             window.scrollTo(0, 0);
             if(document.getElementById('content_filters').classList.contains('hidden')) document.getElementById('content_filters').classList.remove('hidden');
@@ -106,13 +106,13 @@
         else document.getElementById('result_bar').setAttribute('class', 'sticky_search_bar off');
     });
 
-    document.querySelector('#check_all_websites').addEventListener('change', (event) => {
+    document.getElementById('check_all_websites').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
 
-    document.querySelector('#check_all_tags').addEventListener('change', (event) => {
+    document.getElementById('check_all_tags').addEventListener('change', (event) => {
         Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
             el.checked = !event.target.checked;
         });

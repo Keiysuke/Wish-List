@@ -12,15 +12,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script type="text/javascript">
-        document.querySelector('#template_type').addEventListener('change', set_template_type);
+        document.getElementById('template_type').addEventListener('change', set_template_type);
         function set_template_type(){
-            document.querySelector('#wrap_lk_video_game').classList.add('hidden');
-            document.querySelector('#wrap_lk_vg_support').classList.remove('hidden');
-            if(document.querySelector('#template_type').value === 'video_game'){
-                document.querySelector('#wrap_lk_video_game').classList.remove('hidden');
+            document.getElementById('wrap_lk_video_game').classList.add('hidden');
+            document.getElementById('wrap_lk_vg_support').classList.remove('hidden');
+            if(document.getElementById('template_type').value === 'video_game'){
+                document.getElementById('wrap_lk_video_game').classList.remove('hidden');
             }
-            if(document.querySelector('#template_type').value === 'none'){
-                document.querySelector('#wrap_lk_vg_support').classList.add('hidden');
+            if(document.getElementById('template_type').value === 'none'){
+                document.getElementById('wrap_lk_vg_support').classList.add('hidden');
             }
         }
         set_template_type();

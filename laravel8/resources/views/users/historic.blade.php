@@ -17,7 +17,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     function toggle_filters(){
-        document.querySelector('#content_filters').classList.toggle('hidden');
+        document.getElementById('content_filters').classList.toggle('hidden');
     }
 
     function change_page(nb){
@@ -27,16 +27,16 @@
 
     function get_historic(){
         my_fetch('{{ route('post_user_historic') }}', {method: 'post', csrf: true}, {
-            user_id: document.querySelector('#user_id').value,
+            user_id: document.getElementById('user_id').value,
             kind: "{{ $kind }}",
-            date_from: document.querySelector('#date_from').value,
-            date_to: document.querySelector('#date_to').value,
+            date_from: document.getElementById('date_from').value,
+            date_to: document.getElementById('date_to').value,
             page: document.getElementById('page').value,
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
             document.getElementById('content_results').innerHTML = results.html; //lists/historic/purchases
-            document.querySelector('#btn-go-up').click();
+            document.getElementById('btn-go-up').click();
         });
     }
 
