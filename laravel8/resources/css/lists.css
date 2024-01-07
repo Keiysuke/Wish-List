@@ -1,0 +1,64 @@
+#content_share_lists {
+    @apply absolute;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply w-full;
+    @apply h-full;
+    @apply hidden;
+}
+
+#messages_content {
+    @apply pl-1;
+    @apply -mt-2;
+}
+
+#wrap_writer{
+    @apply flex;
+    @apply flex-col;
+    @apply justify-center;
+    @apply mt-2;
+}
+
+#v_list_msg{
+    @apply flex;
+    @apply flex-col;
+    @apply p-1;
+    @apply gap-2;
+    @apply scrollbar-thumb-blue-700;
+    @apply scrollbar-track-blue-400;
+}
+
+.wrap_list_msg {
+    @apply relative;
+    @apply bg-gray-200;
+    @apply flex;
+    @apply flex-col;
+    @apply gap-1;
+    @apply w-full;
+    @apply p-2;
+    @apply rounded;
+    @apply shadow-sm;
+    transition: background-color 1.5s;
+}
+
+.answering {
+    @apply border-l-4;
+    @apply border-blue-600;
+    @apply bg-blue-300;
+}
+
+.replying_to {
+    @apply flex;
+    @apply gap-1;
+    @apply text-xs;
+}
+
+.replying_to:hover {
+    @apply text-gray-500;
+}
+
+.flash {
+    @apply bg-blue-300;
+    transition: background-color 1.5s;
+}

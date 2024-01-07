@@ -27,6 +27,7 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendUserController;
 use App\Http\Controllers\CssColorController;
+use App\Http\Controllers\ListingMessagesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ScriptsController;
 use App\Http\Controllers\UtilsController;
@@ -84,6 +85,7 @@ Route::resource('sellings', SellingController::class)->except(['index', 'create'
 Route::get('sellings/purchase/{purchase}/create', [SellingController::class, 'create'])->name('sellings.create');
 Route::get('sellings/{selling}/destroy', [SellingController::class, 'destroy'])->name('sellings.destroy');
 
+Route::get('lists/users/{user_id?}', [ListingController::class, 'get_user_lists'])->name('show_user_lists');
 Route::get('lists/{id}/products/show', [ListingController::class, 'show_products'])->name('show_list_products');
 Route::post('lists/products/search', [SearchController::class, 'search_products'])->name('list_search_products');
 Route::post('lists/toggle_product', [ListingController::class, 'toggle_product'])->name('toggle_product_on_list');
@@ -92,7 +94,10 @@ Route::get('lists/{id}/destroy', [ListingController::class, 'destroy'])->name('d
 Route::get('lists/{id}/download', [ListingController::class, 'download'])->name('download_list');
 Route::get('shared/lists/{id}/show', [ListingController::class, 'show_share'])->name('show_share_list');
 Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
-Route::get('user/{user_id}/lists/{list_id}', [ListingController::class, 'left'])->name('join_friend_list_request_end');
+Route::get('lists/{list_id}/leave', [ListingController::class, 'leave'])->name('leave_friend_list');
+Route::post('lists/messages/send', [ListingMessagesController::class, 'send'])->name('send_message');
+Route::get('lists/messages/{id}/delete', [ListingMessagesController::class, 'delete'])->name('list_delete_message');
+Route::get('lists/{id}/delete/messages', [ListingMessagesController::class, 'delete_all'])->name('list_delete_all_messages');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -169,4 +174,4 @@ Route::get('scripts/video_games/product/link', [ScriptsController::class, 'lk_al
 //Simple pages
 Route::get('design-system', function() {
     return view("pages.design_system")->render();
-})->name('design_system');
+})->middleware(['auth', 'verified'])->name('design_system');

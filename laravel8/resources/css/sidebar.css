@@ -20,9 +20,13 @@
     @apply pt-6;
 }
 
-#icon-star.active,
 #icon-help.active,
 #icon-globe.active {
+    stroke: currentColor;
+    color: #ed8936;
+}
+
+#icon-star.active {
     @apply fill-current;
     color: #ed8936;
 }

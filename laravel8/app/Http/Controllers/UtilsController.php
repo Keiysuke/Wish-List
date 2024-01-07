@@ -50,4 +50,9 @@ class UtilsController extends Controller
         $vg = VideoGame::find($vg_id);
         return response()->json($vg->fast_link_product($vg_support_id));
     }
+
+    public static function cutString($msg, $siz = 1000){
+        $etc = (strlen($msg) > $siz) ? '...' : '';
+        return substr($msg, 0, $siz) . $etc;
+    }
 }

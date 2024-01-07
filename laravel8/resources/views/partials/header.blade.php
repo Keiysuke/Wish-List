@@ -81,9 +81,9 @@
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>
     </div>
     <div id="submenu_externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
-        <a href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
-        <a href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
-        <a href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
+        <a target="_blank" href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
+        <a target="_blank" href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
+        <a target="_blank" href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
     </div>
     <div id="subicon_bell" class="subicon flex justify-end gap-2">
         @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])

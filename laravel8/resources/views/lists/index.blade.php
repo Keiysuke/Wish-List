@@ -10,6 +10,7 @@
 
 @section('css')
     <link href="{{ asset('css/list_products.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/lists.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')
@@ -17,7 +18,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script type="text/javascript">
     function toggle_filters(){
-        document.querySelector('#content_filters').classList.toggle('hidden');
+        document.getElementById('content_filters').classList.toggle('hidden');
     }
 
     Array.from(document.getElementsByClassName('delete_list')).forEach(e => {
@@ -25,15 +26,22 @@
             const id = e.target.dataset.list_id;
             get_fetch('lists/' + id + '/destroy')
             .then(res => {
-                document.querySelector("#list_"+res.deleted_id).remove();
+                document.getElementById("list_"+res.deleted_id).remove();
                 my_notyf(res);
                 if(res.list_id > 0) document.onload = get_products(res.list_id); //There's still one other list
                 else{ //No more list for the user
-                    document.querySelector("#my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
+                    document.getElementById("my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
                 }
             });
         });
     });
+
+    function leave_list(list_id){
+        get_fetch('lists/' + list_id + '/leave')
+        .then(res => {
+            if (res.success) location.reload();
+        });
+    }
     
     function download_list(list_id){
         get_fetch('lists/' + list_id + '/download')
@@ -86,6 +94,117 @@
             }
         });
     }
+    
+    function del_list_msg(id) {
+        event.stopPropagation();
+        if(confirm('Confirmer la suppression ?')) {
+            const list_id = document.getElementById('list_selected').value;
+            let url = (id == 0) ? 'lists/' + list_id + '/delete/messages' : 'lists/messages/' + id + '/delete';
+            get_fetch(url)
+            .then(res => {
+                my_notyf(res);
+                if (res.html) {
+                    document.getElementById('messages_content').innerHTML = res.html;
+                } else {
+                    document.getElementById('list_msg_' + id).remove();
+                }
+            });
+        }
+    }
+
+    function show_lists(user_id) {
+        const old_user_id = document.getElementById('lists_user_id').value;
+        if (old_user_id == user_id) return;
+        
+        if (user_id == 0) {
+            document.getElementById('title_others_lists').classList.add('active');
+            document.getElementById('title_my_lists').classList.remove('active');
+        } else {
+            document.getElementById('title_others_lists').classList.remove('active');
+            document.getElementById('title_my_lists').classList.add('active');
+        }
+
+        document.getElementById('lists_user_id').value = user_id;
+        get_fetch('lists/users/' + user_id)
+        .then(lists => {
+            document.getElementById('wrap_lists').innerHTML = lists.html;
+            get_products(lists.first_list_id);
+        });
+    }
+
+    function show_messages(res) {
+        const el_m = document.getElementById('messages_content');
+        const el_r = document.getElementById('right');
+        if (res.messages_html !== null && res.shared_list) {
+            el_m.innerHTML = res.messages_html;
+            el_m.classList.remove('hidden');
+            el_r.classList.remove('w-4/5');
+            el_r.classList.add('w-3/5');
+
+            Array.from(document.getElementsByClassName('focus_list_messages')).forEach(e => {
+                e.addEventListener('focus', (e) => {
+                    el_r.classList.remove('w-3/5');
+                    // el_r.classList.add('w-1/5');
+                    el_r.classList.add('w-2/5');
+
+                    el_m.classList.add('w-3/5');
+                    el_m.classList.add('w-2/5');
+                    // el_m.classList.remove('w-1/5');
+                });
+                e.addEventListener('focusout', (e) => {
+                    // el_r.classList.remove('w-1/5');
+                    el_r.classList.remove('w-2/5');
+                    el_r.classList.add('w-3/5');
+                    
+                    // el_m.classList.add('w-1/5');
+                    el_m.classList.remove('w-2/5');
+                    el_m.classList.remove('w-3/5');
+                });
+            });
+            document.getElementById('v_list_msg').scrollTop = document.getElementById('v_list_msg').scrollHeight;
+        } else if (!el_m.classList.contains('hidden')) {
+            el_m.classList.add('hidden');
+            el_r.classList.add('w-4/5');
+            el_r.classList.remove('w-3/5');
+        }
+    }
+
+    function send_msg() {
+        my_fetch('{{ route('send_message') }}', {method: 'post', csrf: true}, {
+            listing_id: parseInt(document.getElementById('list_selected').value),
+            message: document.getElementById('list_msg_to_send').value,
+            answer_to_id: parseInt(document.getElementById('list_answer_id').value),
+        }).then(response => {
+            if (response.ok) return response.json();
+        }).then(res => {
+            document.getElementById('v_list_msg').insertAdjacentHTML('beforeend', res.message);
+            document.getElementById('list_msg_to_send').value = '';
+
+            if (document.getElementById('list_answer_id').value > 0) {
+                cancelReply();
+            }
+        });
+    }
+
+    function replyTo(id, name) {
+        document.getElementById('list_answer_to').classList.remove('hidden');
+        document.getElementById('list_answer_to').firstElementChild.innerHTML = name;
+        document.getElementById('list_answer_id').value = id;
+        document.getElementById('list_msg_' + id).classList.add('answering');
+    }
+    
+    function cancelReply() {
+        const answer_id = document.getElementById('list_answer_id').value;
+        document.getElementById('list_answer_to').classList.add('hidden');
+        document.getElementById('list_answer_id').value = 0;
+        document.getElementById('list_msg_' + answer_id).classList.remove('answering');
+    }
+
+    function flashOriginalMsg(id) {
+        const msg = document.getElementById('list_msg_' + id);
+        msg.classList.add('flash');
+        setTimeout(() => { msg.classList.remove('flash'); }, 1500);
+    }
 
     function toggle_list(list_id, product_id){
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
@@ -95,32 +214,37 @@
         }).then(response => {
             if (response.ok) return response.json();
         }).then(res => {
-            document.querySelector("#list_"+list_id+"_product_"+product_id).remove();
-            let nb_results = document.querySelector('#nb_results').getAttribute('data-nb')-1;
+            document.getElementById("list_"+list_id+"_product_"+product_id).remove();
+            let nb_results = document.getElementById('nb_results').getAttribute('data-nb')-1;
             if(nb_results > 0){
-                document.querySelector('#nb_results').setAttribute('data-nb', nb_results);
-                document.querySelector('#nb_results').innerHTML = nb_results+' Résultat(s)';
-                document.querySelector('#total_price').innerHTML = 'Montant total : ' + res.total_price + ' €';
+                document.getElementById('nb_results').setAttribute('data-nb', nb_results);
+                document.getElementById('nb_results').innerHTML = nb_results+' Résultat(s)';
+                document.getElementById('total_price').innerHTML = 'Montant total : ' + res.total_price + ' €';
             }else get_products(list_id);
         });
     }
 
     function get_products(list_id){
+        const old_list_id = document.getElementById('list_selected').value;
+        if (old_list_id == list_id) return;
+
         get_fetch('lists/' + list_id + '/products/show')
         .then(products => {
-            if(document.querySelector('#list_selected').value != '' && document.querySelector('#list_'+document.querySelector('#list_selected').value) != undefined)
-                document.querySelector('#list_'+document.querySelector('#list_selected').value).classList.toggle('selected');
-            document.querySelector('#list_selected').value = list_id;
-            document.querySelector('#list_'+list_id).classList.toggle('selected');
-            document.querySelector('#content_results').innerHTML = products.html;
+            if(document.getElementById('list_selected').value != '' && document.getElementById('list_'+document.getElementById('list_selected').value) != undefined)
+                document.getElementById('list_'+document.getElementById('list_selected').value).classList.toggle('selected');
+            document.getElementById('list_selected').value = list_id;
+            document.getElementById('list_'+list_id).classList.toggle('selected');
+            document.getElementById('content_results').innerHTML = products.html;
+            show_messages(products);
         });
     }
-    document.onload = get_products({{ empty($lists->first())? 0 : $lists->first()->id }});
+
+    show_lists({{ auth()->user()->id }});
 </script>
 @endsection
 
 @section('absolute_content')
-    <div id="content_share_lists" class="absolute flex justify-center items-center w-full h-full hidden">
+    <div id="content_share_lists">
     </div>
 @endsection
 
@@ -156,35 +280,24 @@
             <span>Vous n'avez pas encore créé de liste...</span>
             @else
                 <div id="left" class="w-1/5 flex flex-col gap-2">
-                    @foreach ($listing_types as $listing_type_id => $lists)
-                    <div id="list_type_{{ $listing_type_id }}" class="list_type">
-                        @php($listing_type = \App\Models\ListingType::find($listing_type_id))
-                        <div class="label">{{ $listing_type->label }}</div>
-                        <div id="content_list_type_{{ $listing_type_id }}" class="all_lists">
-                        @foreach ($lists as $list)
-                            <div id="list_{{ $list->id }}" class="flex w-full gap-2 cursor-pointer text-sm">
-                                <div class="flex w-full justify-between hover:text-red-500 hover:underline" onClick="get_products({{ $list->id }});">
-                                    <span class="inline-flex">{{ $list->label }}
-                                        @if($list->secret)
-                                            <x-svg.big.gift class="icon-xs ml-1 text-red-400"/>
-                                        @endif
-                                    </span>
-                                    <span class="font-light">{{ $list->isShared() ? 'Partagée' : 'Privée' }}</span>
-                                </div>
-                                <a title="Editer la liste" href="{{ route('lists.edit', $list->id) }}">
-                                    <x-svg.edit class="icon-xs icon-clickable"/>
-                                </a>
-                                <x-svg.trash title="Supprimer la liste ?" class="delete_list icon-xs icon-clickable hover:text-red-600" data-list_id="{{ $list->id }}"/>
-                            </div>
-                        @endforeach
-                            </div>
-                        </div>
-                    @endforeach
+                    <div class="flex w-full justify-center gap-1 border-b border-teal-500 mb-2 relative">
+                        <input type="hidden" id="lists_user_id"/>
+                        <span id="title_my_lists" class="title-text active border-teal-500" onClick="show_lists('{{ auth()->user()->id }}');">
+                            <x-svg.clipboard_list title="Mes listes" class="icon-xs"/> Mes listes
+                        </span>
+                        <span id="title_others_lists" class="title-text border-teal-500" onClick="show_lists('0');">
+                            <x-svg.big.user_group title="Listes de mes amis" class="icon-xs"/> Listes d'amis
+                        </span>
+                    </div>
+                    <div id="wrap_lists">
+                    </div>
                 </div>
                 
                 <div id="right" class="w-4/5 flex-col gap-1 px-3 -mt-2">
                     <div id="content_results">
                     </div>
+                </div>
+                <div id="messages_content" class="w-1/5">
                 </div>
             @endif
         </div>

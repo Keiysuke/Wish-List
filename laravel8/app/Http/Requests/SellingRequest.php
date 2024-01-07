@@ -6,8 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SellingRequest extends FormRequest
 {
-    public function authorize()
-    {
+    public function authorize(){
         return true;
     }
     

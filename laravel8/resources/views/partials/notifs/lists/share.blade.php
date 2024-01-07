@@ -1,8 +1,10 @@
-<x-notif :notif="$notif" icon="svg.clipboard_list" kind="message" title="Liste rejointe">
+<x-notif :notif="$notif" icon="svg.clipboard_list" kind="message" title="Vous avez rejoint une liste">
     <div class="flex flex-col content-center mb-2">
-        <div class="flex justify-center gap-2 text-black">
-            <x-svg.big.clipboard_list class="icon-sm"/><span class="font-semibold">{{ $notif->data['list_name'] }}</span>
-        </div>
+        <a href="{{ route('lists.index', ['id' => $notif->data['list_id']]) }}" class="link">
+            <div class="flex justify-center gap-2 text-black">
+                <x-svg.big.clipboard_list class="icon-sm"/><span class="font-semibold">{{ $notif->data['list_name'] }}</span>
+            </div>
+        </a>
         <div class="friend_request_row text-black" data-id="{{ $notif->data['user_id'] }}">
             <div class="avatar">
                 {{ ($notif->data['user_name'])[0] }}

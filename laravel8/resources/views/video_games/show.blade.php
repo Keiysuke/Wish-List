@@ -115,8 +115,9 @@
                                 <x-svg.refresh class="icon-xs"/>
                             </span>
                             <a title="Rechercher un produit" href="{{ route('my_products', ['search' => $video_game->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
-                                <x-svg.search class="icon-xs"/>
+                                <x-svg.big.circle_search class="icon-xs"/>
                             </a>
+                            <x-products.search_offer id="icon_find_offer" search="{{ $video_game->label }}"/>
                         </div>
                     </div>
                     @include('partials.video_games.list.products', $products)

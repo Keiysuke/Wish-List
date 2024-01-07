@@ -8,6 +8,10 @@ body {
 }
 
 .my_scrollbar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  -ms-scroll-chaining: none;
+      overscroll-behavior: contain;
   --scrollbar-track: initial;
   --scrollbar-thumb: initial;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
@@ -29,11 +33,6 @@ body {
 .my_scrollbar::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-}
-
-.my_scrollbar {
-  --scrollbar-thumb: #3f3f46;
-  --scrollbar-track: #a1a1aa;
 }
 
 div.notification {
@@ -135,6 +134,14 @@ a.link:hover {
   color: rgba(239, 68, 68, var(--tw-text-opacity));
 }
 
+.scaleX {
+  transform: scaleX(-1);
+}
+
+.scaleY {
+  transform: scaleY(-1);
+}
+
 .icon-xs {
   width: 1rem;
 }
@@ -153,6 +160,18 @@ a.link:hover {
 
 .icon-xl {
   width: 2rem;
+}
+
+.icon-xxl {
+  width: 2.5rem;
+}
+
+.h-120 {
+  height: 30rem;
+}
+
+.h-150 {
+  height: 42.5rem;
 }
 
 .border-t-only {
@@ -183,22 +202,59 @@ a.link:hover {
   border-bottom-width: 0px;
 }
 
+.icon-clickable:hover .trash {
+  color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
 .icon-clickable:hover {
-  color: color-blue-500;
+  color: rgba(59, 130, 246, var(--tw-bg-opacity));
   transition: ease-in-out;
   transition-duration: 150ms;
   cursor: pointer;
 }
 
+.title-text {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.title-text:not(.active):hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(45, 212, 191, var(--tw-bg-opacity));
+  cursor: pointer;
+}
+
+.title-text.active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(20, 184, 166, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.title-text, .title-icon {
+  border-width: 2px;
+}
+
+.title-text, .title-icon {
+  border-bottom-width: 0px;
+}
+
+.title-text, .title-icon {
+  border-radius: 0.25rem;
+}
+
+.title-text, .title-icon {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.title-text, .title-icon {
+  padding: 0.5rem;
+}
+
 .title-icon {
   --tw-text-opacity: 1;
   color: rgba(63, 63, 70, var(--tw-text-opacity));
-  border-width: 2px;
-  border-bottom-width: 0px;
-  border-radius: 0.25rem;
-  border-bottom-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  padding: 0.5rem;
 }
 
 .title-icon:hover {

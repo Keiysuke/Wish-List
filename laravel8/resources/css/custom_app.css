@@ -8,9 +8,10 @@ body {
 }
 
 .my_scrollbar {
+    @apply overflow-x-hidden;
+    @apply overflow-y-auto;
+    @apply overscroll-contain;
     @apply scrollbar-thin;
-    @apply scrollbar-thumb-gray-700;
-    @apply scrollbar-track-gray-400;
 }
 
 div.notification {
@@ -101,6 +102,14 @@ a.link:hover {
     @apply text-red-500;
 }
 
+.scaleX {
+    transform: scaleX(-1);
+}
+
+.scaleY {
+    transform: scaleY(-1);
+}
+
 .icon-xs {
     @apply w-4;
 }
@@ -119,6 +128,18 @@ a.link:hover {
 
 .icon-xl {
     @apply w-8;
+}
+
+.icon-xxl {
+    @apply w-10;
+}
+
+.h-120 {
+    height: 30rem;
+}
+
+.h-150 {
+    height: 42.5rem;
 }
 
 .border-t-only {
@@ -149,20 +170,43 @@ a.link:hover {
     border-bottom-width: 0px;
 }
 
+.icon-clickable:hover .trash {
+    color: rgba(239, 68, 68, var(--tw-bg-opacity));
+}
+
 .icon-clickable:hover {
-    color: color-blue-500;
+    color: rgba(59, 130, 246, var(--tw-bg-opacity));
     transition: ease-in-out;
     transition-duration: 150ms;
     cursor: pointer;
 }
 
+.title-text {
+    @apply inline-flex;
+    @apply gap-1;
+}
+
+.title-text:not(.active):hover {
+    @apply bg-teal-400;
+    cursor: pointer;
+}
+
+.title-text.active {
+    @apply bg-teal-500;
+    @apply text-white;
+}
+
+.title-text,
 .title-icon {
-    @apply text-gray-700;
     @apply border-2;
     @apply border-b-0;
     @apply rounded;
     @apply rounded-b-none;
     @apply p-2;
+}
+
+.title-icon {
+    @apply text-gray-700;
 }
 
 .title-icon:hover {

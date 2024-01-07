@@ -10,7 +10,7 @@
         @elseif(in_array($notif->type, ['App\Notifications\ShareList']))
             @include("partials.notifs.lists.share", $notif)
         @elseif(in_array($notif->type, ['App\Notifications\ListLeft']))
-            @include("partials.notifs.lists.join", $notif)
+            @include("partials.notifs.lists.left", $notif)
         @endif
     @endforeach
 @endif

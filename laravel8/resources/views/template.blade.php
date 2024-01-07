@@ -19,7 +19,7 @@
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
     @yield('css')
-    <body id="top_page" class="my_scrollbar">
+    <body id="top_page" class="scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
         @yield('absolute_content')
 
         @include('partials.header')

@@ -63,4 +63,8 @@ class Listing extends Model
 
         return $friends;
     }
+
+    public function owned() {
+        return $this->user_id === auth()->user()->id;
+    }
 }

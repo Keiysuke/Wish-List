@@ -21096,6 +21096,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/lists.css":
+/*!*********************************!*\
+  !*** ./resources/css/lists.css ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./resources/assets/sass/app.scss":
 /*!****************************************!*\
   !*** ./resources/assets/sass/app.scss ***!
@@ -21452,7 +21465,8 @@ process.umask = function() { return 0; };
 /******/ 			["./resources/css/products_search.css"],
 /******/ 			["./resources/css/sidebar_friends.css"],
 /******/ 			["./resources/css/video_games_search.css"],
-/******/ 			["./resources/css/list_products.css"]
+/******/ 			["./resources/css/list_products.css"],
+/******/ 			["./resources/css/lists.css"]
 /******/ 		];
 /******/ 		// no chunk on demand loading
 /******/ 		

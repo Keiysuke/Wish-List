@@ -73,15 +73,7 @@ class ViewServiceProvider extends ServiceProvider
         });
         View::composer(['lists.index'], function ($view) {
             $lists = Listing::where('user_id', '=', auth()->user()->id)->orderBy('listing_type_id')->orderBy('label')->get();
-            $list_types = [];
-            foreach ($lists as $list) {
-                if (array_key_exists($list->listing_type_id, $list_types)) {
-                    $list_types[$list->listing_type_id][] = $list;
-                } else {
-                    $list_types[$list->listing_type_id] = [$list];
-                }
-            }
-            $view->with('listing_types', $list_types);
+            $view->with('lists', $lists);
         });
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('product_states', ProductState::all());

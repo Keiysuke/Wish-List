@@ -1,6 +1,6 @@
 <div class="flex flex-col h-screen gap-6" id="list_benefits">
     @if(count($datas) > 0)
-        <div class="flex-grow overflow-auto my_scrollbar">
+        <div class="flex-grow overflow-auto scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
             <table class="relative w-full whitespace-nowrap">
                 <thead class="sticky -top-1 border">
                     <tr>

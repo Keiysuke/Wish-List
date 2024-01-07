@@ -32,7 +32,8 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/products_search.css', 'public/css', [require('tailwindcss')])
     .postCss('resources/css/sidebar_friends.css', 'public/css', [require('tailwindcss')])
     .postCss('resources/css/video_games_search.css', 'public/css', [require('tailwindcss')])
-    .postCss('resources/css/list_products.css', 'public/css', [require('tailwindcss')]);
+    .postCss('resources/css/list_products.css', 'public/css', [require('tailwindcss')])
+    .postCss('resources/css/lists.css', 'public/css', [require('tailwindcss')]);
 
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 

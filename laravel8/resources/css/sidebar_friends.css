@@ -84,12 +84,14 @@ div.friend_request_row {
 }
 
 div.friend_row div.avatar,
-div.friend_request_row div.avatar {
+div.friend_request_row div.avatar,
+div.user_avatar {
     @apply flex;
     @apply justify-center;
     @apply items-center;
     @apply h-8;
     @apply w-8;
+    min-width: 2rem;
     @apply bg-blue-400;
     @apply text-white;
     @apply rounded-full;

@@ -6,6 +6,9 @@
 <x-admin.help.list_helpers>
     <a href="https://heroicons.com/outline" class="link">Heroicons</a>
     <a href="https://www.svgrepo.com/vectors/" class="link">SVG Repo</a>
+    <a href="https://cdpn.io/shshaw/debug/XbxvNj" class="link">Pixels to SVG</a>
+    <a href="https://emojis.wiki/fr/" class="link">Emojis en texte</a>
+    <a href="https://www.svgrepo.com/collection/yellow-emoji-icons/" class="link">Emojis SVG</a>
 </x-admin.help.list_helpers>
 
 <h3 class="mt-0">1. Les petites icônes ({{ count($icons['min']) }})</h3>
@@ -47,3 +50,14 @@
 </div>
 <x-utils.yt.title_icon search="Soundtrack"/>
 <x-utils.psthc.title_icon search="Lies of P" support="ps4"/>
+
+<h3>4. Les emojis pour les messages</h3>
+
+<div class="grid grid-cols-12 gap-4">
+    @foreach($emojis as $emoji)
+        <div class="grid justify-items-center">
+            <x-dynamic-component :component="$emoji['component']" class="icon-xxl" title="{{ $emoji['name'] }}"/>
+            <span class="text-sm">{{ $emoji['text'] }}</span>
+        </div>
+    @endforeach
+</div>

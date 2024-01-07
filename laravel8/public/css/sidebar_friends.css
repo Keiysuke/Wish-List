@@ -108,37 +108,43 @@ div.friend_request_row {
   gap: 0.5rem;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   display: flex;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   justify-content: center;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   align-items: center;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   height: 2rem;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   width: 2rem;
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar,
+div.friend_request_row div.avatar,
+div.user_avatar {
+  min-width: 2rem;
+}
+
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   --tw-bg-opacity: 1;
   background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
-div.friend_row div.avatar, div.friend_request_row div.avatar {
+div.friend_row div.avatar, div.friend_request_row div.avatar, div.user_avatar {
   border-radius: 9999px;
 }
 

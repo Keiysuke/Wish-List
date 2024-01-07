@@ -1,5 +1,4 @@
-@php($ok = $notif->data['status'])
-<x-notif :notif="$notif" kind="{{ $ok ? 'success' : 'error' }}" title="Liste quittée par">
+<x-notif :notif="$notif" kind="warning" title="Liste quittée par">
     <div class="flex flex-col content-center">
         <div class="flex justify-center gap-2 text-black">
             <x-svg.big.clipboard_list class="icon-sm"/><span class="font-semibold">{{ $notif->data['list_name'] }}</span>

@@ -8,7 +8,7 @@ use App\Models\ListingUser;
 use App\Models\User;
 use App\Http\Requests\ListingRequest;
 use App\Models\Notyf;
-use App\Notifications\ListJoined;
+use App\Notifications\ListLeft;
 use App\Notifications\ShareList;
 use Illuminate\Http\Request;
 
@@ -43,11 +43,17 @@ class ListingController extends Controller
         $list = Listing::find($id);
         $products = $list->getProducts();
         $friends = $list->getFriendsNotShared();
-        $returnHTML = view('lists.products.list')->with(compact('products', 'list', 'friends'))->render();
+
+        $listingMessagesController = new ListingMessagesController();
+        $messagesHTML = $listingMessagesController->show($id);
+
+        $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends'))->render();
         return response()->json([
             'success' => true, 
             'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
-            'html' => $returnHTML
+            'html' => $returnHTML,
+            'shared_list' => $list->isShared(),
+            'messages_html' => $messagesHTML
         ]);
     }
 
@@ -75,8 +81,55 @@ class ListingController extends Controller
         return redirect()->route('lists.index')->with('info', __('The list has been created.'));
     }
 
-    public function show(Listing $list){
-        //
+    public function get_user_lists(int $user_id){
+        $messagesHTML = null;
+        $first_list = null;
+        if ($user_id === 0) {//Listes des amis
+            $lists = Listing::select('listings.*')
+                ->join('listing_users', 'listings.id', '=', 'listing_users.listing_id')
+                ->where('listing_users.user_id', '=', auth()->user()->id)
+                ->join('users', 'listings.user_id', '=', 'users.id')
+                ->orderBy('users.name')
+                ->get();
+            $users_name = [];
+            $listing_users = [];
+            foreach ($lists as $list) {
+                if (is_null($first_list)) $first_list = $list;
+                if (array_key_exists($list->user_id, $listing_users)) {
+                    $listing_users[$list->user_id][] = $list;
+                } else {
+                    $listing_users[$list->user_id] = [$list];
+                    $users_name[$list->user_id] = $list->user->name;
+                }
+            }
+            
+            $listingMessagesController = new ListingMessagesController();
+            $messagesHTML = $listingMessagesController->show($first_list->id);
+
+            $returnHTML = view('partials.lists.others')->with(compact('listing_users', 'users_name'))->render();
+
+        } else {
+            $types_label = [];
+            $listing_types = [];
+            $lists = Listing::where('user_id', '=', $user_id)->orderBy('listing_type_id')->orderBy('label')->get();
+            foreach ($lists as $list) {
+                if (is_null($first_list)) $first_list = $list;
+                if (array_key_exists($list->listing_type_id, $listing_types)) {
+                    $listing_types[$list->listing_type_id][] = $list;
+                } else {
+                    $listing_types[$list->listing_type_id] = [$list];
+                    $types_label[$list->listing_type_id] = $list->listing_type->label;
+                }
+            }
+            $returnHTML = view('partials.lists.mine')->with(compact('listing_types', 'types_label'))->render();
+        }
+        return response()->json([
+            'success' => true, 
+            'html' => $returnHTML,
+            'first_list_id' => $first_list->id,
+            'shared_list' => $first_list->isShared(),
+            'messages_html' => $messagesHTML
+        ]);
     }
 
     public function edit(Listing $list){
@@ -142,6 +195,10 @@ class ListingController extends Controller
             $notifs = 0;
             foreach ($request->friends as $friend_id) {
                 $friend = User::find($friend_id);
+                (new ListingUser([
+                    'listing_id' => $list_id,
+                    'user_id' => $friend_id,
+                    ]))->save();
                 //Check if the friend has already been notified or not
                 $exist = $friend->notifications()
                     ->where('type', '=', 'App\Notifications\ShareList')
@@ -157,41 +214,28 @@ class ListingController extends Controller
             if ($notifs > 0) {
                 return response()->json([
                     'success' => true, 
-                    'notyf' => Notyf::success('A sharing request has been sent to your friends')
+                    'notyf' => Notyf::success('Your friend can now access your list')
                 ]);
             } else {
                 return response()->json([
                     'success' => false, 
-                    'notyf' => Notyf::warning('These friends have already been requested for that list')
+                    'notyf' => Notyf::warning('These friends can already access your list')
                 ]);
             }
         }
     }
 
-    function join(int $user_id, int $list_id, string $joined){
-        //Removing the Notification
+    function leave(int $list_id) {
+        $list = Listing::find($list_id);
         $auth_user = User::find(auth()->user()->id);
-        $auth_user->notifications()->where('type', '=', 'App\Notifications\ShareList')
-            ->whereJsonContains('data->user_id', $user_id)
-            ->whereJsonContains('data->list_id', $list_id)
-            ->first()
+        ListingUser::where('listing_id', '=', $list_id)
+            ->where('user_id', '=', $auth_user->id)
             ->delete();
         
-        if ($joined === 'join') {
-            (new ListingUser([
-                'listing_id' => $list_id,
-                'user_id' => $auth_user->id,
-                ]))->save();
-            $notif = Notyf::success('List joined');
-            //Notifying the requester in return
-            (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id)));
-        } else {
-            $notif = Notyf::get('Invitation refused');
-            (User::find($user_id))->notify(new ListJoined($auth_user, Listing::find($list_id), false));
-        }
+        //On informe le propriétaire
+        (User::find($list->user_id))->notify(new ListLeft($auth_user, Listing::find($list_id), false));
         return response()->json([
             'success' => true,
-            'notyf' => $notif
         ]);
     }
 }

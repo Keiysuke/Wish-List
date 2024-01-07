@@ -25,7 +25,7 @@
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     </head>
     @yield('css')
-    <body class="font-sans antialiased my_scrollbar">
+    <body class="font-sans antialiased scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
         <x-jet-banner />
 
         <div class="min-h-screen bg-gray-100">
