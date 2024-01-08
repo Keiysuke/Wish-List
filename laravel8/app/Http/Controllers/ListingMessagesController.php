@@ -37,6 +37,8 @@ class ListingMessagesController extends Controller
      * @param int $id Id of the listing_message to delete
     */
     public function delete(int $id){
+        ListingMessage::where('answer_to_id', '=', $id)
+            ->update(['answer_to_id' => null]);
         ListingMessage::find($id)->delete();
         return response()->json(['success' => true, 'notyf' => Notyf::success('Message deleted')]);
     }

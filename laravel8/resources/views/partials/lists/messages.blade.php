@@ -1,10 +1,15 @@
 <div class="flex w-full justify-center gap-1 border-b border-blue-500 mb-2 relative">
-    <span class="border-2 border-b-0 rounded rounded-b-none p-2 bg-blue-500 text-white font-semibold cursor-pointer inline-flex ml-1 gap-1">
+    <span class="border-2 border-b-0 rounded rounded-b-none p-2 bg-blue-500 text-white font-semibold inline-flex ml-1 gap-1">
         <x-svg.msg title="Messages de la liste actuelle" class="icon-xs"/> Messages de la liste
     </span>
-    <span title="Supprimer tous les messages" class="title-icon heart border-blue-500 absolute right-0 top-2 cursor-pointer inline-flex" onClick="del_list_msg(0);">
-        <x-svg.trash class="icon-xs"/>
-    </span>
+    <div class="absolute right-0 top-2 inline-flex gap-1">
+        <span title="Agrandir" class="title-icon cursor-pointer border-blue-500" onClick="extendListMsg();">
+            <x-svg.big.extand class="icon-xs"/>
+        </span>
+        <span title="Supprimer tous les messages" class="title-icon heart cursor-pointer border-blue-500" onClick="del_list_msg(0);">
+            <x-svg.trash class="icon-xs"/>
+        </span>
+    </div>
 </div>
 <div>
     <div id="v_list_msg" class="h-120 my_scrollbar">

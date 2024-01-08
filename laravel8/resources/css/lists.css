@@ -9,8 +9,29 @@
 }
 
 #messages_content {
+    @apply w-1/5;
     @apply pl-1;
     @apply -mt-2;
+}
+
+#messages_content.extend {
+    @apply w-3/5;
+}
+
+#wrap_list_products {
+    @apply w-2/5;
+    @apply flex-col;
+    @apply gap-1;
+    @apply px-3;
+    @apply -mt-2;
+}
+
+#wrap_list_products.with_msg {
+    @apply w-3/5;
+}
+
+#wrap_list_products.extend {
+    @apply w-4/5;
 }
 
 #wrap_writer{
@@ -21,6 +42,7 @@
 }
 
 #v_list_msg{
+    @apply bg-gray-100;
     @apply flex;
     @apply flex-col;
     @apply p-1;
@@ -31,7 +53,7 @@
 
 .wrap_list_msg {
     @apply relative;
-    @apply bg-gray-200;
+    @apply bg-gray-300;
     @apply flex;
     @apply flex-col;
     @apply gap-1;
@@ -40,6 +62,10 @@
     @apply rounded;
     @apply shadow-sm;
     transition: background-color 1.5s;
+}
+
+.wrap_list_msg.alt {
+    @apply bg-gray-400;
 }
 
 .answering {

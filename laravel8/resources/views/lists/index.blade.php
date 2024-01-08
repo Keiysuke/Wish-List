@@ -82,7 +82,7 @@
             return;
         }
         my_fetch('{{ route('share_list') }}', {method: 'post', csrf: true}, {
-            list_id: list_id,
+            list_id: parseInt(list_id),
             friends: friends,
         }).then(response => {
             if (response.ok) return response.json();
@@ -133,39 +133,31 @@
     }
 
     function show_messages(res) {
-        const el_m = document.getElementById('messages_content');
-        const el_r = document.getElementById('right');
+        const messages_content = document.getElementById('messages_content');
+        const wrap_list_products = document.getElementById('wrap_list_products');
         if (res.messages_html !== null && res.shared_list) {
-            el_m.innerHTML = res.messages_html;
-            el_m.classList.remove('hidden');
-            el_r.classList.remove('w-4/5');
-            el_r.classList.add('w-3/5');
-
-            Array.from(document.getElementsByClassName('focus_list_messages')).forEach(e => {
-                e.addEventListener('focus', (e) => {
-                    el_r.classList.remove('w-3/5');
-                    // el_r.classList.add('w-1/5');
-                    el_r.classList.add('w-2/5');
-
-                    el_m.classList.add('w-3/5');
-                    el_m.classList.add('w-2/5');
-                    // el_m.classList.remove('w-1/5');
-                });
-                e.addEventListener('focusout', (e) => {
-                    // el_r.classList.remove('w-1/5');
-                    el_r.classList.remove('w-2/5');
-                    el_r.classList.add('w-3/5');
-                    
-                    // el_m.classList.add('w-1/5');
-                    el_m.classList.remove('w-2/5');
-                    el_m.classList.remove('w-3/5');
-                });
-            });
+            messages_content.innerHTML = res.messages_html;
+            messages_content.classList.remove('hidden');
+            wrap_list_products.classList.remove('extend');
+            wrap_list_products.classList.add('with_msg');
+            
             document.getElementById('v_list_msg').scrollTop = document.getElementById('v_list_msg').scrollHeight;
-        } else if (!el_m.classList.contains('hidden')) {
-            el_m.classList.add('hidden');
-            el_r.classList.add('w-4/5');
-            el_r.classList.remove('w-3/5');
+        } else if (!messages_content.classList.contains('hidden')) {
+            wrap_list_products.classList.remove('with_msg');
+            wrap_list_products.classList.add('extend');
+            messages_content.classList.add('hidden');
+        }
+    }
+
+    function extendListMsg(reset = false) {
+        const msg_content = document.getElementById('messages_content');
+        const wrap_list_products = document.getElementById('wrap_list_products');
+        if (reset) {
+            msg_content.classList.remove('extend');
+            wrap_list_products.classList.remove('with_msg');
+        } else {
+            msg_content.classList.toggle('extend');
+            wrap_list_products.classList.toggle('with_msg');
         }
     }
 
@@ -208,8 +200,8 @@
 
     function toggle_list(list_id, product_id){
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
-            list_id: list_id,
-            product_id: product_id,
+            list_id: parseInt(list_id),
+            product_id: parseInt(product_id),
             change_checked:true
         }).then(response => {
             if (response.ok) return response.json();
@@ -235,6 +227,7 @@
             document.getElementById('list_selected').value = list_id;
             document.getElementById('list_'+list_id).classList.toggle('selected');
             document.getElementById('content_results').innerHTML = products.html;
+            extendListMsg(true);
             show_messages(products);
         });
     }
@@ -293,11 +286,11 @@
                     </div>
                 </div>
                 
-                <div id="right" class="w-4/5 flex-col gap-1 px-3 -mt-2">
+                <div id="wrap_list_products" class="extend">
                     <div id="content_results">
                     </div>
                 </div>
-                <div id="messages_content" class="w-1/5">
+                <div id="messages_content">
                 </div>
             @endif
         </div>
