@@ -17,6 +17,7 @@
         @if ($message->yours())
             <x-svg.edit class="icon-xs icon-clickable"/>
             <x-svg.trash class="no-propagate icon-xs icon-clickable trash" onClick="del_list_msg('{{ $message->id }}');"/>
+            <x-svg.pin id="pin_msg_icon_{{ $message->id }}" class="no-propagate icon-xs icon-clickable {{ ($message->pin ? 'is_pin' : '') }}" onClick="pin_msg('{{ $message->id }}');"/>
         @endif
     </div>
     <x-svg.reply class="absolute right-1 bottom-1 icon-xs icon-clickable" onClick="replyTo('{{ $message->id }}', '{{ addslashes($message->user->name) }}');"/>

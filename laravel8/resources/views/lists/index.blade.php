@@ -57,6 +57,7 @@
     function toggleShareList(list_id){
         event.stopPropagation();
         document.getElementById('content_share_lists').classList.toggle('hidden');
+        document.getElementById('content_share_lists').classList.toggle('flex');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
@@ -66,6 +67,7 @@
             if (res.success) {
                 document.getElementById('content_share_lists').innerHTML = res.html;
                 document.getElementById('content_share_lists').classList.toggle('hidden');
+                document.getElementById('content_share_lists').classList.toggle('flex');
                 document.getElementById('main').classList.toggle('pointer-events-none');
             }
         });
@@ -89,6 +91,7 @@
         }).then(res => {
             my_notyf(res);
             if (res.success) {
+                document.getElementById('content_share_lists').classList.toggle('flex');
                 document.getElementById('content_share_lists').classList.toggle('hidden');
                 document.getElementById('main').classList.toggle('pointer-events-none');
             }
@@ -191,6 +194,20 @@
         document.getElementById('list_answer_id').value = 0;
         document.getElementById('list_msg_' + answer_id).classList.remove('answering');
     }
+    
+    function pin_msg(id) {
+        const pin_msg = document.getElementById('pin_msg_icon_' + id);
+        const action = pin_msg.classList.contains('is_pin') ? 'unpin' : 'pin';
+        get_fetch('lists/messages/' + id + '/' + action)
+        .then(res => {
+            pin_msg.classList[(action == 'pin' ? 'add' : 'remove')]('is_pin');
+            my_notyf(res);
+        });
+    }
+
+    function show_pinned_msg() {
+        console.log('show_pinned_msg');
+    }
 
     function flashOriginalMsg(id) {
         const msg = document.getElementById('list_msg_' + id);
@@ -237,7 +254,7 @@
 @endsection
 
 @section('absolute_content')
-    <div id="content_share_lists">
+    <div id="content_share_lists" class="hidden">
     </div>
 @endsection
 

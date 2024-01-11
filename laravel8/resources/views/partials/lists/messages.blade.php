@@ -1,4 +1,9 @@
 <div class="flex w-full justify-center gap-1 border-b border-blue-500 mb-2 relative">
+    <div class="absolute left-0 top-2 inline-flex gap-1">
+        <span title="Messages épinglés" class="title-icon cursor-pointer border-blue-500" onClick="show_pinned_msg();">
+            <x-svg.pin class="icon-xs"/>
+        </span>
+    </div>
     <span class="border-2 border-b-0 rounded rounded-b-none p-2 bg-blue-500 text-white font-semibold inline-flex ml-1 gap-1">
         <x-svg.msg title="Messages de la liste actuelle" class="icon-xs"/> Messages de la liste
     </span>
