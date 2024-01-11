@@ -178,7 +178,7 @@ class ListingController extends Controller
     public function show_share(int $id){
         $list = Listing::find($id);
         $friends = $list->getFriendsNotShared();
-
+        
         $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
         return response()->json([
             'success' => true, 

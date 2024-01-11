@@ -88,3 +88,7 @@
     @apply bg-blue-300;
     transition: background-color 1.5s;
 }
+
+.is_pin {
+    @apply text-purple-500;
+}

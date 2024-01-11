@@ -33,6 +33,22 @@ class ListingMessagesController extends Controller
     }
 
     /**
+     * Pin a listing message
+     * @param int $id Id of the listing_message to pin
+    */
+    public function pin(int $id, string $action){
+        $pin = $action === 'pin';
+        if ($pin) {
+            $notyf = Notyf::success('Message pinned');
+        } else {
+            $notyf = Notyf::error('Message unpinned');
+        }
+        ListingMessage::where('id', '=', $id)
+            ->update(['pin' => ($pin ? 1 : 0)]);
+        return response()->json(['success' => true, 'notyf' => $notyf]);
+    }
+
+    /**
      * Delete a listing message
      * @param int $id Id of the listing_message to delete
     */
