@@ -21,6 +21,18 @@
 <script type="text/javascript" src="{{ URL::asset('js/clipboard.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
+    let cur_pict = 1;
+    setInterval(() => {
+        changePictures();
+    }, 4000);
+
+    function changePictures() {
+        if (++cur_pict > document.getElementById('nb_max_pict').value) {
+            cur_pict = 1;
+        }
+        document.getElementById('big_picture').setAttribute('src', document.getElementById('product_pict_'+cur_pict).getAttribute('src'));
+    }
+
     window.onload = function(){
         //Flip thumbnails if some are in a selling's state
         Array.from(document.getElementsByClassName('recto-side flip_thumbnail')).forEach(el => {
@@ -103,8 +115,8 @@
 
     function toggle_list(list_id, product_id, change_checked = true){
         my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
-            list_id: list_id,
-            product_id: product_id,
+            list_id: parseInt(list_id),
+            product_id: parseInt(product_id),
             nb: document.getElementById('list_nb_'+list_id).value,
             change_checked:change_checked
         });

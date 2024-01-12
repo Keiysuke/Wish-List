@@ -17,7 +17,7 @@ class CssColor extends Model
 
     public static function unique_colors(){
         $found = [];
-        foreach(CssColor::all() as $color){
+        foreach(self::all() as $color){
             $color = explode('-', $color->css_class);
             $color = is_array($color)? $color[0] : $color;
             if(!in_array($color, $found)) $found[] = $color;
@@ -26,11 +26,15 @@ class CssColor extends Model
     }
 
     public function color_variants($color){
-        return CssColor::where('css_class', 'like', $color.'%')->get();
+        return $this::where('css_class', 'like', $color.'%')->get();
     }
 
     public function class_details(){
         $details = explode('-', $this->css_class);
         return (Object)['color' => $details[0], 'variant' => $details[1] ?? 'none'];
+    }
+
+    public static function has_variants($color) {
+        return !in_array($color, ['black', 'white']);
     }
 }

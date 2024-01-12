@@ -102,12 +102,14 @@ class ViewServiceProvider extends ServiceProvider
                 'min' => DesignService::getIconsAsComponent(),
                 'big' => DesignService::getIconsAsComponent('big')
             ];
+            $colors = DesignService::getColors();
+            
             $notifications = NotificationService::getExistingNotifications();
             $notyfs = [];
             foreach (Notyf::KINDS as $kind) {
                 $notyfs[$kind] = (Object)['id' => $kind, 'label' => $kind];
             }
-            $view->with(compact('icons', 'notifications', 'notyfs'));
+            $view->with(compact('icons', 'notifications', 'notyfs', 'colors'));
         });
     }
 }

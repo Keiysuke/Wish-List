@@ -122,14 +122,22 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div id="wrap_lk_video_game" class="w-2/5">
-                        <x-form.label for="lk_video_game" required block>Associer le jeu vidéo</x-form.label>
-                        <select name="lk_video_game" id="lk_video_game" value="{{ old('lk_video_game') }}" class="w-full"></select>
-                    </div>
-                    <div id="wrap_lk_vg_support" class="w-2/5">
-                        <x-form.label for="lk_vg_support" required block>Associer le support</x-form.label>
-                        <select name="lk_vg_support" id="lk_vg_support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
-                    </div>
+                    @if ($product->video_game)
+                        @php($vg = $product->video_game)
+                        <div class="flex inline-flex items-center gap-2 pt-6">
+                            Associé à<x-svg.big.vg_controller class="icon-sm text-red-600"/>
+                            <a href="{{ route('video_games.show', $vg->video_game_id) }}" class="font-bold link">{{ $vg->video_game->label.' ('.$vg->vg_support->alias.')' }}</a>
+                        </div>
+                    @else
+                        <div id="wrap_lk_video_game" class="w-2/5">
+                            <x-form.label for="lk_video_game" required block>Associer le jeu vidéo</x-form.label>
+                            <select name="lk_video_game" id="lk_video_game" value="{{ old('lk_video_game') }}" class="w-full"></select>
+                        </div>
+                        <div id="wrap_lk_vg_support" class="w-2/5">
+                            <x-form.label for="lk_vg_support" required block>Associer le support</x-form.label>
+                            <select name="lk_vg_support" id="lk_vg_support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
+                        </div>
+                    @endif
                 </div>
             </div>
 

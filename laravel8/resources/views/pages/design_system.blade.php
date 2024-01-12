@@ -13,6 +13,7 @@
         <div class="right pb-20">
             @include("partials.admin.design_system.icons", $icons)
             @include("partials.admin.design_system.notifs", compact('notifications', 'notyfs'))
+            @include("partials.admin.design_system.form", $colors)
         </div>
     </div>
 </x-app-layout>

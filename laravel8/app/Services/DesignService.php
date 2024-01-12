@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\CssColor;
+
 class DesignService
 {
     const ICONS = [
@@ -28,6 +30,7 @@ class DesignService
         ['name' => 'edit', 'sizes' => [true, false]],
         ['name' => 'euro', 'sizes' => [true, true]],
         ['name' => 'excel', 'sizes' => [true, false]],
+        ['name' => 'extand', 'sizes' => [false, true]],
         ['name' => 'external_link', 'sizes' => [true, false]],
         ['name' => 'eye_close', 'sizes' => [true, false]],
         ['name' => 'eye_open', 'sizes' => [true, false]],
@@ -98,6 +101,17 @@ class DesignService
                 'name' => $icon,
                 'component' => 'svg.'.($size === 'big' ? 'big.' : '').$icon,
             ];
+        }
+        return $res;
+    }
+
+    /*
+    * Return the list of possible Tailwind colors
+    */
+    static function getColors() {
+        $res = [];
+        foreach (CssColor::unique_colors() as $color) {
+            $res[] = $color;
         }
         return $res;
     }

@@ -8,7 +8,7 @@
     @if(count($photos) > 1)
         <div class="flex flex-col w-1/5 gap-2 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-red-200 scrollbar-thumb-rounded pr-1" style="height:450px;">
             @foreach ($photos as $photo)
-                <div class="max-w-full max-h-full cursor-pointer hover:opacity-70" onClick="toggleZoomPictures({{ @++$i }});"><img src="{{ asset($dir.$photo->label) }}" class="border border-gray-800"/></div>
+                <div class="max-w-full max-h-full cursor-pointer hover:opacity-70" onClick="toggleZoomPictures({{ @++$i }});"><img id="product_pict_{{ $i }}" src="{{ asset($dir.$photo->label) }}" class="border border-gray-800"/></div>
             @endforeach
         </div>
     @endif
