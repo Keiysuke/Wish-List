@@ -1,4 +1,4 @@
-<div id="list_msg_{{ $message->id }}" class="wrap_list_msg {{ $class ?? '' }}">
+<div id="list_msg_{{ $message->id }}" class="content_list_msg {{ $class ?? '' }}">
     @if($message->answer_to_id > 0)
         @php($answer = $message->answer_to)
         <div class="cursor-pointer replying_to" onClick="flashOriginalMsg({{ $answer->id }});">

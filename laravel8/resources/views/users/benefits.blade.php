@@ -36,7 +36,7 @@
         });
         
         my_fetch('{{ route('post_user_benefits') }}', {method: 'post', csrf: true}, {
-            user_id: document.getElementById('user_id').value,
+            user_id: parseInt(document.getElementById('user_id').value),
             date_from: document.getElementById('date_from').value,
             date_to: document.getElementById('date_to').value,
             nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,

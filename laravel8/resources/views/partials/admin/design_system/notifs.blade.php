@@ -1,6 +1,6 @@
 <div class="wrap_h1 mt-8">
     <h1>Liste des notifications</h1>
-    <x-svg.big.bell class="icon-lg" title="Cloche de notification"/>
+    <x-svg.big.bell class="icon-lg"/>
 </div>
 
 <h3>1. Les notifications de formulaire</h3>

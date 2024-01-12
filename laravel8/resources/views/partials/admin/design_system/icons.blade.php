@@ -45,6 +45,9 @@
 <div class="title-icon archive inline-flex" onclick="this.classList.toggle('on');">
     <x-svg.archive class="icon-xs"/>
 </div>
+<div class="title-icon heart inline-flex">
+    <x-svg.trash class="icon-xs"/>
+</div>
 <div class="title-icon refresh inline-flex">
     <x-svg.refresh class="icon-xs"/>
 </div>

@@ -27,7 +27,7 @@
 
     function get_historic(){
         my_fetch('{{ route('post_user_historic') }}', {method: 'post', csrf: true}, {
-            user_id: document.getElementById('user_id').value,
+            user_id: parseInt(document.getElementById('user_id').value),
             kind: "{{ $kind }}",
             date_from: document.getElementById('date_from').value,
             date_to: document.getElementById('date_to').value,

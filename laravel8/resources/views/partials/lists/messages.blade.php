@@ -1,6 +1,6 @@
 <div class="flex w-full justify-center gap-1 border-b border-blue-500 mb-2 relative">
     <div class="absolute left-0 top-2 inline-flex gap-1">
-        <span title="Messages épinglés" class="title-icon cursor-pointer border-blue-500" onClick="show_pinned_msg();">
+        <span id="show_pin" title="Messages épinglés" class="title-icon" onClick="show_msg();">
             <x-svg.pin class="icon-xs"/>
         </span>
     </div>
@@ -16,11 +16,9 @@
         </span>
     </div>
 </div>
-<div>
+<div id="wrap_list_msg">
     <div id="v_list_msg" class="h-120 my_scrollbar">
-        @foreach($messages as $message)
-            <x-message :message="$message"/>
-        @endforeach
+        @include('components.messages.list', $messages)
     </div>
     <div id="wrap_writer">
         <x-messages.answer_to id="list_answer_to"/>

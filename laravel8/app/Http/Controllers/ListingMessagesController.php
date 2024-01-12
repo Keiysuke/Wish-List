@@ -5,14 +5,19 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ListingMessageRequest;
 use App\Models\ListingMessage;
 use App\Models\Notyf;
+use App\Services\MessageService;
 
 class ListingMessagesController extends Controller
 {
-    public function show(int $id){
-        $messages = ListingMessage::where('listing_id', '=', $id)
-            ->get();
+    public function show(int $id, string $status){
+        $buildQuery = ListingMessage::where('listing_id', '=', $id);
+        if ($status === 'pinned') {
+            $buildQuery->where('pin', '=', 1);
+        }
+        $messages = $buildQuery->get();
 
-        return view('partials.lists.messages')->with(compact('messages'))->render();
+        $returnHTML = view('components.messages.list')->with(compact('messages'))->render();
+        return response()->json(['success' => true, 'html' => $returnHTML]);
     }
 
     public function send(ListingMessageRequest $request){
@@ -66,6 +71,6 @@ class ListingMessagesController extends Controller
     public function delete_all(int $id){
         ListingMessage::where('listing_id', '=', $id)
             ->delete();
-        return response()->json(['success' => true, 'html' => $this->show($id)]);
+        return response()->json(['success' => true, 'html' => (new MessageService())->show($id)]);
     }
 }

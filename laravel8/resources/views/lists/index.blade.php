@@ -204,9 +204,16 @@
             my_notyf(res);
         });
     }
-
-    function show_pinned_msg() {
-        console.log('show_pinned_msg');
+    
+    function show_msg() {
+        const list_id = document.getElementById('list_selected').value;
+        const show_pin = !document.getElementById('show_pin').classList.contains('active');
+        const type = show_pin ? 'pinned' : 'all';
+        get_fetch('lists/' + list_id + '/messages/show/' + type)
+        .then(res => {
+            document.getElementById('v_list_msg').innerHTML = res.html;
+            document.getElementById('show_pin').classList.toggle('active');
+        });
     }
 
     function flashOriginalMsg(id) {

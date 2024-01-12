@@ -96,9 +96,10 @@ Route::get('shared/lists/{id}/show', [ListingController::class, 'show_share'])->
 Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
 Route::get('lists/{list_id}/leave', [ListingController::class, 'leave'])->name('leave_friend_list');
 Route::post('lists/messages/send', [ListingMessagesController::class, 'send'])->name('send_message');
-Route::get('lists/messages/{id}/{action}', [ListingMessagesController::class, 'pin'])->name('pin_message');
 Route::get('lists/messages/{id}/delete', [ListingMessagesController::class, 'delete'])->name('list_delete_message');
+Route::get('lists/messages/{id}/{action}', [ListingMessagesController::class, 'pin'])->name('pin_message');
 Route::get('lists/{id}/delete/messages', [ListingMessagesController::class, 'delete_all'])->name('list_delete_all_messages');
+Route::get('lists/{id}/messages/show/{pinned}', [ListingMessagesController::class, 'show'])->name('show_messages');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

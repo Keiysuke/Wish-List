@@ -10,6 +10,7 @@ use App\Http\Requests\ListingRequest;
 use App\Models\Notyf;
 use App\Notifications\ListLeft;
 use App\Notifications\ShareList;
+use App\Services\MessageService;
 use Illuminate\Http\Request;
 
 class ListingController extends Controller
@@ -44,8 +45,7 @@ class ListingController extends Controller
         $products = $list->getProducts();
         $friends = $list->getFriendsNotShared();
 
-        $listingMessagesController = new ListingMessagesController();
-        $messagesHTML = $listingMessagesController->show($id);
+        $messagesHTML = (new MessageService())->show($id);
 
         $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends'))->render();
         return response()->json([
@@ -103,8 +103,7 @@ class ListingController extends Controller
                 }
             }
             
-            $listingMessagesController = new ListingMessagesController();
-            $messagesHTML = $listingMessagesController->show($first_list->id);
+            $messagesHTML = (new MessageService())->show($first_list->id);
 
             $returnHTML = view('partials.lists.others')->with(compact('listing_users', 'users_name'))->render();
 

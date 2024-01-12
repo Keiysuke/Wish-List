@@ -51,7 +51,7 @@
   --scrollbar-track: #60a5fa;
 }
 
-.wrap_list_msg {
+.content_list_msg {
   position: relative;
   --tw-bg-opacity: 1;
   background-color: rgba(212, 212, 216, var(--tw-bg-opacity));
@@ -66,7 +66,7 @@
   transition: background-color 1.5s;
 }
 
-.wrap_list_msg.alt {
+.content_list_msg.alt {
   --tw-bg-opacity: 1;
   background-color: rgba(161, 161, 170, var(--tw-bg-opacity));
 }
@@ -95,6 +95,21 @@
   --tw-bg-opacity: 1;
   background-color: rgba(147, 197, 253, var(--tw-bg-opacity));
   transition: background-color 1.5s;
+}
+
+#show_pin {
+  cursor: pointer;
+  --tw-text-opacity: 1;
+  color: rgba(168, 85, 247, var(--tw-text-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(59, 130, 246, var(--tw-border-opacity));
+}
+
+#show_pin:hover, #show_pin.active {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(168, 85, 247, var(--tw-bg-opacity));
 }
 
 .is_pin {

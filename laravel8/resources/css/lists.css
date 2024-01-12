@@ -1,11 +1,9 @@
 #content_share_lists {
     @apply absolute;
-    @apply flex;
     @apply justify-center;
     @apply items-center;
     @apply w-full;
     @apply h-full;
-    @apply hidden;
 }
 
 #messages_content {
@@ -51,7 +49,7 @@
     @apply scrollbar-track-blue-400;
 }
 
-.wrap_list_msg {
+.content_list_msg {
     @apply relative;
     @apply bg-gray-300;
     @apply flex;
@@ -64,7 +62,7 @@
     transition: background-color 1.5s;
 }
 
-.wrap_list_msg.alt {
+.content_list_msg.alt {
     @apply bg-gray-400;
 }
 
@@ -87,6 +85,17 @@
 .flash {
     @apply bg-blue-300;
     transition: background-color 1.5s;
+}
+
+#show_pin {
+    @apply cursor-pointer;
+    @apply text-purple-500;
+    @apply border-blue-500;
+}
+
+#show_pin:hover, #show_pin.active {
+    @apply text-white;
+    @apply bg-purple-500;
 }
 
 .is_pin {
