@@ -12,6 +12,8 @@
         @if($menu === 'database')
             <a href="{{ route('websites.index') }}" class="sub {{ $sub === 'websites' ? 'active' : '' }}">{{ __('Websites') }}</a>
             <a href="{{ route('tags.index') }}" class="sub {{ $sub === 'tags' ? 'active' : '' }}">{{ __('Tags') }}</a>
+            <a href="{{ route('emojis.index') }}" class="sub {{ $sub === 'emojis' ? 'active' : '' }}">{{ __('Emojis') }}</a>
+            <a href="{{ route('sections.emojis.index') }}" class="sub {{ $sub === 'section_emojis' ? 'active' : '' }}">{{ __('Emojis sections') }}</a>
             <a href="{{ route('states.products.index') }}" class="sub {{ $sub === 'product_states' ? 'active' : '' }}">{{ __("Products' states") }}</a>
             <a href="{{ route('states.sells.index') }}" class="sub {{ $sub === 'sell_states' ? 'active' : '' }}">{{ __("Sellings' states") }}</a>
             <a href="{{ route('vg_supports.index') }}" class="sub {{ $sub === 'vg_supports' ? 'active' : '' }}">{{ __("Supports list") }}</a>

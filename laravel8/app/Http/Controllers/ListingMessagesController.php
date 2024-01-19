@@ -2,19 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ListingMessageRequest;
 use App\Models\ListingMessage;
 use App\Models\Notyf;
 use App\Services\MessageService;
+use App\Services\ReactionService;
 
 class ListingMessagesController extends Controller
 {
+    public function get_menu(Request $request){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'msg_id' => 'bail|nullable|int',
+                'yours' => 'bail|required|boolean',
+                'pin' => 'bail|required|boolean',
+                'answer_to' => 'bail|required|string',
+            ]);
+            
+            $html = view('components.messages.action_menu')->with($request->toArray())->render();
+            return response()->json(['success' => true, 'html' => $html]);
+        }
+        abort(404);
+    }
+
     public function show(int $id, string $status){
         $buildQuery = ListingMessage::where('listing_id', '=', $id);
         if ($status === 'pinned') {
             $buildQuery->where('pin', '=', 1);
         }
         $messages = $buildQuery->get();
+        MessageService::setReactions($messages);
 
         $returnHTML = view('components.messages.list')->with(compact('messages'))->render();
         return response()->json(['success' => true, 'html' => $returnHTML]);
@@ -30,7 +48,9 @@ class ListingMessagesController extends Controller
             ]);
             
             if ($message->save()) {
-                $msg = view('components.message')->with(['message' => $message->fresh()])->render();
+                $message->fresh();
+                ReactionService::setReactions($message);
+                $msg = view('components.message')->with(['message' => $message])->render();
                 return response()->json(['success' => true, 'message' => $msg]);
             }
             return response()->json(['success' => false, 'notyf' => Notyf::error('Whoops! Something went wrong.')]);

@@ -56,11 +56,4 @@
 
 <h3>4. Les emojis pour les messages</h3>
 
-<div class="grid grid-cols-12 gap-4">
-    @foreach($emojis as $emoji)
-        <div class="grid justify-items-center">
-            <x-dynamic-component :component="$emoji['component']" class="icon-xxl" title="{{ $emoji['name'] }}"/>
-            <span class="text-sm">{{ $emoji['text'] }}</span>
-        </div>
-    @endforeach
-</div>
+A faire...

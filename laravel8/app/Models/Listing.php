@@ -35,7 +35,7 @@ class Listing extends Model
         
         if ($with_extra) {
             foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
-
+            
             $products->total_price = 0;
             foreach($products as $product) $products->total_price += $product->real_cost * $product->nb;
         }

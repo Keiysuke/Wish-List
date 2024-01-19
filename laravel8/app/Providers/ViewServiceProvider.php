@@ -13,11 +13,14 @@ use App\Models\SellState;
 use App\Models\User;
 use App\Models\Tag;
 use App\Models\CssColor;
+use App\Models\Emoji;
 use App\Models\VgDeveloper;
 use App\Models\VgSupport;
 use App\Services\NotificationService;
 use App\Models\Notyf;
+use App\Models\EmojiSection;
 use App\Services\DesignService;
+use App\Services\EmojiService;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -45,6 +48,9 @@ class ViewServiceProvider extends ServiceProvider
         });
         View::composer(['components.notif'], function ($view) {
             $view->with(['kinds' => NotificationService::KINDS]);
+        });
+        View::composer(['partials.messages.emoji_keyboard'], function ($view) {
+            $view->with(['sections' => EmojiSection::orderBy('id')->get()]);
         });
         View::composer(['products.websites.create', 'products.websites.edit', 'products.create'], function ($view) {
             $view->with('websites', Website::orderBy('label')->get());
@@ -96,12 +102,17 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('unique_colors', CssColor::unique_colors());
         });
 
+        View::composer(['admin.emojis.create', 'admin.emojis.edit'], function ($view) {
+            $view->with('sections', EmojiSection::all());
+        });
+
         //Pages
         View::composer(['pages.design_system'], function ($view) {
             $icons = [
                 'min' => DesignService::getIconsAsComponent(),
                 'big' => DesignService::getIconsAsComponent('big')
             ];
+            $emojis = Emoji::all();
             $colors = DesignService::getColors();
             
             $notifications = NotificationService::getExistingNotifications();
@@ -109,7 +120,7 @@ class ViewServiceProvider extends ServiceProvider
             foreach (Notyf::KINDS as $kind) {
                 $notyfs[$kind] = (Object)['id' => $kind, 'label' => $kind];
             }
-            $view->with(compact('icons', 'notifications', 'notyfs', 'colors'));
+            $view->with(compact('icons', 'emojis', 'notifications', 'notyfs', 'colors'));
         });
     }
 }

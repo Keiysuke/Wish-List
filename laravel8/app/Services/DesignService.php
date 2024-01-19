@@ -75,6 +75,7 @@ class DesignService
         ['name' => 'user_minus', 'sizes' => [true, true]],
         ['name' => 'user_plus', 'sizes' => [true, true]],
         ['name' => 'upper', 'sizes' => [true, false]],
+        ['name' => 'v_dot', 'sizes' => [false, true]],
         ['name' => 'vg_controller', 'sizes' => [false, true]],
         ['name' => 'warning', 'sizes' => [true, true]],
         ['name' => 'zoom_in', 'sizes' => [false, true]],

@@ -3795,6 +3795,21 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/alpine.js");
 
+window.addEventListeners = function (element, events, handler) {
+  if (!Array.isArray(events)) {
+    console.error('Les types d\'événements doivent être fournis sous forme de tableau.');
+    return;
+  }
+
+  events.forEach(function (eventType) {
+    element.addEventListener(eventType, handler);
+  });
+};
+
+window.scrollDown = function (e) {
+  e.scrollTop = e.scrollHeight;
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

@@ -44,7 +44,7 @@
     @apply flex;
     @apply flex-col;
     @apply p-1;
-    @apply gap-2;
+    @apply gap-4;
     @apply scrollbar-thumb-blue-700;
     @apply scrollbar-track-blue-400;
 }
@@ -100,4 +100,145 @@
 
 .is_pin {
     @apply text-purple-500;
+}
+
+#list_msg_emoji_sections {
+    @apply hidden;
+    @apply flex-col;
+    @apply pt-1;
+    @apply px-1;
+    @apply gap-2;
+    border-width: 1px;
+    @apply border-black;
+    @apply rounded;
+    @apply mt-2;
+}
+
+#list_msg_emoji_sections.show {
+    @apply flex;
+}
+
+.emoji_kbd_section {
+    @apply hidden;
+    @apply flex-wrap;
+    @apply justify-center;
+    @apply gap-1;
+}
+
+.emoji_kbd_section.show {
+    @apply flex;
+}
+
+.wrap_vline_emojis {
+    @apply relative;
+    @apply scrollbar-thumb-yellow-700;
+    @apply scrollbar-track-yellow-400;
+}
+
+.vline_emojis {
+    @apply absolute;
+    @apply flex;
+    @apply gap-1;
+}
+
+.emoji_section_title {
+    @apply p-1;
+    border-width: 1px;
+    @apply border-b-0;
+    @apply border-black;
+    @apply rounded-t-lg;
+    @apply bg-amber-100;
+    @apply cursor-pointer;
+}
+
+.emoji_section_title:hover {
+    @apply bg-amber-300;
+}
+
+#list_msg_menu {
+    @apply absolute;
+    z-index: 2;
+}
+
+#list_msg_menu > div:first-child {
+    @apply flex;
+    @apply flex-col;
+    @apply p-2;
+    @apply text-white;
+    @apply bg-gray-700;
+    @apply rounded-lg;
+}
+
+#list_msg_menu > div:first-child > div {
+    @apply inline-flex;
+    @apply gap-1;
+    @apply cursor-pointer;
+}
+
+#list_msg_menu > div:first-child > div:hover {
+    @apply pl-2;
+}
+
+#list_msg_menu > div:first-child > div:hover:not(.trash):not(.pin) {
+    @apply text-blue-500;
+}
+
+#list_msg_menu > div:first-child > div.trash:hover {
+    @apply text-red-500;
+}
+
+#list_msg_menu > div:first-child > div.pin.is_pin,
+#list_msg_menu > div:first-child > div.pin:hover {
+    @apply text-purple-500;
+}
+
+.list_msg_react_btn {
+    @apply absolute;
+    @apply right-1;
+    @apply bottom-1;
+}
+
+.list_msg_react_btn:hover {
+    @apply text-yellow-300;
+}
+
+.list_msg_react_btn.active {
+    transform: scale(1.5);
+    @apply text-yellow-300;
+}
+
+.vline_reactions {
+    @apply absolute;
+    @apply flex;
+    @apply flex-wrap;
+    @apply -bottom-4;
+}
+
+.vline_reactions:not(:empty) {
+    @apply bg-white;
+    @apply px-1;
+    border-width: 1px;
+    @apply border-black;
+    @apply rounded-full;
+}
+
+.msg_reaction {
+    @apply relative;
+    @apply cursor-pointer;
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+}
+
+.msg_reaction:hover {
+    transform: scale(1.15);
+}
+
+.growUp {
+    transform: scale(1.5);
+    transition: transform 1s ease-in-out;
+}
+
+.growDown {
+    transform: scale(0);
+    transition: transform 1s ease-in-out;
 }

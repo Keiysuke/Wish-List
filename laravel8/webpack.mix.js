@@ -15,6 +15,8 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/my_fetch.js', 'public/js')
     .js('resources/js/clipboard.js', 'public/js')
     .js('resources/js/my_notyf.js', 'public/js')
+    .js('resources/js/tchat.js', 'public/js')
+    .js('resources/js/listings.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

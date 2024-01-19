@@ -12,7 +12,7 @@ class Emoji extends Model
     use HasFactory;
     protected $fillable = ['label', 'emoji_section_id'];
     
-    public function emoji_section(){
-        return $this->belongsTo(EmojiSection::class);
+    public function section(){
+        return $this->belongsTo(EmojiSection::class, 'emoji_section_id', 'id', 'emoji_section');
     }
 }

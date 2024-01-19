@@ -27,9 +27,12 @@ use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendUserController;
 use App\Http\Controllers\CssColorController;
+use App\Http\Controllers\EmojiController;
 use App\Http\Controllers\ListingMessagesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ScriptsController;
+use App\Http\Controllers\EmojiSectionController;
+use App\Http\Controllers\ListMsgReactionsController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
@@ -95,11 +98,15 @@ Route::get('lists/{id}/download', [ListingController::class, 'download'])->name(
 Route::get('shared/lists/{id}/show', [ListingController::class, 'show_share'])->name('show_share_list');
 Route::post('lists/share', [ListingController::class, 'share'])->name('share_list');
 Route::get('lists/{list_id}/leave', [ListingController::class, 'leave'])->name('leave_friend_list');
+//Listing Messages
+Route::post('lists/messages/menu/show', [ListingMessagesController::class, 'get_menu'])->name('open_msg_menu');
 Route::post('lists/messages/send', [ListingMessagesController::class, 'send'])->name('send_message');
 Route::get('lists/messages/{id}/delete', [ListingMessagesController::class, 'delete'])->name('list_delete_message');
 Route::get('lists/messages/{id}/{action}', [ListingMessagesController::class, 'pin'])->name('pin_message');
 Route::get('lists/{id}/delete/messages', [ListingMessagesController::class, 'delete_all'])->name('list_delete_all_messages');
 Route::get('lists/{id}/messages/show/{pinned}', [ListingMessagesController::class, 'show'])->name('show_messages');
+//Listing Messages Reactions
+Route::get('lists/messages/{msg_id}/emojis/{emoji_id}', [ListMsgReactionsController::class, 'toggle_reaction'])->name('toggle_list_msg_reaction');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
@@ -121,7 +128,20 @@ Route::get('video_games/products/{id}/unlink', [VideoGameController::class, 'unl
 Route::prefix('admin')->group(function () {
     Route::resource('websites', WebsiteController::class);
     Route::resource('tags', TagController::class);
+    Route::resource('emojis', EmojiController::class);
     
+    Route::resource('sections/emojis', EmojiSectionController::class)
+        ->parameters(['emojis' => 'section'])
+        ->except(['show'])
+        ->names([
+        'index' => 'sections.emojis.index',
+        'create' => 'sections.emojis.create',
+        'store' => 'sections.emojis.store',
+        'edit' => 'sections.emojis.edit',
+        'update' => 'sections.emojis.update',
+        'destroy' => 'sections.emojis.destroy',
+    ]);
+
     Route::resource('states/products', ProductStateController::class)
         ->parameters(['products' => 'product_state'])
         ->except(['show'])

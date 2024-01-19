@@ -44,9 +44,9 @@ class ListingController extends Controller
         $list = Listing::find($id);
         $products = $list->getProducts();
         $friends = $list->getFriendsNotShared();
-
+        
         $messagesHTML = (new MessageService())->show($id);
-
+        
         $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends'))->render();
         return response()->json([
             'success' => true, 
