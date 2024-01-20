@@ -40,18 +40,25 @@
   };
 
   send_msg = function send_msg() {
+    var msg = document.getElementById('list_msg_to_send');
+
+    if (msg.value === '') {
+      notyfJS('Votre message ne peut être vide', 'error');
+      return;
+    }
+
     my_fetch('lists/messages/send', {
       method: 'post',
       csrf: true
     }, {
       listing_id: parseInt(document.getElementById('list_selected').value),
-      message: document.getElementById('list_msg_to_send').value,
+      message: msg.value,
       answer_to_id: parseInt(document.getElementById('list_answer_id').value)
     }).then(function (response) {
       if (response.ok) return response.json();
     }).then(function (res) {
       document.getElementById('v_list_msg').insertAdjacentHTML('beforeend', res.message);
-      document.getElementById('list_msg_to_send').value = '';
+      msg.value = '';
 
       if (document.getElementById('list_answer_id').value > 0) {
         cancelReply();
@@ -128,12 +135,19 @@
 
     if (openIt == -1) {
       keyboard.classList.toggle('show');
+      Array.from(document.getElementsByClassName('btn_emoji_kbd')).forEach(function (e) {
+        e.classList.toggle('hidden');
+      });
       return;
     }
 
+    document.getElementById('emoji_off').classList.add('hidden');
+    document.getElementById('emoji_on').classList.remove('hidden');
     keyboard.classList.add('show');
 
     if (!openIt) {
+      document.getElementById('emoji_off').classList.remove('hidden');
+      document.getElementById('emoji_on').classList.add('hidden');
       keyboard.classList.remove('show');
     }
   };
@@ -225,18 +239,29 @@
     span_user.innerHTML = span_user.innerHTML > 1 ? span_user.innerHTML - 1 : '';
   };
 
+  showEmojiSection = function showEmojiSection(el, id) {
+    el = 'sectionId' in el.target.dataset ? el.target.parentNode : el.target; //On charge la vue de la section des emojis qui est demandée (1 seule fois chacune)
+
+    if (el.dataset.loaded === true) return;
+    get_fetch('tchat/sections/' + id + '/show').then(function (res) {
+      el.dataset.loaded = true;
+      document.getElementById('emoji_kbd_section_' + id).innerHTML = res.html;
+    });
+  };
+
   EmojiSectionChanged = function EmojiSectionChanged(e) {
     var cur_section = document.getElementById('list_msg_emoji_section_id');
     var prev_id = cur_section.value;
     var datas = e.target.dataset;
     var id = 'sectionId' in datas ? datas.sectionId : datas.id;
     if (prev_id == id) return;
+    showEmojiSection(e, id); //On affiche la nouvelle section et cache la précédente
 
-    if (prev_id != id) {
+    if (prev_id > 0) {
       document.getElementById('emoji_kbd_section_' + prev_id).classList.remove('show');
-      cur_section.value = id;
     }
 
+    cur_section.value = id;
     document.getElementById('emoji_kbd_section_' + id).classList.add('show');
   };
 
@@ -245,9 +270,14 @@
     Array.from(document.getElementsByClassName('msg_reaction')).forEach(function (e) {
       e.addEventListener('click', reactionClicked);
     });
-    Array.from(document.getElementsByClassName('emoji_section_title')).forEach(function (e) {
-      e.addEventListener('click', EmojiSectionChanged);
-    });
+    var sections = document.getElementsByClassName('emoji_section_title');
+    Array.from(sections).forEach(function (e) {
+      e.addEventListener('click', EmojiSectionChanged); //On simule le clic sur chaque section à cet endroit car la page aura normalement été complètement chargée
+
+      e.click();
+    }); //On affiche la 1ere section au chargement
+
+    sections[0].click();
   };
 
   show_msg = function show_msg() {

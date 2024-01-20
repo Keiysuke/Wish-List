@@ -15,4 +15,11 @@ class Emoji extends Model
     public function section(){
         return $this->belongsTo(EmojiSection::class, 'emoji_section_id', 'id', 'emoji_section');
     }
+
+    public static function findSpecific($kind = 'kbd_off'){
+        switch ($kind) {
+            case 'kbd_off': return self::find(1);
+            case 'kbd_on': return self::find(15);
+        }
+    }
 }

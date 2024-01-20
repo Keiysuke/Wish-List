@@ -106,6 +106,7 @@ Route::get('lists/messages/{id}/{action}', [ListingMessagesController::class, 'p
 Route::get('lists/{id}/delete/messages', [ListingMessagesController::class, 'delete_all'])->name('list_delete_all_messages');
 Route::get('lists/{id}/messages/show/{pinned}', [ListingMessagesController::class, 'show'])->name('show_messages');
 //Listing Messages Reactions
+Route::get('tchat/sections/{id}/show', [EmojiSectionController::class, 'show'])->name('show_emoji_section');
 Route::get('lists/messages/{msg_id}/emojis/{emoji_id}', [ListMsgReactionsController::class, 'toggle_reaction'])->name('toggle_list_msg_reaction');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

@@ -49,6 +49,9 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['components.notif'], function ($view) {
             $view->with(['kinds' => NotificationService::KINDS]);
         });
+        View::composer(['partials.lists.messages'], function ($view) {
+            $view->with(['emoji_off' => Emoji::findSpecific(), 'emoji_on' => Emoji::findSpecific('kbd_on')]);
+        });
         View::composer(['partials.messages.emoji_keyboard'], function ($view) {
             $view->with(['sections' => EmojiSection::orderBy('id')->get()]);
         });

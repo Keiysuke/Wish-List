@@ -17,6 +17,12 @@ class EmojiSectionController extends Controller
         return view('admin.sections.emojis.index', compact('sections'));
     }
 
+    public function show(int $id){
+        $section = EmojiSection::find($id);
+        $html = view('components.tchat.EmojiGrid')->with(compact('section'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
+    }
+
     public function create(){
         return view('admin.sections.emojis.create');
     }

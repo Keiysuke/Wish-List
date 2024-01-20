@@ -18,10 +18,10 @@
 </div>
 <div id="wrap_list_msg">
     <div id="v_list_msg" class="h-120 my_scrollbar">
-        @include('components.messages.list', $messages)
+        @include('components.tchat.list', $messages)
     </div>
     <div id="wrap_writer">
-        <x-messages.answer_to id="list_answer_to"/>
+        <x-tchat.answer_to id="list_answer_to"/>
         <input type="hidden" id="list_answer_id" value="0"/>
         <input type="hidden" id="list_msg_reaction" value="0"/>
         <x-form.textarea name="list_msg_to_send"/>
@@ -30,7 +30,8 @@
         </div>
         <div class="flex items-center gap-2">
             <x-form.btn type="submit" name="send_list_msg" class="w-full mt-2" onClick="send_msg();">Envoyer</x-form.btn>
-            <x-svg.big.happy class="icon-lg icon-clickable" onClick="toggleEmojiKeyboard(-1);"/>
+            <x-tchat.emoji noReaction :emoji="$emoji_off" id="emoji_off" class="btn_emoji_kbd icon-clickable pt-2" onClick="toggleEmojiKeyboard(-1);"/>
+            <x-tchat.emoji noReaction :emoji="$emoji_on" id="emoji_on" class="btn_emoji_kbd icon-clickable pt-2 hidden" onClick="toggleEmojiKeyboard(-1);"/>
         </div>
     </div>
 </div>

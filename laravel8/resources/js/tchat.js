@@ -33,15 +33,21 @@
     }
 
     send_msg = function() {
+        const msg = document.getElementById('list_msg_to_send')
+        if (msg.value === '') {
+            notyfJS('Votre message ne peut être vide', 'error')
+            return
+        }
+
         my_fetch('lists/messages/send', {method: 'post', csrf: true}, {
             listing_id: parseInt(document.getElementById('list_selected').value),
-            message: document.getElementById('list_msg_to_send').value,
+            message: msg.value,
             answer_to_id: parseInt(document.getElementById('list_answer_id').value),
         }).then(response => {
             if (response.ok) return response.json();
         }).then(res => {
             document.getElementById('v_list_msg').insertAdjacentHTML('beforeend', res.message);
-            document.getElementById('list_msg_to_send').value = '';
+            msg.value = '';
             
             if (document.getElementById('list_answer_id').value > 0) {
                 cancelReply();
@@ -115,10 +121,17 @@
         const keyboard = document.getElementById('list_msg_emoji_sections');
         if (openIt == -1) {
             keyboard.classList.toggle('show');
+            Array.from(document.getElementsByClassName('btn_emoji_kbd')).forEach(e => {
+                e.classList.toggle('hidden');
+            });
             return;
         }
+        document.getElementById('emoji_off').classList.add('hidden');
+        document.getElementById('emoji_on').classList.remove('hidden');
         keyboard.classList.add('show');
         if (!openIt) {
+            document.getElementById('emoji_off').classList.remove('hidden');
+            document.getElementById('emoji_on').classList.add('hidden');
             keyboard.classList.remove('show');
         }
     }
@@ -200,6 +213,18 @@
         span_user.innerHTML = (span_user.innerHTML > 1) ? span_user.innerHTML - 1 : '';
     }
 
+    showEmojiSection = function(el, id) {
+        el = ('sectionId' in el.target.dataset) ? el.target.parentNode : el.target;
+        //On charge la vue de la section des emojis qui est demandée (1 seule fois chacune)
+        if (el.dataset.loaded === true) return
+        
+        get_fetch('tchat/sections/' + id + '/show')
+        .then(res => {
+            el.dataset.loaded = true;
+            document.getElementById('emoji_kbd_section_' + id).innerHTML = res.html;
+        });
+    }
+
     EmojiSectionChanged = function(e) {
         const cur_section = document.getElementById('list_msg_emoji_section_id');
         const prev_id = cur_section.value;
@@ -208,10 +233,12 @@
 
         if (prev_id == id) return;
         
-        if (prev_id != id) {
+        showEmojiSection(e, id)
+        //On affiche la nouvelle section et cache la précédente
+        if (prev_id > 0) {
             document.getElementById('emoji_kbd_section_' + prev_id).classList.remove('show');
-            cur_section.value = id;
         }
+        cur_section.value = id;
         document.getElementById('emoji_kbd_section_' + id).classList.add('show');
     }
 
@@ -221,9 +248,14 @@
             e.addEventListener('click', reactionClicked);
         });
         
-        Array.from(document.getElementsByClassName('emoji_section_title')).forEach(e => {
+        const sections = document.getElementsByClassName('emoji_section_title')
+        Array.from(sections).forEach(e => {
             e.addEventListener('click', EmojiSectionChanged);
+            //On simule le clic sur chaque section à cet endroit car la page aura normalement été complètement chargée
+            e.click();
         });
+        //On affiche la 1ere section au chargement
+        sections[0].click()
     }
     
     show_msg = function() {
