@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class UtilsController extends Controller
 {
-    public function simulate_benefit(Request $request){
+    public function simulateBenefit(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
                 'payed' => 'bail|numeric',
@@ -45,10 +45,10 @@ class UtilsController extends Controller
         return 'https://www.psthc.fr/unjeu/' . $s . strtolower($support);
     }
 
-    public function lk_vg_to_product(int $vg_id, int $vg_support_id = 0){
-        $vg_support_id = $vg_support_id == 0 ? null : $vg_support_id;
-        $vg = VideoGame::find($vg_id);
-        return response()->json($vg->fast_link_product($vg_support_id));
+    public function linkVgToProduct(int $vgId, int $vgSupportId = 0){
+        $vgSupportId = $vgSupportId == 0 ? null : $vgSupportId;
+        $vg = VideoGame::find($vgId);
+        return response()->json($vg->fast_link_product($vgSupportId));
     }
 
     public static function cutString($msg, $siz = 1000){

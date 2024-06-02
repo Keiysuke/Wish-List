@@ -10,10 +10,10 @@ class RegisterService
     /**
      * Creates some lists for new users
     */
-    public static function justCreated(int $user_id) {
+    public static function justCreated(int $userId) {
         $listingController = new ListingController();
         $request = new ListingRequest([
-            'user_id' => $user_id,
+            'user_id' => $userId,
             'listing_type_id' => 1,
             'label' => 'Envies',
             'description' => 'Liste par défaut',
@@ -22,7 +22,7 @@ class RegisterService
         $listingController->store($request);
         
         $request = new ListingRequest([
-            'user_id' => $user_id,
+            'user_id' => $userId,
             'listing_type_id' => 1,
             'label' => 'Noël',
             'description' => 'Liste secrète par défaut',
@@ -31,7 +31,7 @@ class RegisterService
         $listingController->store($request);
 
         $request = new ListingRequest([
-            'user_id' => $user_id,
+            'user_id' => $userId,
             'listing_type_id' => 2,
             'label' => 'Mes jeux vidéo',
             'description' => 'Liste par défaut de type Jeux Vidéo',

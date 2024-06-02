@@ -17,7 +17,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     function toggle_filters(){
-        document.getElementById('content_filters').classList.toggle('hidden');
+        document.getElementById('content-filters').classList.toggle('hidden');
     }
 
     function change_page(nb){
@@ -28,55 +28,55 @@
     function get_benefits(){
         let websites = Array();
         let tags = Array();
-        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+        Array.from(document.getElementsByClassName('filter-website')).forEach(el => {
             if(el.checked) websites.push(el.name);
         });
-        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
+        Array.from(document.getElementsByClassName('filter-tag')).forEach(el => {
             if(el.checked) tags.push(el.name);
         });
         
-        my_fetch('{{ route('post_user_benefits') }}', {method: 'post', csrf: true}, {
-            user_id: parseInt(document.getElementById('user_id').value),
-            date_from: document.getElementById('date_from').value,
-            date_to: document.getElementById('date_to').value,
+        myFetch('{{ route('postUserBenefits') }}', {method: 'post', csrf: true}, {
+            user_id: parseInt(document.getElementById('user-id').value),
+            date_from: document.getElementById('date-from').value,
+            date_to: document.getElementById('date-to').value,
             nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
             page: document.getElementById('page').value,
             websites: websites,
-            no_tag: document.getElementById('no_tag').checked,
-            exclusive_tags: document.getElementById('exclusive_tags').checked,
+            no_tag: document.getElementById('no-tag').checked,
+            exclusive_tags: document.getElementById('exclusive-tags').checked,
             tags: tags,
             purchased: document.querySelector('input[name="purchased"]:checked').value,
         }).then(response => {
             if (response.ok) return response.json();
         }).then(results => {
-            document.getElementById('content_results').innerHTML = results.html; //lists/historic/purchases
+            document.getElementById('content-results').innerHTML = results.html; //lists/historic/purchases
             document.getElementById('btn-go-up').click();
         });
     }
 
-    document.forms['filter_benefits'].onsubmit = (e) => {
+    document.forms['filter-benefits'].onsubmit = (e) => {
         e.preventDefault();
         document.getElementById('page').value = 1;
         get_benefits();
     }
 
-    document.getElementById('check_all_websites').addEventListener('change', (event) => {
-        Array.from(document.getElementsByClassName('filter_website')).forEach(el => {
+    document.getElementById('check-all-websites').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter-website')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
 
-    document.getElementById('check_all_tags').addEventListener('change', (event) => {
-        Array.from(document.getElementsByClassName('filter_tag')).forEach(el => {
+    document.getElementById('check-all-tags').addEventListener('change', (event) => {
+        Array.from(document.getElementsByClassName('filter-tag')).forEach(el => {
             el.checked = !event.target.checked;
         });
     });
 
-    document.getElementById('reset_benefits_filters').addEventListener('click', reset_filters);
+    document.getElementById('reset-benefits-filters').addEventListener('click', reset_filters);
     
     function reset_filters(){
-        document.getElementById('date_from').value = '';
-        document.getElementById('date_to').value = '';
+        document.getElementById('date-from').value = '';
+        document.getElementById('date-to').value = '';
         document.getElementById('page').value = 1;
         get_benefits();
     }
@@ -100,11 +100,11 @@
     </div>
     <hr/>
 
-    <form id="filter_benefits">
+    <form id="filter-benefits">
         @include("partials.filters.benefits")
     </form>
 
-    <input id="user_id" type="hidden" value="{{ auth()->user()->id }}"/>
-    <div id="content_results"></div>
+    <input id="user-id" type="hidden" value="{{ auth()->user()->id }}"/>
+    <div id="content-results"></div>
     <input type="hidden" id="page" name="cur_page" value="{{ isset($paginator)? $paginator->cur_page : 1 }}">
 @endsection

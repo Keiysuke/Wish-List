@@ -37,7 +37,7 @@
 
 /* Fast search bar */
 
-form#fast_search div:first-of-type input {
+form#fast-search div:first-of-type input {
   border-width: 2px;
   --tw-border-opacity: 1;
   border-color: rgba(212, 212, 216, var(--tw-border-opacity));
@@ -54,7 +54,7 @@ form#fast_search div:first-of-type input {
   transition-duration: 300ms;
 }
 
-form#fast_search div:first-of-type input.focus_search {
+form#fast-search div:first-of-type input.focus-search {
   outline: 2px solid transparent;
   outline-offset: 2px;
   width: 13rem;
@@ -63,7 +63,7 @@ form#fast_search div:first-of-type input.focus_search {
   transition-duration: 300ms;
 }
 
-form#fast_search div:first-of-type svg {
+form#fast-search div:first-of-type svg {
   position: absolute;
   --tw-text-opacity: 1;
   color: rgba(82, 82, 91, var(--tw-text-opacity));
@@ -190,17 +190,17 @@ form#fast_search div:first-of-type svg {
   transition: transform 0.5s ease;
 }
 
-#submenu_my_datas {
+#submenu-my-datas {
   left: 21rem;
   top: 3.3rem;
 }
 
-#submenu_create {
+#submenu-create {
   left: 27.5rem;
   top: 3.3rem;
 }
 
-#submenu_externals {
+#submenu-externals {
   left: 46rem;
   top: 3.3rem;
 }
@@ -232,13 +232,13 @@ form#fast_search div:first-of-type svg {
 }
 
 .subicon.open {
-  -webkit-animation: subicon_open 0.5s ease 1 normal forwards;
-          animation: subicon_open 0.5s ease 1 normal forwards;
+  -webkit-animation: subicon-open 0.5s ease 1 normal forwards;
+          animation: subicon-open 0.5s ease 1 normal forwards;
 }
 
 .subicon.close {
-  -webkit-animation: subicon_close 0.5s ease 1 normal forwards;
-          animation: subicon_close 0.5s ease 1 normal forwards;
+  -webkit-animation: subicon-close 0.5s ease 1 normal forwards;
+          animation: subicon-close 0.5s ease 1 normal forwards;
 }
 
 .subicon.open-v {
@@ -249,12 +249,12 @@ form#fast_search div:first-of-type svg {
   transform: scaleY(0);
 }
 
-#subicon_user {
+#subicon-user {
   right: 1.5rem;
   top: 3.3rem;
 }
 
-#subicon_bell {
+#subicon-bell {
   flex-direction: column;
   width: 18rem;
   padding-top: 0.25rem;
@@ -354,7 +354,7 @@ li.breadcrumb-item:not(.active) {
   }
 }
 
-@-webkit-keyframes subicon_open {
+@-webkit-keyframes subicon-open {
   0% {
     transform: scaleY(0);
     transform: scaleX(0);
@@ -371,7 +371,7 @@ li.breadcrumb-item:not(.active) {
   }
 }
 
-@keyframes subicon_open {
+@keyframes subicon-open {
   0% {
     transform: scaleY(0);
     transform: scaleX(0);
@@ -388,7 +388,7 @@ li.breadcrumb-item:not(.active) {
   }
 }
 
-@-webkit-keyframes subicon_close {
+@-webkit-keyframes subicon-close {
   0% {
     transform: scaleY(1);
     transform: scaleX(1);
@@ -405,7 +405,7 @@ li.breadcrumb-item:not(.active) {
   }
 }
 
-@keyframes subicon_close {
+@keyframes subicon-close {
   0% {
     transform: scaleY(1);
     transform: scaleX(1);

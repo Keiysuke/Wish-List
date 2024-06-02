@@ -14,8 +14,8 @@ class VgSupportController extends Controller
 
     //Routes
     public function index(){
-        $vg_supports = VgSupport::paginate(10);
-        return view('admin.vg_supports.index', compact('vg_supports'));
+        $vgSupports = VgSupport::paginate(10);
+        return view('admin.vg_supports.index', compact('vgSupports'));
     }
 
     public function create(){
@@ -26,32 +26,32 @@ class VgSupportController extends Controller
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That video game support already exists')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $vg_support = new VgSupport([
+        $vgSupport = new VgSupport([
             'product_id' => $request->product_id,
             'label' => $request->label,
             'alias' => $request->alias,
             'date_released' => $request->date_released,
             'price' => str_replace(',', '.', $request->price),
         ]);
-        $vg_support->save();
+        $vgSupport->save();
 
         return redirect()->route('vg_supports.index')->with('info', __('The video game support has been saved.'));
     }
 
-    public function edit(VgSupport $vg_support){
-        return view('admin.vg_supports.edit', compact('vg_support'));
+    public function edit(VgSupport $vgSupport){
+        return view('admin.vg_supports.edit', compact('vgSupport'));
     }
     
-    public function update(VgSupportRequest $request, VgSupport $vg_support){
-        if($this->exists($request->label, $vg_support->id))
+    public function update(VgSupportRequest $request, VgSupport $vgSupport){
+        if($this->exists($request->label, $vgSupport->id))
             return back()->withErrors(['label' => __('That video game support already exists')])->withInput(); //Redirect back with a custom error and older Inputs
 
-        $vg_support->update($request->all());
+        $vgSupport->update($request->all());
         return redirect()->route('vg_supports.index')->with('info', __('The video game support has been edited.'));
     }
 
-    public function destroy(VgSupport $vg_support){
-        $vg_support->delete();
+    public function destroy(VgSupport $vgSupport){
+        $vgSupport->delete();
         return back()->with('info', __('The video game support has been deleted.'));
     }
 }

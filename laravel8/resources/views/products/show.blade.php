@@ -27,10 +27,10 @@
     }, 4000);
 
     function changePictures() {
-        if (++cur_pict > document.getElementById('nb_max_pict').value) {
+        if (++cur_pict > document.getElementById('nb-max-pict').value) {
             cur_pict = 1;
         }
-        document.getElementById('big_picture').setAttribute('src', document.getElementById('product_pict_'+cur_pict).getAttribute('src'));
+        document.getElementById('big-img').setAttribute('src', document.getElementById('product-pict_'+cur_pict).getAttribute('src'));
     }
 
     window.onload = function(){
@@ -41,104 +41,104 @@
     }
     
     function toggle_thumbnail(id){
-        document.getElementById('thumbnail_'+id).classList.toggle('mode-recto');
-        document.getElementById('thumbnail_'+id).classList.toggle('mode-verso');
+        document.getElementById('thumbnail-'+id).classList.toggle('mode-recto');
+        document.getElementById('thumbnail-'+id).classList.toggle('mode-verso');
     }
     
     function onPicture(on){
         if(on){
-            document.getElementById('big_picture_zoom').classList.remove('hidden');
-            document.getElementById('big_picture').classList.add('opacity-30');
+            document.getElementById('big-img-zoom').classList.remove('hidden');
+            document.getElementById('big-img').classList.add('opacity-30');
         }else{
-            document.getElementById('big_picture_zoom').classList.add('hidden');
-            document.getElementById('big_picture').classList.remove('opacity-30');
+            document.getElementById('big-img-zoom').classList.add('hidden');
+            document.getElementById('big-img').classList.remove('opacity-30');
         }
     }
 
     function showExpired(e){
-        let inp = document.getElementById('show_expired');
+        let inp = document.getElementById('show-expired');
         if(inp.value === 'hide'){
-            document.getElementById('show_expired').value = 'show';
+            document.getElementById('show-expired').value = 'show';
             e.title = 'Cacher les liens expirés';
         }else{
-            document.getElementById('show_expired').value = 'hide';
+            document.getElementById('show-expired').value = 'hide';
             e.title = 'Afficher les liens expirés';
         }
-        Array.from(document.getElementsByClassName('li_website expired')).forEach(el => {
+        Array.from(document.getElementsByClassName('li-website expired')).forEach(el => {
             el.classList.toggle('hidden');
         });
-        document.getElementById('icon_show_expired').classList.toggle('hidden');
-        document.getElementById('icon_hide_expired').classList.toggle('hidden');
+        document.getElementById('icon-show-expired').classList.toggle('hidden');
+        document.getElementById('icon-hide-expired').classList.toggle('hidden');
     }
 
     function showPict(i){
         event.stopPropagation();
-        document.getElementById('pict_zoom_main').setAttribute('src', document.getElementById('pict_zoom_sec_'+i).getAttribute('src'));
+        document.getElementById('img-zoom-main').setAttribute('src', document.getElementById('img-zoom-sec'+i).getAttribute('src'));
     }
 
     function toggleZoomPictures(i = 1){
         event.stopPropagation();
-        document.getElementById('pict_zoom_main').setAttribute('src', document.getElementById('pict_zoom_sec_'+i).getAttribute('src'));
-        document.getElementById('content_picture_zoomed').classList.toggle('hidden');
+        document.getElementById('img-zoom-main').setAttribute('src', document.getElementById('img-zoom-sec'+i).getAttribute('src'));
+        document.getElementById('content-img-zoomed').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    document.getElementById('follow_product').addEventListener('click', () => {
-        const id = document.getElementById('product_id').value
-        get_fetch('products/' + id + '/follow')
+    document.getElementById('follow-product').addEventListener('click', () => {
+        const id = document.getElementById('product-id').value
+        getFetch('products/' + id + '/follow')
         .then(res => {
-            document.getElementById('follow_product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
-            document.getElementById('follow_product').classList.toggle('on');
+            document.getElementById('follow-product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
+            document.getElementById('follow-product').classList.toggle('on');
         });
     });
 
-    document.getElementById('archive_product').addEventListener('click', () => {
-        const id = document.getElementById('product_id').value
-        get_fetch('products/' + id + '/archive')
+    document.getElementById('archive-product').addEventListener('click', () => {
+        const id = document.getElementById('product-id').value
+        getFetch('products/' + id + '/archive')
         .then(res => {
-            document.getElementById('archive_product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
-            document.getElementById('archive_product').classList.toggle('on');
+            document.getElementById('archive-product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
+            document.getElementById('archive-product').classList.toggle('on');
         });
     });
 
-    function show_histo(e){
-        document.querySelector('[id="histo_offers_'+e.getAttribute("data-id")+'"]').classList.toggle("icon-on");
-        document.querySelector('[id="content_histo_offers_'+e.getAttribute("data-id")+'"]').classList.toggle("hidden");
+    function showHisto(e){
+        document.querySelector('[id="histo-offers-'+e.getAttribute("data-id")+'"]').classList.toggle("icon-on");
+        document.querySelector('[id="content-histo-offers-'+e.getAttribute("data-id")+'"]').classList.toggle("hidden");
     }
 
     //Lists Functions
     function toggleShowLists(){
         event.stopPropagation();
-        document.getElementById('add_to_list').classList.toggle('hidden');
+        document.getElementById('add-to-list').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    function toggle_list(list_id, product_id, change_checked = true){
-        my_fetch('{{ route('toggle_product_on_list') }}', {method: 'post', csrf: true}, {
-            list_id: parseInt(list_id),
-            product_id: parseInt(product_id),
-            nb: document.getElementById('list_nb_'+list_id).value,
-            change_checked:change_checked
+    function toggleList(listId, productId, changeChecked = true){
+        myFetch('{{ route('toggleProductOnList') }}', {method: 'post', csrf: true}, {
+            list_id: parseInt(listId),
+            product_id: parseInt(productId),
+            nb: document.getElementById('list-nb-'+listId).value,
+            change_checked:changeChecked
         });
     }
 
-    function simulate_benef(payed, sold) {
-        if (!document.getElementById('left_sidebar_help').classList.contains('open')) {
+    function simulateBenef(payed, sold) {
+        if (!document.getElementById('left-sidebar-help').classList.contains('open')) {
             document.getElementById('icon-help').dispatchEvent(new CustomEvent('click'));
         }
-        document.getElementById('ls_benefit_payed').value = payed;
-        document.getElementById('ls_benefit_sold').value = ((sold === undefined) ? 0 : sold);
+        document.getElementById('ls-benefit-payed').value = payed;
+        document.getElementById('ls-benefit-sold').value = ((sold === undefined) ? 0 : sold);
     }
 </script>
 @endsection
 
 @section('content')
-    <input type="hidden" id="product_id" value="{{ $product->id }}"/>
-    <x-notification type="success" msg="{{ session('info') }}"/>
+    <input type="hidden" id="product-id" value="{{ $product->id }}"/>
+    <x-Notification type="success" msg="{{ session('info') }}"/>
     
     <div class="relative flex justify-center border-b-2 mb-4">
         <div class="absolute left-0 flex inline-flex gap-2">
-            <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
+            <a title="Editer les photos" href="{{ route('productPhotos.edit', $product->id) }}" class="title-icon inline-flex">
                 <x-svg.picture class="icon-xs"/>
             </a>
             <x-svg.folder class="bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
@@ -146,7 +146,7 @@
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
             @if($product->video_game)
-                <a id="show_video_game" title="Voir le jeu vidéo" href="{{ route('video_games.show', $product->video_game->video_game_id) }}" class="title-icon inline-flex">
+                <a id="show-video-game" title="Voir le jeu vidéo" href="{{ route('video_games.show', $product->video_game->video_game_id) }}" class="title-icon inline-flex">
                     <x-svg.big.vg_controller class="icon-xs"/>
                 </a>
             @endif
@@ -155,13 +155,13 @@
                     <x-svg.edit class="icon-xs"/>
                 </a>
             @endif
-            <span title="Ajouter à une liste" id="add_to_list" class="title-icon add_to_list cursor-pointer inline-flex" onClick="toggleShowLists();">
+            <span title="Ajouter à une liste" id="add-to-list" class="title-icon add_to_list cursor-pointer inline-flex" onClick="toggleShowLists();">
                 <x-svg.add_to_list class="icon-xs"/>
             </span>
-            <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow_product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
+            <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow-product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.heart class="icon-xs"/>
             </span>
-            <span title="{{ $product->archived? 'Retirer des archives' : 'Archiver le produit' }}" id="archive_product" class="title-icon archive {{ $product->archived? 'on' : '' }} cursor-pointer inline-flex">
+            <span title="{{ $product->archived? 'Retirer des archives' : 'Archiver le produit' }}" id="archive-product" class="title-icon archive {{ $product->archived? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.archive class="icon-xs"/>
             </span>
         </div>
@@ -180,7 +180,7 @@
                         </div>
                         <div class="flex inline-flex gap-2">
                             @foreach($product->tags as $tag)
-                                <x-tags.tag :tag="$tag"/>
+                                <x-Tags.Tag :tag="$tag"/>
                             @endforeach
                         </div>
                     </div>
@@ -200,22 +200,22 @@
                         </div>
                         
                         <div class="absolute right-0 -top-1">
-                            <a title="Lier un site de vente" href="{{ route('product_websites.create', $product->id) }}" class="title-icon inline-flex">
+                            <a title="Lier un site de vente" href="{{ route('productWebsites.create', $product->id) }}" class="title-icon inline-flex">
                                 <x-svg.plus class="icon-xs"/>
                             </a>
-                            <x-products.search_offer id="icon_find_offer" search="{{ $product->label }}"/>
-                            @if($product_websites->nb_expired > 0)
-                            <span class="title-icon inline-flex cursor-pointer" title="Afficher les liens expirés" onClick="showExpired(this);">
+                            <x-products.search_offer id="icon-find-offer" search="{{ $product->label }}"/>
+                            @if($productWebsites->nb_expired > 0)
+                                <span class="title-icon inline-flex cursor-pointer" title="Afficher les liens expirés" onClick="showExpired(this);">
                             @else
-                            <span class="title-icon disabled inline-flex" title="Aucun lien n'a expiré pour ce produit">
+                                <span class="title-icon disabled inline-flex" title="Aucun lien n'a expiré pour ce produit">
                             @endif
-                                <input id="show_expired" value="hide" type="hidden"/>
-                                <x-svg.eye_open id="icon_show_expired" class="icon-xs {{ $product_websites->nb_expired > 0 ? '' : 'disabled' }}"/>
-                                <x-svg.eye_close id="icon_hide_expired" class="icon-xs hidden"/>
+                                <input id="show-expired" value="hide" type="hidden"/>
+                                <x-svg.eye_open id="icon-show-expired" class="icon-xs {{ $productWebsites->nb_expired > 0 ? '' : 'disabled' }}"/>
+                                <x-svg.eye_close id="icon-hide-expired" class="icon-xs hidden"/>
                             </span>
                         </div>
                     </div>
-                    @include('partials.products.list.websites', $product_websites)
+                    @include('partials.products.list.websites', $productWebsites)
                 </div>
                 <div class="h-full">
                     <div class="flex justify-between border-b-2 mb-4">

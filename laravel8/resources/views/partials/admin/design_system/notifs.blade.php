@@ -4,22 +4,22 @@
 </div>
 
 <h3>1. Les notifications de formulaire</h3>
-@php($elements = ['x-notification'])
+@php($elements = ['x-Notification'])
 <x-admin.help.list_helpers :elements="$elements"/>
 
-<x-notification type="success" msg="Exemple de message d'action réussie" example/>
-<x-notification type="error" msg="Exemple de message d'action echouée" example/>
+<x-Notification type="success" msg="Exemple de message d'action réussie" example/>
+<x-Notification type="error" msg="Exemple de message d'action echouée" example/>
 
 <h3>2. Les notifications en attente</h3>
-@php($elements = ['NotificationService', 'x-notif'])
+@php($elements = ['NotificationService', 'x-Notif'])
 <x-admin.help.list_helpers :elements="$elements"/>
 
 <div class="grid grid-cols-3 gap-4">
     @foreach($notifications as $kind => $notif)
         <div class="grid justify-items-center">
-            <x-notif :notif="$notif" kind="{{ $kind }}" title="{{ $notif->title }}">
+            <x-Notif :notif="$notif" kind="{{ $kind }}" title="{{ $notif->title }}">
                 Vous pouvez insérer tout type de contenu ici
-            </x-notif>
+            </x-Notif>
         </div>
     @endforeach
 </div>
@@ -29,7 +29,9 @@
 <x-admin.help.list_helpers :elements="$elements"/>
 
 <div class="flex flex-wrap justify-center gap-4">
-    <x-form.input name="notyf_text" id="notyf_text" value="Bravo vous m'avez fait apparaître !"/>
-    <x-form.select name="notyf_kind" id="notyf_kind" :datas="$notyfs" />
-    <x-form.btn onClick="notyfJS(document.getElementById('notyf_text').value, document.getElementById('notyf_kind').value);">Appuyez pour tester !</x-form.btn>
+    <x-Form.Input name="notyf_text" id="notyf-text" value="Bravo vous m'avez fait apparaître !"/>
+    <x-Form.Select name="notyf_kind" id="notyf-kind" :datas="$notyfs" />
+    <x-Form.Btn onClick="notyfJS(document.getElementById('notyf-text').value, document.getElementById('notyf-kind').value);">
+        Appuyez pour tester !
+    </x-Form.Btn>
 </div>

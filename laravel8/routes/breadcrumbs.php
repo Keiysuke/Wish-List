@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // Home
 Breadcrumbs::for('home', function ($trail) {
-    $trail->push('Accueil', route('my_products'));
+    $trail->push('Accueil', route('myProducts'));
 });
 
 //Sitemap
@@ -17,7 +17,7 @@ Breadcrumbs::for('sitemap', function ($trail) {
 Breadcrumbs::for('list', function ($trail, $elem) {
     $trail->parent('home');
     $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes', 'video_game' => 'Jeux Vidéo'];
-    $trail->push(str_replace($elem, $elem, $all[$elem]), route((!strcmp($elem, 'product')? 'my_products' : $elem.'s.index')));
+    $trail->push(str_replace($elem, $elem, $all[$elem]), route((!strcmp($elem, 'product')? 'myProducts' : $elem.'s.index')));
 });
 
 //Home > Sites > Amazon
@@ -45,19 +45,19 @@ Breadcrumbs::for('edit', function ($trail, $elem, $data) {
 //Home > Produits > Uncharted 4 > Edition des photos
 Breadcrumbs::for('edit_product_photos', function ($trail, $product) {
     $trail->parent('show', 'product', $product);
-    $trail->push('Edition des photos', route('product_photos.edit', $product));
+    $trail->push('Edition des photos', route('productPhotos.edit', $product));
 });
 
 //Home > Produits > Uncharted 4 > Lier un site
 Breadcrumbs::for('create_product_website', function ($trail, $product) {
     $trail->parent('show', 'product', $product);
-    $trail->push('Lier un site', route('product_websites.create', $product));
+    $trail->push('Lier un site', route('productWebsites.create', $product));
 });
 
 //Home > Produits > Uncharted 4 > Edition de site lié
 Breadcrumbs::for('edit_product_website', function ($trail, $product_website) {
     $trail->parent('show', 'product', $product_website->product);
-    $trail->push('Edition de site lié', route('product_websites.edit', $product_website));
+    $trail->push('Edition de site lié', route('productWebsites.edit', $product_website));
 });
 
 //Home > Produits > Uncharted 4 > Achats > Création
@@ -88,13 +88,13 @@ Breadcrumbs::for('edit_selling', function ($trail, $selling, $product) {
 Breadcrumbs::for('historic', function ($trail, $kind = 'purchases') {
     $trail->parent('home');
     $end_link = $kind === 'purchases' ? "d'achats" : "de ventes";
-    $trail->push('Mon historique '.$end_link, route('user_historic', $kind));
+    $trail->push('Mon historique '.$end_link, route('userHistoric', $kind));
 });
 
 //Home > Mon historique > Mes bénéfices
 Breadcrumbs::for('benefits', function ($trail) {
     $trail->parent('historic');
-    $trail->push('Mes bénéfices', route('user_benefits'));
+    $trail->push('Mes bénéfices', route('userBenefits'));
 });
 
 //Home > Mes achats > Nouvel achat groupé
@@ -104,16 +104,16 @@ Breadcrumbs::for('create_group_buy', function ($trail) {
 });
 
 //Home > Mes achats > Edition d'un achat groupé
-Breadcrumbs::for('edit_group_buy', function ($trail, $group_buy) {
+Breadcrumbs::for('edit_group_buy', function ($trail, $groupBuy) {
     $trail->parent('historic', 'purchases');
-    $trail->push('Edition d\'un achat groupé', route('group_buys.edit', $group_buy));
+    $trail->push('Edition d\'un achat groupé', route('group_buys.edit', $groupBuy));
 });
 
 //Home > Mon compte
 
 
 //Home > Mon compte > Mes amis
-Breadcrumbs::for('my_friends', function ($trail) {
+Breadcrumbs::for('myFriends', function ($trail) {
     $trail->parent('home');
-    $trail->push('Mes amis', route('my_friends'));
+    $trail->push('Mes amis', route('myFriends'));
 });

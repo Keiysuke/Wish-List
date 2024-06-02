@@ -111,7 +111,7 @@ class DesignService
     */
     static function getColors() {
         $res = [];
-        foreach (CssColor::unique_colors() as $color) {
+        foreach (CssColor::uniqueColors() as $color) {
             $res[] = $color;
         }
         return $res;

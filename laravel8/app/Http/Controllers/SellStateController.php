@@ -14,39 +14,39 @@ class SellStateController extends Controller
 
     //Routes
     public function index(){
-        $sell_states = SellState::paginate(10);
-        return view('admin.states.sells.index', compact('sell_states'));
+        $sellStates = SellState::paginate(10);
+        return view('admin.states.sells.index', compact('sellStates'));
     }
 
     public function create(){
         return view('admin.states.sells.create');
     }
 
-    public function store(Request $request, SellState $sell_state){
+    public function store(Request $request, SellState $sellState){
         $this->validate($request, ['label' => new StateLabel]);
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That state already exists')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $sell_state = new SellState(['label' => $request->label]);
-        $sell_state->save();
+        $sellState = new SellState(['label' => $request->label]);
+        $sellState->save();
         return redirect()->route('states.sells.index')->with('info', __('The state has been saved.'));
     }
 
-    public function edit(SellState $sell_state){
-        return view('admin.states.sells.edit', compact('sell_state'));
+    public function edit(SellState $sellState){
+        return view('admin.states.sells.edit', compact('sellState'));
     }
     
-    public function update(Request $request, SellState $sell_state){
+    public function update(Request $request, SellState $sellState){
         $this->validate($request, ['label' => new StateLabel]);
-        if($this->exists($request->label, $sell_state->id))
+        if($this->exists($request->label, $sellState->id))
             return back()->withErrors(['label' => __('That state already exists')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $sell_state->update($request->all());
+        $sellState->update($request->all());
         return redirect()->route('states.sells.index')->with('info', __('The state has been edited.'));
     }
 
-    public function destroy(SellState $sell_state){
-        $sell_state->delete();
+    public function destroy(SellState $sellState){
+        $sellState->delete();
         return back()->with('info', __('The state has been deleted.'));
     }
 }

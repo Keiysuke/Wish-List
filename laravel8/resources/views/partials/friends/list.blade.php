@@ -1,5 +1,5 @@
 @foreach ($friends as $friend)
-    <div id="sb_friend_row_{{ $friend->id }}" class="friend_row" data-id="{{ $friend->id }}">
+    <div id="sb-friend-row-{{ $friend->id }}" class="friend-row" data-id="{{ $friend->id }}">
         <div class="avatar">
             {{ $friend->first_letter }}
         </div>

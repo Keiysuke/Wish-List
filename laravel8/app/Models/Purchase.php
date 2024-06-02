@@ -52,9 +52,9 @@ class Purchase extends Model
 
     public function getBenefits(){
         $s = $this->selling()->first();
-        $price_sold = ($s->confirmed_price + $s->shipping_fees);
+        $priceSold = ($s->confirmed_price + $s->shipping_fees);
         //No comission if I haven't paid fees (I can have sold it in hand)
-        $price_sold -= ($s->shipping_fees > 0) ? UtilsController::getCommission($price_sold) : 0;
-        return $price_sold - ($this->cost - $this->discount + $s->shipping_fees_payed + $this->customs);
+        $priceSold -= ($s->shipping_fees > 0) ? UtilsController::getCommission($priceSold) : 0;
+        return $priceSold - ($this->cost - $this->discount + $s->shipping_fees_payed + $this->customs);
     }
 }

@@ -10,13 +10,13 @@
         Répondre
     </div>
     @if ($yours)
-        <div class="trash" onClick="del_list_msg('{{ $msg_id }}');">
+        <div class="trash" onClick="delListMsg('{{ $msg_id }}');">
             <x-svg.trash class="icon-xs trash"/>
             Supprimer
         </div>
     @endif
-    <div class="pin {{ ($pin ? 'is_pin' : '') }}" onClick="pin_msg('{{ $msg_id }}');">
-        <x-svg.pin id="pin_msg_icon_{{ $msg_id }}" class="icon-xs {{ ($pin ? 'is_pin' : '') }}" />
+    <div class="pin {{ ($pin ? 'is-pin' : '') }}" onClick="pin_msg('{{ $msg_id }}');">
+        <x-svg.pin id="pin-msg-icon-{{ $msg_id }}" class="icon-xs {{ ($pin ? 'is-pin' : '') }}" />
         {{ $pin ? 'Désé' : 'E' }}pingler
     </div>
 </div>

@@ -1,4 +1,4 @@
-window.my_fetch = function (url, headers, datas){
+window.myFetch = function (url, headers, datas){
     const csrf = headers.csrf ? {"X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content} : {};
     return fetch(url, {
         headers: {
@@ -11,7 +11,7 @@ window.my_fetch = function (url, headers, datas){
     });
 }
 
-window.get_fetch = function (url){
+window.getFetch = function (url){
     return fetch('http://localhost/00%20-%20API/products-managing/laravel8/public/' + url, {
         headers: {"X-Requested-With": "XMLHttpRequest"},
         method: 'get'

@@ -13,9 +13,9 @@ class VideoGameController extends Controller
 {
     private $nb_page_results = 15;
     
-    public function exists($lbl, $id = null){
-        if(is_null($id)) return VideoGame::where("label", $lbl)->exists();
-        else return VideoGame::where('label', $lbl)->where('id', '<>', $id)->exists();
+    public function exists($label, $vgId = null){
+        if(is_null($vgId)) return VideoGame::where("label", $label)->exists();
+        else return VideoGame::where('label', $label)->where('id', '<>', $vgId)->exists();
     }
 
     public function index(Request $request){
@@ -38,16 +38,16 @@ class VideoGameController extends Controller
         // }
 
         if(!is_null($search)) $buildRequest->where('label', 'like', '%'.$search.'%');
-        $video_games = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
+        $videoGames = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
 
-        if ($request->query('fast_search') && count($video_games) === 1) {
-            return redirect()->route('video_games.show', $video_games->first()->id);
+        if ($request->query('fast_search') && count($videoGames) === 1) {
+            return redirect()->route('video_games.show', $videoGames->first()->id);
         }
         
-        $paginator = (object)['cur_page' => $video_games->links()->paginator->currentPage()];
-        $video_games->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+        $paginator = (object)['cur_page' => $videoGames->links()->paginator->currentPage()];
+        $videoGames->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
         
-        return view('video_games.index', compact('video_games', 'sortBy', 'filters', 'search', 'paginator'));
+        return view('video_games.index', compact('videoGames', 'sortBy', 'filters', 'search', 'paginator'));
     }
 
     function filter(Request $request){
@@ -61,21 +61,21 @@ class VideoGameController extends Controller
                 'f_nb_results' => 'bail|required|int',
             ]);
             switch($request->sort_by){
-                case 'alpha': $sort_by = 'label';
+                case 'alpha': $sortBy = 'label';
                     break;
-                case 'players': $sort_by = 'nb_players';
+                case 'players': $sortBy = 'nb_players';
                     break;
-                case 'date_released': $sort_by = 'date_released';
+                case 'date_released': $sortBy = 'date_released';
                     break;
-                default: $sort_by = 'created_at';
+                default: $sortBy = 'created_at';
             }
 
             $buildRequest = VideoGame::query();
-            $filter_support = [];
+            $filterSupport = [];
             //Filtrés par support JV
             foreach($request->vg_supports as $support){
                 $r = explode('vg_support_', $support);
-                $filter_support[] = intval($r[1]);
+                $filterSupport[] = intval($r[1]);
             }
 
             // if($request->url === 'video_games/user'){
@@ -118,22 +118,22 @@ class VideoGameController extends Controller
             }
 
             //Filter on vg_supports
-            if(!count($filter_support)){
+            if(!count($filterSupport)){
                 $buildRequest->wheredoesntHave('vg_supports');
                 
-            }elseif(strcmp(count($filter_support), VgSupport::count())){
-                $buildRequest->whereHas('vg_supports', function($query) use ($filter_support){
-                    $query->whereIn('vg_support_id', $filter_support);
+            }elseif(strcmp(count($filterSupport), VgSupport::count())){
+                $buildRequest->whereHas('vg_supports', function($query) use ($filterSupport){
+                    $query->whereIn('vg_support_id', $filterSupport);
                 });
             }
             
             $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
 
-            $video_games = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
-            $video_games->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+            $videoGames = $buildRequest->orderBy($sortBy, $request->order_by)->paginate($request->f_nb_results);
+            $videoGames->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
             
-            $returnHTML = view('partials.video_games.'.$request->list.'_details')->with(compact('video_games'))->render();
-            return response()->json(['success' => true, 'nb_results' => $video_games->links()? $video_games->links()->paginator->total() : count($video_games), 'html' => $returnHTML]);
+            $returnHTML = view('partials.video_games.'.$request->list.'_details')->with(compact('videoGames'))->render();
+            return response()->json(['success' => true, 'nb_results' => $videoGames->links()? $videoGames->links()->paginator->total() : count($videoGames), 'html' => $returnHTML]);
         }
         abort(404);
     }
@@ -146,33 +146,33 @@ class VideoGameController extends Controller
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That video game already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
 
-        $video_game = new VideoGame([
+        $videoGame = new VideoGame([
             'developer_id' => $request->developer_id, 
             'label' => $request->label, 
             'date_released' => $request->date_released,
             'nb_players' => $request->nb_players,
         ]);
-        $video_game->save();
-        return redirect()->route('video_games.edit', $video_game->id)->with('info', __('The video game has been created.'));
+        $videoGame->save();
+        return redirect()->route('video_games.edit', $videoGame->id)->with('info', __('The video game has been created.'));
     }
 
-    public function show(VideoGame $video_game){
-        $products = $video_game->products;
-        $product = $video_game->product();
+    public function show(VideoGame $videoGame){
+        $products = $videoGame->products;
+        $product = $videoGame->product();
         $photos = is_null($product)? [asset('resources/images/no_pict.png')] : $product->photos()->orderBy('ordered')->get();
         
-        return view('video_games.show', compact('video_game', 'photos', 'product', 'products'));
+        return view('video_games.show', compact('videoGame', 'photos', 'product', 'products'));
     }
     
-    public function edit(VideoGame $video_game){
-        return view('video_games.edit', compact('video_game'));
+    public function edit(VideoGame $videoGame){
+        return view('video_games.edit', compact('videoGame'));
     }
     
-    public function update(VideoGameRequest $request, VideoGame $video_game){
-        if($this->exists($request->label, $video_game->id))
+    public function update(VideoGameRequest $request, VideoGame $videoGame){
+        if($this->exists($request->label, $videoGame->id))
             return back()->withErrors(['label' => __('That video game already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $video_game->update($request
+        $videoGame->update($request
             ->merge([
                 'developer_id' => $request->developer_id, 
                 'label' => $request->label, 
@@ -181,11 +181,11 @@ class VideoGameController extends Controller
             ])
             ->all()
         );
-        return redirect()->route('video_games.edit', $video_game)->with('info', __('The video game has been edited.'));
+        return redirect()->route('video_games.edit', $videoGame)->with('info', __('The video game has been edited.'));
     }
 
-    public function unlink_product(int $id){
-        ProductAsVideoGame::where('product_id', '=', $id)->delete();
+    public function unlinkProduct(int $productId){
+        ProductAsVideoGame::where('product_id', '=', $productId)->delete();
         return response()->json(['success' => true, 'notyf' => Notyf::success('The product has been unlinked')]);
     }
 }

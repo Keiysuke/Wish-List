@@ -26,11 +26,11 @@ class NotificationsController extends Controller
         $products = $buildRequest->orderBy('label')->get();
 
         $today = Carbon::now();
-        $check_date = Carbon::now()->addDays(3);
+        $checkDate = Carbon::now()->addDays(3);
         foreach($products as $product){
             foreach($product->productWebsites as $pw){
                 //Notif all users if current date is 3 days or less, before the available/expired date
-                if(!is_null($pw->available_date) && ($pw->available_date >= $today && $pw->available_date <= $check_date)){
+                if(!is_null($pw->available_date) && ($pw->available_date >= $today && $pw->available_date <= $checkDate)){
                     foreach($product->users as $user){
                         $exist = $user->notifications()->where('type', '=', 'App\Notifications\ProductSoonAvailable')->whereJsonContains('data->product_website_id', $pw->id)->first();
                         $days = Carbon::createFromFormat('Y-m-d H:i:s', $pw->available_date)->diffInDays($today);
@@ -40,7 +40,7 @@ class NotificationsController extends Controller
                     }
                 }
                 
-                if(!is_null($pw->expiration_date) && ($pw->expiration_date >= $today && $pw->expiration_date <= $check_date)){
+                if(!is_null($pw->expiration_date) && ($pw->expiration_date >= $today && $pw->expiration_date <= $checkDate)){
                     foreach($product->users as $user){
                         $exist = $user->notifications()->where('type', '=', 'App\Notifications\ProductSoonExpire')->whereJsonContains('data->product_website_id', $pw->id)->first();
                         $days = Carbon::createFromFormat('Y-m-d H:i:s', $pw->expiration_date)->diffInDays($today);

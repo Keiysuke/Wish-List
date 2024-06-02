@@ -15,9 +15,9 @@ class GroupBuyRequest extends FormRequest
             'label' => 'string|nullable|max:100',
             'date' => 'date|required',
             'shipping_fees' => 'required',
-            'max_product_nb' => 'int|required|min:1',
+            'max_nb_products' => 'int|required|min:1',
         ];
-        for($i = 0; $i < $this->max_product_nb; $i++){
+        for($i = 0; $i < $this->max_nb_products; $i++){
             $rules = array_merge($rules, [
                 'product_bought_offer_id_'.$i => 'int|required'
             ]);
@@ -28,7 +28,7 @@ class GroupBuyRequest extends FormRequest
     public function messages()
     {
         return [
-            'max_product_nb.min' => 'There must be at least one product.',
+            'max_nb_products.min' => 'There must be at least one product.',
         ];
     }
 }

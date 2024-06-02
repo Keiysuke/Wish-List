@@ -1,22 +1,22 @@
 @php($month = null)
-<div class="flex flex-col gap-6" id="list_purchases">
+<div class="flex flex-col gap-6" id="list-purchases">
     @if(count($datas) > 0)
         @foreach($datas as $data)
             @if(is_null($month) || $month != $data->month)
                 @php($month = $data->month)
                 <h2 class="text-center mt-4">{{ __($data->month).' '.$data->year.' ('.$totals[$data->year.'_'.$data->month].' €)' }}</h2>
             @endif
-            <div class="flex justify-between h-full border rounded hover:shadow-lg transition ease-in-out duration-150" id="element_{{ $data->kind.'_'.$data->id }}">
+            <div class="flex justify-between h-full border rounded hover:shadow-lg transition ease-in-out duration-150" id="element-{{ $data->kind.'-'.$data->id }}">
                 @if($data->simple)
                     <div class="relative w-1/12">
                         <a href="{{ route('products.show', $data->product_id) }}">
-                            <div class="product_pict rounded rounded-r-none" style="background-image: url({{ asset(config('images.path_products').'/'.$data->product_id.'/'.$data->product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                            <div class="product-pict rounded rounded-r-none" style="background-image: url({{ asset(config('images.path_products').'/'.$data->product_id.'/'.$data->product->photos()->firstWhere('ordered', 1)->label) }})"></div>
                         </a>
                     </div>
                     <div class="flex flex-col w-11/12">
                         <div class="flex justify-between border-1 border-b border-gray-100 bg-gray-200 rounded">
                             <p class="text-sm font-semibold text-black py-1 pl-4 border-b border-gray-300 bg-gray-200">{{ $data->product->label }}</p>
-                            <div class="icons_container">
+                            <div class="icons-container">
                                 <a href="{{ route('products.show', $data->product->id) }}" class="inline-flex hover:text-blue-500" title="Fiche du produit">
                                     <x-svg.eye_open class="icon-xs"/>
                                 </a>
@@ -33,7 +33,7 @@
                     <div class="flex flex-col w-full border-1 border-b border-gray-100 rounded">
                         <p class="relative flex justify-center items-center mb-2 text-sm font-semibold text-black py-1 border-b border-gray-300 bg-gray-200">
                             <span class="flex inline-flex items-center absolute left-2">
-                                <span class="text-base" title="{{ 'Coût + Fdp - Réduc : '.$data->global_cost.' + '.$data->shipping_fees.' - '.$data->discount }}">{{ $data->cost.' €' }}</span><x-utils.v_line height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
+                                <span class="text-base" title="{{ 'Coût + Fdp - Réduc : '.$data->global_cost.' + '.$data->shipping_fees.' - '.$data->discount }}">{{ $data->cost.' €' }}</span><x-Utils.VLine height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
                             </span>
                             <span class="text-lg">{{ is_null($data->label)? __("Group purchase") : $data->label }}</span>
                             <span class="absolute right-2 font-normal italic">

@@ -15,7 +15,7 @@ class CssColor extends Model
         return $this->hasMany(Tag::class);
     }
 
-    public static function unique_colors(){
+    public static function uniqueColors(){
         $found = [];
         foreach(self::all() as $color){
             $color = explode('-', $color->css_class);

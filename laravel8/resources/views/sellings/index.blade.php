@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <x-notification type="success" msg="{{ session('info') }}"/>
+    <x-Notification type="success" msg="{{ session('info') }}"/>
     
     <h2>Liste des ventes</h2>
     <table class="table-auto">

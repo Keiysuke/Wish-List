@@ -26,7 +26,7 @@
 }
 
 /* Fast search bar */
-form#fast_search div:first-of-type input {
+form#fast-search div:first-of-type input {
     @apply border-2;
     @apply border-gray-300;
     @apply bg-white;
@@ -40,7 +40,7 @@ form#fast_search div:first-of-type input {
     @apply duration-300;
 }
 
-form#fast_search div:first-of-type input.focus_search {
+form#fast-search div:first-of-type input.focus-search {
     @apply outline-none;
     @apply w-52;
     @apply pr-8;
@@ -48,7 +48,7 @@ form#fast_search div:first-of-type input.focus_search {
     @apply duration-300;
 }
 
-form#fast_search div:first-of-type svg {
+form#fast-search div:first-of-type svg {
     @apply absolute;
     @apply text-gray-600;
     @apply h-8;
@@ -131,17 +131,17 @@ form#fast_search div:first-of-type svg {
     transition: transform 0.5s ease;
 }
 
-#submenu_my_datas {
+#submenu-my-datas {
     left: 21rem;
     top: 3.3rem;
 }
 
-#submenu_create {
+#submenu-create {
     left: 27.5rem;
     top: 3.3rem;
 }
 
-#submenu_externals {
+#submenu-externals {
     left: 46rem;
     top: 3.3rem;
 }
@@ -168,11 +168,11 @@ form#fast_search div:first-of-type svg {
 }
 
 .subicon.open {
-    animation: subicon_open 0.5s ease 1 normal forwards;
+    animation: subicon-open 0.5s ease 1 normal forwards;
 }
 
 .subicon.close {
-    animation: subicon_close 0.5s ease 1 normal forwards;
+    animation: subicon-close 0.5s ease 1 normal forwards;
 }
 
 .subicon.open-v {
@@ -183,12 +183,12 @@ form#fast_search div:first-of-type svg {
     transform: scaleY(0);
 }
 
-#subicon_user {
+#subicon-user {
     right: 1.5rem;
     top: 3.3rem;
 }
 
-#subicon_bell {
+#subicon-bell {
     @apply flex-col;
     @apply w-72;
     @apply py-1;
@@ -270,7 +270,7 @@ li.breadcrumb-item:not(.active) {
     }
 }
 
-@keyframes subicon_open {
+@keyframes subicon-open {
     0% {
         transform: scaleY(0);
         transform: scaleX(0);
@@ -287,7 +287,7 @@ li.breadcrumb-item:not(.active) {
     }
 }
 
-@keyframes subicon_close {
+@keyframes subicon-close {
     0% {
         transform: scaleY(1);
         transform: scaleX(1);

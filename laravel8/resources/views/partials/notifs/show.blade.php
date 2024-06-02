@@ -1,4 +1,3 @@
-
 @if($notifs->isEmpty())
     <span class="px-2">Aucune notification</span>
 @else

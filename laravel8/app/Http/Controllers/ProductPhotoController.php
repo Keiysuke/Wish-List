@@ -28,8 +28,8 @@ class ProductPhotoController extends Controller
         
         $dir = config('images.path_products').'/'.$product->id;
         //Suppression des photos
-        $del_photos = $product->photos()->where('ordered', '>', $request->nb_photos)->get();
-        foreach($del_photos as $p){
+        $deletedPhotos = $product->photos()->where('ordered', '>', $request->nb_photos)->get();
+        foreach($deletedPhotos as $p){
             $p->delete();
             File::delete(public_path().'/'.$dir.'/'.$p->label);
         }

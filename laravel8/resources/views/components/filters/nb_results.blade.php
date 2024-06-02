@@ -3,12 +3,12 @@
 <div class="grid grid-cols-2 gap-2 gap-x-12 px-8">
     @foreach ($values as $k => $value)
         @if (!$k)
-            <x-filters.utils.radio name="f_nb_results" id="{{ $value }}_results" value="{{ $value }}" checked>{{ $value }} Résultats</x-filters.utils.radio>
+            <x-filters.utils.radio name="f_nb_results" id="{{ $value }}-results" value="{{ $value }}" checked>{{ $value }} Résultats</x-filters.utils.radio>
         @else
-            <x-filters.utils.radio name="f_nb_results" id="{{ $value }}_results" value="{{ $value }}">{{ $value }} Résultats</x-filters.utils.radio>
+            <x-filters.utils.radio name="f_nb_results" id="{{ $value }}-results" value="{{ $value }}">{{ $value }} Résultats</x-filters.utils.radio>
         @endif
     @endforeach
     @if(isset($all))
-        <x-filters.utils.radio name="f_nb_results" id="all_results" value="all">Tous</x-filters.utils.radio>
+        <x-filters.utils.radio name="f_nb_results" id="all-results" value="all">Tous</x-filters.utils.radio>
     @endif
 </div>

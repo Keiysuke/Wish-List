@@ -1,3 +1,3 @@
 @foreach($messages as $message)
-<x-message :message="$message"/>
+    <x-Tchat.Message :message="$message"/>
 @endforeach

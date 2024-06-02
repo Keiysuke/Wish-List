@@ -8,7 +8,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-window.my_fetch = function (url, headers, datas) {
+window.myFetch = function (url, headers, datas) {
   var csrf = headers.csrf ? {
     "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
   } : {};
@@ -22,7 +22,7 @@ window.my_fetch = function (url, headers, datas) {
   });
 };
 
-window.get_fetch = function (url) {
+window.getFetch = function (url) {
   return fetch('http://localhost/00%20-%20API/products-managing/laravel8/public/' + url, {
     headers: {
       "X-Requested-With": "XMLHttpRequest"

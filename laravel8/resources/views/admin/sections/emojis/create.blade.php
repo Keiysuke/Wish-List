@@ -1,9 +1,9 @@
 <x-app-layout>
-    <div id="dashboard_table">
+    <div id="dashboard-table">
         <x-admin.dashboard_menu menu="database" sub="emoji_sections"/>
 
         <div class="right">
-            <x-notification type="success" msg="{{ session('info') }}"/>
+            <x-Notification type="success" msg="{{ session('info') }}"/>
             
             <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('sections.emojis.store') }}" method="POST">
                 @csrf
@@ -11,12 +11,12 @@
                 <hr/>
 
                 <div class="mb-4">
-                    <x-form.label for="label" block required>Nom de la section</x-form.label>
-                    <x-form.input name="label" placeholder="Visages souriants" value="{{ old('label') }}"/>
+                    <x-Form.Label for="label" block required>Nom de la section</x-Form.Label>
+                    <x-Form.Input name="label" placeholder="Visages souriants" value="{{ old('label') }}"/>
                 </div>
                 <div class="flex items-center justify-between">
-                    <x-form.btn type="submit">Ajouter la section</x-form.btn>
-                    <x-form.cancel href="{{ route('sections.emojis.index') }}"/>
+                    <x-Form.Btn type="submit">Ajouter la section</x-Form.Btn>
+                    <x-Form.Cancel href="{{ route('sections.emojis.index') }}"/>
                 </div>
             </form>
         </div>

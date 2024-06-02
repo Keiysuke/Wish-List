@@ -16,23 +16,23 @@
                 <x-svg.house class="icon-xs"/>
                 <span class="px-1">{{ __('Home') }}</span>
             </a>
-            <x-menu.submenu id="my_datas" href="{{ route('my_products') }}" active="{{ $path === 'products/user' }}">{{ __('My products') }}</x-menu.submenu>
-            <x-menu.submenu id="create" href="{{ route('products.create') }}" active="{{ $path === 'products/create' }}">{{ __('Add new') }}</x-menu.submenu>
-            <x-menu.link href="{{ route('sitemap') }}" active="{{ $path === 'sitemap' }}">{{ __('Sitemap') }}</x-menu.link>
-            <x-menu.ext_link href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro">{{ __('Convertisseur $ -> €') }}</x-menu.ext_link>
+            <x-Menu.Submenu id="my-datas" href="{{ route('myProducts') }}" active="{{ $path === 'products/user' }}">{{ __('My products') }}</x-Menu.Submenu>
+            <x-Menu.Submenu id="create" href="{{ route('products.create') }}" active="{{ $path === 'products/create' }}">{{ __('Add new') }}</x-Menu.Submenu>
+            <x-Menu.Link href="{{ route('sitemap') }}" active="{{ $path === 'sitemap' }}">{{ __('Sitemap') }}</x-Menu.Link>
+            <x-Menu.ExtLink href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro">{{ __('Convertisseur $ -> €') }}</x-Menu.ExtLink>
 
-            <x-menu.submenu id="externals">{{ __('External links') }}</x-menu.submenu>
-            <x-menu.ext_link href="http://localhost/phpmyadmin/db_structure.php?server=2&db=api_products_managing">
+            <x-Menu.Submenu id="externals">{{ __('External links') }}</x-Menu.Submenu>
+            <x-Menu.ExtLink href="http://localhost/phpmyadmin/db_structure.php?server=2&db=api_products_managing">
                 <x-svg.big.db class="inline-flex icon-sm mr-1"/>Base de données
-            </x-menu.ext_link>
+            </x-Menu.ExtLink>
         </div>
         <!-- Fast menu search -->
-        <form id="fast_search" action="{{ route('my_products', ['fast_search' => true]) }}" method="POST">
+        <form id="fast-search" action="{{ route('myProducts', ['fast_search' => true]) }}" method="POST">
             @method("GET")
-            <div class="relative flex inline-flex justify-end" onMouseOver="open_search();" onMouseOut="open_search(false);">
-                <input id="fast_search_text" class="{{ isset($search)? 'focus_search' : '' }}" type="search" name="search" placeholder="{{ __('Search products...') }}" value="{{ isset($search)? $search : '' }}" onFocus="open_search();" onFocusOut="open_search(false);">
-                <!-- <x-svg.big.circle_search onClick="document.forms['fast_search'].submit();"/> -->
-                <x-svg.big.circle_search onClick="document.forms['fast_search'].submit();"/>
+            <div class="relative flex inline-flex justify-end" onMouseOver="openSearch();" onMouseOut="openSearch(false);">
+                <input id="fast-search-text" class="{{ isset($search)? 'focus-search' : '' }}" type="search" name="search" placeholder="{{ __('Search products...') }}" value="{{ isset($search)? $search : '' }}" onFocus="openSearch();" onFocusOut="openSearch(false);">
+                <!-- <x-svg.big.circle_search onClick="document.forms['fast-search'].submit();"/> -->
+                <x-svg.big.circle_search onClick="document.forms['fast-search'].submit();"/>
             </div>
         </form>
         <!-- menu icons -->
@@ -60,15 +60,15 @@
 @include('partials.sidebars.left.externals')
 
 <nav id="submenu">
-    <div id="submenu_my_datas" class="submenu" onMouseOver="submenu(true, 'my_datas');" onMouseOut="submenu(false, 'my_datas');">
-        <a href="{{ route('my_products') }}">{{ __('My products') }}</a>
+    <div id="submenu-my-datas" class="submenu" onMouseOver="submenu(true, 'my-datas');" onMouseOut="submenu(false, 'my-datas');">
+        <a href="{{ route('myProducts') }}">{{ __('My products') }}</a>
         <a href="{{ route('lists.index') }}">{{ __("My lists") }}</a>
-        <a href="{{ route('user_historic', 'purchases') }}">{{ __('My purchases') }}</a>
-        <a href="{{ route('user_historic', 'sellings') }}">{{ __('My sells') }}</a>
-        <a href="{{ route('user_benefits') }}">{{ __('My benefits') }}</a>
+        <a href="{{ route('userHistoric', 'purchases') }}">{{ __('My purchases') }}</a>
+        <a href="{{ route('userHistoric', 'sellings') }}">{{ __('My sells') }}</a>
+        <a href="{{ route('userBenefits') }}">{{ __('My benefits') }}</a>
         <a href="{{ route('video_games.index') }}">{{ __('My video games') }}</a>
     </div>
-    <div id="submenu_create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
+    <div id="submenu-create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
         <a href="{{ route('products.create') }}">{{ __('Product') }}</a>
         <a href="{{ route('group_buys.create') }}">{{ __('Group purchase') }}</a>
         <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
@@ -80,22 +80,22 @@
         <a href="{{ route('states.products.create') }}">{{ __("Product's state") }}</a>
         <a href="{{ route('states.sells.create') }}">{{ __("Selling's state") }}</a>
     </div>
-    <div id="submenu_externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
+    <div id="submenu-externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
         <a target="_blank" href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
         <a target="_blank" href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
         <a target="_blank" href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
     </div>
-    <div id="subicon_bell" class="subicon flex justify-end gap-2">
+    <div id="subicon-bell" class="subicon flex justify-end gap-2">
         @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])
     </div>
-    <div id="subicon_user" class="subicon menu">
+    <div id="subicon-user" class="subicon menu">
         <span>
             <x-svg.cog class="icon-xs"/>
             <a class="no-propagate" href="{{ route('profile.show') }}">{{ __('My profile') }}</a>
         </span>
         <span>
             <x-svg.users class="icon-xs"/>
-            <a class="no-propagate" href="{{ route('my_friends') }}">{{ __('My friends') }}</a>
+            <a class="no-propagate" href="{{ route('myFriends') }}">{{ __('My friends') }}</a>
         </span>
         <span>
             <x-svg.log_out class="icon-xs"/>

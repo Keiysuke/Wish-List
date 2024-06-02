@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function filter_historic(Request $request){
+    public function filterHistoric(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
                 'user_id' => 'bail|required|int',
@@ -22,11 +22,11 @@ class UserController extends Controller
             
             $date_from = is_null($request->date_from)? '1970-01-01' : $request->date_from;
             $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
-            $user_id = $request->user_id;
+            $userId = $request->user_id;
             $kind = $request->kind;
             $totals = [];
             if($kind === "purchases"){
-                $purchases = Purchase::where('user_id', '=', $user_id)
+                $purchases = Purchase::where('user_id', '=', $userId)
                     ->where('date', '>=', $date_from)
                     ->where('date', '<=', $date_to)
                     ->doesnthave('group_buy_purchases')
@@ -37,21 +37,21 @@ class UserController extends Controller
                     $data->date_used = strtotime($data->date);
                     $data->date_show = __('Purchased on').' '.date('d F Y', $data->date_used);
                 }
-                $group_buys = GroupBuy::where('user_id', '=', $user_id)
+                $groupBuys = GroupBuy::where('user_id', '=', $userId)
                     ->where('date', '>=', $date_from)
                     ->where('date', '<=', $date_to)
                     ->orderBy('date', 'desc')
                     ->get();
-                foreach($group_buys as $data){
+                foreach($groupBuys as $data){
                     $data->kind = 'group_buy';
                     $data->date_used = strtotime($data->date);
                     $data->date_show = __('Purchased on').' '.date('d F Y', $data->date_used);
                     $data->cost = $data->global_cost + $data->shipping_fees - $data->discount;
                     $data->purchases = $data->grouped_purchases();
                 }
-                $datas = $purchases->concat($group_buys);
+                $datas = $purchases->concat($groupBuys);
             }else{
-                $datas = Selling::where('user_id', '=', $user_id)
+                $datas = Selling::where('user_id', '=', $userId)
                     ->where('sell_state_id', '=', 5)
                     ->where('date_sold', '>=', $date_from)
                     ->where('date_sold', '<=', $date_to)
@@ -95,7 +95,7 @@ class UserController extends Controller
         return view('users/benefits', compact('filters'));
     }
 
-    public function filter_benefits(Request $request){
+    public function filterBenefits(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
                 'user_id' => 'bail|required|int',
@@ -106,7 +106,7 @@ class UserController extends Controller
             
             $date_from = is_null($request->date_from)? '1970-01-01' : $request->date_from;
             $date_to = is_null($request->date_to)? '3000-01-01' : $request->date_to;
-            $user_id = $request->user_id;
+            $userId = $request->user_id;
             $nb_results = $request->nb_results === 'all' ? -1 : $request->nb_results;
             
             $totals = [
@@ -116,30 +116,30 @@ class UserController extends Controller
             ];
 
             /* Managing filters sent */
-            $filter_pw = [];
-            $filter_tag = ['in' => [], 'out' => []];
+            $filterPw = [];
+            $filterTag = ['in' => [], 'out' => []];
             //Filtrés par sites
             foreach($request->websites as $product_website){
                 $r = explode('_', $product_website);
-                $filter_pw[] = intval($r[1]);
+                $filterPw[] = intval($r[1]);
             }
             $tags = Tag::all();
             //Filtrés par tags
             foreach($tags as $tag){
-                if(in_array('tag_'.$tag->id, $request->tags)) $filter_tag['in'][] = $tag->id;
-                else $filter_tag['out'][] = $tag->id;
+                if(in_array('tag_'.$tag->id, $request->tags)) $filterTag['in'][] = $tag->id;
+                else $filterTag['out'][] = $tag->id;
             }
             //Ajout des tags filtrés
-            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filter_tag['in'])) {
-                $filter_tag['in'][] = $request->tag_in;
+            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filterTag['in'])) {
+                $filterTag['in'][] = $request->tag_in;
             }
-            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filter_tag['out'])) {
-                $filter_tag['out'][] = $request->tag_out;
+            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filterTag['out'])) {
+                $filterTag['out'][] = $request->tag_out;
             }
 
             /* Creating the query */
             $buildRequest = Purchase::query();
-            $buildRequest->where('user_id', '=', $user_id)
+            $buildRequest->where('user_id', '=', $userId)
                 ->where('date', '>=', $date_from)
                 ->where('date', '<=', $date_to);
             
@@ -149,16 +149,16 @@ class UserController extends Controller
                     $query->wheredoesntHave('tags');
                 });
                 
-            }elseif(count($filter_tag['in']) > 0){
-                $buildRequest->whereHas('product', function($query) use ($filter_tag){
-                    $query->whereHas('tags', function($q) use ($filter_tag) {
-                        $q->whereIn('tag_id', $filter_tag['in']);
+            }elseif(count($filterTag['in']) > 0){
+                $buildRequest->whereHas('product', function($query) use ($filterTag){
+                    $query->whereHas('tags', function($q) use ($filterTag) {
+                        $q->whereIn('tag_id', $filterTag['in']);
                     });
                 });
                 if($request->exclusive_tags){
-                    $buildRequest->whereDoesntHave('product', function($query) use ($filter_tag){
-                        $query->whereHas('tags', function($q) use ($filter_tag) {
-                            $q->whereIn('tag_id', $filter_tag['out']);
+                    $buildRequest->whereDoesntHave('product', function($query) use ($filterTag){
+                        $query->whereHas('tags', function($q) use ($filterTag) {
+                            $q->whereIn('tag_id', $filterTag['out']);
                         });
                     });
                 }
@@ -179,8 +179,8 @@ class UserController extends Controller
             }
 
             //Filter on Websites
-            $buildRequest->whereHas('website', function($query) use ($filter_pw){
-                $query->whereIn('website_id', $filter_pw);
+            $buildRequest->whereHas('website', function($query) use ($filterPw){
+                $query->whereIn('website_id', $filterPw);
             });
 
             $datas = $buildRequest->orderBy('date', 'desc')

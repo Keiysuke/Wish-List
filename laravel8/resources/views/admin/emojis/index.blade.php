@@ -1,9 +1,9 @@
 <x-app-layout>
-    <div id="dashboard_table">
+    <div id="dashboard-table">
         <x-admin.dashboard_menu menu="database" sub="emojis"/>
         
         <div class="right">
-            <x-notification type="success" msg="{{ session('info') }}"/>
+            <x-Notification type="success" msg="{{ session('info') }}"/>
 
             <div class="relative flex justify-center border-b-2 mb-4">
                 <span class="absolute left-0 font-semibold">{{ isset($emojis->links) ? $emojis->links()->paginator->total() : count($emojis) }} Resultats</span>
@@ -20,9 +20,9 @@
                     <div class="item_list flex flex-between gap-4 p-2 shadow rounded border-l-4 border-indigo-400 hover:shadow-lg transform hover:scale-105">
                         <div class="flex w-full items-center gap-8">
                             <span class="font-bold"># {{ $emoji->id }}</span>
-                            <x-utils.v_line />
+                            <x-Utils.VLine />
                             <span>{{ $emoji->label }}</span>
-                            <x-utils.v_line />
+                            <x-Utils.VLine />
                             <span>{{ $emoji->section->label }}</span>
                         </div>
                         <div class="flex flex-around items-center gap-4 text-sm">

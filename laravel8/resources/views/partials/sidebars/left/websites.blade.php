@@ -1,9 +1,9 @@
-<div class="sidebar_content text-sm" id="left_sidebar_websites">
-    @foreach($user_website_sections as $section_id => $user_websites)
-        @php($section = \App\Models\UserWebsiteSection::find($section_id))
+<div class="sidebar-content text-sm" id="left-sidebar-websites">
+    @foreach($userWebsiteSections as $sectionId => $userWebsites)
+        @php($section = \App\Models\UserWebsiteSection::find($sectionId))
         <p><x-dynamic-component :component="$section->icon" class="icon-sm text-{{ $section->color('bg') }}"/> {{ $section->label }}</p>
-        <div class="ls_grid-3">
-            @foreach($user_websites as $w)
+        <div class="left-sidebar-grid-3">
+            @foreach($userWebsites as $w)
                 <div class="square">
                     <a href="{{ $w->website->url }}" title="{{ $w->website->label }}" target="_blank"><img src="{{ asset(config('images.icons_websites')).'/'.$w->website->id.'.'.$w->website->icon }}"/></a>
                 </div>
@@ -11,7 +11,7 @@
         </div>
     @endforeach
     <p><x-svg.globe class="icon-sm text-orange-400"/> Mes applis</p>
-    <div class="ls_grid-3">
+    <div class="left-sidebar-grid-3">
         <div class="square bg-white">
             <a href="http://localhost/00 - API/warframe/laravel8/public/weapons" title="Warframe Codex" target="_blank"><img src="{{ asset(config('images.icons_mes_applis')).'/warframe.png' }}"/></a>
         </div>

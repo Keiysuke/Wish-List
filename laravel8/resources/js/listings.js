@@ -1,154 +1,177 @@
-(function() {
-    toggle_filters = function(){
-        document.getElementById('content_filters').classList.toggle('hidden');
+(function () {
+    toggle_filters = function () {
+        document.getElementById('content-filters').classList.toggle('hidden')
     }
 
-    Array.from(document.getElementsByClassName('delete_list')).forEach(e => {
+    Array.from(document.getElementsByClassName('delete-list')).forEach(e => {
         e.addEventListener('click', (e) => {
-            const id = e.target.dataset.list_id;
-            get_fetch('lists/' + id + '/destroy')
+            const listId = e.target.dataset.list_id
+            getFetch('lists/' + listId + '/destroy')
+                .then(res => {
+                    document.getElementById("list-" + res.deletedId).remove()
+                    my_notyf(res)
+                    if (res.list_id > 0) document.onload = getProducts(res.listId) //There's still one other list
+                    else { //No more list for the user
+                        document.getElementById("my-lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>"
+                    }
+                })
+        })
+    })
+
+    leaveList = function (listId) {
+        getFetch('lists/' + listId + '/leave')
             .then(res => {
-                document.getElementById("list_"+res.deleted_id).remove();
-                my_notyf(res);
-                if(res.list_id > 0) document.onload = get_products(res.list_id); //There's still one other list
-                else{ //No more list for the user
-                    document.getElementById("my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
+                if (res.success) location.reload()
+            })
+    }
+
+    downloadList = function (listId) {
+        getFetch('lists/' + listId + '/download')
+            .then(res => {
+                const link = document.createElement('a')
+                link.href = window.URL.createObjectURL(new Blob([res.blob]))
+                link.setAttribute('download', res.filename + '.csv')
+                document.body.appendChild(link)
+                link.click()
+            })
+    }
+
+    toggleShareList = function () {
+        event.stopPropagation()
+        document.getElementById('content-share-list').classList.toggle('hidden')
+        document.getElementById('content-share-list').classList.toggle('flex')
+        document.getElementById('main').classList.toggle('pointer-events-none')
+    }
+
+    showShareList = function (listId) {
+        getFetch('shared/lists/' + listId + '/show')
+            .then(res => {
+                if (res.success) {
+                    document.getElementById('content-share-list').innerHTML = res.html
+                    document.getElementById('content-share-list').classList.toggle('hidden')
+                    document.getElementById('content-share-list').classList.toggle('flex')
+                    document.getElementById('main').classList.toggle('pointer-events-none')
                 }
-            });
-        });
-    });
-
-    leave_list = function(list_id){
-        get_fetch('lists/' + list_id + '/leave')
-        .then(res => {
-            if (res.success) location.reload();
-        });
-    }
-    
-    download_list = function(list_id){
-        get_fetch('lists/' + list_id + '/download')
-        .then(res => {
-            let link = document.createElement('a');
-            link.href = window.URL.createObjectURL(new Blob([res.blob]));
-            link.setAttribute('download', res.filename + '.csv');
-            document.body.appendChild(link);
-            link.click();
-        });
-    }
-    
-    toggleShareList = function(list_id){
-        event.stopPropagation();
-        document.getElementById('content_share_lists').classList.toggle('hidden');
-        document.getElementById('content_share_lists').classList.toggle('flex');
-        document.getElementById('main').classList.toggle('pointer-events-none');
+            })
     }
 
-    showShareList = function(list_id){
-        get_fetch('shared/lists/' + list_id + '/show')
-        .then(res => {
-            if (res.success) {
-                document.getElementById('content_share_lists').innerHTML = res.html;
-                document.getElementById('content_share_lists').classList.toggle('hidden');
-                document.getElementById('content_share_lists').classList.toggle('flex');
-                document.getElementById('main').classList.toggle('pointer-events-none');
-            }
-        });
-    }
-
-    shareList = function(list_id){
-        event.stopPropagation();
-        let friends = Array();
+    shareList = function (listId) {
+        event.stopPropagation()
+        let friends = Array()
         Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(el => {
-            if(el.checked) friends.push(parseInt(el.dataset.friendId));
-        });
+            if (el.checked) friends.push(parseInt(el.dataset.friendId))
+        })
         if (friends.length === 0) {
-            notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error');
-            return;
+            notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error')
+            return
         }
-        my_fetch('lists/share', {method: 'post', csrf: true}, {
-            list_id: parseInt(list_id),
+        myFetch('lists/share', {
+            method: 'post',
+            csrf: true
+        }, {
+            list_id: parseInt(listId),
             friends: friends,
         }).then(response => {
-            if (response.ok) return response.json();
+            if (response.ok) return response.json()
         }).then(res => {
-            my_notyf(res);
+            my_notyf(res)
             if (res.success) {
-                document.getElementById('content_share_lists').classList.toggle('flex');
-                document.getElementById('content_share_lists').classList.toggle('hidden');
-                document.getElementById('main').classList.toggle('pointer-events-none');
+                document.getElementById('content-share-list').classList.toggle('flex')
+                document.getElementById('content-share-list').classList.toggle('hidden')
+                document.getElementById('main').classList.toggle('pointer-events-none')
             }
-        });
+        })
     }
 
-    show_messages = function(res) {
-        const messages_content = document.getElementById('messages_content');
-        const wrap_list_products = document.getElementById('wrap_list_products');
-        if (res.messages_html !== null && res.shared_list) {//Il y a des messages
-            messages_content.innerHTML = res.messages_html;
-            messages_content.classList.remove('hidden');
-            wrap_list_products.classList.remove('extend');
-            wrap_list_products.classList.add('with_msg');
-            
-            scrollDown(document.getElementById('v_list_msg'));
-            maj_reactions();
-        } else if (!messages_content.classList.contains('hidden')) {
-            wrap_list_products.classList.remove('with_msg');
-            wrap_list_products.classList.add('extend');
-            messages_content.classList.add('hidden');
+    /**
+     * Met à jour les mesages affichés dans le tchat
+     * @param {object} res - Résultat contenant le html de la liste des messages
+     */
+    showMessages = function (res) {
+        const contentMsg = document.getElementById('content-msg')
+        const wrapListProducts = document.getElementById('wrap-list-products')
+        if (res.htmlMsg !== null && res.shared_list) { //Il y a des messages
+            contentMsg.innerHTML = res.htmlMsg
+            contentMsg.classList.remove('hidden')
+            wrapListProducts.classList.remove('extend')
+            wrapListProducts.classList.add('with-msg')
+
+            scrollDown(document.getElementById('v-list-msg'))
+            maj_reactions()
+        } else if (!contentMsg.classList.contains('hidden')) {
+            wrapListProducts.classList.remove('with-msg')
+            wrapListProducts.classList.add('extend')
+            contentMsg.classList.add('hidden')
         }
     }
 
-    toggle_list = function(list_id, product_id){
-        my_fetch('lists/toggle_product', {method: 'post', csrf: true}, {
-            list_id: parseInt(list_id),
-            product_id: parseInt(product_id),
-            change_checked:true
+    /**
+     * 
+     * @param {int} listId - Identifiant de la liste
+     * @param {int} productId - Identifiant du produit
+     */
+    toggleList = function (listId, productId) {
+        myFetch('lists/products/toggle', {
+            method: 'post',
+            csrf: true
+        }, {
+            list_id: parseInt(listId),
+            product_id: parseInt(productId),
+            change_checked: true
         }).then(response => {
-            if (response.ok) return response.json();
+            if (response.ok) return response.json()
         }).then(res => {
-            document.getElementById("list_"+list_id+"_product_"+product_id).remove();
-            let nb_results = document.getElementById('nb_results').getAttribute('data-nb')-1;
-            if(nb_results > 0){
-                document.getElementById('nb_results').setAttribute('data-nb', nb_results);
-                document.getElementById('nb_results').innerHTML = nb_results+' Résultat(s)';
-                document.getElementById('total_price').innerHTML = 'Montant total : ' + res.total_price + ' €';
-            }else get_products(list_id);
-        });
+            document.getElementById("list-" + listId + "-product-" + productId).remove();
+            let nb_results = document.getElementById('nb-results').getAttribute('data-nb') - 1
+            if (nb_results > 0) {
+                document.getElementById('nb-results').setAttribute('data-nb', nb_results)
+                document.getElementById('nb-results').innerHTML = nb_results + ' Résultat(s)'
+                document.getElementById('total-price').innerHTML = 'Montant total : ' + res.total_price + ' €'
+            } else getProducts(listId)
+        })
     }
 
-    get_products = function(list_id){
-        const old_list_id = document.getElementById('list_selected').value;
-        if (old_list_id == list_id) return;
+    /**
+     * Récupère les produits d'une liste
+     * @param {int} listId - Identifiant de la liste
+     */
+    getProducts = function (listId) {
+        const oldListId = document.getElementById('list-selected').value
+        if (oldListId == listId) return
 
-        get_fetch('lists/' + list_id + '/products/show')
-        .then(products => {
-            if(document.getElementById('list_selected').value != '' && document.getElementById('list_'+document.getElementById('list_selected').value) != undefined)
-                document.getElementById('list_'+document.getElementById('list_selected').value).classList.toggle('selected');
-            document.getElementById('list_selected').value = list_id;
-            document.getElementById('list_'+list_id).classList.toggle('selected');
-            document.getElementById('content_results').innerHTML = products.html;
-            extendListMsg(true);
-            show_messages(products);
-        });
+        getFetch('lists/' + listId + '/products/show')
+            .then(products => {
+                if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined)
+                    document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected')
+                document.getElementById('list-selected').value = listId
+                document.getElementById('list-' + listId).classList.toggle('selected')
+                document.getElementById('content-results').innerHTML = products.html
+                extendListMsg(true)
+                showMessages(products)
+            })
     }
-    
-    show_lists = function(user_id) {
-        const old_user_id = document.getElementById('lists_user_id').value;
-        if (old_user_id == user_id) return;
-        
-        if (user_id == 0) {
-            document.getElementById('title_others_lists').classList.add('active');
-            document.getElementById('title_my_lists').classList.remove('active');
+
+    /**
+     * Affiche les listes d'un utilisateur
+     * @param {int} userId - Identifiant de l'utilisateur dont on affiche les listes
+     */
+    showLists = function (userId) {
+        const oldUserId = document.getElementById('lists-user-id').value
+        if (oldUserId == userId) return
+
+        if (userId == 0) {
+            document.getElementById('title-others-lists').classList.add('active')
+            document.getElementById('title-my-lists').classList.remove('active')
         } else {
-            document.getElementById('title_others_lists').classList.remove('active');
-            document.getElementById('title_my_lists').classList.add('active');
+            document.getElementById('title-others-lists').classList.remove('active')
+            document.getElementById('title-my-lists').classList.add('active')
         }
-    
-        document.getElementById('lists_user_id').value = user_id;
-        get_fetch('lists/users/' + user_id)
-        .then(lists => {
-            document.getElementById('wrap_lists').innerHTML = lists.html;
-            get_products(lists.first_list_id);
-        });
+
+        document.getElementById('lists-user-id').value = userId
+        getFetch('lists/users/' + userId)
+            .then(lists => {
+                document.getElementById('wrap-lists').innerHTML = lists.html
+                getProducts(lists.first_list_id)
+            })
     }
-})();
+})()

@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <x-notification type="success" msg="{{ session('info') }}"/>
+    <x-Notification type="success" msg="{{ session('info') }}"/>
     
     <h2>Liste des achats</h2>
     <a class="button is-info" href="{{ route('purchases.create') }}">Ajouter un nouvel achat</a>

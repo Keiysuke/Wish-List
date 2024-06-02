@@ -1,4 +1,4 @@
-<div id="content_filters" class="flex flex-col gap-4 mb-8 hidden">
+<div id="content-filters" class="flex flex-col gap-4 mb-8 hidden">
     <div class="flex flex-grow justify-center gap-4">
         <div class="filter_block flex flex-col w-1/2 items-center gap-2">
             <x-filters.tags :tags="$tags" :filters="$filters"/>

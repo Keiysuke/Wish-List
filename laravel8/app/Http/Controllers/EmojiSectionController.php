@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class EmojiSectionController extends Controller
 {
-    public function exists($lbl, $id = null){
-        if(is_null($id)) return EmojiSection::where("label", $lbl)->exists();
-        else return EmojiSection::where('label', $lbl)->where('id', '<>', $id)->exists();
+    public function exists($label, $sectionId = null){
+        if(is_null($sectionId)) return EmojiSection::where("label", $label)->exists();
+        else return EmojiSection::where('label', $label)->where('id', '<>', $sectionId)->exists();
     }
 
     public function index(){
@@ -17,9 +17,9 @@ class EmojiSectionController extends Controller
         return view('admin.sections.emojis.index', compact('sections'));
     }
 
-    public function show(int $id){
-        $section = EmojiSection::find($id);
-        $html = view('components.tchat.EmojiGrid')->with(compact('section'))->render();
+    public function show(int $sectionId){
+        $section = EmojiSection::find($sectionId);
+        $html = view('components.Tchat.EmojiGrid')->with(compact('section'))->render();
         return response()->json(['success' => true, 'html' => $html]);
     }
 

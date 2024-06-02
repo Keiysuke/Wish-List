@@ -86,7 +86,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(User::class, 'friend_users', 'friend_id', 'user_id')->withPivot('favorite')->withTimestamps();
     }
 
-    public function is_friend() {
+    public function isFriend() {
         $link = FriendUser::whereIn('user_id', [$this->id, auth()->user()->id])
             ->whereIn('friend_id', [$this->id, auth()->user()->id])
             ->get();

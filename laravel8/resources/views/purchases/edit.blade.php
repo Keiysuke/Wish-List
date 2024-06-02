@@ -6,7 +6,7 @@
 
 @section('content')
 @php($dir = config('images.path_products').'/'.$purchase->product_id.'/')
-<x-notification type="success" msg="{{ session('info') }}"/>
+<x-Notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('purchases.update', $purchase) }}" method="POST">
@@ -25,23 +25,23 @@
         </div>
         <hr/>
 
-        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user_id"/>
+        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user-id"/>
         <div class="flex justify-between gap-4 mb-4">
             <div class="flex gap-4 w-2/5">
                 <div class="w-1/10">
                     <img src="{{ asset($dir.$purchase->product->photos->firstWhere('ordered', 1)->label) }}" class="h-20"/>
                 </div>
                 <div class="w-9/10">
-                    <x-form.label for="product_id" block>Produit acheté</x-form.label>
+                    <x-Form.Label for="product-id" block>Produit acheté</x-Form.Label>
                     <div class="pl-2 pt-2">{{ $purchase->product->label }}</div>
                 </div>
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
-                    <x-form.label for="product_state_id" block required create="{{ route('states.products.create') }}">Etat du produit</x-form.label>
-                    <select name="product_state_id" id="product_state_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
-                        @foreach($product_states as $product_state)
-                            <option value="{{ $product_state->id }}" @if(strcmp(old('product_state_id', $purchase->product_state_id), $product_state->id) === 0) selected @endif>{{ $product_state->label }}</option>
+                    <x-Form.Label for="product-state-id" block required create="{{ route('states.products.create') }}">Etat du produit</x-Form.Label>
+                    <select name="product_state_id" id="product-state-id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                        @foreach($productStates as $productState)
+                            <option value="{{ $productState->id }}" @if(strcmp(old('product_state_id', $purchase->product_state_id), $productState->id) === 0) selected @endif>{{ $productState->label }}</option>
                         @endforeach
                     </select>
                     @error('product_state_id')
@@ -50,20 +50,20 @@
                 </div>
                 
                 <div class="w-1/3">
-                    <x-form.label for="date" block required>Date d'achat</x-form.label>
-                    <x-form.date name="date" value="{{ old('date', $purchase->date) }}"/>
+                    <x-Form.Label for="date" block required>Date d'achat</x-Form.Label>
+                    <x-Form.Date name="date" value="{{ old('date', $purchase->date) }}"/>
                 </div>
                 <div class="w-1/3">
-                    <x-form.label for="date_received" block required>Date de réception</x-form.label>
-                    <x-form.date name="date_received" value="{{ old('date_received', $purchase->date_received) }}"/>
+                    <x-Form.Label for="date-received" block required>Date de réception</x-Form.Label>
+                    <x-Form.Date name="date_received" value="{{ old('date_received', $purchase->date_received) }}"/>
                 </div>
             </div>
         </div>
         
         <div class="flex gap-4 mb-4">
             <div class="w-2/5">
-                <x-form.label for="website_id" block required create="{{ route('websites.create') }}">Site web</x-form.label>
-                <select name="website_id" id="website_id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                <x-Form.Label for="website-id" block required create="{{ route('websites.create') }}">Site web</x-Form.Label>
+                <select name="website_id" id="website-id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                     @foreach($websites as $website)
                         <option value="{{ $website->id }}" @if(strcmp(old('website_id', $purchase->website_id), $website->id) === 0) selected @endif>{{ $website->label }}</option>
                     @endforeach
@@ -74,22 +74,22 @@
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
-                    <x-form.label for="cost" block required>Coût (€)</x-form.label>
-                    <x-form.input name="cost" placeholder="60" value="{{ old('cost', $purchase->cost) }}"/>
+                    <x-Form.Label for="cost" block required>Coût (€)</x-Form.Label>
+                    <x-Form.Input name="cost" placeholder="60" value="{{ old('cost', $purchase->cost) }}"/>
                 </div>
                 <div class="w-1/3">
-                    <x-form.label for="discount" block>Réduction (€)</x-form.label>
-                    <x-form.input name="discount" placeholder="0" value="{{ old('discount', $purchase->discount) }}"/>
+                    <x-Form.Label for="discount" block>Réduction (€)</x-Form.Label>
+                    <x-Form.Input name="discount" placeholder="0" value="{{ old('discount', $purchase->discount) }}"/>
                 </div>
                 <div class="w-1/3">
-                    <x-form.label for="customs" block>Douane (€)</x-form.label>
-                    <x-form.input name="customs" placeholder="0" value="{{ old('customs', $purchase->customs) }}"/>
+                    <x-Form.Label for="customs" block>Douane (€)</x-Form.Label>
+                    <x-Form.Input name="customs" placeholder="0" value="{{ old('customs', $purchase->customs) }}"/>
                 </div>
             </div>
         </div>
         <div class="flex items-center justify-between">
-            <x-form.btn type="submit">Mettre à jour l'achat</x-form.btn>
-            <x-form.cancel href="{{ route('products.show', $purchase->product_id) }}"/>
+            <x-Form.Btn type="submit">Mettre à jour l'achat</x-Form.Btn>
+            <x-Form.Cancel href="{{ route('products.show', $purchase->product_id) }}"/>
         </div>
     </form>
 </div>

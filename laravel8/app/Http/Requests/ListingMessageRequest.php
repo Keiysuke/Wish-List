@@ -12,7 +12,7 @@ class ListingMessageRequest extends FormRequest
 
     public function rules(){
         $rules = [
-            'listing_id' => 'int|required',
+            'list_id' => 'int|required',
             'message' => 'string|required|max:1000',
             'answer_to_id' => 'int|nullable',
         ];

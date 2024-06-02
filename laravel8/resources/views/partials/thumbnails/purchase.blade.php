@@ -11,7 +11,7 @@
             <a title="Editer l'achat" href="{{ route('purchases.edit', $purchase->id) }}" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                 <x-svg.edit class="w-5 h-5 hover:transform hover:scale-125"/>
             </a>
-            <a onClick="simulate_benef({{ $payed + $purchase->customs }}, {{ $sold }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
+            <a onClick="simulateBenef({{ $payed + $purchase->customs }}, {{ $sold }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                 <x-svg.euro class="w-5 h-5 hover:transform hover:scale-125"/>
             </a>
         </div>

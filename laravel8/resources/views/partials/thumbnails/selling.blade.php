@@ -15,7 +15,7 @@
                 <a title="Editer la vente" href="{{ route('sellings.edit', $sell->id) }}" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                     <x-svg.edit class="w-5 h-5 hover:transform hover:scale-125"/>
                 </a>
-                <a onClick="simulate_benef({{ $sell->purchase->price() }}, {{ $sell->price() }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
+                <a onClick="simulateBenef({{ $sell->purchase->price() }}, {{ $sell->price() }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                     <x-svg.euro class="w-5 h-5 hover:transform hover:scale-125"/>
                 </a>
             </div>
@@ -24,11 +24,11 @@
             <p><span class="font-semibold">Etat :</span> {{ $sell->productState->label }}</p>
             <div>
                 <p class="flex inline-flex gap-1">
-                    <x-svg.help id="histo_offers_{{ $sell->id }}" data-id="{{ $sell->id }}" class="no-propagate icon-clickable icon-xs" onClick="show_histo(this);"/>
+                    <x-svg.help id="histo-offers-{{ $sell->id }}" data-id="{{ $sell->id }}" class="no-propagate icon-clickable icon-xs" onClick="showHisto(this);"/>
                     <span class="font-semibold">Prix :</span> {{ $sell->price() }} €
                 </p>
             </div>
-            <div id="content_histo_offers_{{ $sell->id }}" class="text-xs hidden">
+            <div id="content-histo-offers-{{ $sell->id }}" class="text-xs hidden">
                 @include('partials.sellings.offers', ['offers' => $sell->histo_offers])
             </div>
             <p class="text-sm text-gray-500">sur <a class="link no-propagate" href="{{ $sell->website->url }}" target="_blank">{{ $sell->website->label }}</a>{{ ($sell->sell_state_id === 1 || is_null($sell->date_begin))? '' : ' depuis le '.date('d/m/Y', strtotime($sell->date_begin)) }}</p>

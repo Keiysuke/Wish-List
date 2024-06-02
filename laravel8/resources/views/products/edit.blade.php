@@ -12,18 +12,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script type="text/javascript">
-        document.getElementById('template_type').addEventListener('change', set_template_type);
-        function set_template_type(){
-            document.getElementById('wrap_lk_video_game').classList.add('hidden');
-            document.getElementById('wrap_lk_vg_support').classList.remove('hidden');
-            if(document.getElementById('template_type').value === 'video_game'){
-                document.getElementById('wrap_lk_video_game').classList.remove('hidden');
+        document.getElementById('template-type').addEventListener('change', setTemplateType);
+        function setTemplateType(){
+            document.getElementById('wrap-lk-video-game').classList.add('hidden');
+            document.getElementById('wrap-lk-vg-support').classList.remove('hidden');
+            if(document.getElementById('template-type').value === 'video_game'){
+                document.getElementById('wrap-lk-video-game').classList.remove('hidden');
             }
-            if(document.getElementById('template_type').value === 'none'){
-                document.getElementById('wrap_lk_vg_support').classList.add('hidden');
+            if(document.getElementById('template-type').value === 'none'){
+                document.getElementById('wrap-lk-vg-support').classList.add('hidden');
             }
         }
-        set_template_type();
+        setTemplateType();
 
         $('#lk_video_game').select2({
             placeholder: 'Sélectionnez un jeu vidéo...',
@@ -52,7 +52,7 @@
             }
         });
 
-        $('#lk_vg_support').select2({
+        $('#lk-vg-support').select2({
             placeholder: 'Sélectionnez un support de jv...',
             allowClear: true,
             ajax: {
@@ -85,10 +85,10 @@
 @section('content')
 @php($template = $product->get_template())
 @php($dir = config('images.path_products').'/'.$product->id.'/')
-<x-notification type="success" msg="{{ session('info') }}"/>
+<x-Notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
-    <form id="my_form" class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('products.update', $product) }}" method="POST">
+    <form id="my-form" class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('products.update', $product) }}" method="POST">
         @csrf
         @method('put')
         <div class="relative flex">
@@ -107,13 +107,13 @@
             </div>
             <div class="flex flex-col w-7/12 gap-4">
                 <div>
-                    <x-form.label for="label" block required>Nom du produit</x-form.label>
-                    <x-form.input name="label" placeholder="Uncharted 4" value="{{ old('label', $product->label) }}"/>
+                    <x-Form.Label for="label" block required>Nom du produit</x-Form.Label>
+                    <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label', $product->label) }}"/>
                 </div>
                 <div class="flex gap-4">
                     <div class="w-1/5">
-                        <x-form.label for="template_type" block>Type du produit</x-form.label>
-                        <select name="template_type" id="template_type" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                        <x-Form.Label for="template-type" block>Type du produit</x-Form.Label>
+                        <select name="template_type" id="template-type" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                             <option value="none">Aucun</option>
                             <option value="video_game" @if(strcmp($template->type, 'video_game') === 0) selected @endif>Jeu Vidéo</option>
                             <option value="vg_support" @if(strcmp($template->type, 'vg_support') === 0) selected @endif>Support de JV</option>
@@ -129,13 +129,13 @@
                             <a href="{{ route('video_games.show', $vg->video_game_id) }}" class="font-bold link">{{ $vg->video_game->label.' ('.$vg->vg_support->alias.')' }}</a>
                         </div>
                     @else
-                        <div id="wrap_lk_video_game" class="w-2/5">
-                            <x-form.label for="lk_video_game" required block>Associer le jeu vidéo</x-form.label>
-                            <select name="lk_video_game" id="lk_video_game" value="{{ old('lk_video_game') }}" class="w-full"></select>
+                        <div id="wrap-lk-video-game" class="w-2/5">
+                            <x-Form.Label for="lk-video-game" required block>Associer le jeu vidéo</x-Form.Label>
+                            <select name="lk_video_game" id="lk-video-game" value="{{ old('lk_video_game') }}" class="w-full"></select>
                         </div>
-                        <div id="wrap_lk_vg_support" class="w-2/5">
-                            <x-form.label for="lk_vg_support" required block>Associer le support</x-form.label>
-                            <select name="lk_vg_support" id="lk_vg_support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
+                        <div id="wrap-lk-vg-support" class="w-2/5">
+                            <x-Form.Label for="lk-vg-support" required block>Associer le support</x-Form.Label>
+                            <select name="lk_vg_support" id="lk-vg-support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
                         </div>
                     @endif
                 </div>
@@ -144,17 +144,17 @@
             <div class="flex justify-around w-3/12 gap-4">
                 <div class="flex flex-col w-1/3 gap-4">
                     <div>
-                        <x-form.label for="limited_edition" block>Edition limitée ?</x-form.label>
-                        <x-form.input name="limited_edition" placeholder="3000" value="{{ old('limited_edition', $product->limited_edition) }}"/>
+                        <x-Form.Label for="limited-edition" block>Edition limitée ?</x-Form.Label>
+                        <x-Form.Input name="limited_edition" placeholder="3000" value="{{ old('limited_edition', $product->limited_edition) }}"/>
                     </div>
                     <div>
-                        <x-form.label for="real_cost" block required>Prix neuf (€)</x-form.label>
-                        <x-form.input name="real_cost" placeholder="20.50" value="{{ old('real_cost', $product->real_cost) }}"/>
+                        <x-Form.Label for="real-cost" block required>Prix neuf (€)</x-Form.Label>
+                        <x-Form.Input name="real_cost" placeholder="20.50" value="{{ old('real_cost', $product->real_cost) }}"/>
                     </div>
                 </div>
                 <div class="w-2/3">
-                    <x-form.label for="tag_ids" block required create="{{ route('tags.create') }}">Tags associés</x-form.label>
-                    <select multiple name="tag_ids[]" id="tag_ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
+                    <x-Form.Label for="tag-ids" block required create="{{ route('tags.create') }}">Tags associés</x-Form.Label>
+                    <select multiple name="tag_ids[]" id="tag-ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
                         @foreach($tags as $tag)
                             <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', $product->tag_ids()))) selected @endif>{{ $tag->label }}</option>
                         @endforeach
@@ -166,12 +166,12 @@
             </div>
         </div>
         <div class="mb-4">
-            <x-form.label for="description" block>Description</x-form.label>
-            <x-form.textarea name="description">{{ old('description', $product->description) }}</x-form.textarea>
+            <x-Form.Label for="description" block>Description</x-Form.Label>
+            <x-Form.Textarea name="description">{{ old('description', $product->description) }}</x-Form.Textarea>
         </div>
         <div class="flex items-center justify-between">
-            <x-form.btn type="submit">Modifier le produit</x-form.btn>
-            <x-form.cancel href="{{ route('products.show', $product->id) }}"/>
+            <x-Form.Btn type="submit">Modifier le produit</x-Form.Btn>
+            <x-Form.Cancel href="{{ route('products.show', $product->id) }}"/>
         </div>
     </form>
     </div>

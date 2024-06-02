@@ -1,4 +1,4 @@
-<div id="content_filters" class="flex flex-col items-start gap-4 hidden">
+<div id="content-filters" class="flex flex-col items-start gap-4 hidden">
     <div class="filter_block flex flex-col items-center gap-4">
         <x-filters.period/>
     </div>

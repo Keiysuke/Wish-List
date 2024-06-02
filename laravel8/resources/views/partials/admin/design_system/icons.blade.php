@@ -33,7 +33,7 @@
 
 <h3>3. Les icônes sur le site</h3>
 
-<div id="show_video_game" class="title-icon inline-flex">
+<div id="show-video-game" class="title-icon inline-flex">
     <x-svg.big.vg_controller class="icon-xs"/>
 </div>
 <div class="title-icon inline-flex">
@@ -51,8 +51,8 @@
 <div class="title-icon refresh inline-flex">
     <x-svg.refresh class="icon-xs"/>
 </div>
-<x-utils.yt.title_icon search="Soundtrack"/>
-<x-utils.psthc.title_icon search="Lies of P" support="ps4"/>
+<x-Utils.Yt.TitleIcon search="Soundtrack"/>
+<x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
 
 <h3>4. Les emojis pour les messages</h3>
 

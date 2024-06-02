@@ -1,5 +1,5 @@
 /* Index video_games */
-.video_game_price {
+.video-game-price {
     @apply absolute;
     @apply top-4;
     @apply p-2;
@@ -11,25 +11,25 @@
     @apply border-white;
 }
 
-.video_game_pict {
+.video-game-img {
     height: 11rem;
     @apply bg-center;
     @apply bg-cover;
 }
 
 /* Search video_games bar */
-.sticky_search_bar.off {
+.sticky-search-bar.off {
     @apply relative;
     @apply mt-8;
 }
 
-.sticky_search_bar.off div#search_bar {
+.sticky-search-bar.off div#search-bar {
     @apply absolute;
     @apply -top-10;
     @apply right-0;
 }
 
-.sticky_search_bar.on {
+.sticky-search-bar.on {
     @apply flex;
     @apply justify-between;
     @apply items-center;
@@ -47,16 +47,16 @@
     background-color: lightsalmon;
 }
 
-.sticky_search_bar div#search_bar {
+.sticky-search-bar div#search-bar {
     @apply bg-white;
 }
 
-input#search_text,
-input#search_text:focus {
+input#search-text,
+input#search-text:focus {
     @apply border-none;
     @apply outline-none;
 }
 
-#icon_filter.on {
+#icon-filter.on {
     @apply text-blue-500;
 }

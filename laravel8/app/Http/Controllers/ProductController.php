@@ -23,10 +23,10 @@ class ProductController extends Controller
 {
     private $nb_page_results = 15;
 
-    public function get_picture(int $product_id){
-        $photo = ProductPhoto::where('product_id', '=', $product_id)->first();
-        $returnHTML = asset(config('images.path_products').'/'.$product_id.'/'.$photo->label);
-        return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $product_id)]);
+    public function getPicture(int $productId){
+        $photo = ProductPhoto::where('product_id', '=', $productId)->first();
+        $returnHTML = asset(config('images.path_products').'/'.$productId.'/'.$photo->label);
+        return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $productId)]);
     }
 
     public function setProductWebsites(&$products){
@@ -129,25 +129,25 @@ class ProductController extends Controller
             }
 
             $buildRequest = Product::query();
-            $filter_pw = [];
-            $filter_tag = ['in' => [], 'out' => []];
+            $filterPw = [];
+            $filterTag = ['in' => [], 'out' => []];
             //Filtrés par sites
             foreach($request->websites as $product_website){
                 $r = explode('_', $product_website);
-                $filter_pw[] = intval($r[1]);
+                $filterPw[] = intval($r[1]);
             }
             $tags = Tag::all();
             //Filtrés par tags
             foreach($tags as $tag){
-                if(in_array('tag_'.$tag->id, $request->tags)) $filter_tag['in'][] = $tag->id;
-                else $filter_tag['out'][] = $tag->id;
+                if(in_array('tag_'.$tag->id, $request->tags)) $filterTag['in'][] = $tag->id;
+                else $filterTag['out'][] = $tag->id;
             }
             //Ajout des tags filtrés
-            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filter_tag['in'])) {
-                $filter_tag['in'][] = $request->tag_in;
+            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filterTag['in'])) {
+                $filterTag['in'][] = $request->tag_in;
             }
-            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filter_tag['out'])) {
-                $filter_tag['out'][] = $request->tag_out;
+            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filterTag['out'])) {
+                $filterTag['out'][] = $request->tag_out;
             }
 
             if($request->url === 'products/user'){
@@ -162,35 +162,35 @@ class ProductController extends Controller
                 })->orWheredoesntHave('users');
             }
 
-            //$products = DB::table('product_websites')->rightJoin('products', 'product_websites.product_id', '=', 'products.id')->get();
+            //$products = DB::table('productWebsites')->rightJoin('products', 'productWebsites.product_id', '=', 'products.id')->get();
             if($request->stock === 'product_missing'){
                 $buildRequest->wheredoesntHave('productWebsites')
                     ->orWhereHas('productWebsites', function($query){
                         $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
                 });
-            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all' and !strcmp(count($filter_pw), Website::count())){
-                $buildRequest->where(function($query) use ($filter_pw){
+            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all' and !strcmp(count($filterPw), Website::count())){
+                $buildRequest->where(function($query) use ($filterPw){
                     $query->wheredoesntHave('productWebsites')
-                    ->orWhereHas('productWebsites', function($query) use ($filter_pw){
-                        $query->whereIn('website_id', $filter_pw);
+                    ->orWhereHas('productWebsites', function($query) use ($filterPw){
+                        $query->whereIn('website_id', $filterPw);
                     });
                 });
             }else{
-                $buildRequest->whereHas('productWebsites', function($query) use ($filter_pw){
-                    $query->whereIn('website_id', $filter_pw);
+                $buildRequest->whereHas('productWebsites', function($query) use ($filterPw){
+                    $query->whereIn('website_id', $filterPw);
                 });
             }
             //Filter on tags
             if($request->no_tag){
                 $buildRequest->wheredoesntHave('tags');
                 
-            }elseif(count($filter_tag['in']) > 0){
-                $buildRequest->whereHas('tags', function($query) use ($filter_tag){
-                    $query->whereIn('tag_id', $filter_tag['in']);
+            }elseif(count($filterTag['in']) > 0){
+                $buildRequest->whereHas('tags', function($query) use ($filterTag){
+                    $query->whereIn('tag_id', $filterTag['in']);
                 });
                 if($request->exclusive_tags){
-                    $buildRequest->whereDoesntHave('tags', function($query) use ($filter_tag){
-                        $query->whereIn('tag_id', $filter_tag['out']);
+                    $buildRequest->whereDoesntHave('tags', function($query) use ($filterTag){
+                        $query->whereIn('tag_id', $filterTag['out']);
                     });
                 }
             }
@@ -252,13 +252,13 @@ class ProductController extends Controller
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
             $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
                         
-            $returnHTML = view('partials.products.'.$request->list.'_details')->with(['products' => $this->get_products($products)])->render();
+            $returnHTML = view('partials.products.'.$request->list.'_details')->with(['products' => $this->getProducts($products)])->render();
             return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
         }
         abort(404);
     }
 
-    function get_products($products){
+    function getProducts($products){
         $this->setProductWebsites($products);
         $this->setProductPurchases($products);
         return $products;
@@ -296,25 +296,25 @@ class ProductController extends Controller
         ]);
         $product->save();
         //Adding the photo
-        app('App\Http\Controllers\UploadController')->storePhoto($request, 1, $product);
+        (new UploadController)->storePhoto($request, 1, $product);
         $info = __('The product has been created.');
         //Adding the potential tags
-        $tag_ids = $request->tag_ids ?? [];
-        $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
+        $tagIds = $request->tag_ids ?? [];
+        $this->updateTags($tagIds, $product->tag_ids(), $product->id);
         
         //We link it to the current user
         $product->users()->attach($request->user_id);
         
         if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
             
-            $product_website = new ProductWebsite([
+            $productWebsite = new ProductWebsite([
                 'product_id' => $product->id,
                 'website_id' => $request->website_id,
                 'price' => str_replace(',', '.', $request->price),
                 'url' => $request->url,
                 'expiration_date' => $request->expiration_date,
             ]);
-            $product_website->save();
+            $productWebsite->save();
             
             $purchase = new Purchase([
                 'user_id' => $request->user_id,
@@ -337,10 +337,10 @@ class ProductController extends Controller
     public function show(Product $product){
         $product->createdBy();
         $product->following();
-        $product_websites = $product->productWebsites()->orderBy('price')->get();
+        $productWebsites = $product->productWebsites()->orderBy('price')->get();
         $purchases = $product->purchases()->orderBy('date')->get();
         $photos = $product->photos()->orderBy('ordered')->get();
-        $product_websites->nb_expired = 0;
+        $productWebsites->nb_expired = 0;
         //On ajoute des infos pour l'affichage
         foreach($purchases as $purchase){
             if(!is_null($purchase->selling) && $purchase->selling->isSold()){
@@ -352,19 +352,19 @@ class ProductController extends Controller
             }
         }
         
-        foreach($product_websites as $pw){
+        foreach($productWebsites as $pw){
             $pw->expired = !is_null($pw->expiration_date) && ($pw->expiration_date < Carbon::now());
             $pw->available_soon = !is_null($pw->available_date) && ($pw->available_date >= Carbon::now());
             $pw->lower_price = $pw->price < $product->real_cost;
             
             if(($pw->expired || !is_null($pw->expiration_date)) && !$pw->available_soon){ //Une date d'expiration est renseignée
                 $pw->date_show = __('Expire');
-                $past_date = $pw->expiration_date < Carbon::now();
-                if($past_date){
-                    $product_websites->nb_expired++;
+                $pastDate = $pw->expiration_date < Carbon::now();
+                if($pastDate){
+                    $productWebsites->nb_expired++;
                     $pw->date_show = __('Expired');
                 }
-                $pw->date_show .= ' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->expiration_date, $past_date);
+                $pw->date_show .= ' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->expiration_date, $pastDate);
             }elseif($pw->available_soon){
                 $pw->date_show = __('Available').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->available_date);
             }
@@ -375,7 +375,7 @@ class ProductController extends Controller
             $list->hasProduct = $list->products()->find($product->id);
             $list->product_nb = ($list->hasProduct)? ListingProduct::where('product_id', '=', $product->id)->first()->nb : 1;
         }
-        return view('products.show', compact('product', 'photos', 'product_websites', 'purchases', 'lists'));
+        return view('products.show', compact('product', 'photos', 'productWebsites', 'purchases', 'lists'));
     }
     
     public function showFromNotification(Product $product, DatabaseNotification $notification){
@@ -394,8 +394,8 @@ class ProductController extends Controller
                 'cost' => str_replace(',', '.', $request->cost)
             ]);
         }
-        $tag_ids = $request->tag_ids ?? [];
-        $this->update_tags($tag_ids, $product->tag_ids(), $product->id);
+        $tagIds = $request->tag_ids ?? [];
+        $this->updateTags($tagIds, $product->tag_ids(), $product->id);
         
         $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
         $product->update($request->all());
@@ -412,13 +412,13 @@ class ProductController extends Controller
         return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
     }
 
-    public function update_tags(Array $new_tags, Array $old_tags, int $product_id): void{
-        foreach($old_tags as $old_id){ //Delete old and no more selected tags
-            if(!in_array($old_id, $new_tags)) ProductTag::where('product_id', '=', $product_id)->where('tag_id', '=', $old_id)->delete();
+    public function updateTags(Array $newTags, Array $oldTags, int $productId): void{
+        foreach($oldTags as $oldId){ //Delete old and no more selected tags
+            if(!in_array($oldId, $newTags)) ProductTag::where('product_id', '=', $productId)->where('tag_id', '=', $oldId)->delete();
         }
-        foreach($new_tags as $new_id){ //Adding new tags not previously selected
-            if(!in_array($new_id, $old_tags)){
-                (new ProductTag(['product_id' => $product_id, 'tag_id' => $new_id]))->save();
+        foreach($newTags as $newId){ //Adding new tags not previously selected
+            if(!in_array($newId, $oldTags)){
+                (new ProductTag(['product_id' => $productId, 'tag_id' => $newId]))->save();
             }
         }
     }

@@ -29,7 +29,7 @@ $i: 3;
     cursor: pointer;
 }
 
-.btn_show_product:hover {
+.btn-show-product:hover {
     p {
         background-color: color-blue-400;
         transition: 0.1s;
@@ -46,15 +46,15 @@ $i: 3;
     }
 }
 
-.list_type{
-    div.label{
+.list-type {
+    div.label {
         background-color: burlywood;
         padding-left: 0.25rem;
         border-top-left-radius: 0.25rem;
         border-top-right-radius: 0.25rem;
     }
 
-    div.all_lists{
+    div.all-lists {
         border: 1px solid burlywood;
         padding: 0.25rem;
     }

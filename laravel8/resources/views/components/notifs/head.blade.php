@@ -4,6 +4,11 @@
         <span>{{ $slot }}</span>
     </div>
     @if($canClose)
-    <x-svg.close wStroke="3" class="no-propagate icon-xs cursor-pointer text-{{ $color }}-300 fill-current hover:text-white" title="Supprimer" onClick="deleteNotif('{{ $notif->id }}');"/>
+        <x-svg.close 
+            wStroke="3" 
+            class="no-propagate icon-xs cursor-pointer text-{{ $color }}-300 fill-current hover:text-white" 
+            title="Supprimer" 
+            onClick="deleteNotif('{{ $notif->id }}');"
+            />
     @endif
 </div>

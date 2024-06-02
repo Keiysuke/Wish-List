@@ -20,7 +20,7 @@
         <script src="{{ asset('js/custom.js') }}"></script>
     </head>
     @yield('css')
-    <body id="top_page" class="scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
+    <body id="top-page" class="scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
         @yield('absolute_content')
 
         @include('partials.header')
@@ -32,7 +32,7 @@
             </main>
         </div>
 
-        <x-btn-top-page/>
+        <x-btnTopPage/>
 
         @include('partials.footer')
     </body>
@@ -50,77 +50,77 @@
             else document.getElementById('btn-go-up').classList.remove('show');
         }
 
-        function open_search(on = true){
+        function openSearch(on = true){
             if(on){
-                document.getElementById('fast_search_text').classList.add('focus_search');
+                document.getElementById('fast-search-text').classList.add('focus-search');
             }else{
-                var is_focused = document.activeElement === document.getElementById('fast_search_text');
-                if(document.getElementById('fast_search_text').value === '' && !is_focused)
-                    document.getElementById('fast_search_text').classList.remove('focus_search');
+                var is_focused = document.activeElement === document.getElementById('fast-search-text');
+                if(document.getElementById('fast-search-text').value === '' && !is_focused)
+                    document.getElementById('fast-search-text').classList.remove('focus-search');
             }
         }
 
         function submenu(show, nav){
-            if(show) document.getElementById('submenu_'+nav).classList.toggle('open');
-            else document.getElementById('submenu_'+nav).classList.remove('open');
-            //document.getElementById('submenu_'+nav).classList.toggle('open')
+            if(show) document.getElementById('submenu-' + nav).classList.toggle('open');
+            else document.getElementById('submenu-' + nav).classList.remove('open');
+            //document.getElementById('submenu-'+nav).classList.toggle('open')
         }
         
         $('#icon-profil').click(function(event){
             event.stopPropagation();
-            close_submenu('bell');
+            closeSubmenu('bell');
 
-            if(document.getElementById('subicon_user').classList.contains('open')){
-                document.getElementById('subicon_user').classList.remove('open');
+            if(document.getElementById('subicon-user').classList.contains('open')){
+                document.getElementById('subicon-user').classList.remove('open');
                 document.getElementById('icon-profil').classList.remove('on');
-                document.getElementById('subicon_user').classList.add('close');
+                document.getElementById('subicon-user').classList.add('close');
             }else{
-                document.getElementById('subicon_user').classList.add('open');
+                document.getElementById('subicon-user').classList.add('open');
                 document.getElementById('icon-profil').classList.add('on');
-                document.getElementById('subicon_user').classList.remove('close');
+                document.getElementById('subicon-user').classList.remove('close');
             }
         });
         
         $('#icon-bell').click(function(event){
             event.stopPropagation();
-            close_submenu('user');
+            closeSubmenu('user');
 
-            if(document.getElementById('subicon_bell').classList.contains('open-v')){
-                document.getElementById('subicon_bell').classList.remove('open-v');
+            if(document.getElementById('subicon-bell').classList.contains('open-v')){
+                document.getElementById('subicon-bell').classList.remove('open-v');
                 document.getElementById('icon-bell').classList.remove('on');
-                document.getElementById('subicon_bell').classList.add('close-v');
+                document.getElementById('subicon-bell').classList.add('close-v');
             }else{
-                document.getElementById('subicon_bell').classList.add('open-v');
+                document.getElementById('subicon-bell').classList.add('open-v');
                 document.getElementById('icon-bell').classList.add('on');
                 document.getElementById('icon-bell').classList.remove('bounce-effect');
-                document.getElementById('subicon_bell').classList.remove('close-v');
+                document.getElementById('subicon-bell').classList.remove('close-v');
             }
         });
 
         $('html').click(function(e) {
-            close_submenu('user');
-            close_submenu('bell');
+            closeSubmenu('user');
+            closeSubmenu('bell');
         });
 
-        function close_submenu(menu){
+        function closeSubmenu(menu){
             if(menu === 'user'){
-                if(document.getElementById('subicon_user').classList.contains('open')){
-                    document.getElementById('subicon_user').classList.remove('open');
+                if(document.getElementById('subicon-user').classList.contains('open')){
+                    document.getElementById('subicon-user').classList.remove('open');
                     document.getElementById('icon-profil').classList.remove('on');
-                    document.getElementById('subicon_user').classList.add('close');
+                    document.getElementById('subicon-user').classList.add('close');
                 }
             }else if(menu === 'bell'){
-                if(document.getElementById('subicon_bell').classList.contains('open-v')){
-                    document.getElementById('subicon_bell').classList.remove('open-v');
+                if(document.getElementById('subicon-bell').classList.contains('open-v')){
+                    document.getElementById('subicon-bell').classList.remove('open-v');
                     document.getElementById('icon-bell').classList.remove('on');
                 }
             }
         }
 
         let SIDEBAR = {
-            'icon-star': 'left_sidebar_websites',
-            'icon-help': 'left_sidebar_help',
-            'icon-globe': 'left_sidebar_externals',
+            'icon-star': 'left-sidebar-websites',
+            'icon-help': 'left-sidebar-help',
+            'icon-globe': 'left-sidebar-externals',
         };
 
         for (var icon in SIDEBAR) { //Gestion de left sidebar
@@ -137,45 +137,45 @@
             });
         };
 
-        function ls_benefit_help(){
-            my_fetch('{{ route('simulate_benefit') }}', {method: 'post', csrf: true}, {
-                payed: document.getElementById('ls_benefit_payed').value,
-                sold: document.getElementById('ls_benefit_sold').value,
-                commission: document.getElementById('ls_benefit_commission').checked,
+        function lsBenefitHelp(){
+            myFetch('{{ route('simulateBenefit') }}', {method: 'post', csrf: true}, {
+                payed: document.getElementById('ls-benefit-payed').value,
+                sold: document.getElementById('ls-benefit-sold').value,
+                commission: document.getElementById('ls-benefit-commission').checked,
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {
-                document.getElementById('ls_benefit_results_benef').innerHTML = results.benefit + ' €';
+                document.getElementById('ls-benefit-results-benef').innerHTML = results.benefit + ' €';
                 if (results.benefit >= 0) {
-                    document.getElementById('ls_benefit_results_benef').classList.add('text-green-400');
-                    document.getElementById('ls_benefit_results_benef').classList.remove('text-red-400');
+                    document.getElementById('ls-benefit-results-benef').classList.add('text-green-400');
+                    document.getElementById('ls-benefit-results-benef').classList.remove('text-red-400');
                 } else {
-                    document.getElementById('ls_benefit_results_benef').classList.add('text-red-400');
-                    document.getElementById('ls_benefit_results_benef').classList.remove('text-green-400');
+                    document.getElementById('ls-benefit-results-benef').classList.add('text-red-400');
+                    document.getElementById('ls-benefit-results-benef').classList.remove('text-green-400');
                 }
             });
         }
 
         function deleteNotif(id) {
-            get_fetch('notifications/' + id + '/delete')
+            getFetch('notifications/' + id + '/delete')
             .then(results => {
                 my_notyf(results);
-                document.getElementById('notif_' + id).remove();
-                document.getElementById('nb_notifs').innerHTML -= 1;
-                if (document.getElementById('nb_notifs').innerHTML == 0) {
-                    close_submenu('bell');
+                document.getElementById('notif' + id).remove();
+                document.getElementById('nb-notif').innerHTML -= 1;
+                if (document.getElementById('nb-notif').innerHTML == 0) {
+                    closeSubmenu('bell');
                 }
             });
         }
 
                                                             /* Friend Requests */
-        Array.from(document.getElementsByClassName('friend_request')).forEach(el => { el.addEventListener('click', (el) => {
+        Array.from(document.getElementsByClassName('friend-request')).forEach(el => { el.addEventListener('click', (el) => {
                 const {userId, friendId, answer} = el.target.dataset;
                 friendRequest(userId, friendId, answer);
             }); 
         });
-        function friendRequest(user_id, friend_id, answer) {
-            get_fetch('user/' + user_id + '/request/friend/' + friend_id + '/' + answer)
+        function friendRequest(userId, friendId, answer) {
+            getFetch('user/' + userId + '/request/friend/' + friendId + '/' + answer)
             .then(results => {
                 my_notyf(results);
             });

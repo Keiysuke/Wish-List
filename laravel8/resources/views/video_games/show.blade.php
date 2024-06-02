@@ -10,7 +10,7 @@
 @endsection
 
 @section('breadcrumbs')
-{{ Breadcrumbs::render('show', 'video_game', $video_game) }}
+{{ Breadcrumbs::render('show', 'video_game', $videoGame) }}
 @endsection
 
 @section('js')
@@ -20,77 +20,77 @@
 <script>
     function onPicture(on){
         if(on){
-            document.getElementById('big_picture_zoom').classList.remove('hidden');
-            document.getElementById('big_picture').classList.add('opacity-30');
+            document.getElementById('big-img-zoom').classList.remove('hidden');
+            document.getElementById('big-img').classList.add('opacity-30');
         }else{
-            document.getElementById('big_picture_zoom').classList.add('hidden');
-            document.getElementById('big_picture').classList.remove('opacity-30');
+            document.getElementById('big-img-zoom').classList.add('hidden');
+            document.getElementById('big-img').classList.remove('opacity-30');
         }
     }
     
     function showPict(i){
         event.stopPropagation();
-        document.getElementById('pict_zoom_main').setAttribute('src', document.getElementById('pict_zoom_sec_'+i).getAttribute('src'));
+        document.getElementById('img-zoom-main').setAttribute('src', document.getElementById('img-zoom-sec'+i).getAttribute('src'));
     }
     
     function toggleZoomPictures(i = 1){
         event.stopPropagation();
-        document.getElementById('pict_zoom_main').setAttribute('src', document.getElementById('pict_zoom_sec_'+i).getAttribute('src'));
-        document.getElementById('content_picture_zoomed').classList.toggle('hidden');
+        document.getElementById('img-zoom-main').setAttribute('src', document.getElementById('img-zoom-sec'+i).getAttribute('src'));
+        document.getElementById('content-img-zoomed').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    document.getElementById('fast_lk_product').addEventListener('click', () => {
-        const vg_id = document.getElementById('video_game_id').value;
-        get_fetch('video_games/' + vg_id + '/vg_support/0/products/link')
+    document.getElementById('fast-link-product').addEventListener('click', () => {
+        const vgId = document.getElementById('video-game-id').value;
+        getFetch('video_games/' + vgId + '/vg_support/0/products/link')
         .then(res => {
             my_notyf(res);
             if (res.success) location.reload();
         });
     });
     
-    Array.from(document.getElementsByClassName('unlink_product')).forEach(el => { el.addEventListener('click', unlinkProduct); });
+    Array.from(document.getElementsByClassName('unlink-product')).forEach(el => { el.addEventListener('click', unlinkProduct); });
     function unlinkProduct(e){
-        let product_id = e.target.dataset.id
-        get_fetch('video_games/products/' + product_id + '/unlink')
+        let productId = e.target.dataset.id
+        getFetch('video_games/products/' + productId + '/unlink')
         .then(res => {
             if (res.success) {
                 my_notyf(res);
-                document.getElementById('product_link_'+product_id).remove()
+                document.getElementById('product-link-'+productId).remove()
             }
         });
     }
 </script>
 @endsection
 
-@php($support = $video_game->support())
+@php($support = $videoGame->support())
 @section('content')
-    <input type="hidden" id="video_game_id" value="{{ $video_game->id }}"/>
-    <x-notification type="success" msg="{{ session('info') }}"/>
+    <input type="hidden" id="video-game-id" value="{{ $videoGame->id }}"/>
+    <x-Notification type="success" msg="{{ session('info') }}"/>
 
     <div class="relative flex justify-center border-b-2 mb-4">
         @if(!is_null($product))
             <div class="absolute left-0 flex inline-flex gap-2">
-                <a title="Editer les photos" href="{{ route('product_photos.edit', $product->id) }}" class="title-icon inline-flex">
+                <a title="Editer les photos" href="{{ route('productPhotos.edit', $product->id) }}" class="title-icon inline-flex">
                     <x-svg.picture class="icon-xs"/>
                 </a>
                 <x-svg.folder class="bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
             </div>
         @endif
-        <h1>{{ $video_game->label }}</h1>
+        <h1>{{ $videoGame->label }}</h1>
         <div class="absolute right-0">
-            <a title="Editer le jeu vidéo" href="{{ route('video_games.edit', $video_game->id) }}" class="title-icon inline-flex">
+            <a title="Editer le jeu vidéo" href="{{ route('video_games.edit', $videoGame->id) }}" class="title-icon inline-flex">
                 <x-svg.edit class="icon-xs"/>
             </a>
-            <x-utils.yt.title_icon search="{{ $video_game->label }} Soundtrack"/>
-            <x-utils.psthc.title_icon search="{{ $video_game->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+            <x-Utils.Yt.TitleIcon search="{{ $videoGame->label }} Soundtrack"/>
+            <x-Utils.Psthc.TitleIcon search="{{ $videoGame->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
         </div>
     </div>
     <div class="flex justify-between h-full divide-x-2 pb-12">
         @if(!is_null($product))
             <div class="w-1/5">
-                <div id="product_picture" class="flex justify-center">
-                    <img id="big_picture" class="pr-1" src="{{ asset($dir.$photos->first()->label) }}"/>
+                <div id="product-picture" class="flex justify-center">
+                    <img id="big-img" class="pr-1" src="{{ asset($dir.$photos->first()->label) }}"/>
                 </div>
             </div>
         @endif
@@ -100,7 +100,7 @@
                     <div class="flex flex-col justify-around gap-4 w-9/12">
                         <div>
                             <p class="text-lg font-semibold">Description</p>
-                            <p class="text-sm ml-4 italic">{!! nl2br($video_game->description) !!}</p>
+                            <p class="text-sm ml-4 italic">{!! nl2br($videoGame->description) !!}</p>
                         </div>
                     </div>
                 </div>
@@ -111,13 +111,13 @@
                             <h2>Produits associées :</h2>
                         </div>
                         <div class="absolute right-0 -top-1">
-                            <span id="fast_lk_product" title="Association auto" class="title-icon refresh cursor-pointer inline-flex">
+                            <span id="fast-link-product" title="Association auto" class="title-icon refresh cursor-pointer inline-flex">
                                 <x-svg.refresh class="icon-xs"/>
                             </span>
-                            <a title="Rechercher un produit" href="{{ route('my_products', ['search' => $video_game->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
+                            <a title="Rechercher un produit" href="{{ route('myProducts', ['search' => $videoGame->label, 'fast_search' => true]) }}" class="title-icon inline-flex">
                                 <x-svg.big.circle_search class="icon-xs"/>
                             </a>
-                            <x-products.search_offer id="icon_find_offer" search="{{ $video_game->label }}"/>
+                            <x-products.search_offer id="icon-find-offer" search="{{ $videoGame->label }}"/>
                         </div>
                     </div>
                     @include('partials.video_games.list.products', $products)

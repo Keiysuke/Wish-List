@@ -1,9 +1,9 @@
 <x-app-layout>
-    <div id="dashboard_table">
+    <div id="dashboard-table">
         <x-admin.dashboard_menu menu="database" sub="websites"/>
         
         <div class="right">
-            <x-notification type="success" msg="{{ session('info') }}"/>
+            <x-Notification type="success" msg="{{ session('info') }}"/>
 
             <div class="relative flex justify-center border-b-2 mb-4">
                 <span class="absolute left-0 font-semibold">{{ isset($websites->links) ? $websites->links()->paginator->total() : count($websites) }} Resultats</span>
@@ -20,7 +20,7 @@
                     <div class="item_list flex flex-between gap-4 p-2 shadow rounded border-l-4 border-indigo-400 hover:shadow-lg transform hover:scale-105">
                         <div class="flex w-full items-center gap-8">
                             <span class="font-bold"># {{ $website->id }}</span>
-                            <x-utils.v_line />
+                            <x-Utils.VLine />
                             <span class="inline-flex gap-2">
                                 {{ $website->label }}
                                 @if($website->can_sell)
@@ -30,7 +30,7 @@
                                     <x-svg.big.vg_controller class="icon-xs text-red-500"/>
                                 @endif
                             </span>
-                            <x-utils.v_line />
+                            <x-Utils.VLine />
                             <span>{{ $website->url }}</span>
                         </div>
                         <div class="flex flex-around items-center gap-4 text-sm">

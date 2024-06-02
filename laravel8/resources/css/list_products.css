@@ -1,26 +1,26 @@
 /* Index products */
-div.no-offer div.product_pict {
+div.no-offer div.product-pict {
     filter: grayscale(90%);
 }
 
-.product_pict {
+.product-pict {
     height: 6rem;
     @apply bg-center;
     @apply bg-cover;
 }
 
-.icons_container {
+.icons-container {
     @apply flex;
     @apply inline-flex;
     @apply gap-1;
     @apply pr-1;
 }
 
-.icons_container a {
+.icons-container a {
     @apply px-1;
 }
 
-#my_lists div#left div.selected {
+#my-lists div#left div.selected {
     @apply bg-gray-200;
     @apply font-semibold;
     @apply p-2;

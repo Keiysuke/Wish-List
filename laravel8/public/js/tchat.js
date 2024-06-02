@@ -6,271 +6,345 @@
   document.addEventListener('click', function (event) {
     closeMsgMenu();
   });
+  /**
+   * Permet la suppression d'un ou tous les messages du tchat de la liste
+   * @param {int} msgId - Identifiant du message à supprimer si != 0
+  */
 
-  del_list_msg = function del_list_msg(id) {
-    event.stopPropagation();
-
+  delListMsg = function delListMsg(msgId) {
     if (confirm('Confirmer la suppression ?')) {
-      var list_id = document.getElementById('list_selected').value;
-      var url = id == 0 ? 'lists/' + list_id + '/delete/messages' : 'lists/messages/' + id + '/delete';
-      get_fetch(url).then(function (res) {
+      var listId = document.getElementById('list-selected').value;
+      var url = msgId == 0 ? 'lists/' + listId + '/delete/messages' : 'lists/messages/' + msgId + '/delete';
+      getFetch(url).then(function (res) {
         my_notyf(res);
 
         if (res.html) {
-          document.getElementById('messages_content').innerHTML = res.html;
+          document.getElementById('content-msg').innerHTML = res.html;
         } else {
-          document.getElementById('list_msg_' + id).parentNode.remove();
+          document.getElementById('list-msg-' + msgId).parentNode.remove();
         }
       });
     }
   };
+  /**
+   * Etend ou réduit la zone de tchat / du détail des listes
+   * @param {boolean} reset - True -> Réduit la zone de tchat
+  */
+
 
   extendListMsg = function extendListMsg() {
     var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
-    var msg_content = document.getElementById('messages_content');
-    var wrap_list_products = document.getElementById('wrap_list_products');
+    var msgContent = document.getElementById('content-msg');
+    var wrapListProducts = document.getElementById('wrap-list-products');
 
     if (reset) {
-      msg_content.classList.remove('extend');
-      wrap_list_products.classList.remove('with_msg');
+      msgContent.classList.remove('extend');
+      wrapListProducts.classList.remove('with-msg');
     } else {
-      msg_content.classList.toggle('extend');
-      wrap_list_products.classList.toggle('with_msg');
+      msgContent.classList.toggle('extend');
+      wrapListProducts.classList.toggle('with-msg');
     }
   };
+  /**
+   * Envoi le message écrit par l'utilisateur dans la liste en cours
+  */
 
-  send_msg = function send_msg() {
-    var msg = document.getElementById('list_msg_to_send');
+
+  sendMsg = function sendMsg() {
+    var msg = document.getElementById('list-msg-to-send');
 
     if (msg.value === '') {
       notyfJS('Votre message ne peut être vide', 'error');
       return;
     }
 
-    my_fetch('lists/messages/send', {
+    myFetch('lists/messages/send', {
       method: 'post',
       csrf: true
     }, {
-      listing_id: parseInt(document.getElementById('list_selected').value),
+      list_id: parseInt(document.getElementById('list-selected').value),
       message: msg.value,
-      answer_to_id: parseInt(document.getElementById('list_answer_id').value)
+      answer_to_id: parseInt(document.getElementById('list-answer-id').value)
     }).then(function (response) {
       if (response.ok) return response.json();
     }).then(function (res) {
-      document.getElementById('v_list_msg').insertAdjacentHTML('beforeend', res.message);
+      document.getElementById('v-list-msg').insertAdjacentHTML('beforeend', res.message);
       msg.value = '';
 
-      if (document.getElementById('list_answer_id').value > 0) {
+      if (document.getElementById('list-answer-id').value > 0) {
         cancelReply();
       } else {
-        scrollDown(document.getElementById('v_list_msg'));
+        scrollDown(document.getElementById('v-list-msg'));
       }
     });
   };
+  /**
+   * Configure les informations pour répondre à un message
+   * @param {int} msgId - Identifiant du message auquel on répond
+   * @param {int} name - Nom de l'utilisateur à qui l'on répond
+  */
 
-  replyTo = function replyTo(id, name) {
-    document.getElementById('list_answer_to').classList.remove('hidden');
-    document.getElementById('list_answer_to').firstElementChild.innerHTML = name;
-    document.getElementById('list_answer_id').value = id;
-    document.getElementById('list_msg_' + id).classList.add('answering');
+
+  replyTo = function replyTo(msgId, name) {
+    document.getElementById('list-answer-to').classList.remove('hidden');
+    document.getElementById('list-answer-to').firstElementChild.innerHTML = name;
+    document.getElementById('list-answer-id').value = msgId;
+    document.getElementById('list-msg-' + msgId).classList.add('answering');
   };
+  /**
+   * Annule la préparation à la réponse d'un message
+  */
+
 
   cancelReply = function cancelReply() {
-    var answer_id = document.getElementById('list_answer_id').value;
+    var answerId = document.getElementById('list-answer-id').value;
 
-    if (answer_id > 0) {
-      document.getElementById('list_answer_to').classList.add('hidden');
-      document.getElementById('list_answer_id').value = 0;
-      document.getElementById('list_msg_' + answer_id).classList.remove('answering');
+    if (answerId > 0) {
+      document.getElementById('list-answer-to').classList.add('hidden');
+      document.getElementById('list-answer-id').value = 0;
+      document.getElementById('list-msg-' + answerId).classList.remove('answering');
     }
   };
+  /**
+   * Dés/Epingle un message sur une liste
+   * @param {int} msgId - Identifiant du message à dés/épingler
+  */
 
-  pin_msg = function pin_msg(id) {
-    var pin_msg = document.getElementById('pin_msg_icon_' + id);
-    var action = pin_msg.classList.contains('is_pin') ? 'unpin' : 'pin';
-    get_fetch('lists/messages/' + id + '/' + action).then(function (res) {
-      pin_msg.classList[action == 'pin' ? 'add' : 'remove']('is_pin');
-      pin_msg.parentNode.classList[action == 'pin' ? 'add' : 'remove']('is_pin');
+
+  pin_msg = function pin_msg(msgId) {
+    var pinMsg = document.getElementById('pin-msg-icon-' + msgId);
+    var action = pinMsg.classList.contains('is-pin') ? 'unpin' : 'pin';
+    getFetch('lists/messages/' + msgId + '/' + action).then(function (res) {
+      pinMsg.classList[action == 'pin' ? 'add' : 'remove']('is-pin');
+      pinMsg.parentNode.classList[action == 'pin' ? 'add' : 'remove']('is-pin');
       my_notyf(res);
     });
   };
   /** 
-   * (Des)Active the emoji msg btn and open the Emoji Keyboard if it's closed
+   * Configure un message pour y ajouter des réactions
+   * @param {int} msgId - Identifiant du message
   */
 
 
-  toggleEmojiMsg = function toggleEmojiMsg(id) {
+  toggleEmojiMsg = function toggleEmojiMsg(msgId) {
     var active = true;
-    var list_msg_reaction = document.getElementById('list_msg_reaction');
-    var prev_id = list_msg_reaction.value;
+    var listMsgReaction = document.getElementById('list-msg-reaction');
+    var prevId = listMsgReaction.value;
 
-    if (prev_id == 0) {
+    if (prevId == 0) {
       //On clique pour la première fois
-      document.getElementById('react_msg_icon_' + id).classList.add('active');
+      document.getElementById('reactionIcon' + msgId).classList.add('active');
     } else {
-      if (prev_id != id) {
+      if (prevId != msgId) {
         //On désactive le précédent et active celui cliqué
-        document.getElementById('react_msg_icon_' + prev_id).classList.remove('active');
-        document.getElementById('react_msg_icon_' + id).classList.add('active'); //Il s'agit du précédent message donc on vérifie l'état du bouton
+        document.getElementById('reactionIcon' + prevId).classList.remove('active');
+        document.getElementById('reactionIcon' + msgId).classList.add('active');
       } else {
-        if (document.getElementById('react_msg_icon_' + id).classList.contains('active')) {
-          document.getElementById('react_msg_icon_' + id).classList.remove('active');
+        //Il s'agit du précédent message donc on vérifie l'état du bouton
+        if (document.getElementById('reactionIcon' + msgId).classList.contains('active')) {
+          document.getElementById('reactionIcon' + msgId).classList.remove('active');
           active = false;
         } else {
-          document.getElementById('react_msg_icon_' + id).classList.add('active');
+          document.getElementById('reactionIcon' + msgId).classList.add('active');
         }
       }
     }
 
-    list_msg_reaction.value = id;
+    listMsgReaction.value = msgId;
     toggleEmojiKeyboard(active);
   };
   /** 
-   * Open or close the Emojis Keyboard
+   * Ouvre/ferme le clavier des emojis
+   * @param {boolean|int} - Si -1 -> Ouvre le clavier sans se soucier de son précédent état
   */
 
 
   toggleEmojiKeyboard = function toggleEmojiKeyboard(openIt) {
-    var keyboard = document.getElementById('list_msg_emoji_sections');
+    var keyboard = document.getElementById('list-msg-emoji-sections');
 
     if (openIt == -1) {
       keyboard.classList.toggle('show');
-      Array.from(document.getElementsByClassName('btn_emoji_kbd')).forEach(function (e) {
+      Array.from(document.getElementsByClassName('btn-emoji-kbd')).forEach(function (e) {
         e.classList.toggle('hidden');
       });
       return;
     }
 
-    document.getElementById('emoji_off').classList.add('hidden');
-    document.getElementById('emoji_on').classList.remove('hidden');
+    document.getElementById('emoji-off').classList.add('hidden');
+    document.getElementById('emoji-on').classList.remove('hidden');
     keyboard.classList.add('show');
 
     if (!openIt) {
-      document.getElementById('emoji_off').classList.remove('hidden');
-      document.getElementById('emoji_on').classList.add('hidden');
+      document.getElementById('emoji-off').classList.remove('hidden');
+      document.getElementById('emoji-on').classList.add('hidden');
       keyboard.classList.remove('show');
     }
   };
   /** 
-   * Cancel every msg menu's actions that can be done in time
+   * Annule toutes les actions possibles du menu des messages
   */
 
 
   resetMsgActions = function resetMsgActions() {
     cancelReply();
   };
-
-  closeMsgMenu = function closeMsgMenu() {
-    document.getElementById('list_msg_menu').classList.add('hidden');
-  };
   /** 
-   * Open the Msg menu's actions
+   * Ferme le menu des actions d'un message
   */
 
 
-  openMsgMenu = function openMsgMenu(e, msg_id, yours, pin, answer_to) {
+  closeMsgMenu = function closeMsgMenu() {
+    document.getElementById('list-msg-menu').classList.add('hidden');
+  };
+  /**
+   * Ouvre le menu des actions d'un message
+   * @param {event} e - évènément cliqué
+   * @param {int} msgId - Identifiant du message
+   * @param {string} yours - Message de l'utilisateur ou non
+   * @param {boolean} pin - Indique si le message était épinglé ou non
+   * @param {string} answerTo - Nom de l'utilisateur qui a envoyé ce message
+  */
+
+
+  openMsgMenu = function openMsgMenu(e, msgId, yours, pin, answerTo) {
     resetMsgActions();
     var x = e.clientX;
     var y = e.clientY + window.scrollY; //Prise en compte de la scrollbar
 
-    my_fetch('lists/messages/menu/show', {
+    myFetch('lists/messages/menu/show', {
       method: 'post',
       csrf: true
     }, {
-      msg_id: parseInt(msg_id),
+      msg_id: parseInt(msgId),
       yours: yours == '' ? false : yours,
-      pin: pin,
-      answer_to: answer_to
+      pin: pin == '' ? false : pin,
+      answer_to: answerTo
     }).then(function (response) {
       if (response.ok) return response.json();
     }).then(function (res) {
-      document.getElementById('list_msg_menu').innerHTML = res.html;
-      document.getElementById('list_msg_menu').classList.remove('hidden');
-      document.getElementById('list_msg_menu').style.left = x + 'px';
-      document.getElementById('list_msg_menu').style.top = y + 'px';
+      document.getElementById('list-msg-menu').innerHTML = res.html;
+      document.getElementById('list-msg-menu').classList.remove('hidden');
+      document.getElementById('list-msg-menu').style.left = x + 'px';
+      document.getElementById('list-msg-menu').style.top = y + 'px';
     });
   };
+  /** 
+   * Ajoute/Enlève une réaction au message préselectionné
+   * @param {event} event - évènément cliqué
+  */
 
-  reactionClicked = function reactionClicked(e) {
-    var datas = e.target.dataset;
-    var msg_id = datas.messageId == undefined ? document.getElementById('list_msg_reaction').value : datas.messageId;
-    var emoji_id = datas.emojiId == undefined ? datas.id : datas.emojiId;
-    var e_id = document.getElementById('msg_' + msg_id + '_reaction_' + emoji_id);
-    get_fetch('lists/messages/' + msg_id + '/emojis/' + emoji_id).then(function (res) {
+
+  reactionClicked = function reactionClicked(event) {
+    var datas = event.target.dataset;
+    var msgId = datas.messageId == undefined ? document.getElementById('list-msg-reaction').value : datas.messageId;
+    var emojiId = datas.emojiId == undefined ? datas.id : datas.emojiId;
+    var reactionElement = document.getElementById('msg-' + msgId + '-reaction-' + emojiId);
+    getFetch('lists/messages/' + msgId + '/emojis/' + emojiId).then(function (res) {
       if (!res.created) {
-        removeReaction(res.nb_users, e_id, msg_id);
+        removeReaction(res.nb_users, reactionElement, msgId);
       } else {
-        if (e_id == undefined) {
+        if (reactionElement == undefined) {
           //On rajoute l'emoji aux autres
-          document.getElementById('list_msg_' + msg_id).querySelector('div.vline_reactions').innerHTML = res.reactionsHTML;
+          document.getElementById('list-msg-' + msgId).querySelector('div.v-line-reactions').innerHTML = res.reactionsHTML;
           requestAnimationFrame(function () {
-            e_id = document.getElementById('msg_' + msg_id + '_reaction_' + emoji_id);
-            addReaction(e_id, msg_id, true);
+            reactionElement = document.getElementById('msg-' + msgId + '-reaction-' + emojiId);
+            addReaction(reactionElement, msgId, true);
           });
         } else {
-          addReaction(e_id, msg_id);
+          addReaction(reactionElement, msgId);
         }
       }
     });
   };
+  /** 
+   * Ajoute une réaction à un message
+   * @param {int} emojiId - Identifiant de l'emoji
+   * @param {int} msgId - Identifiant du message
+   * @param {boolean} justRefreshed - Indique si les réactions viennent d'être rafrachies ou non
+  */
 
-  addReaction = function addReaction(e_id, msg_id) {
+
+  addReaction = function addReaction(emojiId, msgId) {
     var justRefreshed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-    e_id.classList.add('growUp');
+    emojiId.classList.add('grow-up');
     setTimeout(function () {
-      e_id.classList.remove('growUp');
+      emojiId.classList.remove('grow-up');
     }, 1000);
-    var span_user = document.getElementById('list_msg_' + msg_id).querySelector('div.vline_reactions span:last-child');
+    var span_user = document.getElementById('list-msg-' + msgId).querySelector('div.v-line-reactions span:last-child');
     var nb_users = justRefreshed ? span_user.innerHTML : parseInt(span_user.innerHTML) + 1;
     span_user.innerHTML = nb_users;
     maj_reactions();
   };
+  /** 
+   * Retire une réaction à un message (avec effet si c'était le dernier utilisateur sur cette réaction)
+   * @param {int} emojiId - Identifiant de l'emoji
+   * @param {int} msgId - Identifiant du message
+   * @param {string} nbUsers - Nombre d'utilisateurs restants pour cette réaction
+  */
 
-  removeReaction = function removeReaction(nb_users, e_id, msg_id) {
-    if (nb_users == '') {
-      e_id.classList.add('growDown');
+
+  removeReaction = function removeReaction(nbUsers, emojiId, msgId) {
+    if (nbUsers == '') {
+      emojiId.classList.add('grow-down');
       setTimeout(function () {
-        e_id.classList.remove('growDown');
-        e_id.remove();
+        emojiId.classList.remove('grow-down');
+        emojiId.remove();
       }, 1000);
     }
 
-    var span_user = document.getElementById('list_msg_' + msg_id).querySelector('div.vline_reactions span:last-child');
+    var span_user = document.getElementById('list-msg-' + msgId).querySelector('div.v-line-reactions span:last-child');
     span_user.innerHTML = span_user.innerHTML > 1 ? span_user.innerHTML - 1 : '';
   };
+  /** 
+   * Charge (1 fois) ou affiche la vue de la section des emojis demandée
+   * @param {event} event - évènement
+   * @param {int} sectionId - Identifiant de la section
+  */
 
-  showEmojiSection = function showEmojiSection(el, id) {
-    el = 'sectionId' in el.target.dataset ? el.target.parentNode : el.target; //On charge la vue de la section des emojis qui est demandée (1 seule fois chacune)
 
-    if (el.dataset.loaded === true) return;
-    get_fetch('tchat/sections/' + id + '/show').then(function (res) {
-      el.dataset.loaded = true;
-      document.getElementById('emoji_kbd_section_' + id).innerHTML = res.html;
+  showEmojiSection = function showEmojiSection(event, sectionId) {
+    event = 'sectionId' in event.target.dataset ? event.target.parentNode : event.target;
+    if (event.dataset.loaded == 'true') return;
+    getFetch('tchat/sections/' + sectionId + '/show').then(function (res) {
+      event.dataset.loaded = true;
+      document.getElementById('emoji-kbd-section' + sectionId).innerHTML = res.html;
+      Array.from(document.getElementById('emoji-kbd-section' + sectionId).getElementsByClassName('msg-reaction')).forEach(function (e) {
+        e.addEventListener('click', reactionClicked);
+      });
     });
   };
+  /** 
+   * Gère le changement des sections d'emojis
+   * @param {event} event - évènement cliqué
+  */
 
-  EmojiSectionChanged = function EmojiSectionChanged(e) {
-    var cur_section = document.getElementById('list_msg_emoji_section_id');
+
+  EmojiSectionChanged = function EmojiSectionChanged(event) {
+    var cur_section = document.getElementById('list-msg-emoji-section-id');
     var prev_id = cur_section.value;
-    var datas = e.target.dataset;
+    var datas = event.target.dataset;
     var id = 'sectionId' in datas ? datas.sectionId : datas.id;
     if (prev_id == id) return;
-    showEmojiSection(e, id); //On affiche la nouvelle section et cache la précédente
+    showEmojiSection(event, id); //On affiche la nouvelle section et cache la précédente
 
     if (prev_id > 0) {
-      document.getElementById('emoji_kbd_section_' + prev_id).classList.remove('show');
+      document.getElementById('emoji-kbd-section' + prev_id).classList.remove('show');
     }
 
     cur_section.value = id;
-    document.getElementById('emoji_kbd_section_' + id).classList.add('show');
+    document.getElementById('emoji-kbd-section' + id).classList.add('show');
   };
+  /** 
+   * Met a jour les réactions des messages visibles
+  */
+
 
   maj_reactions = function maj_reactions() {
     // addEventListeners(e, ['click', 'mouseover', 'mouseout'], (e) => {
-    Array.from(document.getElementsByClassName('msg_reaction')).forEach(function (e) {
+    Array.from(document.getElementsByClassName('msg-reaction')).forEach(function (e) {
       e.addEventListener('click', reactionClicked);
     });
-    var sections = document.getElementsByClassName('emoji_section_title');
+    var sections = document.getElementsByClassName('emoji-section-title');
     Array.from(sections).forEach(function (e) {
       e.addEventListener('click', EmojiSectionChanged); //On simule le clic sur chaque section à cet endroit car la page aura normalement été complètement chargée
 
@@ -279,19 +353,28 @@
 
     sections[0].click();
   };
+  /** 
+   * Affiche le message
+  */
 
-  show_msg = function show_msg() {
-    var list_id = document.getElementById('list_selected').value;
-    var show_pin = !document.getElementById('show_pin').classList.contains('active');
-    var type = show_pin ? 'pinned' : 'all';
-    get_fetch('lists/' + list_id + '/messages/show/' + type).then(function (res) {
-      document.getElementById('v_list_msg').innerHTML = res.html;
-      document.getElementById('show_pin').classList.toggle('active');
+
+  showMsg = function showMsg() {
+    var listId = document.getElementById('list-selected').value;
+    var showPin = !document.getElementById('show-pin').classList.contains('active');
+    var type = showPin ? 'pinned' : 'all';
+    getFetch('lists/' + listId + '/messages/show/' + type).then(function (res) {
+      document.getElementById('v-list-msg').innerHTML = res.html;
+      document.getElementById('show-pin').classList.toggle('active');
     });
   };
+  /** 
+   * Joue un effet sur un message
+   * @param {int} msgId - Identifiant du message flashé
+  */
 
-  flashOriginalMsg = function flashOriginalMsg(id) {
-    var msg = document.getElementById('list_msg_' + id);
+
+  flashOriginalMsg = function flashOriginalMsg(msgId) {
+    var msg = document.getElementById('list-msg-' + msgId);
     msg.classList.add('flash');
     setTimeout(function () {
       msg.classList.remove('flash');

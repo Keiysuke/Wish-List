@@ -13,15 +13,15 @@ class ReactionService
         $this->reactions = [];
         $this->message = $message;
         foreach($message->reactions as $reaction) {
-            $emoji_id = $reaction->emoji->id;
-            $user_datas = $reaction->user;
-            if (array_key_exists($emoji_id, $this->reactions)) {
-                $this->reactions[$emoji_id]['users'][] = $user_datas;
+            $emojiId = $reaction->emoji->id;
+            $userDatas = $reaction->user;
+            if (array_key_exists($emojiId, $this->reactions)) {
+                $this->reactions[$emojiId]['users'][] = $userDatas;
             } else {
-                $this->reactions[$emoji_id] = [
+                $this->reactions[$emojiId] = [
                     'message_id' => $message->id,
                     'emoji' => $reaction->emoji,
-                    'users' => [$user_datas],
+                    'users' => [$userDatas],
                 ];
             }
         }
@@ -36,7 +36,7 @@ class ReactionService
     }
 
     public function show() {
-        $returnHTML = view('components.messages.reactions')->with(['reactions' => $this->reactions])->render();
+        $returnHTML = view('components.Tchat.ReactionsLine')->with(['reactions' => $this->reactions])->render();
         return response()->json(['success' => true, 'html' => $returnHTML]);
     }
 }

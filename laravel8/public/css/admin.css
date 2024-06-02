@@ -1,4 +1,4 @@
-#dashboard_table {
+#dashboard-table {
   display: flex;
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
@@ -7,7 +7,7 @@
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-#dashboard_table div.left {
+#dashboard-table div.left {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,56 +18,56 @@
   width: 16%;
 }
 
-#dashboard_table div.left a, #dashboard_table div.left div a {
+#dashboard-table div.left a, #dashboard-table div.left div a {
   display: flex;
 }
 
-#dashboard_table div.left a, #dashboard_table div.left div a {
+#dashboard-table div.left a, #dashboard-table div.left div a {
   flex-direction: column;
 }
 
-#dashboard_table div.left a, #dashboard_table div.left div a {
+#dashboard-table div.left a, #dashboard-table div.left div a {
   align-items: center;
 }
 
-#dashboard_table div.left a, #dashboard_table div.left div a {
+#dashboard-table div.left a, #dashboard-table div.left div a {
   width: 100%;
 }
 
-#dashboard_table div.left a, #dashboard_table div.left div a {
+#dashboard-table div.left a, #dashboard-table div.left div a {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
-#dashboard_table div.left a.sub, #dashboard_table div.left div a.sub {
+#dashboard-table div.left a.sub, #dashboard-table div.left div a.sub {
   --tw-bg-opacity: 1;
   background-color: rgba(24, 24, 27, var(--tw-bg-opacity));
 }
 
-#dashboard_table div.left a.sub, #dashboard_table div.left div a.sub {
+#dashboard-table div.left a.sub, #dashboard-table div.left div a.sub {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
 
-#dashboard_table div.left a.active, #dashboard_table div.left div a.active {
+#dashboard-table div.left a.active, #dashboard-table div.left div a.active {
   cursor: default;
 }
 
-#dashboard_table div.left a.active, #dashboard_table div.left div a.active {
+#dashboard-table div.left a.active, #dashboard-table div.left div a.active {
   --tw-border-opacity: 1;
   border-color: rgba(129, 140, 248, var(--tw-border-opacity));
 }
 
-#dashboard_table div.left a.active, #dashboard_table div.left div a.active {
+#dashboard-table div.left a.active, #dashboard-table div.left div a.active {
   border-left-width: 4px;
 }
 
-#dashboard_table div.left a.active, #dashboard_table div.left div a.active {
+#dashboard-table div.left a.active, #dashboard-table div.left div a.active {
   --tw-text-opacity: 1;
   color: rgba(165, 180, 252, var(--tw-text-opacity));
 }
 
-#dashboard_table div.left a.sub.active {
+#dashboard-table div.left a.sub.active {
   --tw-border-opacity: 1;
   border-color: rgba(165, 180, 252, var(--tw-border-opacity));
   border-left-width: 4px;
@@ -77,31 +77,31 @@
   background-color: rgba(228, 228, 231, var(--tw-bg-opacity));
 }
 
-#dashboard_table div.left a:not(.active):hover, #dashboard_table div.left div a:not(.active):hover {
+#dashboard-table div.left a:not(.active):hover, #dashboard-table div.left div a:not(.active):hover {
   --tw-bg-opacity: 1;
   background-color: rgba(63, 63, 70, var(--tw-bg-opacity));
 }
 
-#dashboard_table div.left a:not(.active):hover, #dashboard_table div.left div a:not(.active):hover {
+#dashboard-table div.left a:not(.active):hover, #dashboard-table div.left div a:not(.active):hover {
   --tw-text-opacity: 1;
   color: rgba(212, 212, 216, var(--tw-text-opacity));
 }
 
-#dashboard_table div.right {
+#dashboard-table div.right {
   width: 100%;
   margin-top: 2rem;
   margin: 1rem;
 }
 
 @media (min-width: 640px) {
-  #dashboard_table div.right {
+  #dashboard-table div.right {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
 }
 
 @media (min-width: 1024px) {
-  #dashboard_table div.right {
+  #dashboard-table div.right {
     padding-left: 2rem;
     padding-right: 2rem;
   }

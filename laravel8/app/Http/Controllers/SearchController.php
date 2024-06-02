@@ -12,23 +12,26 @@ class SearchController extends Controller
 {
     const NB_RESULTS = 8;
 
-    public function search_products(Request $request){
+    /**
+     * Search and return products that are not already in the list
+     */
+    public function findOtherProducts(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
                 'list_id' => 'bail|nullable|int',
                 'search' => 'bail|nullable|string'
                 ]);
 
-            $except_ids = [];
+            $exceptIds = [];
             if(!is_null($request->list_id)){ //We do not show the products that already are in the list
                 $list = Listing::find($request->list_id);
-                $products = app('App\Http\Controllers\ProductController')->get_products($list->products()->paginate());
-                foreach($products as $product) $except_ids[] = $product->id;
+                $products = (new ProductController)->getProducts($list->products()->paginate());
+                foreach($products as $product) $exceptIds[] = $product->id;
             }
 
             //We keep only the products with matching labels
             $products = Product::select('label')
-                ->whereNotIn('id', $except_ids)
+                ->whereNotIn('id', $exceptIds)
                 ->where('label', 'LIKE', "%{$request->search}%")
                 ->orderBy('label')->take($this::NB_RESULTS)->get();
 

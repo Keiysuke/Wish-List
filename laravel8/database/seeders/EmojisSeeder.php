@@ -607,5 +607,27 @@ class EmojisSeeder extends Seeder
         \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '👛']);
         \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🏡']);
         \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '📅']);
+
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🧿']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎯']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎮']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🧸']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🪁']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🃏']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎲']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🧩']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🔮']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎱']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎰']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🪀']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🎴']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '🀄']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '♟️']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '♣️']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '♠️']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '♥️']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '♦️']);
+        \App\Models\Emoji::create(['emoji_section_id' => '14', 'label' => '⚜️']);
+
     }
 }

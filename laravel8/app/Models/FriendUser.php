@@ -20,9 +20,9 @@ class FriendUser extends Model{
     public function getRequests(){
         $user = User::find(auth()->user()->id);
 
-        $friend_request = $user->notifications()
+        $friendRequest = $user->notifications()
             ->where('type', '=', 'App\Notifications\FriendRequest')
             ->whereJsonContains('data->friend_id', $user->id);
-        return $friend_request;
+        return $friendRequest;
     }
 }

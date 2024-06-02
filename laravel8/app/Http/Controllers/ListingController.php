@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
-    public function toggle_product(Request $request){
+    public function toggleProduct(Request $request){
         if ($request->ajax()) {
             $this->validate($request, [
                 'list_id' => 'bail|required|int',
@@ -40,12 +40,12 @@ class ListingController extends Controller
         }
     }
 
-    public function show_products(int $id){
-        $list = Listing::find($id);
+    public function showProducts(int $listId){
+        $list = Listing::find($listId);
         $products = $list->getProducts();
         $friends = $list->getFriendsNotShared();
         
-        $messagesHTML = (new MessageService())->show($id);
+        $messagesHTML = (new MessageService())->show($listId);
         
         $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends'))->render();
         return response()->json([
@@ -53,7 +53,7 @@ class ListingController extends Controller
             'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
             'html' => $returnHTML,
             'shared_list' => $list->isShared(),
-            'messages_html' => $messagesHTML
+            'htmlMsg' => $messagesHTML
         ]);
     }
 
@@ -81,53 +81,53 @@ class ListingController extends Controller
         return redirect()->route('lists.index')->with('info', __('The list has been created.'));
     }
 
-    public function get_user_lists(int $user_id){
+    public function getUserLists(int $userId){
         $messagesHTML = null;
-        $first_list = null;
-        if ($user_id === 0) {//Listes des amis
+        $firstList = null;
+        if ($userId === 0) {//Listes des amis
             $lists = Listing::select('listings.*')
                 ->join('listing_users', 'listings.id', '=', 'listing_users.listing_id')
                 ->where('listing_users.user_id', '=', auth()->user()->id)
                 ->join('users', 'listings.user_id', '=', 'users.id')
                 ->orderBy('users.name')
                 ->get();
-            $users_name = [];
-            $listing_users = [];
+            $usersName = [];
+            $listingUsers = [];
             foreach ($lists as $list) {
-                if (is_null($first_list)) $first_list = $list;
-                if (array_key_exists($list->user_id, $listing_users)) {
-                    $listing_users[$list->user_id][] = $list;
+                if (is_null($firstList)) $firstList = $list;
+                if (array_key_exists($list->user_id, $listingUsers)) {
+                    $listingUsers[$list->user_id][] = $list;
                 } else {
-                    $listing_users[$list->user_id] = [$list];
-                    $users_name[$list->user_id] = $list->user->name;
+                    $listingUsers[$list->user_id] = [$list];
+                    $usersName[$list->user_id] = $list->user->name;
                 }
             }
             
-            $messagesHTML = (new MessageService())->show($first_list->id);
+            $messagesHTML = (new MessageService())->show($firstList->id);
 
-            $returnHTML = view('partials.lists.others')->with(compact('listing_users', 'users_name'))->render();
+            $returnHTML = view('partials.lists.others')->with(compact('listingUsers', 'usersName'))->render();
 
         } else {
-            $types_label = [];
-            $listing_types = [];
-            $lists = Listing::where('user_id', '=', $user_id)->orderBy('listing_type_id')->orderBy('label')->get();
+            $typesLabel = [];
+            $listingTypes = [];
+            $lists = Listing::where('user_id', '=', $userId)->orderBy('listing_type_id')->orderBy('label')->get();
             foreach ($lists as $list) {
-                if (is_null($first_list)) $first_list = $list;
-                if (array_key_exists($list->listing_type_id, $listing_types)) {
-                    $listing_types[$list->listing_type_id][] = $list;
+                if (is_null($firstList)) $firstList = $list;
+                if (array_key_exists($list->listing_type_id, $listingTypes)) {
+                    $listingTypes[$list->listing_type_id][] = $list;
                 } else {
-                    $listing_types[$list->listing_type_id] = [$list];
-                    $types_label[$list->listing_type_id] = $list->listing_type->label;
+                    $listingTypes[$list->listing_type_id] = [$list];
+                    $typesLabel[$list->listing_type_id] = $list->listing_type->label;
                 }
             }
-            $returnHTML = view('partials.lists.mine')->with(compact('listing_types', 'types_label'))->render();
+            $returnHTML = view('partials.lists.mine')->with(compact('listingTypes', 'typesLabel'))->render();
         }
         return response()->json([
             'success' => true, 
             'html' => $returnHTML,
-            'first_list_id' => $first_list->id,
-            'shared_list' => $first_list->isShared(),
-            'messages_html' => $messagesHTML
+            'first_list_id' => $firstList->id,
+            'shared_list' => $firstList->isShared(),
+            'htmlMsg' => $messagesHTML
         ]);
     }
 
@@ -146,8 +146,8 @@ class ListingController extends Controller
         return redirect()->route('lists.index')->with('info', __('The list has been edited.'));
     }
 
-    public function destroy(int $id){
-        $list = Listing::find($id);
+    public function destroy(int $listId){
+        $list = Listing::find($listId);
         foreach($list->products as $product){ //Suppression des associations aux produits de la liste
             ListingProduct::where('listing_id', '=', $list->id)->where('product_id', '=', $product->id)->delete();
         }
@@ -155,27 +155,27 @@ class ListingController extends Controller
             ListingUser::where('listing_id', '=', $list->id)->where('user_id', '=', $user->id)->delete();
         }
         $list->delete();
-        $first_list = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
-        $list_id = is_null($first_list)? -1 : $first_list->id;
+        $firstList = Listing::where('user_id', '=', auth()->user()->id)->orderBy('label')->first();
+        $firstListId = is_null($firstList)? -1 : $firstList->id;
         return response()->json([
             'success' => true, 
-            'deleted_id' => $id, 
-            'list_id' => $list_id,
+            'deletedId' => $listId, 
+            'listId' => $firstListId,
             'notyf' => Notyf::success('The list has been deleted')
         ]);
     }
 
-    public function download(int $id){
-        $products = Listing::find($id)->getProducts();
+    public function download(int $listId){
+        $products = Listing::find($listId)->getProducts();
         return response()->json([
             'success' => true, 
             'blob' => view('exports.list', compact('products'))->render(), 
-            'filename' => Listing::getFileName($id)
+            'filename' => Listing::getFileName($listId)
         ]);
     }
 
-    public function show_share(int $id){
-        $list = Listing::find($id);
+    public function showShare(int $listId){
+        $list = Listing::find($listId);
         $friends = $list->getFriendsNotShared();
         
         $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
@@ -188,25 +188,25 @@ class ListingController extends Controller
     public function share(Request $request){
         if ($request->ajax()) {
             $this->validate($request, ['list_id' => 'bail|required|int']);
-            $list_id = $request->list_id;
+            $listId = $request->list_id;
             $user = auth()->user();
 
             $notifs = 0;
             foreach ($request->friends as $friend_id) {
                 $friend = User::find($friend_id);
                 (new ListingUser([
-                    'listing_id' => $list_id,
+                    'listing_id' => $listId,
                     'user_id' => $friend_id,
                     ]))->save();
                 //Check if the friend has already been notified or not
                 $exist = $friend->notifications()
                     ->where('type', '=', 'App\Notifications\ShareList')
-                    ->whereJsonContains('data->list_id', $list_id)
+                    ->whereJsonContains('data->list_id', $listId)
                     ->whereJsonContains('data->user_id', $user->id)
                     ->first();
                 if (!$exist) {
                     $notifs++;
-                    $friend->notify(new ShareList($user, Listing::find($list_id)));
+                    $friend->notify(new ShareList($user, Listing::find($listId)));
                 }
             }
 
@@ -224,15 +224,15 @@ class ListingController extends Controller
         }
     }
 
-    function leave(int $list_id) {
-        $list = Listing::find($list_id);
-        $auth_user = User::find(auth()->user()->id);
-        ListingUser::where('listing_id', '=', $list_id)
-            ->where('user_id', '=', $auth_user->id)
+    function leave(int $listId) {
+        $list = Listing::find($listId);
+        $authUser = User::find(auth()->user()->id);
+        ListingUser::where('listing_id', '=', $listId)
+            ->where('user_id', '=', $authUser->id)
             ->delete();
         
         //On informe le propriétaire
-        (User::find($list->user_id))->notify(new ListLeft($auth_user, Listing::find($list_id), false));
+        (User::find($list->user_id))->notify(new ListLeft($authUser, Listing::find($listId), false));
         return response()->json([
             'success' => true,
         ]);

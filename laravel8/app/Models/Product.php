@@ -132,8 +132,8 @@ class Product extends Model
     }
 
     public function get_template(): object{
-        $video_game = ProductAsVideoGame::where('product_id', '=', $this->id)->first();
-        if(!is_null($video_game)) return (object)['type' => 'video_game', 'id' => $video_game->id];
+        $videoGame = ProductAsVideoGame::where('product_id', '=', $this->id)->first();
+        if(!is_null($videoGame)) return (object)['type' => 'video_game', 'id' => $videoGame->id];
 
         $support = VgSupport::where('product_id', '=', $this->id)->first();
         if(!is_null($support)) return (object)['type' => 'vg_support', 'id' => $support->id];

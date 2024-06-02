@@ -7,7 +7,7 @@
         <script type="text/javascript" src="{{ URL::asset('js/my_notyf.js') }}"></script>
     @endsection
 
-    <div id="dashboard_table">
+    <div id="dashboard-table">
         <x-admin.dashboard_menu menu="design"/>
         
         <div class="right pb-20">

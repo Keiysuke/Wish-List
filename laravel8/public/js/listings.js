@@ -4,32 +4,32 @@
   \**********************************/
 (function () {
   toggle_filters = function toggle_filters() {
-    document.getElementById('content_filters').classList.toggle('hidden');
+    document.getElementById('content-filters').classList.toggle('hidden');
   };
 
-  Array.from(document.getElementsByClassName('delete_list')).forEach(function (e) {
+  Array.from(document.getElementsByClassName('delete-list')).forEach(function (e) {
     e.addEventListener('click', function (e) {
-      var id = e.target.dataset.list_id;
-      get_fetch('lists/' + id + '/destroy').then(function (res) {
-        document.getElementById("list_" + res.deleted_id).remove();
+      var listId = e.target.dataset.list_id;
+      getFetch('lists/' + listId + '/destroy').then(function (res) {
+        document.getElementById("list-" + res.deletedId).remove();
         my_notyf(res);
-        if (res.list_id > 0) document.onload = get_products(res.list_id); //There's still one other list
+        if (res.list_id > 0) document.onload = getProducts(res.listId); //There's still one other list
         else {
             //No more list for the user
-            document.getElementById("my_lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
+            document.getElementById("my-lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>";
           }
       });
     });
   });
 
-  leave_list = function leave_list(list_id) {
-    get_fetch('lists/' + list_id + '/leave').then(function (res) {
+  leaveList = function leaveList(listId) {
+    getFetch('lists/' + listId + '/leave').then(function (res) {
       if (res.success) location.reload();
     });
   };
 
-  download_list = function download_list(list_id) {
-    get_fetch('lists/' + list_id + '/download').then(function (res) {
+  downloadList = function downloadList(listId) {
+    getFetch('lists/' + listId + '/download').then(function (res) {
       var link = document.createElement('a');
       link.href = window.URL.createObjectURL(new Blob([res.blob]));
       link.setAttribute('download', res.filename + '.csv');
@@ -38,25 +38,25 @@
     });
   };
 
-  toggleShareList = function toggleShareList(list_id) {
+  toggleShareList = function toggleShareList() {
     event.stopPropagation();
-    document.getElementById('content_share_lists').classList.toggle('hidden');
-    document.getElementById('content_share_lists').classList.toggle('flex');
+    document.getElementById('content-share-list').classList.toggle('hidden');
+    document.getElementById('content-share-list').classList.toggle('flex');
     document.getElementById('main').classList.toggle('pointer-events-none');
   };
 
-  showShareList = function showShareList(list_id) {
-    get_fetch('shared/lists/' + list_id + '/show').then(function (res) {
+  showShareList = function showShareList(listId) {
+    getFetch('shared/lists/' + listId + '/show').then(function (res) {
       if (res.success) {
-        document.getElementById('content_share_lists').innerHTML = res.html;
-        document.getElementById('content_share_lists').classList.toggle('hidden');
-        document.getElementById('content_share_lists').classList.toggle('flex');
+        document.getElementById('content-share-list').innerHTML = res.html;
+        document.getElementById('content-share-list').classList.toggle('hidden');
+        document.getElementById('content-share-list').classList.toggle('flex');
         document.getElementById('main').classList.toggle('pointer-events-none');
       }
     });
   };
 
-  shareList = function shareList(list_id) {
+  shareList = function shareList(listId) {
     event.stopPropagation();
     var friends = Array();
     Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(function (el) {
@@ -68,11 +68,11 @@
       return;
     }
 
-    my_fetch('lists/share', {
+    myFetch('lists/share', {
       method: 'post',
       csrf: true
     }, {
-      list_id: parseInt(list_id),
+      list_id: parseInt(listId),
       friends: friends
     }).then(function (response) {
       if (response.ok) return response.json();
@@ -80,83 +80,104 @@
       my_notyf(res);
 
       if (res.success) {
-        document.getElementById('content_share_lists').classList.toggle('flex');
-        document.getElementById('content_share_lists').classList.toggle('hidden');
+        document.getElementById('content-share-list').classList.toggle('flex');
+        document.getElementById('content-share-list').classList.toggle('hidden');
         document.getElementById('main').classList.toggle('pointer-events-none');
       }
     });
   };
+  /**
+   * Met à jour les mesages affichés dans le tchat
+   * @param {object} res - Résultat contenant le html de la liste des messages
+   */
 
-  show_messages = function show_messages(res) {
-    var messages_content = document.getElementById('messages_content');
-    var wrap_list_products = document.getElementById('wrap_list_products');
 
-    if (res.messages_html !== null && res.shared_list) {
+  showMessages = function showMessages(res) {
+    var contentMsg = document.getElementById('content-msg');
+    var wrapListProducts = document.getElementById('wrap-list-products');
+
+    if (res.htmlMsg !== null && res.shared_list) {
       //Il y a des messages
-      messages_content.innerHTML = res.messages_html;
-      messages_content.classList.remove('hidden');
-      wrap_list_products.classList.remove('extend');
-      wrap_list_products.classList.add('with_msg');
-      scrollDown(document.getElementById('v_list_msg'));
+      contentMsg.innerHTML = res.htmlMsg;
+      contentMsg.classList.remove('hidden');
+      wrapListProducts.classList.remove('extend');
+      wrapListProducts.classList.add('with-msg');
+      scrollDown(document.getElementById('v-list-msg'));
       maj_reactions();
-    } else if (!messages_content.classList.contains('hidden')) {
-      wrap_list_products.classList.remove('with_msg');
-      wrap_list_products.classList.add('extend');
-      messages_content.classList.add('hidden');
+    } else if (!contentMsg.classList.contains('hidden')) {
+      wrapListProducts.classList.remove('with-msg');
+      wrapListProducts.classList.add('extend');
+      contentMsg.classList.add('hidden');
     }
   };
+  /**
+   * 
+   * @param {int} listId - Identifiant de la liste
+   * @param {int} productId - Identifiant du produit
+   */
 
-  toggle_list = function toggle_list(list_id, product_id) {
-    my_fetch('lists/toggle_product', {
+
+  toggleList = function toggleList(listId, productId) {
+    myFetch('lists/products/toggle', {
       method: 'post',
       csrf: true
     }, {
-      list_id: parseInt(list_id),
-      product_id: parseInt(product_id),
+      list_id: parseInt(listId),
+      product_id: parseInt(productId),
       change_checked: true
     }).then(function (response) {
       if (response.ok) return response.json();
     }).then(function (res) {
-      document.getElementById("list_" + list_id + "_product_" + product_id).remove();
-      var nb_results = document.getElementById('nb_results').getAttribute('data-nb') - 1;
+      document.getElementById("list-" + listId + "-product-" + productId).remove();
+      var nb_results = document.getElementById('nb-results').getAttribute('data-nb') - 1;
 
       if (nb_results > 0) {
-        document.getElementById('nb_results').setAttribute('data-nb', nb_results);
-        document.getElementById('nb_results').innerHTML = nb_results + ' Résultat(s)';
-        document.getElementById('total_price').innerHTML = 'Montant total : ' + res.total_price + ' €';
-      } else get_products(list_id);
+        document.getElementById('nb-results').setAttribute('data-nb', nb_results);
+        document.getElementById('nb-results').innerHTML = nb_results + ' Résultat(s)';
+        document.getElementById('total-price').innerHTML = 'Montant total : ' + res.total_price + ' €';
+      } else getProducts(listId);
     });
   };
+  /**
+   * Récupère les produits d'une liste
+   * @param {int} listId - Identifiant de la liste
+   */
 
-  get_products = function get_products(list_id) {
-    var old_list_id = document.getElementById('list_selected').value;
-    if (old_list_id == list_id) return;
-    get_fetch('lists/' + list_id + '/products/show').then(function (products) {
-      if (document.getElementById('list_selected').value != '' && document.getElementById('list_' + document.getElementById('list_selected').value) != undefined) document.getElementById('list_' + document.getElementById('list_selected').value).classList.toggle('selected');
-      document.getElementById('list_selected').value = list_id;
-      document.getElementById('list_' + list_id).classList.toggle('selected');
-      document.getElementById('content_results').innerHTML = products.html;
+
+  getProducts = function getProducts(listId) {
+    var oldListId = document.getElementById('list-selected').value;
+    if (oldListId == listId) return;
+    getFetch('lists/' + listId + '/products/show').then(function (products) {
+      if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined) document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected');
+      document.getElementById('list-selected').value = listId;
+      document.getElementById('list-' + listId).classList.toggle('selected');
+      document.getElementById('content-results').innerHTML = products.html;
       extendListMsg(true);
-      show_messages(products);
+      showMessages(products);
     });
   };
+  /**
+   * Affiche les listes d'un utilisateur
+   * @param {int} userId - Identifiant de l'utilisateur dont on affiche les listes
+   */
 
-  show_lists = function show_lists(user_id) {
-    var old_user_id = document.getElementById('lists_user_id').value;
-    if (old_user_id == user_id) return;
 
-    if (user_id == 0) {
-      document.getElementById('title_others_lists').classList.add('active');
-      document.getElementById('title_my_lists').classList.remove('active');
+  showLists = function showLists(userId) {
+    var oldUserId = document.getElementById('lists-user-id').value;
+    if (oldUserId == userId) return;
+
+    if (userId == 0) {
+      document.getElementById('title-others-lists').classList.add('active');
+      document.getElementById('title-my-lists').classList.remove('active');
     } else {
-      document.getElementById('title_others_lists').classList.remove('active');
-      document.getElementById('title_my_lists').classList.add('active');
+      document.getElementById('title-others-lists').classList.remove('active');
+      document.getElementById('title-my-lists').classList.add('active');
     }
 
-    document.getElementById('lists_user_id').value = user_id;
-    get_fetch('lists/users/' + user_id).then(function (lists) {
-      document.getElementById('wrap_lists').innerHTML = lists.html;
-      get_products(lists.first_list_id);
+    document.getElementById('lists-user-id').value = userId;
+    getFetch('lists/users/' + userId).then(function (lists) {
+      document.getElementById('wrap-lists').innerHTML = lists.html;
+      getProducts(lists.first_list_id);
     });
   };
 })();

@@ -36,7 +36,7 @@
         <x-svg.big.stats class="icon"/>
         {{ __('Statistics') }}
     </a>
-    <a href="{{ route('design_system') }}"  class="{{ $menu === 'design' ? 'active' : '' }}">
+    <a href="{{ route('designSystem') }}"  class="{{ $menu === 'design' ? 'active' : '' }}">
         <x-svg.big.screen class="icon"/>
         {{ __('Design') }}
     </a>

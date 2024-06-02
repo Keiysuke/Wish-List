@@ -1,11 +1,19 @@
-<div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6" id="grid_products">
+<div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6" id="grid-products">
     @if(count($products) > 0)
         @foreach($products as $product)
             <a href="{{ route('products.show', $product->id) }}">
-                <div class="grid_product flex flex-col justify-between shadow border rounded h-full transform hover:-rotate-3 hover:shadow-xl transition ease-in-out duration-150">
+                <div class="grid-product flex flex-col justify-between shadow border rounded h-full transform hover:-rotate-3 hover:shadow-xl transition ease-in-out duration-150">
+                    {{-- @if($product->video_game)
+                        @php($vg = $product->video_game->video_game)
+                        @php($support = $product->video_game->vg_support)
+                        <div class="top vg-icons">
+                            <x-Utils.Yt.TitleIcon search="{{ $vg->label }} Soundtrack"/>
+                            <x-Utils.Psthc.TitleIcon search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+                        </div>
+                    @endif --}}
                     <div class="top relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
-                        <div class="product_price">{{ $product->real_cost }} €</div>
-                        <div class="product_pict rounded rounded-b-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                        <div class="product-price">{{ $product->real_cost }} €</div>
+                        <div class="product-pict rounded rounded-b-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
                     </div>
                     <div class="down flex flex-col justify-between h-full font-semibold text-center {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">
                         <p class="my-2 text-black">{{ (strlen($product->label) > 50)? substr($product->label, 0, 50).'...' : $product->label }}</p>

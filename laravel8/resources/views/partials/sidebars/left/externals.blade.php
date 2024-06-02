@@ -1,6 +1,6 @@
-<div class="sidebar_content" id="left_sidebar_externals">
+<div class="sidebar-content" id="left-sidebar-externals">
     <p><x-svg.globe class="icon-sm text-blue-400"/> Liens externes</p>
-    <div class="ls_grid-2">
+    <div class="left-sidebar-grid-2">
         <div class="rectangle">
             <a href="https://tinypng.com/" title="Tiny PNG" target="_blank"><img src="{{ asset(config('images.icons_externals')).'/tinypng.png' }}"/></a>
         </div>
@@ -19,19 +19,22 @@
     </div>
     <div class="flex flex-col items-center mt-4 gap-4">
         <div class="flex gap-2">
-            <x-svg.big.box class="icon-lg"/><a class="link" href="https://www.amazon.fr/gp/your-account/order-history?ref_=ya_d_c_yo" target="_blank">Commandes Amazon</a>
+            <x-svg.big.box class="icon-lg"/>
+            <a class="link" href="https://www.amazon.fr/gp/your-account/order-history?ref_=ya_d_c_yo" target="_blank">
+                Commandes Amazon
+            </a>
         </div>
         <div class="flex gap-2">
-            <x-form.input name="sb_yt_text" type="text" placeholder="Recherche sur Youtube"/>
-            <x-form.btn type="submit" color="red"><x-svg.search class="icon-sm"/></x-form.btn>
+            <x-Form.Input name="sbYtText" type="text" placeholder="Recherche sur Youtube"/>
+            <x-Form.Btn type="submit" color="red"><x-svg.search class="icon-sm"/></x-Form.Btn>
         </div>
         <div class="flex gap-2">
-            <x-form.input name="sb_psthc_text" type="text" placeholder="Recherche sur PSTHC"/>
-            <x-form.btn type="submit" color="yellow"><x-svg.big.trophy class="icon-sm text-black"/></x-form.btn>
+            <x-Form.Input name="sbPsthcText" type="text" placeholder="Recherche sur PSTHC"/>
+            <x-Form.Btn type="submit" color="yellow"><x-svg.big.trophy class="icon-sm text-black"/></x-Form.Btn>
         </div>
         <div class="flex gap-2">
-            <x-form.input name="sb_offer_text" type="text" placeholder="Dénicher des offres"/>
-            <x-form.btn type="submit"><x-svg.big.euro class="icon-sm text-white"/></x-form.btn>
+            <x-Form.Input name="sbOfferText" type="text" placeholder="Dénicher des offres"/>
+            <x-Form.Btn type="submit"><x-svg.big.euro class="icon-sm text-white"/></x-Form.Btn>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div id="dashboard_table">
+    <div id="dashboard-table">
         <x-admin.dashboard_menu menu="database" sub="products"/>
 
         <div class="right">

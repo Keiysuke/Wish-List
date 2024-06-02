@@ -5,7 +5,7 @@
         <div class="grid grid-cols-4 text-center gap-4">
             @foreach ($purchases as $purchase)
                 <div class="thumbnail-recto-verso relative border rounded cursor-pointer hover:shadow-lg transition ease-in-out duration-150">
-                    <div class="thumbnail mode-recto" id="thumbnail_{{ @++$cpt }}">
+                    <div class="thumbnail mode-recto" id="thumbnail-{{ @++$cpt }}">
                         @if($purchase->display_type === 'benef')
                             @include('partials.thumbnails.benefice', [$purchase, 'class' => 'layer recto-side', $cpt])
                         @else

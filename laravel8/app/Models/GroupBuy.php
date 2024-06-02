@@ -22,11 +22,11 @@ class GroupBuy extends Model
     }
 
     public function setDatas(){
-        $purchases_id = [];
+        $purchasesId = [];
         foreach($this->group_buy_purchases as $p){
-            $purchases_id[] = $p->purchase_id;
+            $purchasesId[] = $p->purchase_id;
         }
-        $this->datas = compact('purchases_id');
+        $this->datas = compact('purchasesId');
     }
 
     public function has_purchases(){
@@ -38,22 +38,22 @@ class GroupBuy extends Model
     }
 
     public function grouped_purchases(){ //Return a collection of purchases grouped by product_id and with the number for each of them
-        $distinct_products = [];
+        $distinctProducts = [];
         $r = collect([]);
-        foreach($this->group_buy_purchases as $group_buy_purchase){
-            $product_id = $group_buy_purchase->purchase->product_id;
-            $cost = $group_buy_purchase->purchase->cost;
-            $key = $product_id.'_'.$cost;
-            if(!array_key_exists($key, $distinct_products)){
-                $distinct_products[$key] = 1;
-                $r = $r->push($group_buy_purchase->purchase); //We only keep the first purchase of each product
+        foreach($this->group_buy_purchases as $groupBuyPurchase){
+            $productId = $groupBuyPurchase->purchase->product_id;
+            $cost = $groupBuyPurchase->purchase->cost;
+            $key = $productId.'_'.$cost;
+            if(!array_key_exists($key, $distinctProducts)){
+                $distinctProducts[$key] = 1;
+                $r = $r->push($groupBuyPurchase->purchase); //We only keep the first purchase of each product
             }else{
-                $distinct_products[$key]++; //Another same product for that group buy
+                $distinctProducts[$key]++; //Another same product for that group buy
             }
         }
 
         //We modify each purchase to keep the number of same couple product/purchase for that group buy
-        foreach($distinct_products as $key => $v){
+        foreach($distinctProducts as $key => $v){
             $r->transform(function($item, $k) use($key, $v){
                 if($item->product_id.'_'.$item->cost === $key) $item->nb = $v;
                 return $item;

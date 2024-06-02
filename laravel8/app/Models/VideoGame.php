@@ -41,27 +41,27 @@ class VideoGame extends Model
 
     /** 
      * Return an array containing datas corresponding if the JV has successfully been linked to a product/support
-     * @param int $support_id
+     * @param int $supportId
      * @return array
     */
-    public function fast_link_product($support_id = null){
+    public function fast_link_product($supportId = null){
         $products = Product::where('label', 'like', '%'.$this->label.'%')
             ->orWhere('label', 'like', '%'.str_replace(': ', '%', $this->label).'%')
             ->get();
         if(count($products) === 1){
             $product = $products->first();
 
-            if (is_null($support_id)) {
+            if (is_null($supportId)) {
                 $supports = VgSupport::all();
                 foreach($supports as $support){
                     if(strpos($product->label, $support->alias) === false) continue;
-                    $support_id = $support->id;
+                    $supportId = $support->id;
                 }
             }
 
-            if (!is_null($support_id)) { //If it's still null, we can't link
+            if (!is_null($supportId)) { //If it's still null, we can't link
                 $pvg = ProductAsVideoGame::where('video_game_id', '=', $this->id)
-                    ->where('vg_support_id', '=', $support_id)
+                    ->where('vg_support_id', '=', $supportId)
                     ->where('product_id', '=', $product->id)
                     ->get();
                 
@@ -76,7 +76,7 @@ class VideoGame extends Model
                     $pvg = new ProductAsVideoGame([
                         'product_id' => $product->id, 
                         'video_game_id' => $this->id, 
-                        'vg_support_id' => $support_id, 
+                        'vg_support_id' => $supportId, 
                     ]);
                     $pvg->save();
                 }

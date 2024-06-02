@@ -7,7 +7,7 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.my_scrollbar {
+.my-scrollbar {
     @apply overflow-x-hidden;
     @apply overflow-y-auto;
     @apply overscroll-contain;
@@ -278,7 +278,7 @@ a.link:hover {
     @apply text-white;
 }
 
-li.li_website.expired {
+li.li-website.expired {
     text-decoration: line-through;
 }
 
@@ -291,11 +291,11 @@ li.li_website.expired {
     background-color: transparent;
 }
 
-a.sitemap_link {
+a.sitemap-link {
     @apply inline-flex;
 }
 
-a.sitemap_link:hover span {
+a.sitemap-link:hover span {
     color: #ed8936;
 }
 
@@ -307,34 +307,34 @@ span.tag {
     @apply rounded-full;
 }
 
-#show_video_game:hover{
+#show-video-game:hover {
     @apply bg-red-700;
 }
 
-#show_video_game svg{
+#show-video-game svg {
     @apply text-red-700;
 }
 
-#show_video_game:hover svg{
+#show-video-game:hover svg {
     @apply text-white;
 }
 
-.btn_show_product:hover p {
+.btn-show-product:hover p {
     @apply bg-blue-400;
     transition: 0.1s;
 }
 
-.btn_show_product:hover div {
+.btn-show-product:hover div {
     @apply bg-blue-500;
     transition: 0.1s;
 }
 
-.btn_show_product:hover div {
+.btn-show-product:hover div {
     transform: translate(10px, 0);
     transition: 0.3s;
 }
 
-.list_type div.label {
+.list-type div.label {
     background-color: burlywood;
     @apply p-1;
     text-align: center;
@@ -342,7 +342,7 @@ span.tag {
     border-top-right-radius: 0.25rem;
 }
 
-.list_type div.all_lists {
+.list-type div.all-lists {
     border: 1px solid burlywood;
     @apply p-1;
 }

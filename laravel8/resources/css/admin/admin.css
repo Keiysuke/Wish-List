@@ -1,11 +1,11 @@
-#dashboard_table {
+#dashboard-table {
     @apply flex;
     @apply bg-white;
     @apply overflow-hidden;
     @apply shadow-xl;
 }
 
-#dashboard_table div.left {
+#dashboard-table div.left {
     @apply flex;
     @apply flex-col;
     @apply items-center;
@@ -14,8 +14,8 @@
     width: 16%;
 }
 
-#dashboard_table div.left a,
-#dashboard_table div.left div a {
+#dashboard-table div.left a,
+#dashboard-table div.left div a {
     @apply flex;
     @apply flex-col;
     @apply items-center;
@@ -23,51 +23,51 @@
     @apply py-2;
 }
 
-#dashboard_table div.left a.sub,
-#dashboard_table div.left div a.sub {
+#dashboard-table div.left a.sub,
+#dashboard-table div.left div a.sub {
     @apply bg-gray-900;
     @apply text-sm;
 }
 
-#dashboard_table div.left a.active,
-#dashboard_table div.left div a.active {
+#dashboard-table div.left a.active,
+#dashboard-table div.left div a.active {
     @apply cursor-default;
 }
 
-#dashboard_table div.left a.active,
-#dashboard_table div.left div a.active {
+#dashboard-table div.left a.active,
+#dashboard-table div.left div a.active {
     @apply border-indigo-400;
     @apply border-l-4;
     @apply text-indigo-300;
 }
 
-#dashboard_table div.left a.sub.active {
+#dashboard-table div.left a.sub.active {
     @apply border-indigo-300;
     @apply border-l-4;
     @apply text-gray-800;
     @apply bg-gray-200;
 }
 
-#dashboard_table div.left a:not(.active):hover,
-#dashboard_table div.left div a:not(.active):hover {
+#dashboard-table div.left a:not(.active):hover,
+#dashboard-table div.left div a:not(.active):hover {
     @apply bg-gray-700;
     @apply text-gray-300;
 }
 
-#dashboard_table div.right {
+#dashboard-table div.right {
     @apply w-full;
     @apply mt-8;
     @apply m-4;
 }
 
 @screen sm {
-    #dashboard_table div.right {
+    #dashboard-table div.right {
         @apply px-6;
     }
 }
 
 @screen lg {
-    #dashboard_table div.right {
+    #dashboard-table div.right {
         @apply px-8;
     }
 }

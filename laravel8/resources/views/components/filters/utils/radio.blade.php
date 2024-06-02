@@ -1,4 +1,4 @@
 <div class="inline-flex">
-    <x-form.radio id="{{ $id ?? $value }}" name="{{ $name }}" value="{{ $value }}">{{ (isset($checked) && ($checked == 1 || $checked === $value)) ? 'checked' : '' }}</x-form.radio>
-    <x-form.label class="text-gray-600 text-sm font-semibold mb-2" for="{{ $id ?? $value }}">{{ $slot }}</x-form.label>
+    <x-Form.Radio id="{{ $id ?? str_replace('_', '-', $value) }}" name="{{ $name }}" value="{{ $value }}">{{ (isset($checked) && ($checked == 1 || $checked === $value)) ? 'checked' : '' }}</x-Form.Radio>
+    <x-Form.Label class="text-gray-600 text-sm font-semibold mb-2" for="{{ $id ?? $value }}">{{ $slot }}</x-Form.Label>
 </div>

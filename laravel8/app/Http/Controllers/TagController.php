@@ -64,10 +64,10 @@ class TagController extends Controller
     }
 
     public function getCssClassId(TagRequest $request, $kind = 'border'){
-        $css_class = (Object)[
+        $cssClass = (Object)[
             'class' => $request->{$kind.'_color'}.(($request->{$kind.'_variant'} === 'none')? '' : ('-'.$request->{$kind.'_variant'})), 
             'text_color' => null
         ];
-        return CssColor::where('css_class', '=', $css_class->class)->first()->id;
+        return CssColor::where('css_class', '=', $cssClass->class)->first()->id;
     }
 }

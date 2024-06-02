@@ -36,12 +36,12 @@ class Tag extends Model
         return $this->{$kind.'_css_color'}->css_class;
     }
 
-    public static function getExample($border_css_color_id = null, $text_css_color_id = null, $bg_css_color_id = null, $label = 'Exemple'){
+    public static function getExample($borderCssColorId = null, $textCssColorId = null, $bgCssColorId = null, $label = 'Exemple'){
         $tag = new Tag([
             'label' => $label,
-            'border_css_color_id' => is_null($border_css_color_id)? 1 : $border_css_color_id,
-            'text_css_color_id' => is_null($text_css_color_id)? 1 : $text_css_color_id,
-            'bg_css_color_id' => is_null($bg_css_color_id)? 1 : $bg_css_color_id,
+            'border_css_color_id' => is_null($borderCssColorId)? 1 : $borderCssColorId,
+            'text_css_color_id' => is_null($textCssColorId)? 1 : $textCssColorId,
+            'bg_css_color_id' => is_null($bgCssColorId)? 1 : $bgCssColorId,
         ]);
         return $tag;
     }

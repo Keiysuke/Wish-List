@@ -1,11 +1,11 @@
-div#wrap_sidebar_friends {
+div#wrap-sidebar-friends {
     @apply text-white;
     @apply flex;
     @apply gap-4;
 }
 
-div#wrap_sidebar_friends div#user_profile,
-div#wrap_sidebar_friends div#sidebar_friends {
+div#wrap-sidebar-friends div#user-profile,
+div#wrap-sidebar-friends div#sidebar-friends {
     @apply bg-gray-800;
     @apply w-1/5;
     @apply rounded-md;
@@ -13,26 +13,26 @@ div#wrap_sidebar_friends div#sidebar_friends {
     @apply border-2;
 }
 
-div#wrap_sidebar_friends div#user_profile {
+div#wrap-sidebar-friends div#user-profile {
     @apply relative;
     @apply flex-col;
     @apply p-4;
     @apply h-60;
 }
 
-div#sidebar_friends {
+div#sidebar-friends {
     @apply py-4;
     @apply min-h-screen;
 }
 
-div#sidebar_friends div#sb_head_friends {
+div#sidebar-friends div#sb-friends-head {
     @apply flex;
     @apply flex-col;
     @apply items-center;
     @apply px-4;
 }
 
-div#sbh_friends_icons {
+div#sbh-friends-icons {
     @apply flex;
     @apply justify-center;
     @apply w-1/3;
@@ -42,7 +42,7 @@ div#sbh_friends_icons {
     @apply rounded-lg;
 }
 
-div#sidebar_friends div#sb_head_friends div#content_search_user {
+div#sidebar-friends div#sb-friends-head div#content-search-user {
     @apply relative;
     @apply mx-auto;
     @apply text-gray-600;
@@ -50,20 +50,20 @@ div#sidebar_friends div#sb_head_friends div#content_search_user {
     @apply py-4;
 }
 
-input#search_text,
-input#search_text:focus {
+input#search-text,
+input#search-text:focus {
     @apply border-none;
     @apply outline-none;
 }
 
-div #friends_list {
+div #friends-list {
     @apply flex;
     @apply flex-col;
     @apply w-full;
     @apply gap-4;
 }
 
-div.friend_row {
+div.friend-row {
     @apply flex;
     @apply items-center;
     @apply p-2;
@@ -71,21 +71,21 @@ div.friend_row {
     @apply bg-gray-800;
 }
 
-div.friend_row:hover {
+div.friend-row:hover {
     @apply rounded-md;
     @apply bg-gray-600;
 }
 
-div.friend_request_row {
+div.friend-request-row {
     @apply flex;
     @apply items-center;
     @apply p-2;
     @apply gap-2;
 }
 
-div.friend_row div.avatar,
-div.friend_request_row div.avatar,
-div.user_avatar {
+div.friend-row div.avatar,
+div.friend-request-row div.avatar,
+div.user-avatar {
     @apply flex;
     @apply justify-center;
     @apply items-center;
@@ -97,14 +97,14 @@ div.user_avatar {
     @apply rounded-full;
 }
 
-div.friend_row div.name,
-div.friend_request_row div.name {
+div.friend-row div.name,
+div.friend-request-row div.name {
     @apply flex;
     @apply flex-col;
     @apply text-sm;
 }
 
-.btn_close {
+.btn-close {
     @apply absolute;
     @apply right-4;
     @apply p-1;
@@ -112,6 +112,6 @@ div.friend_request_row div.name {
     @apply rounded-md;
 }
 
-.btn_close:hover {
+.btn-close:hover {
     @apply bg-gray-600;
 }

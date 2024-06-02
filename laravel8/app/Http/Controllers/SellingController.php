@@ -58,8 +58,8 @@ class SellingController extends Controller
     }
 
     public function destroy(Selling $selling){
-        $product_id = $selling->product_id;
+        $productId = $selling->product_id;
         $selling->delete();
-        return redirect()->route('products.show', $product_id)->with('info', __('The sell has been deleted.'));
+        return redirect()->route('products.show', $productId)->with('info', __('The sell has been deleted.'));
     }
 }

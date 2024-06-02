@@ -5,132 +5,48 @@
 @endsection
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('my_friends') }}
+    {{ Breadcrumbs::render('myFriends') }}
 @endsection
 
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('js/manageFriends.js') }}"></script>
 <script>
-    Array.from(document.getElementById('sbh_friends_icons').children).forEach(el => { el.addEventListener('click', setFriendsTab); });
+    Array.from(document.getElementById('sbh-friends-icons').children).forEach(el => { el.addEventListener('click', setFriendsTab); });
 
-    function setFriendsTab(e = null) {
-        const tab = (e) ? e.target.dataset.kind : 'friends';
-        switch (tab) {
-            case 'friends': search_user();
-                break;
-            case 'users': search_user(false);
-                break;
-            case 'my_params':
-                break;
-        }
-        document.getElementById('sbh_friends_icons').dataset.current = tab;
-    }
-
-    function closeUserProfile() {
-        document.getElementById('user_profile').classList.add('hidden');
-        document.getElementById('user_profile').classList.remove('flex');
-    }
-
-    function showUserProfile(e) {
-        const new_id = e.target.dataset.id;
-        const w = document.getElementById('user_profile');
-        if (new_id == w.dataset.userId || w.dataset.userId == 0) {
-            w.classList.toggle('hidden');
-            w.classList.toggle('flex');
-        }
-        w.dataset.userId = new_id;
-        //On actualise seulement lorsqu'on affiche un autre user
-        if (w.classList.contains('flex')) {
-
-            get_fetch('user/' + new_id + '/profile')
-            .then(results => {
-                document.getElementById('user_datas').innerHTML = results.html;
-                if (results.is_friend) {
-                    document.getElementById('delete_friend').addEventListener('click', removeFriend);
-                } else {
-                    document.getElementById('add_friend').addEventListener('click', addFriend);
-                }
-            });
-        }
-    }
-
-    function addFriend(e) {
-        get_fetch('user/request/user/' + e.target.dataset.id + '/befriend')
-        .then(results => {
-            my_notyf(results);
-        });
-    }
-    
-    function removeFriend(e) {
-        get_fetch('user/friends/' + e.target.dataset.id + '/remove')
-        .then(results => {
-            my_notyf(results);
-            if (results.success) {
-                closeUserProfile()
-                document.getElementById('sb_friend_row_' + results.user_id).remove();
-            }
-        });
-    }
-
-    function search_user(is_friend = true){
-        my_fetch('{{ route('friends_search') }}', {method: 'post', csrf: true}, {
-            name: document.getElementById('search_user').value,
-            is_friend: is_friend,
-        }).then(response => {
-            if (response.ok) {
-                document.getElementById('search_user').classList.remove('border');
-                return response.json();
-            } else {
-                if(response.status == 422) {
-                    document.getElementById('search_user').classList.add('border');
-                    document.getElementById('search_user').classList.add('border-red-500');
-                }
-                return null;
-            }
-        }).then(friends => {
-            document.getElementById('friends_content_results').innerHTML = friends.html;
-            Array.from(document.getElementsByClassName('friend_row')).forEach(el => { el.addEventListener('click', showUserProfile); });
-            if(friends === null) {
-                document.getElementById('title_friends_content_results').innerHTML = 'Aucun résultat';
-            } else {
-                document.getElementById('title_friends_content_results').innerHTML = is_friend ? 'Mes amis (' + friends.nb_results + ')' : 'Ajouter des amis';
-            }
-        });
-    }
-
-    document.getElementById('close_user_profile').addEventListener('click', closeUserProfile);
+    document.getElementById('close-user-profile').addEventListener('click', closeUserProfile);
     setFriendsTab();
 </script>
 @endsection
 
 @section('content')
-<div id="wrap_sidebar_friends">
-    <div id="sidebar_friends">
-        <div id="sb_head_friends">
-            <div id="sbh_friends_icons" data-current="friends">
+<div id="wrap-sidebar-friends">
+    <div id="sidebar-friends">
+        <div id="sb-friends-head">
+            <div id="sbh-friends-icons" data-current="friends">
                 <x-svg.users class="icon-sm" data-kind="friends"/>
                 <x-svg.user_plus class="icon-sm" data-kind="users"/>
                 <x-svg.plus class="icon-sm" data-kind="my_params"/>
             </div>
-            <div id="content_search_user">
-                <input type="text" class=" p-2 w-11/12 pr-8" placeholder="{{ __('Search users...') }}" id="search_user" name="search_user" onKeyUp="search_user();" value="">
+            <div id="content-search-user">
+                <input type="text" class=" p-2 w-11/12 pr-8" placeholder="{{ __('Search users...') }}" id="search-user" name="searchUser" onKeyUp="searchUser();" value="">
                 <button type="submit" class="absolute mt-3 mr-2">
                     <x-svg.search class="icon-xs text-gray-400 pt-1 pr-1"/>
                 </button>
             </div>
-            <div id="friends_list">
-                <h2 id="title_friends_content_results"></h2>
-                <div id="friends_content_results">
+            <div id="friends-list">
+                <h2 id="title-friends-content-results"></h2>
+                <div id="friends-content-results">
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="user_profile" class="hidden" data-user-id="0">
-        <div id="close_user_profile" class="btn_close icon-clickable">
+    <div id="user-profile" class="hidden" data-user-id="0">
+        <div id="close-user-profile" class="btn-close icon-clickable">
             <x-svg.close class="btn_clickable icon-sm" />
         </div>
-        <div id="user_datas">
+        <div id="user-datas">
         </div>
     </div>
 </div>

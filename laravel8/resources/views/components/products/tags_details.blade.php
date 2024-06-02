@@ -5,6 +5,6 @@
         </div>
         <div class="flex inline-flex gap-2 {{ $class ?? '' }}">
     @endif
-    <x-tags.tag :tag="$tag" />
+    <x-Tags.Tag :tag="$tag" />
 @endforeach
 </div>

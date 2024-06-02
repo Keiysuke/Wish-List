@@ -30,10 +30,10 @@ class Listing extends Model
         return $this->belongsToMany(User::class, 'listing_users')->withTimestamps();
     }
 
-    public function getProducts($with_extra = true){
-        $products = app('App\Http\Controllers\ProductController')->get_products($this->products()->paginate());
+    public function getProducts($withExtra = true){
+        $products = app('App\Http\Controllers\ProductController')->getProducts($this->products()->paginate());
         
-        if ($with_extra) {
+        if ($withExtra) {
             foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
             
             $products->total_price = 0;
@@ -42,8 +42,8 @@ class Listing extends Model
         return $products;
     }
 
-    static function getFileName($id) {
-        $list = Listing::find($id);
+    static function getFileName($listId) {
+        $list = Listing::find($listId);
         return ($list->listing_type_id <= 1 ? '' : ' ['.$list->listing_type->label.'] ').$list->label;
     }
 
