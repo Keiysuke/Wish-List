@@ -19,6 +19,9 @@
         </span>
     </div>
 </div>
+@if(!empty($list->description))
+    <div class="text-sm italic mb-2">{{ $list->description }}</div>
+@endif
 <h2 class="mb-2" id="nb-results" data-nb="{{ count($products) }}">{{ count($products) }} Résultat(s)</h2>
 
 @include('lists.products.details', $products)

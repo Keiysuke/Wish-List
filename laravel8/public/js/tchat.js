@@ -21,6 +21,12 @@
         if (res.html) {
           document.getElementById('content-msg').innerHTML = res.html;
         } else {
+          var listMsgReaction = document.getElementById('list-msg-reaction');
+
+          if (listMsgReaction.value == msgId) {
+            listMsgReaction.value = 0;
+          }
+
           document.getElementById('list-msg-' + msgId).parentNode.remove();
         }
       });
@@ -344,14 +350,15 @@
     Array.from(document.getElementsByClassName('msg-reaction')).forEach(function (e) {
       e.addEventListener('click', reactionClicked);
     });
+    var prevSectionId = document.getElementById('list-msg-emoji-section-id').value;
     var sections = document.getElementsByClassName('emoji-section-title');
     Array.from(sections).forEach(function (e) {
       e.addEventListener('click', EmojiSectionChanged); //On simule le clic sur chaque section à cet endroit car la page aura normalement été complètement chargée
 
       e.click();
-    }); //On affiche la 1ere section au chargement
+    }); //On affiche la précédente section sélectionnée ou la 1ère si c'est la première fois
 
-    sections[0].click();
+    sections[prevSectionId == 0 ? prevSectionId : prevSectionId - 1].click();
   };
   /** 
    * Affiche le message

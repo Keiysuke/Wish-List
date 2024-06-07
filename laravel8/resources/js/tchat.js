@@ -17,6 +17,10 @@
                 if (res.html) {
                     document.getElementById('content-msg').innerHTML = res.html
                 } else {
+                    const listMsgReaction = document.getElementById('list-msg-reaction');
+                    if (listMsgReaction.value == msgId) {
+                        listMsgReaction.value = 0;
+                    }
                     document.getElementById('list-msg-' + msgId).parentNode.remove()
                 }
             })
@@ -310,14 +314,16 @@
             e.addEventListener('click', reactionClicked)
         })
         
+        const prevSectionId = document.getElementById('list-msg-emoji-section-id').value
         const sections = document.getElementsByClassName('emoji-section-title')
         Array.from(sections).forEach(e => {
             e.addEventListener('click', EmojiSectionChanged)
             //On simule le clic sur chaque section à cet endroit car la page aura normalement été complètement chargée
             e.click()
         })
-        //On affiche la 1ere section au chargement
-        sections[0].click()
+        
+        //On affiche la précédente section sélectionnée ou la 1ère si c'est la première fois
+        sections[((prevSectionId == 0) ? prevSectionId : (prevSectionId-1))].click()
     }
     
     /** 

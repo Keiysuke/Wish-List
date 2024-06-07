@@ -46,7 +46,7 @@
             <div class="flex gap-4 w-1/2">
                 <div class="w-1/3">
                     <x-Form.Label for="price" block required>Prix du site (€)</x-Form.Label>
-                    <x-Form.Input name="price" placeholder="50" value="{{ old('price') }}"/>
+                    <x-Form.Input name="price" placeholder="50" value="{{ old('price', $product->real_cost) }}"/>
                 </div>
                 <div class="w-1/3">
                     <x-Form.Label for="available-date" block>Date de disponibilité</x-Form.Label>
