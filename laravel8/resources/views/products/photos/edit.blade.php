@@ -46,8 +46,12 @@
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('productPhotos.update', $product) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
-        <h1>Edition des photos d'un produit</h1>
-        <hr/>
+        <div class="relative flex border-b-2 mb-4">
+            <h1>Edition des photos d'un produit
+                <x-products.search_photo id="icon-find-photo" search="{{ $product->label }}" class="title-icon absolute right-0 flex inline-flex gap-2"/>
+            </h1>
+            <hr/>
+        </div>
 
         <div class="flex justify-center">
             <div class="w-1/3">

@@ -137,11 +137,12 @@
     <x-Notification type="success" msg="{{ session('info') }}"/>
     
     <div class="relative flex justify-center border-b-2 mb-4">
-        <div class="absolute left-0 flex inline-flex gap-2">
+        <div class="absolute left-0 flex inline-flex gap-1">
             <a title="Editer les photos" href="{{ route('productPhotos.edit', $product->id) }}" class="title-icon inline-flex">
                 <x-svg.picture class="icon-xs"/>
             </a>
-            <x-svg.folder class="bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
+            <x-products.search_photo id="icon-find-photo" search="{{ $product->label }}" class="title-icon inline-flex"/>
+            <x-svg.folder class="bottom-1 ml-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
         </div>
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">

@@ -70,11 +70,11 @@
 
     <div class="relative flex justify-center border-b-2 mb-4">
         @if(!is_null($product))
-            <div class="absolute left-0 flex inline-flex gap-2">
+            <div class="absolute left-0 flex inline-flex gap-1">
                 <a title="Editer les photos" href="{{ route('productPhotos.edit', $product->id) }}" class="title-icon inline-flex">
                     <x-svg.picture class="icon-xs"/>
                 </a>
-                <x-svg.folder class="bottom-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
+                <x-svg.folder class="bottom-1 ml-1 cursor icon-xs" title="Copier le lien vers le dossier" onClick="setClipboard('{{ str_replace('\\', '/', public_path()).'/'.$dir }}')"/>
             </div>
         @endif
         <h1>{{ $videoGame->label }}</h1>
