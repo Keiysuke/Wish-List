@@ -138,6 +138,12 @@
         };
 
         function lsBenefitHelp(){
+            let payed = parseFloat(document.getElementById('ls-benefit-payed').value).toFixed(2);
+            let sold = parseFloat(document.getElementById('ls-benefit-sold').value).toFixed(2);
+            if (isNaN(payed) || isNaN(sold)) {
+                notyfJS('Veuillez saisir un montant d\'achat et de vente', 'error');
+                return;
+            }
             myFetch('{{ route('simulateBenefit') }}', {method: 'post', csrf: true}, {
                 payed: document.getElementById('ls-benefit-payed').value,
                 sold: document.getElementById('ls-benefit-sold').value,

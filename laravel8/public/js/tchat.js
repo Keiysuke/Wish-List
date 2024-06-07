@@ -20,6 +20,7 @@
 
         if (res.html) {
           document.getElementById('content-msg').innerHTML = res.html;
+          maj_reactions();
         } else {
           var listMsgReaction = document.getElementById('list-msg-reaction');
 

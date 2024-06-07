@@ -16,10 +16,11 @@
                 my_notyf(res)
                 if (res.html) {
                     document.getElementById('content-msg').innerHTML = res.html
+                    maj_reactions()
                 } else {
-                    const listMsgReaction = document.getElementById('list-msg-reaction');
+                    const listMsgReaction = document.getElementById('list-msg-reaction')
                     if (listMsgReaction.value == msgId) {
-                        listMsgReaction.value = 0;
+                        listMsgReaction.value = 0
                     }
                     document.getElementById('list-msg-' + msgId).parentNode.remove()
                 }
