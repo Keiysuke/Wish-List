@@ -25,7 +25,7 @@
         }
         setTemplateType();
 
-        $('#lk_video_game').select2({
+        $('#lk-video-game').select2({
             placeholder: 'Sélectionnez un jeu vidéo...',
             ajax: {
                 url: "{{ route('autocomplete') }}",
@@ -84,7 +84,6 @@
 
 @section('content')
 @php($template = $product->get_template())
-@php($dir = config('images.path_products').'/'.$product->id.'/')
 <x-Notification type="success" msg="{{ session('info') }}"/>
 
 <div class="min-w-full max-w-xs">
@@ -118,8 +117,11 @@
                             <option value="video_game" @if(strcmp($template->type, 'video_game') === 0) selected @endif>Jeu Vidéo</option>
                             <option value="vg_support" @if(strcmp($template->type, 'vg_support') === 0) selected @endif>Support de JV</option>
                         </select>
-                        @error('template_type')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        @error('lk_video_game')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        @error('lk_vg_support')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                     @if ($product->video_game)

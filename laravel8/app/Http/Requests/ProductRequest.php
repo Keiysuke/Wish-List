@@ -28,8 +28,29 @@ class ProductRequest extends FormRequest
                 'date' => 'required|date',
             ]);
         }
-        //A la création, on oblige la présence de l'upload de la photo mais pas à l'édition
-        // if($this->has('expiration_date')) $rules['photo_1'] = 'image|required';
+        
+        //A l'édition, il est possible d'associer un support ou jeu vidéo au produit
+        if($this->has('template_type') && $this->template_type !== 'none'){
+            switch($this->template_type){
+                case 'video_game':
+                    $rules = array_merge($rules, 
+                    ['lk_video_game' => 'int|required',
+                        'lk_vg_support' => 'int|required',
+                    ]);
+                    break;
+                case 'vg_support':
+                    $rules = array_merge($rules, ['lk_vg_support' => 'int|required']);
+                    break;
+            }
+        }
         return $rules;
+    }
+
+    public function messages()
+    {
+        return [
+            'lk_video_game.required' => 'You must choose a video game',
+            'lk_vg_support.required' => 'You must choose a support',
+        ];
     }
 }
