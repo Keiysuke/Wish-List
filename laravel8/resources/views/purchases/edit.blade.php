@@ -74,7 +74,10 @@
             </div>
             <div class="flex gap-4 w-3/5">
                 <div class="w-1/3">
-                    <x-Form.Label for="cost" block required>Coût (€)</x-Form.Label>
+                    <div class="relative flex inline-flex w-full">
+                        <x-Form.Label for="cost" block required>Coût (€)</x-Form.Label>
+                        <x-Utils.Convert inputId="cost"/>
+                    </div>
                     <x-Form.Input name="cost" placeholder="60" value="{{ old('cost', $purchase->cost) }}"/>
                 </div>
                 <div class="w-1/3">

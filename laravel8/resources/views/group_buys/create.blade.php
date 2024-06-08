@@ -34,7 +34,10 @@
                 <x-Form.Input name="global_cost" placeholder="350" value="{{ old('global_cost') }}"/>
             </div> --}}
             <div class="w-1/12">
-                <x-Form.Label for="shipping-fees" block required>Frais de port</x-Form.Label>
+                <div class="relative flex inline-flex w-full">
+                    <x-Form.Label for="shipping-fees" block required>Frais de port</x-Form.Label>
+                    <x-Utils.Convert inputId="shipping-fees"/>
+                </div>
                 <x-Form.Input name="shipping_fees" placeholder="49.99" value="{{ old('shipping_fees', 0) }}"/>
             </div>
             <div class="w-1/12">

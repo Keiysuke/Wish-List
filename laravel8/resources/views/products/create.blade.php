@@ -21,10 +21,13 @@
         });
     });
     
-    document.getElementById('real-cost').addEventListener('focusout', (e) => {
-        if (document.getElementById('price').value === '') document.getElementById('price').value = e.target.value;
-        if (document.getElementById('cost').value === '') document.getElementById('cost').value = e.target.value;
-    });
+    function updatePrices(update = false) {
+        if (update) {
+            getConvertPrice('real-cost');
+        }
+        if (update || document.getElementById('price').value === '') document.getElementById('price').value = document.getElementById('real-cost').value;
+        if (update || document.getElementById('cost').value === '') document.getElementById('cost').value = document.getElementById('real-cost').value;
+    }
 
     function set_purchase(v) {
         document.getElementById('section-product-website').classList.toggle('hidden');
@@ -95,8 +98,11 @@
                         <x-Form.Input name="limited_edition" placeholder="3000" value="{{ old('limited_edition') }}"/>
                     </div>
                     <div>
-                        <x-Form.Label for="real-cost" block required>Prix neuf (€)</x-Form.Label>
-                        <x-Form.Input id="real-cost" name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}"/>
+                        <div class="relative flex inline-flex w-full">
+                            <x-Form.Label for="real-cost" block required>Prix neuf (€)</x-Form.Label>
+                            <x-Utils.Convert inputId="real-cost" onClick="updatePrices(true)"/>
+                        </div>
+                        <x-Form.Input id="real-cost" name="real_cost" placeholder="20.50" value="{{ old('real_cost') }}" onFocusOut="updatePrices()"/>
                     </div>
                 </div>
                 <div class="w-2/3">
@@ -169,7 +175,10 @@
                         @enderror
                     </div>
                     <div class="w-1/2">
-                        <x-Form.Label for="cost" block required>Coût (€)</x-Form.Label>
+                        <div class="relative flex inline-flex w-full">
+                            <x-Form.Label for="cost" block required>Coût (€)</x-Form.Label>
+                            <x-Utils.Convert inputId="cost"/>
+                        </div>
                         <x-Form.Input name="cost" type="text" placeholder="Ce produit m'a coûté..." value="{{ old('cost') }}"/>
                     </div>
                 </div>

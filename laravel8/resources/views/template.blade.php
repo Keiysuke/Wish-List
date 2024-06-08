@@ -162,6 +162,20 @@
             });
         }
 
+        function lsConvert(){
+            document.getElementById('ls-convert-result').value = (document.getElementById('ls-convert-text').value * 0.92445).toFixed(4);
+        }
+
+        /**
+         * Met à jour un montant en utilisant le convertisseur
+         * @param string Id du champs qui contient la valeur à convertir
+        */
+        function getConvertPrice(inputId){
+            document.getElementById('ls-convert-text').value = document.getElementById(inputId).value;
+            lsConvert();
+            document.getElementById(inputId).value = document.getElementById('ls-convert-result').value;
+        }
+
         function deleteNotif(id) {
             getFetch('notifications/' + id + '/delete')
             .then(results => {
