@@ -29,11 +29,11 @@ class VideoGameController extends Controller
         $buildRequest = VideoGame::query();
         // if($request->path() === 'video_games/user'){
         //     $buildRequest->whereHas('users', function($query){
-        //         $query->where('user_id', '=', Auth::user()->id);
+        //         $query->where('user_id', '=', auth()->user()->id);
         //     });
         // }else{
         //     $buildRequest->whereHas('users', function($query){
-        //         $query->where('user_id', '<>', Auth::user()->id);
+        //         $query->where('user_id', '<>', auth()->user()->id);
         //     });
         // }
 
@@ -80,12 +80,12 @@ class VideoGameController extends Controller
 
             // if($request->url === 'video_games/user'){
             //     $buildRequest->whereHas('users', function($query){
-            //         $query->where('user_id', '=', Auth::user()->id);
+            //         $query->where('user_id', '=', auth()->user()->id);
             //     });
             // }else{
             //     $buildRequest->whereHas('users', function($query){
             //         $query->whereNotIn('product_id', function($query){
-            //             $query->select('product_id')->from('product_users')->where('user_id', '=', Auth::user()->id);
+            //             $query->select('product_id')->from('product_users')->where('user_id', '=', auth()->user()->id);
             //         });
             //     })->orWheredoesntHave('users');
             // }

@@ -13,7 +13,7 @@
         <h1>Création d'une liste</h1>
         <hr/>
 
-        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user-id"/>
+        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id" id="user-id"/>
         <div class="flex gap-4">
             <div class="w-8/12">
                 <x-Form.Label for="label" block required>Nom de la liste</x-Form.Label>

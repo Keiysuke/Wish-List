@@ -27,7 +27,7 @@
         </div>
         <hr/>
         
-        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user-id"/>
+        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id" id="user-id"/>
         <div class="flex justify-between gap-4 mb-4">
             <div class="flex gap-4 w-2/5">
                 <div class="w-1/10">

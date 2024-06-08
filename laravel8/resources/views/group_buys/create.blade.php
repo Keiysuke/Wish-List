@@ -22,7 +22,7 @@
         <h1>Création d'un achat groupé</h1>
         <hr/>
 
-        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user-id"/>
+        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id" id="user-id"/>
         
         <div class="flex justify-center gap-4 mb-4">
             <div class="w-4/12">

@@ -54,7 +54,7 @@
         <h1>Ajout de produit</h1>
         <hr/>
 
-        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id" id="user-id"/>
+        <input type="hidden" value="{{ auth()->user()->id }}" name="user_id" id="user-id"/>
         <div class="flex gap-4">
             <div class="flex flex-col items-center w-2/12">
                 <input type="file" accept="image/*" id="photo-1" name="photo_1" class="hidden" onchange="loadFile(event)">

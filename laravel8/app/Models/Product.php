@@ -12,8 +12,6 @@ use App\Models\Selling;
 use App\Models\ProductPhoto;
 use App\Models\Listing;
 use App\Models\Tag;
-use App\Models\VideoGame;
-use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -109,13 +107,13 @@ class Product extends Model
 
     public function following(){
         $this->following = count(User::whereHas('products', function($query){
-            $query->where('user_id', '=', Auth::user()->id)
+            $query->where('user_id', '=', auth()->user()->id)
                 ->where('product_id', '=', $this->id);
         })->get()) >= 1;
     }
 
     public function createdBy(){
-        $this->created = $this->created_by == Auth::user()->id;
+        $this->created = $this->created_by == auth()->user()->id;
     }
 
     public function setFirstPhoto(){
