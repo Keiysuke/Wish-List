@@ -4,6 +4,8 @@
     @foreach($notifs as $notif)
         @if(in_array($notif->type, ['App\Notifications\ProductSoonAvailable', 'App\Notifications\ProductSoonExpire']))
             @include("partials.notifs.products.soon", $notif)
+        @elseif(in_array($notif->type, ['App\Notifications\MissingPhotos']))
+            @include("partials.notifs.products.no_photos", $notif)
         @elseif(in_array($notif->type, ['App\Notifications\FriendRequest']))
             @include("partials.notifs.requests.friend", $notif)
         @elseif(in_array($notif->type, ['App\Notifications\ShareList']))

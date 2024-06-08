@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Notifications\MissingPhotos;
 use App\Notifications\ProductSoonAvailable;
 use App\Notifications\ProductSoonExpire;
 use Carbon\Carbon;
@@ -50,6 +51,19 @@ class NotificationsController extends Controller
                     }
                 }
             }
+        }
+        $this->checkMissingPhotos();
+    }
+
+    public function checkMissingPhotos(){
+        $buildRequest = Product::query();
+        $buildRequest->doesntHave('photos');
+        $products = $buildRequest->orderBy('label')->get();
+
+        foreach($products as $product){
+            $user = $product->creator();
+            $exist = $user->notifications()->where('type', '=', 'App\Notifications\MissingPhotos')->whereJsonContains('data->product_id', $product->id)->first();
+            if(!$exist) $user->notify(new MissingPhotos($product, $user));
         }
     }
 }

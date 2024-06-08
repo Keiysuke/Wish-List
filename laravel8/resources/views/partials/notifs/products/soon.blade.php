@@ -1,4 +1,3 @@
-
 @php($expire = strcmp($notif->type, 'App\Notifications\ProductSoonExpire'))
 <x-Notif 
     :notif="$notif" 

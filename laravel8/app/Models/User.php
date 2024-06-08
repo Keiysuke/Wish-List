@@ -67,7 +67,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function createdProducts(){
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class, 'created_by');
     }
     
     public function sellings(){

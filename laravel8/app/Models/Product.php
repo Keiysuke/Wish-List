@@ -49,7 +49,7 @@ class Product extends Model
     }
     
     public function creator(){
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class, 'id', 'created_by')->first();
     }
     
     public function purchases(){

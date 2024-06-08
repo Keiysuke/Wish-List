@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\ProductWebsite;
 use App\Models\User;
@@ -48,11 +46,12 @@ class ProductSoonExpire extends Notification
     public function toArray($notifiable)
     {
         $days = Carbon::createFromFormat('Y-m-d H:i:s', $this->productWebsite->expiration_date)->diffInDays(Carbon::now());
+        $this->productWebsite->product->setFirstPhoto();
         return [
             'product_label' => $this->productWebsite->product->label,
             'days' => $days,
             'expiration_date' => $this->productWebsite->expiration_date,
-            'product_photo' => $this->productWebsite->product->photos->first()->label,
+            'product_photo' => $this->productWebsite->product->pict,
             'product_id' => $this->productWebsite->product_id,
             'product_website_id' => $this->productWebsite->id,
             'user_id' => $this->user->id,
