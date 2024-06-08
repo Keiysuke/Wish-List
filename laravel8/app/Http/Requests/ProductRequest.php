@@ -29,7 +29,7 @@ class ProductRequest extends FormRequest
             ]);
         }
         //A la création, on oblige la présence de l'upload de la photo mais pas à l'édition
-        if($this->has('expiration_date')) $rules['photo_1'] = 'image|required';
+        // if($this->has('expiration_date')) $rules['photo_1'] = 'image|required';
         return $rules;
     }
 }

@@ -65,4 +65,11 @@ class ProductPhotoController extends Controller
         }
         return redirect()->route('products.show', $product->id)->with('info', __('Photos have been edited.'));
     }
+
+    public static function getPhotoLink($photo, $dir = ''){
+        if (is_null($photo)) {
+            return 'resources/images/no_pict.png';
+        }
+        return $dir.$photo->label;
+    }
 }

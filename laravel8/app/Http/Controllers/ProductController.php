@@ -56,7 +56,7 @@ class ProductController extends Controller
     public function setProductPurchases(&$products){
         foreach($products as $product){
             $product->url = route('products.show', $product->id);
-            $product->pict = asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label);
+            $product->setFirstPhoto();
             $product->description = strlen($product->description) > 450 ? substr($product->description, 0, 450).'...': $product->description;
             $product->nb_purchases = count($product->purchases);
             $product->nb_resells = 0;
@@ -295,8 +295,10 @@ class ProductController extends Controller
             'real_cost' => str_replace(',', '.', $request->real_cost),
         ]);
         $product->save();
-        //Adding the photo
-        (new UploadController)->storePhoto($request, 1, $product);
+        
+        if (UtilsController::checkKeyExistingInArray($request, 'photo_')) {//Adding the photo
+            (new UploadController)->storePhoto($request, 1, $product);
+        }
         $info = __('The product has been created.');
         //Adding the potential tags
         $tagIds = $request->tag_ids ?? [];
@@ -337,6 +339,7 @@ class ProductController extends Controller
     public function show(Product $product){
         $product->createdBy();
         $product->following();
+        $product->setFirstPhoto();
         $productWebsites = $product->productWebsites()->orderBy('price')->get();
         $purchases = $product->purchases()->orderBy('date')->get();
         $photos = $product->photos()->orderBy('ordered')->get();

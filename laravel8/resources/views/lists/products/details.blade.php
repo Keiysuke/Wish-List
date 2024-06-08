@@ -5,7 +5,7 @@
             <div class="list_product flex justify-between h-full border rounded hover:shadow-lg transition ease-in-out duration-150" id="list-{{ isset($list)? $list->id : '' }}-product-{{ $product->id }}">
                 <div class="relative w-1/12 {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                     <a href="{{ route('products.show', $product->id) }}">
-                        <div class="product-pict rounded rounded-r-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                        <div class="product-pict rounded rounded-r-none" style="background-image: url({{ $product->pict }})"></div>
                     </a>
                 </div>
                 <div class="flex flex-col w-11/12 {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">

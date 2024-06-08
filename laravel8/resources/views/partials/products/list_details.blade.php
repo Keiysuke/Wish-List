@@ -5,7 +5,7 @@
                 <div class="relative w-1/5 {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                     <a href="{{ route('products.show', $product->id) }}">
                         <div class="product-price">{{ $product->real_cost }} €</div>
-                        <div class="product-pict rounded rounded-r-none" style="height: 11rem; background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                        <div class="product-pict rounded rounded-r-none" style="height: 11rem; background-image: url({{ $product->pict }})"></div>
                     </a>
                 </div>
                 <div class="flex flex-col w-4/5 {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">

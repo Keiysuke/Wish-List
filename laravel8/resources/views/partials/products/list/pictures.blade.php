@@ -3,7 +3,7 @@
         <div class="flex justify-center items-center absolute h-full w-full">
             <x-svg.big.zoom_in id="big-img-zoom" class="w-20 hidden pointer-events-none"/>
         </div>
-        <img id="big-img" class="cursor-pointer object-contain {{ count($photos) === 1 ? 'pr-1' : '' }}" src="{{ asset($dir.$photos->first()->label) }}"/>
+        <img id="big-img" class="cursor-pointer object-contain {{ count($photos) === 1 ? 'pr-1' : '' }}" src="{{ $firstPhoto }}"/>
     </div>
     @if(count($photos) > 1)
         <div class="flex flex-col w-1/5 gap-2 overflow-x-hidden overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-red-500 scrollbar-track-red-200 scrollbar-thumb-rounded pr-1" style="height:450px;">

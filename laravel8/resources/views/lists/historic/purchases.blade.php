@@ -45,7 +45,8 @@
                         </p>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         @foreach ($data->purchases as $purchase)
-                            @php($img = asset(config('images.path_products').'/'.$purchase->product_id.'/'.$purchase->product->photos()->firstWhere('ordered', 1)->label))
+                            @php($purchase->product->setFirstPhoto())
+                            @php($img = asset($purchase->product->pict))
                             <div class="flex justify-center gap-4 border-1 border-gray-300" id="purchase_{{ $purchase->id }}">
                                 <div class="flex flex-col items-center relative">
                                     <a href="{{ route('products.show', $purchase->product_id) }}">

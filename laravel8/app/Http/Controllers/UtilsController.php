@@ -55,4 +55,13 @@ class UtilsController extends Controller
         $etc = (strlen($msg) > $siz) ? '...' : '';
         return substr($msg, 0, $siz) . $etc;
     }
+
+    public static function checkKeyExistingInArray($tab, $find){
+        foreach ($tab as $k => $v) {
+            if (strpos($k, $find) === 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

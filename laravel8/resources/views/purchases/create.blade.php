@@ -31,7 +31,7 @@
         <div class="flex justify-between gap-4 mb-4">
             <div class="flex gap-4 w-2/5">
                 <div class="w-1/10">
-                    <img src="{{ asset($dir.$product->photos->firstWhere('ordered', 1)->label) }}" class="h-20"/>
+                    <img src="{{ $product->pict }}" class="h-20"/>
                 </div>
                 <div class="w-9/10">
                     <input type="hidden" value="{{ $product->id }}" name="product_id" id="product-id"/>

@@ -16,6 +16,7 @@ class PurchaseController extends Controller
 
     public function create(Product $product){
         $product->best_offer = $product->bestWebsiteOffer();
+        $product->pict = asset(ProductPhotoController::getPhotoLink($product->photos->firstWhere('ordered', 1)));
         $today = DateService::today();
         return view('purchases.create', compact('product', 'today'));
     }

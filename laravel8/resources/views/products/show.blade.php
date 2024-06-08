@@ -6,7 +6,7 @@
 @endsection
 
 @section('absolute_content')
-    @include('partials.products.zoom_pictures', ['dir' => $dir, 'photos' => $photos])
+    @include('partials.products.zoom_pictures', ['dir' => $dir, 'photos' => $photos, 'firstPhoto' => $product->pict])
     @include('partials.products.my_lists', ['id' => $product->id, 'product_id' => $product->id])
 @endsection
 
@@ -22,9 +22,11 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     let cur_pict = 1;
-    setInterval(() => {
-        changePictures();
-    }, 4000);
+    if (document.getElementById('nb-max-pict').value > 1) {
+        setInterval(() => {
+            changePictures();
+        }, 4000);
+    }
 
     function changePictures() {
         if (++cur_pict > document.getElementById('nb-max-pict').value) {
@@ -77,6 +79,9 @@
     }
 
     function toggleZoomPictures(i = 1){
+        if (document.getElementById('img-zoom-sec'+i) == null) {
+            return
+        }
         event.stopPropagation();
         document.getElementById('img-zoom-main').setAttribute('src', document.getElementById('img-zoom-sec'+i).getAttribute('src'));
         document.getElementById('content-img-zoomed').classList.toggle('hidden');
@@ -169,7 +174,7 @@
     </div>
     <div class="flex justify-between h-full divide-x-2 {{ (count($purchases) > 0 && session()->has('info'))? 'pb-32' : 'pb-12' }}">
         <div class="{{ (count($photos) > 1)? 'w-1/3' : 'w-1/4' }}">
-            @include('partials.products.list.pictures', [$photos, 'dir' => $dir])
+            @include('partials.products.list.pictures', [$photos, 'dir' => $dir, 'firstPhoto' => $product->pict])
         </div>
         <div class="{{ (count($photos) > 1)? 'w-2/3' : 'w-3/4' }}">
             <div class="flex flex-col justify-between h-full gap-8 p-4 pt-0">

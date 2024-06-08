@@ -13,7 +13,7 @@
                     @endif --}}
                     <div class="top relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                         <div class="product-price">{{ $product->real_cost }} €</div>
-                        <div class="product-pict rounded rounded-b-none" style="background-image: url({{ asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                        <div class="product-pict rounded rounded-b-none" style="background-image: url({{ $product->pict }})"></div>
                     </div>
                     <div class="down flex flex-col justify-between h-full font-semibold text-center {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">
                         <p class="my-2 text-black">{{ (strlen($product->label) > 50)? substr($product->label, 0, 50).'...' : $product->label }}</p>

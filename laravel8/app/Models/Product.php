@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\ProductPhotoController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -12,6 +13,7 @@ use App\Models\ProductPhoto;
 use App\Models\Listing;
 use App\Models\Tag;
 use App\Models\VideoGame;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -107,13 +109,25 @@ class Product extends Model
 
     public function following(){
         $this->following = count(User::whereHas('products', function($query){
-            $query->where('user_id', '=', \Auth::user()->id)
+            $query->where('user_id', '=', Auth::user()->id)
                 ->where('product_id', '=', $this->id);
         })->get()) >= 1;
     }
 
     public function createdBy(){
-        $this->created = $this->created_by == \Auth::user()->id;
+        $this->created = $this->created_by == Auth::user()->id;
+    }
+
+    public function setFirstPhoto(){
+        $firstPhoto = $this->photos()->firstWhere('ordered', 1);
+        $photo = ProductPhotoController::getPhotoLink($firstPhoto);
+        if (is_null($firstPhoto)) {
+            $linkPhoto = asset($photo);
+        } else {
+            $linkPhoto = asset(config('images.path_products').'/'.$this->id.'/'.$photo);
+        }
+
+        $this->pict = asset($linkPhoto);
     }
 
     public function description($length = 1000){
