@@ -90,7 +90,7 @@
         @if(!is_null($product))
             <div class="w-1/5">
                 <div id="product-picture" class="flex justify-center">
-                    <img id="big-img" class="pr-1" src="{{ asset($dir.$photos->first()->label) }}"/>
+                    <img id="big-img" class="pr-1" src="{{ $product->pict }}"/>
                 </div>
             </div>
         @endif

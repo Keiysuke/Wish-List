@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductAsVideoGame;
 use App\Models\VgSupport;
-use App\Models\VideoGame;
-use Illuminate\Http\Request;
 
 class ProductTemplateController extends Controller
 {

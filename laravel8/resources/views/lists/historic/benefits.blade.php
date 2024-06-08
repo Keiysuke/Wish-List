@@ -18,11 +18,12 @@
                 </thead>
                 <tbody>
                 @foreach($datas as $k => $data)
+                    @php($data->product->setFirstPhoto())
                     <tr tabindex="0" class="focus:outline-none border border-gray-100 rounded">
                         <x-Tables.Td label="# {{ $k }}" class="text-center"/>
                         <x-Tables.Td>
                             <a href="{{ route('products.show', $data->product_id) }}">
-                                <img class="h-10" src="{{ asset(config('images.path_products').'/'.$data->product_id.'/'.$data->product->photos()->firstWhere('ordered', 1)->label) }}"/>
+                                <img class="h-10" src="{{ $data->product->pict }}"/>
                             </a>
                         </x-Tables.Td>
                         <x-Tables.Td :label="$data->product->label" class="text-xs"/>

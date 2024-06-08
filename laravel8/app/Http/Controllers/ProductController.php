@@ -23,10 +23,10 @@ class ProductController extends Controller
 {
     private $nb_page_results = 15;
 
-    public function getPicture(int $productId){
-        $photo = ProductPhoto::where('product_id', '=', $productId)->first();
-        $returnHTML = asset(config('images.path_products').'/'.$productId.'/'.$photo->label);
-        return response()->json(['success' => true, 'html' => $returnHTML, 'link' => route('products.show', $productId)]);
+    public function getPicture(int $id){
+        $product = Product::find($id);
+        $product->setFirstPhoto();
+        return response()->json(['success' => true, 'html' => $product->pict, 'link' => route('products.show', $id)]);
     }
 
     public function setProductWebsites(&$products){
@@ -387,6 +387,7 @@ class ProductController extends Controller
     }
 
     public function edit(Product $product){
+        $product->setFirstPhoto();
         return view('products.edit', compact('product'));
     }
     

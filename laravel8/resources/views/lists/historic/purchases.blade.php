@@ -8,9 +8,10 @@
             @endif
             <div class="flex justify-between h-full border rounded hover:shadow-lg transition ease-in-out duration-150" id="element-{{ $data->kind.'-'.$data->id }}">
                 @if($data->simple)
+                    @php($data->product->setFirstPhoto())
                     <div class="relative w-1/12">
                         <a href="{{ route('products.show', $data->product_id) }}">
-                            <div class="product-pict rounded rounded-r-none" style="background-image: url({{ asset(config('images.path_products').'/'.$data->product_id.'/'.$data->product->photos()->firstWhere('ordered', 1)->label) }})"></div>
+                            <div class="product-pict rounded rounded-r-none" style="background-image: url({{ $data->product->pict }})"></div>
                         </a>
                     </div>
                     <div class="flex flex-col w-11/12">

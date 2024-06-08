@@ -103,7 +103,7 @@
         
         <div class="flex gap-4 mb-4">
             <div class="w-2/12 flex justify-center items-center">
-                <img src="{{ asset($dir.$product->photos->firstWhere('ordered', 1)->label) }}" class="h-40"/>
+                <img src="{{ $product->pict }}" class="h-40"/>
             </div>
             <div class="flex flex-col w-7/12 gap-4">
                 <div>

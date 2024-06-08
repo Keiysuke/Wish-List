@@ -1,4 +1,5 @@
 @php($first = $product ?? $products->first())
+@php($first->setFirstPhoto())
 @php($existingPurchase = old('product_bought_exists_'.$nb, ($editPurchase->id ?? null)))
 <div id="product-bought-{{ $nb }}">
     <div class="flex gap-4">
@@ -10,7 +11,7 @@
         </div>
         <div class="flex justify-center w-1/12">
             <a href="{{ route('products.show', $first->id) }}" target="_blank" id="product-link-{{ $nb }}">
-                <img id="img-product-bought-{{ $nb }}" class="h-20" src="{{ asset(config('images.path_products').'/'.$first->id.'/'.$first->photos()->first()->label) }}"/>
+                <img id="img-product-bought-{{ $nb }}" class="h-20" src="{{ $first->pict }}"/>
             </a>
         </div>
         <div class="w-6/12">

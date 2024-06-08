@@ -2,12 +2,11 @@
     @if(count($videoGames) > 0)
         @foreach($videoGames as $videoGame)
             @php($product = $videoGame->product())
-            @php($photo = is_null($product)? asset('resources/images/no_pict.png') : asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label))
             <a href="{{ route('video_games.show', $videoGame->id) }}">
                 <div class="grid_video_game flex flex-col justify-between shadow border rounded h-full transform hover:-rotate-3 hover:shadow-xl transition ease-in-out duration-150">
                     <div class="top relative">
                         <div class="video-game-price">{{ is_null($product)? '??' : $product->real_cost }} €</div>
-                        <div class="video-game-img rounded rounded-b-none" style="background-image: url({{ $photo }})"></div>
+                        <div class="video-game-img rounded rounded-b-none" style="background-image: url({{ $videoGame->pict }})"></div>
                     </div>
                     <div class="down flex flex-col justify-between h-full font-semibold text-center">
                         <p class="my-2 text-black">{{ (strlen($videoGame->label) > 50)? substr($videoGame->label, 0, 50).'...' : $videoGame->label }}</p>

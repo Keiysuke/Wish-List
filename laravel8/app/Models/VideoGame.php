@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\ProductPhotoController;
 use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,13 +31,26 @@ class VideoGame extends Model
     }
 
     public function product(){
-        $products = $this->products;
-        return (count($products) > 0)? $products->first()->product : null;
+        $this->setFirstPhoto();
+        if (count($this->products) > 0) {
+            return $this->products->first()->product;
+        }
+        return null;
     }
     
     public function support(){
         $products = $this->products;
         return (count($products) > 0)? $products->first()->support : null;
+    }
+
+    public function setFirstPhoto(){
+        if (count($this->products) > 0) {
+            $product = $this->products->first()->product;
+            $product->setFirstPhoto();
+            $this->pict = $product->pict;
+        } else {
+            $this->pict = asset(ProductPhotoController::getPhotoLink(null));
+        }
     }
 
     /** 

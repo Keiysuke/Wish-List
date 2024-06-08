@@ -2,11 +2,10 @@
     @if(count($videoGames) > 0)
         @foreach($videoGames as $videoGame)
             @php($product = $videoGame->product())
-            @php($photo = is_null($product)? asset('resources/images/no_pict.png') : asset(config('images.path_products').'/'.$product->id.'/'.$product->photos()->firstWhere('ordered', 1)->label))
             <div class="list_video_game flex justify-between h-full shadow border rounded hover:shadow-lg transition ease-in-out duration-150">
                 <div class="relative w-1/3">
                     <a href="{{ route('video_games.show', $videoGame->id) }}">
-                        <div class="video-game-img rounded rounded-r-none" style="height: 10rem; background-image: url({{ $photo }})"></div>
+                        <div class="video-game-img rounded rounded-r-none" style="height: 10rem; background-image: url({{ $videoGame->pict }})"></div>
                     </a>
                 </div>
                 <div class="flex flex-col w-2/3">
