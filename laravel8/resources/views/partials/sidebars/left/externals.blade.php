@@ -25,16 +25,20 @@
             </a>
         </div>
         <div class="flex gap-2">
-            <x-Form.Input name="sbYtText" type="text" placeholder="Recherche sur Youtube"/>
-            <x-Form.Btn type="submit" color="red"><x-svg.search class="icon-sm"/></x-Form.Btn>
+            <x-Form.Input name="sb_yt_text" type="text" placeholder="Recherche sur Youtube"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="yt" color="red"><x-svg.search class="icon-sm"/></x-Form.Btn>
         </div>
         <div class="flex gap-2">
-            <x-Form.Input name="sbPsthcText" type="text" placeholder="Recherche sur PSTHC"/>
-            <x-Form.Btn type="submit" color="yellow"><x-svg.big.trophy class="icon-sm text-black"/></x-Form.Btn>
+            <x-Form.Input name="sb_psthc_text" type="text" placeholder="Recherche sur PSTHC"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="psthc" color="yellow"><x-svg.big.trophy class="icon-sm text-black"/></x-Form.Btn>
         </div>
         <div class="flex gap-2">
-            <x-Form.Input name="sbOfferText" type="text" placeholder="Dénicher des offres"/>
-            <x-Form.Btn type="submit"><x-svg.big.euro class="icon-sm text-white"/></x-Form.Btn>
+            <x-Form.Input name="sb_offer_text" type="text" placeholder="Dénicher des offres"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="offer"><x-svg.big.euro class="icon-sm text-white"/></x-Form.Btn>
+        </div>
+        <div class="flex gap-2">
+            <x-Form.Input name="sb_pictures_text" type="text" placeholder="Rechercher des images"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="pictures" color="green"><x-svg.big.picture class="icon-sm text-black"/></x-Form.Btn>
         </div>
     </div>
 </div>

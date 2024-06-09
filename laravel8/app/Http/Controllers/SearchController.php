@@ -7,6 +7,8 @@ use App\Models\Listing;
 use App\Models\Product;
 use App\Models\VgSupport;
 use App\Models\VideoGame;
+use App\Services\SearchService;
+use Illuminate\Validation\Rule;
 
 class SearchController extends Controller
 {
@@ -58,5 +60,17 @@ class SearchController extends Controller
             }
         }
         return response()->json($data);
+    }
+
+    public function externalSearch(Request $request)
+    {
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'kind' => ['bail', 'required', Rule::in(array_keys(SearchService::KINDS))],
+                'search' => 'bail|required|string'
+            ]);
+
+            return response()->json(['success' => true, 'link' => SearchService::getLink($request->kind, $request->search)]);
+        }
     }
 }

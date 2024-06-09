@@ -1,3 +1,3 @@
-<a {{ $attributes }} title="{{ $title ?? "Rechercher des images" }}" href="https://www.google.com/search?q={{ str_replace(' ', '+', $search) }}&sca_esv=4ce04de13f7e18f6&sca_upv=1&rlz=1C1CHBF_frFR906FR906&udm=2&biw=1920&bih=919&sxsrf=ADLYWILvwrDl4z_fWxSF3uhbyxGNWIO59Q%3A1717787401594&ei=CVtjZo7uI8itkdUP5aO4wA4&ved=0ahUKEwjOlvzemMqGAxXIVqQEHeURDugQ4dUDCBA&uact=5&oq=The+Essential+Games+Music+Collection&gs_lp=Egxnd3Mtd2l6LXNlcnAiJFRoZSBFc3NlbnRpYWwgR2FtZXMgTXVzaWMgQ29sbGVjdGlvbjIHEAAYgAQYGEjWBlAAWABwAXgAkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAICmAMAiAYBkgcBMaAHAA&sclient=gws-wiz-serp" target="_blank" class="title-icon cursor-pointer inline-flex {{ $class ?? '' }}">
+<a {{ $attributes }} title="{{ $title ?? "Rechercher des images" }}" href="{{ MySearch::getLink('pictures', $search) }}" target="_blank" class="title-icon cursor-pointer inline-flex {{ $class ?? '' }}">
     <x-svg.search class="icon-xs"/>
 </a>

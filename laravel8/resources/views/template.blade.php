@@ -176,7 +176,7 @@
             document.getElementById(inputId).value = document.getElementById('ls-convert-result').value;
         }
 
-        function deleteNotif(id) {
+        function deleteNotif(id){
             getFetch('notifications/' + id + '/delete')
             .then(results => {
                 my_notyf(results);
@@ -185,6 +185,29 @@
                 if (document.getElementById('nb-notif').innerHTML == 0) {
                     closeSubmenu('bell');
                 }
+            });
+        }
+
+                                                            /* Sidebar */
+        Array.from(document.getElementsByClassName('sb-search')).forEach(el => { el.addEventListener('click', (el) => {
+                sbSearch(el.target.dataset.kind);
+            }); 
+        });
+        function sbSearch(kind){
+            let input = document.getElementById('sb-'+kind+'-text')
+            if(input == null){
+                notyfJS('Le champ de recherche n\'a pu être identifié', 'error');
+                return;
+            }
+            myFetch('{{ route('externalSearch') }}', {method: 'post', csrf: true}, {
+                kind: kind,
+                search: document.getElementById('sb-'+kind+'-text').value,
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                window.open(results.link);
+            }).catch(error => {
+                notyfJS(error, 'error'); // Gérer les erreurs
             });
         }
 

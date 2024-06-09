@@ -84,6 +84,7 @@
         <a target="_blank" href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
         <a target="_blank" href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
         <a target="_blank" href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
+        <a target="_blank" href="https://ledenicheur.fr/">{{ __('Dénicheur de produits') }}</a>
     </div>
     <div id="subicon-bell" class="subicon flex justify-end gap-2">
         @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])

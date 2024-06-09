@@ -1,7 +1,7 @@
 <a 
     {{ $attributes }} 
     title="{{ $title ?? "Voir les succès" }}" 
-    href="{{ \App\Http\Controllers\UtilsController::psthc($search, $support) }}/liste-trophees.htm" 
+    href="{{ MySearch::getLink('psthc', $search) }}" 
     target="_blank" 
     class="title-icon trophy inline-flex {{ $class ?? '' }}"
     >

@@ -1,5 +1,7 @@
 <?php
 
+use App\Facades\MySearchFacade;
+
 return [
 
     /*
@@ -231,6 +233,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'EloquentBuilder' => Fouladgar\EloquentBuilder\Facade::class,
+        'MySearch' => App\Facades\MySearchFacade::class,
 
     ],
 

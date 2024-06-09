@@ -29,22 +29,6 @@ class UtilsController extends Controller
         return ($price*11.08)/100;
     }
 
-    public static function psthc($search, $support = 'ps4') {
-        $replace = [
-            ' ' => '-', 
-            "&#039;s" => '', 
-            ':' => '',
-            'of ' => '',
-        ];
-        $search = strtolower(strtr($search, $replace));
-        $s = '';
-        foreach(explode('-', $search) as $term){
-            if(!strcmp($term, intval($term))) $s .= $term;
-            else $s .= $term.'-';
-        }
-        return 'https://www.psthc.fr/unjeu/' . $s . strtolower($support);
-    }
-
     public function linkVgToProduct(int $vgId, int $vgSupportId = 0){
         $vgSupportId = $vgSupportId == 0 ? null : $vgSupportId;
         $vg = VideoGame::find($vgId);

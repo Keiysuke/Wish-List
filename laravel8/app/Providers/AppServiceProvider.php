@@ -19,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'App\Repositories\PhotosRepositoryInterface',
-            'App\Repositories\PhotosRepository'
+            'App\Repositories\PhotosRepository',
+            'App\Services\SearchService'
         );
     }
 

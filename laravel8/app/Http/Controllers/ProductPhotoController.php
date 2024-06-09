@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductPhoto;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -26,6 +27,9 @@ class ProductPhotoController extends Controller
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) return back()->withInput($request->input())->withErrors($validator->errors());
         
+        //On met à jour les notifications au sujet des photos du produit
+        $this->delNotifMissingPhoto($product);
+
         $dir = config('images.path_products').'/'.$product->id;
         //Suppression des photos
         $deletedPhotos = $product->photos()->where('ordered', '>', $request->nb_photos)->get();
@@ -71,5 +75,13 @@ class ProductPhotoController extends Controller
             return 'resources/images/no_pict.png';
         }
         return $dir.$photo->label;
+    }
+
+    public static function delNotifMissingPhoto($product){
+        $user = User::find(auth()->user()->id);
+        $notif = $user->notifications()->where('type', '=', 'App\Notifications\MissingPhotos')->whereJsonContains('data->product_id', $product->id)->first();
+        if(!is_null($notif)){
+            $notif->delete();
+        }
     }
 }
