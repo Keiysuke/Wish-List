@@ -1,0 +1,1 @@
+<span class="text-purple-400">{{ isset($public) ? 'public' : 'private' }} function <span class="text-blue-500">{{ $name }}</span>({{ $slot }}) {</span>

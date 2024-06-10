@@ -7,11 +7,13 @@
 @php($elements = ['x-Notification'])
 <x-admin.help.list_helpers :elements="$elements"/>
 
-<x-Notification type="success" msg="Exemple de message d'action réussie" example/>
-<x-Notification type="error" msg="Exemple de message d'action echouée" example/>
+<div class="grid grid-cols-2 gap-4">
+    <x-Notification type="success" msg="Exemple de message d'action réussie" example/>
+    <x-Notification type="error" msg="Exemple de message d'action echouée" example/>
+</div>
 
 <h3>2. Les notifications en attente</h3>
-@php($elements = ['NotificationService', 'x-Notif'])
+@php($elements = ['App/Notifications', 'NotificationsController', 'NotificationService', 'x-Notif'])
 <x-admin.help.list_helpers :elements="$elements"/>
 
 <div class="grid grid-cols-3 gap-4">
@@ -24,7 +26,14 @@
     @endforeach
 </div>
 
-<h3>2. Les notifications dynamiques</h3>
+<x-Window.Coding class="mt-4 w-10/12" title="Supprimer une notification d'un utilisateur" major="auth()->user() | ->notifications() | ->whereJsonContains">
+    auth()->user()->notifications()->where('type', '=', 'App\Notifications\FriendRequest')<br />
+        ->whereJsonContains('data->user_id', $userId)<br />
+        ->first()<br />
+        ->delete();<br />
+</x-Window.Coding >
+
+<h3>3. Les notifications dynamiques</h3>
 @php($elements = ['my_notyf.js', 'Notyf'])
 <x-admin.help.list_helpers :elements="$elements"/>
 

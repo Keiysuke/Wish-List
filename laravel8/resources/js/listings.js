@@ -121,7 +121,7 @@
         }).then(response => {
             if (response.ok) return response.json()
         }).then(res => {
-            document.getElementById("list-" + listId + "-product-" + productId).remove();
+            document.getElementById("list-" + listId + "-product-" + productId).remove()
             let nb_results = document.getElementById('nb-results').getAttribute('data-nb') - 1
             if (nb_results > 0) {
                 document.getElementById('nb-results').setAttribute('data-nb', nb_results)

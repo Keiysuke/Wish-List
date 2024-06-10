@@ -199,3 +199,11 @@ Route::get('scripts/video_games/product/link', [ScriptsController::class, 'lkAll
 Route::get('design-system', function() {
     return view("pages.design_system")->render();
 })->middleware(['auth', 'verified'])->name('designSystem');
+
+Route::get('design-coding', function() {
+    return view("pages.design_coding")->render();
+})->middleware(['auth', 'verified'])->name('designCoding');
+
+Route::get('coding-examples', function() {
+    return view("pages.coding_examples")->render();
+})->middleware(['auth', 'verified'])->name('codingExamples');

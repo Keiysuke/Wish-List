@@ -1,5 +1,5 @@
 window.myFetch = function (url, headers, datas){
-    const csrf = headers.csrf ? {"X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content} : {};
+    const csrf = headers.csrf ? {"X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content} : {}
     return fetch(url, {
         headers: {
             "Content-Type": "application/json",
@@ -8,7 +8,7 @@ window.myFetch = function (url, headers, datas){
         },
         method: headers['method'],
         body: JSON.stringify(datas)
-    });
+    })
 }
 
 window.getFetch = function (url){
@@ -16,6 +16,6 @@ window.getFetch = function (url){
         headers: {"X-Requested-With": "XMLHttpRequest"},
         method: 'get'
     }).then(response => {
-        if (response.ok) return response.json();
-    });
+        if (response.ok) return response.json()
+    })
 }

@@ -4,24 +4,24 @@
      * @param {event} event - évènement cliqué
     */
     setFriendsTab = function(event = null) {
-        const tab = (event) ? event.target.dataset.kind : 'friends';
+        const tab = (event) ? event.target.dataset.kind : 'friends'
         switch (tab) {
-            case 'friends': searchUser();
-                break;
-            case 'users': searchUser(false);
-                break;
+            case 'friends': searchUser()
+                break
+            case 'users': searchUser(false)
+                break
             case 'my_params':
-                break;
+                break
         }
-        document.getElementById('sbh-friends-icons').dataset.current = tab;
+        document.getElementById('sbh-friends-icons').dataset.current = tab
     }
 
     /**
      * Ferme la fenêtre de profil d'un utilisateur
     */
     closeUserProfile = function() {
-        document.getElementById('user-profile').classList.add('hidden');
-        document.getElementById('user-profile').classList.remove('flex');
+        document.getElementById('user-profile').classList.add('hidden')
+        document.getElementById('user-profile').classList.remove('flex')
     }
 
     /**
@@ -29,25 +29,25 @@
      * @param {event} event - évènement cliqué
     */
     showUserProfile = function(event) {
-        const newId = event.target.dataset.id;
-        const w = document.getElementById('user-profile');
+        const newId = event.target.dataset.id
+        const w = document.getElementById('user-profile')
         if (newId == w.dataset.userId || w.dataset.userId == 0) {
-            w.classList.toggle('hidden');
-            w.classList.toggle('flex');
+            w.classList.toggle('hidden')
+            w.classList.toggle('flex')
         }
-        w.dataset.userId = newId;
+        w.dataset.userId = newId
         //On actualise seulement lorsqu'on affiche un autre user
         if (w.classList.contains('flex')) {
 
             getFetch('user/' + newId + '/profile')
             .then(results => {
-                document.getElementById('user-datas').innerHTML = results.html;
+                document.getElementById('user-datas').innerHTML = results.html
                 if (results.isFriend) {
-                    document.getElementById('delete-friend').addEventListener('click', removeFriend);
+                    document.getElementById('delete-friend').addEventListener('click', removeFriend)
                 } else {
-                    document.getElementById('add-friend').addEventListener('click', addFriend);
+                    document.getElementById('add-friend').addEventListener('click', addFriend)
                 }
-            });
+            })
         }
     }
 
@@ -59,8 +59,8 @@
         const friendId = event.target.dataset.id
         getFetch('user/request/user/' + friendId + '/befriend')
         .then(results => {
-            my_notyf(results);
-        });
+            my_notyf(results)
+        })
     }
 
     /**
@@ -71,12 +71,12 @@
         const userId = event.target.dataset.id
         getFetch('user/friends/' + userId + '/remove')
         .then(results => {
-            my_notyf(results);
+            my_notyf(results)
             if (results.success) {
                 closeUserProfile()
-                document.getElementById('sb-friend-row-' + results.user_id).remove();
+                document.getElementById('sb-friend-row-' + results.user_id).remove()
             }
-        });
+        })
     }
 
     /**
@@ -89,25 +89,25 @@
             is_friend: isFriend,
         }).then(response => {
             if (response.ok) {
-                document.getElementById('search-user').classList.remove('border');
-                return response.json();
+                document.getElementById('search-user').classList.remove('border')
+                return response.json()
             } else {
                 if(response.status == 422) {
-                    document.getElementById('search-user').classList.add('border');
-                    document.getElementById('search-user').classList.add('border-red-500');
+                    document.getElementById('search-user').classList.add('border')
+                    document.getElementById('search-user').classList.add('border-red-500')
                 }
-                return null;
+                return null
             }
         }).then(friends => {
-            document.getElementById('friends-content-results').innerHTML = friends.html;
+            document.getElementById('friends-content-results').innerHTML = friends.html
             Array.from(document.getElementsByClassName('friend-row')).forEach(el => {
-                el.addEventListener('click', showUserProfile);
-            });
+                el.addEventListener('click', showUserProfile)
+            })
             if(friends === null) {
-                document.getElementById('title-friends-content-results').innerHTML = 'Aucun résultat';
+                document.getElementById('title-friends-content-results').innerHTML = 'Aucun résultat'
             } else {
-                document.getElementById('title-friends-content-results').innerHTML = isFriend ? 'Mes amis (' + friends.nb_results + ')' : 'Ajouter des amis';
+                document.getElementById('title-friends-content-results').innerHTML = isFriend ? 'Mes amis (' + friends.nb_results + ')' : 'Ajouter des amis'
             }
-        });
+        })
     }
 })()

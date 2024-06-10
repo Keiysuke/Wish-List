@@ -1,0 +1,1 @@
+@if(isset($protected))<span class="text-purple-400">protected</span>@endif <span class="text-cyan-400">${{ $var }}</span> {{ $slot }}

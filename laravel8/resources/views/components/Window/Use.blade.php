@@ -1,0 +1,1 @@
+<span class="text-orange-700">use </span><span>{{ $slot }}</span>

@@ -8,12 +8,10 @@
     @endsection
 
     <div id="dashboard-table">
-        <x-admin.dashboard_menu menu="design" sub="system"/>
+        <x-admin.dashboard_menu menu="design" sub="coding_examples"/>
         
         <div class="right pb-20">
-            @include("partials.admin.design_system.icons", $icons)
-            @include("partials.admin.design_system.notifs", compact('notifications', 'notyfs'))
-            @include("partials.admin.design_system.form", $colors)
+            @include("partials.admin.coding.examples")
         </div>
     </div>
 </x-app-layout>

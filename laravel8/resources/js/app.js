@@ -1,18 +1,18 @@
-require('./bootstrap');
+require('./bootstrap')
 
-require('alpinejs');
+require('alpinejs')
 
 window.addEventListeners = function(element, events, handler) {
     if (!Array.isArray(events)) {
-        console.error('Les types d\'événements doivent être fournis sous forme de tableau.');
-        return;
+        console.error('Les types d\'événements doivent être fournis sous forme de tableau.')
+        return
     }
 
     events.forEach(function(eventType) {
-        element.addEventListener(eventType, handler);
-    });
+        element.addEventListener(eventType, handler)
+    })
 }
 
 window.scrollDown = function(e) {
-    e.scrollTop = e.scrollHeight;
+    e.scrollTop = e.scrollHeight
 }

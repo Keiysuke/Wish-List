@@ -23,6 +23,7 @@ class DesignService
         ['name' => 'circle_plus', 'sizes' => [true, false]],
         ['name' => 'clipboard_list', 'sizes' => [true, true]],
         ['name' => 'close', 'sizes' => [true, false]],
+        ['name' => 'cmd', 'sizes' => [true, true]],
         ['name' => 'cog', 'sizes' => [true, false]],
         ['name' => 'db', 'sizes' => [false, true]],
         ['name' => 'double_arrow', 'sizes' => [false, true]],
