@@ -74,7 +74,7 @@ class UserController extends Controller
             }
             $datas = $datas->sortBy('date_used', 1, true)->paginate(15);
             $paginator = (object)['cur_page' => $datas->links()->paginator->currentPage()];
-            $datas->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+            $datas->useAjax = true; //Permet l'utilisation du système de pagination en ajax
 
             $returnHTML = view('lists.historic.'.$kind)->with(compact('datas', 'totals', 'paginator'))->render();
             return response()->json(['success' => true, 'html' => $returnHTML]);
@@ -206,7 +206,7 @@ class UserController extends Controller
             }
             $datas = $datas->sortBy(['website_id'], 1, true)->paginate($nb_results);
             $paginator = (object)['cur_page' => $datas->links()->paginator->currentPage()];
-            $datas->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+            $datas->useAjax = true; //Permet l'utilisation du système de pagination en ajax
 
             $returnHTML = view('lists.historic.benefits')->with(compact('datas', 'totals', 'paginator'))->render();
             return response()->json(['success' => true, 'html' => $returnHTML]);

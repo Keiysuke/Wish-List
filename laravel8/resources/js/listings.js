@@ -135,17 +135,22 @@
      * Récupère les produits d'une liste
      * @param {int} listId - Identifiant de la liste
      */
-    getProducts = function (listId) {
+    getProducts = function (listId, pageChanged = false) {
         const oldListId = document.getElementById('list-selected').value
-        if (oldListId == listId) return
+        if (oldListId == listId && !pageChanged) return
 
-        getFetch('lists/' + listId + '/products/show')
-            .then(products => {
+        myFetch('lists/' + listId + '/products/show', {method: 'post', csrf: true}, {
+                user_id: parseInt(document.getElementById('user-id').value),
+                page: document.getElementById('page').value,
+            }).then(response => {
+                if (response.ok) return response.json()
+            }).then(products => {
                 if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined)
                     document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected')
                 document.getElementById('list-selected').value = listId
                 document.getElementById('list-' + listId).classList.toggle('selected')
                 document.getElementById('content-results').innerHTML = products.html
+                document.getElementById('btn-go-up').click();
                 extendListMsg(true)
                 showMessages(products)
             })

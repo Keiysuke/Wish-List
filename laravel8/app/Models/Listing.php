@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\FriendUserController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
@@ -31,7 +32,8 @@ class Listing extends Model
     }
 
     public function getProducts($withExtra = true){
-        $products = app('App\Http\Controllers\ProductController')->getProducts($this->products()->paginate());
+        $products = (new ProductController)->getProducts($this->products()->paginate());
+        $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
         
         if ($withExtra) {
             foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;

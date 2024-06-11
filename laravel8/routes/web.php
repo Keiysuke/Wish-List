@@ -89,7 +89,7 @@ Route::get('sellings/purchase/{purchase}/create', [SellingController::class, 'cr
 Route::get('sellings/{selling}/destroy', [SellingController::class, 'destroy'])->name('sellings.destroy');
 
 Route::get('lists/users/{userId?}', [ListingController::class, 'getUserLists'])->name('showUserLists');
-Route::get('lists/{listId}/products/show', [ListingController::class, 'showProducts'])->name('showListProducts');
+Route::post('lists/{listId}/products/show', [ListingController::class, 'showProducts'])->name('showListProducts');
 Route::post('lists/products/findOthers', [SearchController::class, 'findOtherProducts'])->name('listFindOtherProducts');
 Route::post('lists/products/toggle', [ListingController::class, 'toggleProduct'])->name('toggleProductOnList');
 Route::resource('lists', ListingController::class)->middleware(['auth', 'verified'])->except(['destroy']);

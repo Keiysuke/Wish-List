@@ -47,10 +47,11 @@ class ListingController extends Controller
         
         $messagesHTML = (new MessageService())->show($listId);
         
-        $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends'))->render();
+        $nb_results = $products->links()? $products->links()->paginator->total() : count($products);
+        $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends', 'nb_results'))->render();
         return response()->json([
             'success' => true, 
-            'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 
+            'nb_results' => $nb_results, 
             'html' => $returnHTML,
             'shared_list' => $list->isShared(),
             'htmlMsg' => $messagesHTML

@@ -11,6 +11,7 @@
 @section('css')
     <link href="{{ asset('css/list_products.css') }}" rel="stylesheet">
     <link href="{{ asset('css/lists.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/pagination.css') }}" rel="stylesheet">
 @endsection
 
 @section('js')
@@ -18,6 +19,11 @@
 <script src="{{ asset('js/listings.js') }}"></script>
 <script type="text/javascript">
     showLists({{ auth()->user()->id }});
+
+    function change_page(nb){
+        document.getElementById('page').value = nb;
+        getProducts(document.getElementById('list-selected').value, true);
+    }
 </script>
 @endsection
 
@@ -76,6 +82,8 @@
                 <div id="wrap-list-products" class="extend">
                     <div id="content-results">
                     </div>
+                    <input id="user-id" type="hidden" value="{{ auth()->user()->id }}"/>
+                    <input type="hidden" id="page" name="cur_page" value="{{ isset($products)? $products->links()->paginator->currentPage() : 1 }}">
                 </div>
                 <div id="content-msg">
                 </div>

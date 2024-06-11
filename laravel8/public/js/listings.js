@@ -145,13 +145,23 @@
 
 
   getProducts = function getProducts(listId) {
+    var pageChanged = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var oldListId = document.getElementById('list-selected').value;
-    if (oldListId == listId) return;
-    getFetch('lists/' + listId + '/products/show').then(function (products) {
+    if (oldListId == listId && !pageChanged) return;
+    myFetch('lists/' + listId + '/products/show', {
+      method: 'post',
+      csrf: true
+    }, {
+      user_id: parseInt(document.getElementById('user-id').value),
+      page: document.getElementById('page').value
+    }).then(function (response) {
+      if (response.ok) return response.json();
+    }).then(function (products) {
       if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined) document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected');
       document.getElementById('list-selected').value = listId;
       document.getElementById('list-' + listId).classList.toggle('selected');
       document.getElementById('content-results').innerHTML = products.html;
+      document.getElementById('btn-go-up').click();
       extendListMsg(true);
       showMessages(products);
     });

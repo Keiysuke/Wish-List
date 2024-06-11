@@ -22,6 +22,6 @@
 @if(!empty($list->description))
     <div class="text-sm italic mb-2">{{ $list->description }}</div>
 @endif
-<h2 class="mb-2" id="nb-results" data-nb="{{ count($products) }}">{{ count($products) }} Résultat(s)</h2>
+<h2 class="mb-2" id="nb-results" data-nb="{{ $nb_results }}">{{ $nb_results }} produit(s)</h2>
 
 @include('lists.products.details', $products)

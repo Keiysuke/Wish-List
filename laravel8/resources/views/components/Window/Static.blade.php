@@ -1,0 +1,1 @@
+<span class="text-amber-400">{{ $name }}</span><span class="text-cyan-400">::</span><span class="text-blue-500">{{ $method }}</span>

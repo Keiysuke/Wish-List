@@ -45,7 +45,7 @@ class VideoGameController extends Controller
         }
         
         $paginator = (object)['cur_page' => $videoGames->links()->paginator->currentPage()];
-        $videoGames->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+        $videoGames->useAjax = true; //Permet l'utilisation du système de pagination en ajax
         
         return view('video_games.index', compact('videoGames', 'sortBy', 'filters', 'search', 'paginator'));
     }
@@ -130,7 +130,7 @@ class VideoGameController extends Controller
             $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
 
             $videoGames = $buildRequest->orderBy($sortBy, $request->order_by)->paginate($request->f_nb_results);
-            $videoGames->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+            $videoGames->useAjax = true; //Permet l'utilisation du système de pagination en ajax
             
             $returnHTML = view('partials.video_games.'.$request->list.'_details')->with(compact('videoGames'))->render();
             return response()->json(['success' => true, 'nb_results' => $videoGames->links()? $videoGames->links()->paginator->total() : count($videoGames), 'html' => $returnHTML]);

@@ -100,7 +100,7 @@ class ProductController extends Controller
         // die();
         
         $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
-        $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+        $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
         
         $this->setProductWebsites($products);
         return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
@@ -250,7 +250,7 @@ class ProductController extends Controller
             }
             $buildRequest->where('archived', '=', $request->show_archived);
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
-            $products->use_ajax = true; //Permet l'utilsation du système de pagination en ajax
+            $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
                         
             $returnHTML = view('partials.products.'.$request->list.'_details')->with(['products' => $this->getProducts($products)])->render();
             return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
