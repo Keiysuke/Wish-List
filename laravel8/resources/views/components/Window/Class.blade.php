@@ -1,1 +1,1 @@
-<span class="text-amber-400"><span class="text-purple-400">class</span> {{ $name }} @if(isset($extends))<span class="text-purple-400">extends</span> {{ $extends }}</span>@endif
+<span class="amber"><span class="purple">class</span> {{ $name }} @if(isset($extends))<span class="purple">extends</span> {{ $extends }}</span>@endif

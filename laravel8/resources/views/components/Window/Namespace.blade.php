@@ -1,1 +1,1 @@
-<span class="text-orange-700">namespace </span><span class="text-amber-500">{{ $slot }}</span>
+<span class="orange">namespace </span><span class="amber">{{ $slot }}</span>

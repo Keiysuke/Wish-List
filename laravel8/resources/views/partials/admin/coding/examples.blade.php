@@ -28,7 +28,7 @@
         <br />
         <x-Window.Comment>// Le système de pagination à afficher quand $data > 0<br /></x-Window.Comment>
         < footer id="paginate" class="card-footer flex justify-center p-4"><br />
-            <x-Window.EscapeOutput class="ml-4"><x-Window.Var var="datas"/>->links()<br /></x-Window.EscapeOutput>
+            <x-Window.EscapeOutput class="ml-4"><x-Window.Var var="datas"/>->links()</x-Window.EscapeOutput><br />
         < /footer><br />
     </x-Window.Coding>
 </div>

@@ -1,1 +1,1 @@
-<span class="text-cyan-400">@ {{ $name }}</span>
+<span class="cyan">@ {{ $name }}</span>

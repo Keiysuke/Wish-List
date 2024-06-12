@@ -40,3 +40,35 @@ h3 {
   font-style: italic;
   font-weight: 600;
 }
+
+/*Coding Window*/
+
+.green {
+  --tw-text-opacity: 1;
+  color: rgba(22, 163, 74, var(--tw-text-opacity));
+}
+
+.purple {
+  --tw-text-opacity: 1;
+  color: rgba(192, 132, 252, var(--tw-text-opacity));
+}
+
+.blue {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+}
+
+.cyan {
+  --tw-text-opacity: 1;
+  color: rgba(34, 211, 238, var(--tw-text-opacity));
+}
+
+.amber {
+  --tw-text-opacity: 1;
+  color: rgba(245, 158, 11, var(--tw-text-opacity));
+}
+
+.orange {
+  --tw-text-opacity: 1;
+  color: rgba(194, 65, 12, var(--tw-text-opacity));
+}

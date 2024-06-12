@@ -1,1 +1,1 @@
-<span class="text-cyan-400">return </span>
+<span class="cyan">return </span>

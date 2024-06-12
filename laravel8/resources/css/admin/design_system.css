@@ -36,3 +36,23 @@ h3 {
     @apply italic;
     @apply font-semibold;
 }
+
+/*Coding Window*/
+.green {
+    @apply text-green-600;
+}
+.purple {
+    @apply text-purple-400;
+}
+.blue {
+    @apply text-blue-500;
+}
+.cyan {
+    @apply text-cyan-400;
+}
+.amber {
+    @apply text-amber-500;
+}
+.orange {
+    @apply text-orange-700;
+}

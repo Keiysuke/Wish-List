@@ -1,1 +1,1 @@
-<span class="text-green-600">{{ $slot }}</span>
+<span class="green">{{ $slot }}</span>

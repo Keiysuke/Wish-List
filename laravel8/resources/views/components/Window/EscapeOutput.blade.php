@@ -1,1 +1,1 @@
-<span class="text-purple-400 {{ $class }}">{{ $slot }}</span>
+<span class="purple {{ $class }}">{ { {{ $slot }} } }</span>
