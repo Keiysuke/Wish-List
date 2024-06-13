@@ -26,9 +26,9 @@
     @endforeach
 </div>
 
-<x-Window.Coding class="mt-4 w-10/12" title="Supprimer une notification d'un utilisateur" major="auth()->user() | ->notifications() | ->whereJsonContains">
-    auth()->user()->notifications()->where('type', '=', 'App\Notifications\FriendRequest')<br />
-        ->whereJsonContains('data->user_id', $userId)<br />
+<x-Window.Coding class="mt-4 w-10/12" title="Supprimer une notification d'un utilisateur" major="auth()->user() | ->notifications() | ->whereJsonContains | NotificationCoontroller | app/Notifications/MissingPhotos">
+    auth()->user()-><x-Window.Keyword name="notifications"/>()->where('type', '=', 'App\Notifications\FriendRequest')<br />
+        -><x-Window.Keyword name="whereJsonContains"/>('data->user_id', $userId)<br />
         ->first()<br />
         ->delete();<br />
 </x-Window.Coding >
@@ -44,3 +44,19 @@
         Appuyez pour tester !
     </x-Form.Btn>
 </div>
+
+<x-Window.Coding class="mt-4 w-10/12" title="Mes Notyf en JS" major="notyfJS | Notyf | myNotyf">
+    notyfJS(<x-Window.Comment>'Message qui sera affiché'</x-Window.Comment>, <x-Window.Comment>'error'</x-Window.Comment>);<br />
+    <br />
+    <x-Window.Comment>// A retourner par la méthode qui a été appelée en ajax...</x-Window.Comment><br />
+    <x-Window.Return/> response()->json([<br />
+    <div class="ml-4">
+        'success' => true, <br />
+        'notyf' => <x-Window.Static name="Notyf" method="success"/>('Your friend can now access your list')<br />
+    </div>
+    ]);<br />
+    <x-Window.Comment>// ...ensuite, du côté de l'appel ajax</x-Window.Comment><br />
+    }).then(res => {<br />
+        <span class="ml-4">myNotyf(res)</span><br />
+    })<br />
+</x-Window.Coding>

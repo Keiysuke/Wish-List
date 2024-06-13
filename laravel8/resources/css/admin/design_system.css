@@ -50,9 +50,21 @@ h3 {
 .cyan {
     @apply text-cyan-400;
 }
+.red {
+    @apply text-red-500;
+}
+.yellow {
+    @apply text-yellow-500;
+}
 .amber {
     @apply text-amber-500;
 }
 .orange {
     @apply text-orange-700;
+}
+
+.warning {
+    @apply text-yellow-500;
+    @apply inline-flex;
+    @apply mr-1;
 }

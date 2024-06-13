@@ -73,7 +73,7 @@
   addFriend = function addFriend(event) {
     var friendId = event.target.dataset.id;
     getFetch('user/request/user/' + friendId + '/befriend').then(function (results) {
-      my_notyf(results);
+      myNotyf(results);
     });
   };
   /**
@@ -85,7 +85,7 @@
   removeFriend = function removeFriend(event) {
     var userId = event.target.dataset.id;
     getFetch('user/friends/' + userId + '/remove').then(function (results) {
-      my_notyf(results);
+      myNotyf(results);
 
       if (results.success) {
         closeUserProfile();

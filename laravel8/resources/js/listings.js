@@ -9,7 +9,7 @@
             getFetch('lists/' + listId + '/destroy')
                 .then(res => {
                     document.getElementById("list-" + res.deletedId).remove()
-                    my_notyf(res)
+                    myNotyf(res)
                     if (res.list_id > 0) document.onload = getProducts(res.listId) //There's still one other list
                     else { //No more list for the user
                         document.getElementById("my-lists").innerHTML = "<span>Vous n'avez pas encore créé de liste...</span>"
@@ -74,7 +74,7 @@
         }).then(response => {
             if (response.ok) return response.json()
         }).then(res => {
-            my_notyf(res)
+            myNotyf(res)
             if (res.success) {
                 document.getElementById('content-share-list').classList.toggle('flex')
                 document.getElementById('content-share-list').classList.toggle('hidden')

@@ -44,7 +44,7 @@
         const vgId = document.getElementById('video-game-id').value;
         getFetch('video_games/' + vgId + '/vg_support/0/products/link')
         .then(res => {
-            my_notyf(res);
+            myNotyf(res);
             if (res.success) location.reload();
         });
     });
@@ -55,7 +55,7 @@
         getFetch('video_games/products/' + productId + '/unlink')
         .then(res => {
             if (res.success) {
-                my_notyf(res);
+                myNotyf(res);
                 document.getElementById('product-link-'+productId).remove()
             }
         });

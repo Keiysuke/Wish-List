@@ -33,27 +33,29 @@
 
 <h3>3. Les icônes sur le site</h3>
 
-<div id="show-video-game" class="title-icon inline-flex">
-    <x-svg.big.vg_controller class="icon-xs"/>
+<div class="flex gap-1">
+    <div id="show-video-game" class="title-icon inline-flex">
+        <x-svg.big.vg_controller class="icon-xs"/>
+    </div>
+    <div class="title-icon inline-flex">
+        <x-svg.edit class="icon-xs"/>
+    </div>
+    <div class="title-icon heart inline-flex" onclick="this.classList.toggle('on');">
+        <x-svg.heart class="icon-xs"/>
+    </div>
+    <div class="title-icon archive inline-flex" onclick="this.classList.toggle('on');">
+        <x-svg.archive class="icon-xs"/>
+    </div>
+    <div class="title-icon heart inline-flex">
+        <x-svg.trash class="icon-xs"/>
+    </div>
+    <div class="title-icon refresh inline-flex">
+        <x-svg.refresh class="icon-xs"/>
+    </div>
+    <x-Utils.Yt.TitleIcon search="Soundtrack"/>
+    <x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
+    <x-products.search_photo search="#" class="title-icon inline-flex"/>
 </div>
-<div class="title-icon inline-flex">
-    <x-svg.edit class="icon-xs"/>
-</div>
-<div class="title-icon heart inline-flex" onclick="this.classList.toggle('on');">
-    <x-svg.heart class="icon-xs"/>
-</div>
-<div class="title-icon archive inline-flex" onclick="this.classList.toggle('on');">
-    <x-svg.archive class="icon-xs"/>
-</div>
-<div class="title-icon heart inline-flex">
-    <x-svg.trash class="icon-xs"/>
-</div>
-<div class="title-icon refresh inline-flex">
-    <x-svg.refresh class="icon-xs"/>
-</div>
-<x-Utils.Yt.TitleIcon search="Soundtrack"/>
-<x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
-
 <h3>4. Les emojis pour les messages</h3>
 
 A faire...

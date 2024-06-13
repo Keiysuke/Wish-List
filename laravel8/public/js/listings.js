@@ -12,7 +12,7 @@
       var listId = e.target.dataset.list_id;
       getFetch('lists/' + listId + '/destroy').then(function (res) {
         document.getElementById("list-" + res.deletedId).remove();
-        my_notyf(res);
+        myNotyf(res);
         if (res.list_id > 0) document.onload = getProducts(res.listId); //There's still one other list
         else {
             //No more list for the user
@@ -77,7 +77,7 @@
     }).then(function (response) {
       if (response.ok) return response.json();
     }).then(function (res) {
-      my_notyf(res);
+      myNotyf(res);
 
       if (res.success) {
         document.getElementById('content-share-list').classList.toggle('flex');

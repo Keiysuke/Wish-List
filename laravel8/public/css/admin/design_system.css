@@ -63,6 +63,16 @@ h3 {
   color: rgba(34, 211, 238, var(--tw-text-opacity));
 }
 
+.red {
+  --tw-text-opacity: 1;
+  color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.yellow {
+  --tw-text-opacity: 1;
+  color: rgba(234, 179, 8, var(--tw-text-opacity));
+}
+
 .amber {
   --tw-text-opacity: 1;
   color: rgba(245, 158, 11, var(--tw-text-opacity));
@@ -71,4 +81,11 @@ h3 {
 .orange {
   --tw-text-opacity: 1;
   color: rgba(194, 65, 12, var(--tw-text-opacity));
+}
+
+.warning {
+  --tw-text-opacity: 1;
+  color: rgba(234, 179, 8, var(--tw-text-opacity));
+  display: inline-flex;
+  margin-right: 0.25rem;
 }

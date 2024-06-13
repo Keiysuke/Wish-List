@@ -59,7 +59,7 @@
         const friendId = event.target.dataset.id
         getFetch('user/request/user/' + friendId + '/befriend')
         .then(results => {
-            my_notyf(results)
+            myNotyf(results)
         })
     }
 
@@ -71,7 +71,7 @@
         const userId = event.target.dataset.id
         getFetch('user/friends/' + userId + '/remove')
         .then(results => {
-            my_notyf(results)
+            myNotyf(results)
             if (results.success) {
                 closeUserProfile()
                 document.getElementById('sb-friend-row-' + results.user_id).remove()

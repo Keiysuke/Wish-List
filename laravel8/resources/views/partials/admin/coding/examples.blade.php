@@ -31,4 +31,26 @@
             <x-Window.EscapeOutput class="ml-4"><x-Window.Var var="datas"/>->links()</x-Window.EscapeOutput><br />
         < /footer><br />
     </x-Window.Coding>
+
+    <x-Window.Coding class="w-10/12" title="Lancer une recherche externe" major="SearchService | route 'externalSearch' => SearchController::externalSearch">
+        <x-Window.Static name="MySearch" method="getLink"/>('pictures', <x-Window.Var var="search"/>)
+    </x-Window.Coding>
+
+    <x-Window.Coding class="w-10/12" title="Lancer un appel ajax" major="POST => myFetch | GET => getFetch">
+        <x-Window.Keyword name="myFetch"/>(' { { route('externalSearch') } }', {<x-Window.Keyword name="method" color="red"/>: 'post', <x-Window.Keyword name="csrf" color="red"/>: true}, {<br />
+            <div class="ml-4">
+                <x-Window.Keyword name="kind" color="red"/>: kind,<br />
+                <x-Window.Keyword name="search" color="red"/>: document.<x-Window.Keyword name="getElementById"/>('sb-'+kind+'-text').value,<br />
+            </div>
+        }).<x-Window.Keyword name="then"/>(response => {<br />
+            <span class="ml-4">if (response.ok) <x-Window.Return/> response.<x-Window.Keyword name="json"/>();<br /></span>
+        }).<x-Window.Keyword name="then"/>(results => {<br />
+            <span class="ml-4">window.<x-Window.Keyword name="open"/>(results.link);<br /></span>
+        }).<x-Window.Keyword name="catch"/>(error => {<br />
+            <span class="ml-4"><x-Window.Keyword name="notyfJS"/>(error, 'error'); <x-Window.Comment>// Gérer les erreurs<br /></x-Window.Comment></span>
+        });<br />
+        <br />
+        <x-svg.warning class="warning icon-sm"/><x-Window.Comment>il faut renseigner l'url pour que cela fonctionne<br /></x-Window.Comment>
+        <x-Window.Keyword name="getFetch"/>('user/request/user/' + friendId + '/befriend')<br />
+    </x-Window.Coding>
 </div>

@@ -1,0 +1,1 @@
+<span class="{{ $color ?? 'blue' }}">{{ $name }}</span>

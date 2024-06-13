@@ -179,7 +179,7 @@
         function deleteNotif(id){
             getFetch('notifications/' + id + '/delete')
             .then(results => {
-                my_notyf(results);
+                myNotyf(results);
                 document.getElementById('notif' + id).remove();
                 document.getElementById('nb-notif').innerHTML -= 1;
                 if (document.getElementById('nb-notif').innerHTML == 0) {
@@ -220,7 +220,7 @@
         function friendRequest(userId, friendId, answer) {
             getFetch('user/' + userId + '/request/friend/' + friendId + '/' + answer)
             .then(results => {
-                my_notyf(results);
+                myNotyf(results);
             });
         }
 
