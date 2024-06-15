@@ -27,14 +27,17 @@
 </div>
 
 <x-Window.Coding class="mt-4 w-10/12" title="Supprimer une notification d'un utilisateur" major="auth()->user() | ->notifications() | ->whereJsonContains | NotificationCoontroller | app/Notifications/MissingPhotos">
-    auth()->user()-><x-Window.Keyword name="notifications"/>()->where('type', '=', 'App\Notifications\FriendRequest')<br />
+    <x-Window.Var var="user"/> = <x-Window.Static name="User" method="find"/>(auth()->user()->id);<br />
+    <x-Window.Var var="user"/>-><x-Window.Keyword name="notifications"/>()->where('type', '=', 'App\Notifications\FriendRequest')<br />
+    <div class="ml-4">
         -><x-Window.Keyword name="whereJsonContains"/>('data->user_id', $userId)<br />
         ->first()<br />
         ->delete();<br />
+    </div>
 </x-Window.Coding >
 
 <h3>3. Les notifications dynamiques</h3>
-@php($elements = ['my_notyf.js', 'Notyf'])
+@php($elements = ['myNotyf.js', 'Notyf'])
 <x-admin.help.list_helpers :elements="$elements"/>
 
 <div class="flex flex-wrap justify-center gap-4">

@@ -1,4 +1,4 @@
-<div class="relative flex items-center justify-between px-2 py-2 font-bold text-white bg-{{ $color }}-500">
+<div class="relative flex items-center justify-between px-2 py-1 font-bold text-white bg-{{ $color }}-500">
     <div class="relative flex items-center gap-2">
         <x-dynamic-component :component="$icon" class="icon-sm"/>
         <span>{{ $slot }}</span>

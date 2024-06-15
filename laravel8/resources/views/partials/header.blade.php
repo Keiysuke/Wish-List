@@ -86,7 +86,7 @@
         <a target="_blank" href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
         <a target="_blank" href="https://ledenicheur.fr/">{{ __('Dénicheur de produits') }}</a>
     </div>
-    <div id="subicon-bell" class="subicon flex justify-end gap-2">
+    <div id="subicon-bell" class="max-h-150 my-scrollbar subicon flex gap-2">
         @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])
     </div>
     <div id="subicon-user" class="subicon menu">

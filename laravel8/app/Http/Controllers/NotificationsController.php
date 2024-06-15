@@ -4,13 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\VideoGame;
 use App\Notifications\MissingPhotos;
+use App\Notifications\MissingProductOnVideoGame;
 use App\Notifications\ProductSoonAvailable;
 use App\Notifications\ProductSoonExpire;
 use Carbon\Carbon;
 
 class NotificationsController extends Controller
 {
+    public static function deleteFrom($kind, $customId){
+        $user = User::find(auth()->user()->id);
+        switch($kind){
+            case 'MissingProductOnVideoGame':
+                $notif = $user->notifications()->where('type', '=', 'App\Notifications\MissingProductOnVideoGame')->whereJsonContains('data->video_game_id', $customId)->first();
+                break;
+        }
+        if(!is_null($notif)){
+            $notif->delete();
+        }
+    }
+
     public function delete($id){
         $user = User::find(auth()->user()->id);
         $user->notifications()->find($id)->delete();
@@ -64,6 +78,26 @@ class NotificationsController extends Controller
             $user = $product->creator();
             $exist = $user->notifications()->where('type', '=', 'App\Notifications\MissingPhotos')->whereJsonContains('data->product_id', $product->id)->first();
             if(!$exist) $user->notify(new MissingPhotos($product, $user));
+        }
+    }
+
+    /** 
+     * Video Games Notifications
+    */
+    
+    public function checkVideoGameNotifications(){
+        $this->checkMissingProduct();
+    }
+
+    public function checkMissingProduct(){
+        $buildRequest = VideoGame::query();
+        $buildRequest->doesntHave('products');
+        $videoGames = $buildRequest->orderBy('label')->get();
+
+        foreach($videoGames as $videoGame){
+            $user = $videoGame->creator();
+            $exist = $user->notifications()->where('type', '=', 'App\Notifications\MissingProductOnVideoGame')->whereJsonContains('data->video_game_id', $videoGame->id)->first();
+            if(!$exist) $user->notify(new MissingProductOnVideoGame($videoGame, $user));
         }
     }
 }

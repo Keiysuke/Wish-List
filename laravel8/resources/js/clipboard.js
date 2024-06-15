@@ -7,4 +7,5 @@ window.setClipboard = function(value) {
     tempInput.select()
     document.execCommand('copy')
     document.body.removeChild(tempInput)
+    notyfJS('Le lien du dossier a été copié', 'success')
 }

@@ -12,7 +12,7 @@ window.notyfJS = function (msg, kind){
     })
 }
 
-window.my_notyf = function (r){
+window.myNotyf = function (r){
     if (r.notyf) {
         var notyf = new Notyf()
         notyf.open(r.notyf)

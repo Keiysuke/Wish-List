@@ -4,19 +4,19 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use App\Models\Product;
+use App\Models\VideoGame;
 use App\Models\User;
 
-class MissingPhotos extends Notification
+class MissingProductOnVideoGame extends Notification
 {
     use Queueable;
 
     protected $user;
-    protected $product;
+    protected $videoGame;
 
-    public function __construct(Product $product, User $user)
+    public function __construct(VideoGame $videoGame, User $user)
     {
-        $this->product = $product;
+        $this->videoGame = $videoGame;
         $this->user = $user;
     }
 
@@ -31,18 +31,12 @@ class MissingPhotos extends Notification
         return ['database'];
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
     public function toArray($notifiable)
     {
         return [
-            'product_id' => $this->product->id,
+            'video_game_id' => $this->videoGame->id,
             'user_id' => $this->user->id,
-            'product_label' => $this->product->label,
+            'video_game_label' => $this->videoGame->label,
         ];
     }
 }

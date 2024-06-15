@@ -12,3 +12,9 @@
         <x-Form.Btn color="{{ $color }}">{{ $color }}</x-Form.Btn>
     @endforeach
 </div>
+
+<h3>2. Les composants</h3>
+
+<x-Window.Coding class="mt-4 w-10/12" title="Composant dynamique" major="x-dynamic-component">
+    < <x-Window.Keyword color="red" name="x-dynamic-component"/> component:="<x-Window.Var var="section"/>->icon" class="icon-sm" /><br />
+</x-Window.Coding >

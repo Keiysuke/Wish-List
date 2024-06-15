@@ -15,11 +15,6 @@ class ProductSoonAvailable extends Notification
     protected $user;
     protected $productWebsite;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
     public function __construct(ProductWebsite $productWebsite, User $user)
     {
         $this->productWebsite = $productWebsite;

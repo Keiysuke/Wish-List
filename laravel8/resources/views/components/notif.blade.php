@@ -1,6 +1,6 @@
 @php($color = $kinds[$kind]['color'])
 @php($icon = isset($icon) ? $icon : $kinds[$kind]['icon'])
-<div id="notif{{ $notif->id }}" class="w-full max-w-sm mx-auto overflow-hidden rounded shadow-sm">
+<div id="notif{{ $notif->id }}">
     <x-Notifs.Head 
         :notif="$notif" 
         icon="{{ $icon }}" 

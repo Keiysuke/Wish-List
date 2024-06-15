@@ -4,6 +4,7 @@
 </div>
 
 <div class="flex flex-col gap-8">
+    <h3 class="my-0">1. PHP / Blade</h3>
     <x-Window.Coding class="w-10/12" title="Utiliser une vue en tant que String" major="renderAsString | renderComponent">
         <x-Window.Use>Illuminate\Support\Facades\Blade;<br /></x-Window.Use>
         <br />
@@ -36,7 +37,18 @@
         <x-Window.Static name="MySearch" method="getLink"/>('pictures', <x-Window.Var var="search"/>)
     </x-Window.Coding>
 
-    <x-Window.Coding class="w-10/12" title="Lancer un appel ajax" major="POST => myFetch | GET => getFetch">
+    <h3 class="my-0">2. Javascript</h3>
+
+    <x-Window.Coding kind="JS" class="w-10/12" title="Lancer une fonction JS toutes les 5 secondes" major="SetInterval">
+        <x-Window.Keyword name="showMsg" color="purple"/>() {<br />
+            <div class="ml-4">
+                console.<x-Window.Keyword name="log"/>('test')<br />
+            </div>
+        }<br />
+        <x-Window.Keyword name="setInterval"/>(showMsg, 5000)<br />
+    </x-Window.Coding>
+
+    <x-Window.Coding kind="JS" class="w-10/12" title="Lancer un appel ajax" major="POST => myFetch | GET => getFetch">
         <x-Window.Keyword name="myFetch"/>(' { { route('externalSearch') } }', {<x-Window.Keyword name="method" color="red"/>: 'post', <x-Window.Keyword name="csrf" color="red"/>: true}, {<br />
             <div class="ml-4">
                 <x-Window.Keyword name="kind" color="red"/>: kind,<br />

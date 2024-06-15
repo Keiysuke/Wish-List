@@ -21,6 +21,7 @@ class VideoGameController extends Controller
     public function index(Request $request){
         //Si la mise à jour des notifications n'a pas été faite
         app('App\Http\Controllers\NotificationsController')->checkProductNotifications();
+        app('App\Http\Controllers\NotificationsController')->checkVideoGameNotifications();
         
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid', 'show_archived' => 0];
         $filters = (object)['purchased' => 'purchased_all', 'f_nb_results' => $this->nb_page_results];

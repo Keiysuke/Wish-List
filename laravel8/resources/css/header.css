@@ -192,10 +192,12 @@ form#fast-search div:first-of-type svg {
     @apply flex-col;
     @apply w-72;
     @apply py-1;
-    @apply px-2;
+    @apply px-1;
     @apply text-white;
     @apply right-6;
     @apply rounded-b-md;
+    @apply scrollbar-thumb-orange-600;
+    @apply scrollbar-track-orange-300;
     top: 3.3rem;
     transform-origin: 0 0;
     transition: transform 0.2s ease;

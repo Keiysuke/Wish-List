@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProductPhotoController;
 use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,6 +21,10 @@ class VideoGame extends Model
 
     public function products(){
         return $this->hasMany(ProductAsVideoGame::class);
+    }
+    
+    public function creator(){
+        return $this->hasOne(User::class, 'id', 'created_by')->first();
     }
 
     public function vg_supports(){
@@ -82,9 +87,9 @@ class VideoGame extends Model
                 if (count($pvg) > 0) { //Already linked to a product
                     $pvg = $pvg->first();
                     if ($pvg->video_game_id !== $this->id) {
-                        return ['success' => true, 'notyf' => Notyf::error('Linked to another product : '.$pvg->video_game_id)];
+                        return ['success' => false, 'notyf' => Notyf::error('Linked to another product : '.$pvg->video_game_id)];
                     } else {
-                        return ['success' => true, 'notyf' => Notyf::warning('Already linked to that product')];
+                        return ['success' => false, 'notyf' => Notyf::warning('Already linked to that product')];
                     }
                 } else { //Linking to the product found
                     $pvg = new ProductAsVideoGame([
@@ -94,6 +99,8 @@ class VideoGame extends Model
                     ]);
                     $pvg->save();
                 }
+                //Suppression d'une notification si jamais elle existe
+                NotificationsController::deleteFrom('MissingProductOnVideoGame', $this->id);
                 return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product')];
             }
         }
