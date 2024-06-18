@@ -34,7 +34,7 @@
                     <div class="flex flex-col w-full border-1 border-b border-gray-100 rounded">
                         <p class="relative flex justify-center items-center mb-2 text-sm font-semibold text-black py-1 border-b border-gray-300 bg-gray-200">
                             <span class="flex inline-flex items-center absolute left-2">
-                                <span class="text-base" title="{{ 'Coût + Fdp - Réduc : '.$data->global_cost.' + '.$data->shipping_fees.' - '.$data->discount }}">{{ $data->cost.' €' }}</span><x-Utils.VLine height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
+                                <span class="text-base {{ $data->customs > 0 ? 'text-amber-600' : '' }}" title="{{ $data->explainCost }}">{{ $data->cost.' €' }}</span><x-Utils.VLine height="3"/> <a class="link" href="{{ $data->purchases->first()->website->url }}" target="_blank">{{ $data->purchases->first()->website->label }}</a>
                             </span>
                             <span class="text-lg">{{ is_null($data->label)? __("Group purchase") : $data->label }}</span>
                             <span class="absolute right-2 font-normal italic">

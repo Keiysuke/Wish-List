@@ -47,11 +47,16 @@ class ListingMessagesController extends Controller
                 'message' => $request->message,
                 'answer_to_id' => ($request->answer_to_id === 0 ? null : $request->answer_to_id),
             ]);
+            //On récupère le dernier message de la liste pour vérifier s'il s'agit du même user
+            $lastMsg = ListingMessage::where('listing_id', '=', $request->list_id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+            $odd = $lastMsg->user_id != auth()->user()->id;
             
             if ($message->save()) {
                 $message->fresh();
                 ReactionService::setReactions($message);
-                $msg = view('components.Tchat.Message')->with(['message' => $message])->render();
+                $msg = view('components.Tchat.Message')->with(['message' => $message, 'sent' => true, 'odd' => $odd])->render();
                 return response()->json(['success' => true, 'message' => $msg]);
             }
             return response()->json(['success' => false, 'notyf' => Notyf::error('Whoops! Something went wrong.')]);

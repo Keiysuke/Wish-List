@@ -48,6 +48,13 @@ class UserController extends Controller
                     $data->date_show = __('Purchased on').' '.date('d F Y', $data->date_used);
                     $data->cost = $data->global_cost + $data->shipping_fees - $data->discount;
                     $data->purchases = $data->grouped_purchases();
+                    //Ajout des frais de douane
+                    $data->customs = 0;
+                    foreach($data->purchases as $purchase){
+                        $data->customs += $purchase->customs;
+                    }
+                    $data->cost += $data->customs;
+                    $data->explainCost = 'Coût + Fdp + Douane - Réduc : '.$data->global_cost.' + '.$data->shipping_fees.' + '.$data->customs.' - '.$data->discount;
                 }
                 $datas = $purchases->concat($groupBuys);
             }else{

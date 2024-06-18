@@ -289,3 +289,32 @@
   transform: scale(0);
   transition: transform 1s ease-in-out;
 }
+
+.fade-in {
+  -webkit-animation: fade-in-msg 0.5s ease-in-out;
+          animation: fade-in-msg 0.5s ease-in-out;
+}
+
+@-webkit-keyframes fade-in-msg {
+  from {
+    opacity: 0;
+    transform: translateX(85px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-msg {
+  from {
+    opacity: 0;
+    transform: translateX(85px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

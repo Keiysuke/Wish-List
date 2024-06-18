@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-1">
-    <div id="list-msg-{{ $message->id }}" class="content-list-msg {{ $class ?? '' }}">
+    <div id="list-msg-{{ $message->id }}" class="content-list-msg {{ $class ?? '' }}@if(isset($sent)) fade-in @endif">
         @if($message->answer_to_id > 0)
             @php($answer = $message->answer_to)
             <div class="cursor-pointer replying-to" onClick="flashOriginalMsg({{ $answer->id }});">
@@ -9,10 +9,17 @@
             </div>
         @endif
 
-        <div class="flex items-center gap-2">
-            <div class="user-avatar">{{ $message->user->name[0] }}</div>
-            <span>{{ $message->user->name }}</span>
-        </div>
+        @if($odd)
+            <div class="flex items-center justify-end mr-3 gap-2">
+                <span>{{ $message->user->name }}</span>
+                <div class="user-avatar">{{ $message->user->name[0] }}</div>
+            </div>
+        @else
+            <div class="flex items-center gap-2">
+                <div class="user-avatar">{{ $message->user->name[0] }}</div>
+                <span>{{ $message->user->name }}</span>
+            </div>
+        @endif
         <div id="content-list-msg-{{ $message->id }}">{{ $message->message }}</div>
         <div class="msg_icons flex gap-1 absolute right-0 top-1">
             <x-svg.big.v_dot 
@@ -25,8 +32,6 @@
             class="list-msg-react-btn icon-xs icon-clickable" 
             onClick="toggleEmojiMsg('{{ $message->id }}');"
             />
-        <div class="v-line-reactions">
-            @include('components.Tchat.ReactionsLine', ['reactions' => $message->allReactions])
-        </div>
+        <div class="v-line-reactions">@include('components.Tchat.ReactionsLine', ['reactions' => $message->allReactions])</div>
     </div>
 </div>
