@@ -92,7 +92,19 @@
    */
 
 
-  showMessages = function showMessages(res) {
+  showMessages = function showMessages() {
+    var listId = document.getElementById('list-selected').value;
+    getFetch('lists/' + listId + '/messages/get').then(function (res) {
+      toggleShowMessages(res);
+    });
+  };
+  /**
+   * Affiche/Cache la liste des messages
+   * @param {object} res - Résultat contenant le html de la liste des messages
+   */
+
+
+  toggleShowMessages = function toggleShowMessages(res) {
     var contentMsg = document.getElementById('content-msg');
     var wrapListProducts = document.getElementById('wrap-list-products');
 
@@ -163,7 +175,7 @@
       document.getElementById('content-results').innerHTML = products.html;
       document.getElementById('btn-go-up').click();
       extendListMsg(true);
-      showMessages(products);
+      toggleShowMessages(products);
     });
   };
   /**
@@ -189,7 +201,8 @@
       document.getElementById('wrap-lists').innerHTML = lists.html;
       getProducts(lists.first_list_id);
     });
-  };
+  }; // setInterval(showMessages, 5000)
+
 })();
 /******/ })()
 ;

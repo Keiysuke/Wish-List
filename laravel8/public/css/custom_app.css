@@ -429,3 +429,32 @@ span.tag {
   padding: 0.25rem;
 }
 
+.animated-icon {
+  position: absolute;
+  -webkit-animation: rise-and-disappear 2.5s forwards;
+          animation: rise-and-disappear 2.5s forwards;
+}
+
+@-webkit-keyframes rise-and-disappear {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-20px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes rise-and-disappear {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-20px) scale(0);
+    opacity: 0;
+  }
+}

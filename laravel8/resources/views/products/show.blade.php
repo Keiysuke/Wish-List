@@ -88,12 +88,13 @@
         document.getElementById('main').classList.toggle('pointer-events-none');
     }
 
-    document.getElementById('follow-product').addEventListener('click', () => {
+    document.getElementById('follow-product').addEventListener('click', (e) => {
         const id = document.getElementById('product-id').value
         getFetch('products/' + id + '/follow')
         .then(res => {
             document.getElementById('follow-product').setAttribute('title', res.product.follow? 'Ne plus suivre' : 'Suivre');
             document.getElementById('follow-product').classList.toggle('on');
+            riseIcon(e, 'follow', res.product.follow)
         });
     });
 

@@ -32,7 +32,7 @@
             </main>
         </div>
 
-        <x-btnTopPage/>
+        <x-BtnTopPage/>
 
         @include('partials.footer')
     </body>

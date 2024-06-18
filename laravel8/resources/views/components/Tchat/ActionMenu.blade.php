@@ -1,6 +1,6 @@
 <div>
     @if ($yours)
-        <div>
+        <div onClick="editMsg('{{ $msg_id }}');">
             <x-svg.edit class="icon-xs"/>
             Editer
         </div>

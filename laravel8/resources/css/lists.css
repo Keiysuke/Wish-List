@@ -72,6 +72,12 @@
     @apply bg-blue-300;
 }
 
+.editing {
+    @apply border-l-4;
+    @apply border-green-600;
+    @apply bg-green-300;
+}
+
 .replying-to {
     @apply flex;
     @apply gap-1;

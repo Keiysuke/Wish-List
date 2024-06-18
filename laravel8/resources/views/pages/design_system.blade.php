@@ -5,6 +5,7 @@
 
     @section('js')
         <script type="text/javascript" src="{{ URL::asset('js/my_notyf.js') }}"></script>
+        <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
     @endsection
 
     <div id="dashboard-table">

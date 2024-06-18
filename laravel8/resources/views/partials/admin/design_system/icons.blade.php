@@ -56,6 +56,21 @@
     <x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
     <x-products.search_photo search="#" class="title-icon inline-flex"/>
 </div>
+
+<h3>4. Les icônes animées<div class="ml-2 no-underline flex inline-flex">
+        <x-Form.Checkbox class="mr-1" name="not"/>
+        <x-Form.Label for="not">Effet inverse</x-Form.Label>
+    </div>
+</h3>
+@php($elements = ['DesignService::ANIM_ICONS', 'riseIcon'])
+<x-admin.help.list_helpers :elements="$elements"/>
+
+<div class="flex gap-1">
+    <div class="title-icon heart inline-flex" onclick="this.classList.toggle('on'); riseIcon(event, 'follow', !document.getElementById('not').checked);">
+        <x-svg.heart class="icon-xs"/>
+    </div>
+</div>
+
 <h3>4. Les emojis pour les messages</h3>
 
 A faire...

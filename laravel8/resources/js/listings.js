@@ -87,7 +87,19 @@
      * Met à jour les mesages affichés dans le tchat
      * @param {object} res - Résultat contenant le html de la liste des messages
      */
-    showMessages = function (res) {
+    showMessages = function () {
+        const listId = document.getElementById('list-selected').value
+        getFetch('lists/' + listId + '/messages/get')
+        .then(res => {
+            toggleShowMessages(res)
+        })
+    }
+
+    /**
+     * Affiche/Cache la liste des messages
+     * @param {object} res - Résultat contenant le html de la liste des messages
+     */
+    toggleShowMessages = function (res) {
         const contentMsg = document.getElementById('content-msg')
         const wrapListProducts = document.getElementById('wrap-list-products')
         if (res.htmlMsg !== null && res.shared_list) { //Il y a des messages
@@ -152,7 +164,7 @@
                 document.getElementById('content-results').innerHTML = products.html
                 document.getElementById('btn-go-up').click();
                 extendListMsg(true)
-                showMessages(products)
+                toggleShowMessages(products)
             })
     }
 
@@ -179,4 +191,6 @@
                 getProducts(lists.first_list_id)
             })
     }
+
+    // setInterval(showMessages, 5000)
 })()

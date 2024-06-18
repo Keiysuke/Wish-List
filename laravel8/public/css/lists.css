@@ -79,6 +79,14 @@
   background-color: rgba(147, 197, 253, var(--tw-bg-opacity));
 }
 
+.editing {
+  border-left-width: 4px;
+  --tw-border-opacity: 1;
+  border-color: rgba(22, 163, 74, var(--tw-border-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgba(134, 239, 172, var(--tw-bg-opacity));
+}
+
 .replying-to {
   display: flex;
   gap: 0.25rem;

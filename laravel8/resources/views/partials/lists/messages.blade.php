@@ -22,8 +22,10 @@
     </div>
     <div id="wrap-writer">
         <x-Tchat.AnswerTo id="list-answer-to"/>
+        <x-Tchat.CancelEdit id="list-cancel-edit"/>
         <input type="hidden" id="list-answer-id" value="0"/>
         <input type="hidden" id="list-msg-reaction" value="0"/>
+        <input type="hidden" id="list-edit-id" value="0"/>
         <x-Form.Textarea id="list-msg-to-send" name="list_msg_to_send"/>
         <div id="list-msg-emoji-sections">
             @include('partials.messages.emoji_keyboard')

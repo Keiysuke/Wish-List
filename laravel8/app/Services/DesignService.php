@@ -6,6 +6,11 @@ use App\Models\CssColor;
 
 class DesignService
 {
+    const ANIM_ICONS = [
+        'follow' => '💔',
+        'unfollow' => '❤️',
+    ];
+
     const ICONS = [
         ['name' => 'add_to_list', 'sizes' => [true, false]],
         ['name' => 'archive', 'sizes' => [true, true]],
@@ -116,5 +121,9 @@ class DesignService
             $res[] = $color;
         }
         return $res;
+    }
+
+    static function getAnimIcon($kind) {
+        return self::ANIM_ICONS[$kind];
     }
 }

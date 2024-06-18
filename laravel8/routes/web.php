@@ -40,6 +40,7 @@ use App\Http\Controllers\VideoGameController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
+Route::get('/render_icon/{kind}', [EmojiController::class, 'renderIcon'])->name('renderIcon');
 
 Route::get('user/{id}/profile', [FriendUserController::class, 'getProfile'])->name('getUserProfile');
 Route::get('user/friends', [FriendUserController::class, 'index'])->name('myFriends');
@@ -100,7 +101,10 @@ Route::post('lists/share', [ListingController::class, 'share'])->name('shareList
 Route::get('lists/{listId}/leave', [ListingController::class, 'leave'])->name('leaveFriendList');
 //Listing Messages
 Route::post('lists/messages/menu/show', [ListingMessagesController::class, 'getActionsMenu'])->name('openMsgMenu');
+Route::get('lists/{listId}/messages/get', [ListingMessagesController::class, 'getMessages'])->name('getMessages');
 Route::post('lists/messages/send', [ListingMessagesController::class, 'send'])->name('sendMessage');
+Route::get('lists/messages/{msgId}/edit', [ListingMessagesController::class, 'edit'])->name('listEditMessage');
+Route::post('lists/messages/{msgId}/update', [ListingMessagesController::class, 'update'])->name('listUpdateMessage');
 Route::get('lists/messages/{msgId}/delete', [ListingMessagesController::class, 'delete'])->name('listDeleteMessage');
 Route::get('lists/messages/{msgId}/{action}', [ListingMessagesController::class, 'pin'])->name('pinMessage');
 Route::get('lists/{listId}/delete/messages', [ListingMessagesController::class, 'deleteAll'])->name('listDeleteAllMessages');

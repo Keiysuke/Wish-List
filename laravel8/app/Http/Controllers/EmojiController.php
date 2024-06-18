@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emoji;
+use App\Services\DesignService;
 use Illuminate\Http\Request;
 
 class EmojiController extends Controller
@@ -54,5 +55,9 @@ class EmojiController extends Controller
     public function destroy(Emoji $emoji){
         $emoji->delete();
         return redirect()->route('emojis.index')->with('info', __('The emoji has been deleted.'));
+    }
+
+    public function renderIcon(String $kind){
+        return response()->json(['success' => true, 'html' => DesignService::getAnimIcon($kind)]);
     }
 }

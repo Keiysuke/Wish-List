@@ -13,7 +13,7 @@
             <div class="user-avatar">{{ $message->user->name[0] }}</div>
             <span>{{ $message->user->name }}</span>
         </div>
-        <div>{{ $message->message }}</div>
+        <div id="content-list-msg-{{ $message->id }}">{{ $message->message }}</div>
         <div class="msg_icons flex gap-1 absolute right-0 top-1">
             <x-svg.big.v_dot 
                 class="icon-sm icon-clickable" 

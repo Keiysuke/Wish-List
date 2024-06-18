@@ -2,7 +2,7 @@
     document.addEventListener('click', function(event) {
         closeMsgMenu()
     })
-    
+
     /**
      * Permet la suppression d'un ou tous les messages du tchat de la liste
      * @param {int} msgId - Identifiant du message à supprimer si != 0
@@ -13,7 +13,7 @@
             let url = (msgId == 0) ? 'lists/' + listId + '/delete/messages' : 'lists/messages/' + msgId + '/delete'
             getFetch(url)
             .then(res => {
-                my_notyf(res)
+                myNotyf(res)
                 if (res.html) {
                     document.getElementById('content-msg').innerHTML = res.html
                     maj_reactions()
@@ -54,6 +54,12 @@
             return
         }
 
+        const editing = document.getElementById('list-edit-id').value > 0
+        if (editing) {
+            //Il s'agit de la modification d'un message
+            return updateMsg(document.getElementById('list-edit-id').value, msg.value)
+        }
+
         myFetch('lists/messages/send', {method: 'post', csrf: true}, {
             list_id: parseInt(document.getElementById('list-selected').value),
             message: msg.value,
@@ -82,6 +88,7 @@
         document.getElementById('list-answer-to').firstElementChild.innerHTML = name
         document.getElementById('list-answer-id').value = msgId
         document.getElementById('list-msg-' + msgId).classList.add('answering')
+        document.getElementById('list-msg-to-send').focus();
     }
     
     /**
@@ -97,6 +104,52 @@
     }
     
     /**
+     * Permet l'édition d'un message sur une liste
+     * @param {int} msgId - Identifiant du message à modifier
+    */
+    editMsg = function(msgId) {
+        let writer = document.getElementById('list-msg-to-send');
+        document.getElementById('list-cancel-edit').classList.remove('hidden')
+        document.getElementById('list-edit-id').value = msgId
+        document.getElementById('list-msg-' + msgId).classList.add('editing')
+        getFetch('lists/messages/' + msgId + '/edit')
+        .then(res => {
+            writer.innerHTML = res.msg.message;
+        })
+        writer.focus();
+    }
+    
+    /**
+     * Annule la préparation à l'édition d'un message
+    */
+    cancelEdit = function() {
+        const editId = document.getElementById('list-edit-id').value
+        if (editId > 0) {
+            document.getElementById('list-cancel-edit').classList.add('hidden')
+            document.getElementById('list-edit-id').value = 0
+            document.getElementById('list-msg-' + editId).classList.remove('editing')
+            document.getElementById('list-msg-to-send').innerHTML = ''
+        }
+    }
+    
+    /**
+     * Sauvegarde le message en cours d'édition
+    */
+    updateMsg = function(msgId, msg) {
+        myFetch('lists/messages/' + msgId + '/update', {method: 'post', csrf: true}, {
+            message: msg,
+        }).then(response => {
+            if (response.ok) return response.json()
+        }).then(res => {
+            document.getElementById('list-cancel-edit').classList.add('hidden')
+            document.getElementById('list-edit-id').value = 0
+            document.getElementById('content-list-msg-' + msgId).innerHTML = msg
+            document.getElementById('list-msg-' + msgId).classList.remove('editing')
+            document.getElementById('list-msg-to-send').value = ''
+        })
+    }
+
+    /**
      * Dés/Epingle un message sur une liste
      * @param {int} msgId - Identifiant du message à dés/épingler
     */
@@ -107,7 +160,7 @@
         .then(res => {
             pinMsg.classList[(action == 'pin' ? 'add' : 'remove')]('is-pin')
             pinMsg.parentNode.classList[(action == 'pin' ? 'add' : 'remove')]('is-pin')
-            my_notyf(res)
+            myNotyf(res)
         })
     }
 
@@ -169,6 +222,7 @@
     */
     resetMsgActions = function() {
         cancelReply()
+        cancelEdit()
     }
 
     /** 

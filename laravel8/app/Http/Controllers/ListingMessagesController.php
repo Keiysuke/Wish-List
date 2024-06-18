@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ListingMessageRequest;
+use App\Models\Listing;
 use App\Models\ListingMessage;
 use App\Models\Notyf;
 use App\Services\MessageService;
@@ -54,6 +55,43 @@ class ListingMessagesController extends Controller
                 return response()->json(['success' => true, 'message' => $msg]);
             }
             return response()->json(['success' => false, 'notyf' => Notyf::error('Whoops! Something went wrong.')]);
+        }
+    }
+
+    /**
+     * Edit a listing message
+     * @param int $msgId Id of the listing_message to edit
+    */
+    public function edit(int $msgId){
+        return response()->json(['success' => true, 'msg' => ListingMessage::find($msgId)]);
+    }
+
+    /**
+     * Return messages of a list
+     * @param int $listId Id of the listing
+    */
+    public function getMessages(int $listId){
+        $list = Listing::find($listId);
+        return response()->json([
+            'success' => true, 
+            'htmlMsg' => (new MessageService())->show($listId),
+            'shared_list' => $list->isShared(),
+        ]);
+    }
+
+    /**
+     * Update a listing message
+     * @param int $msgId Id of the listing_message to update
+    */
+    public function update(Request $request, int $msgId){
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'message' => 'bail|required|string',
+            ]);
+
+            ListingMessage::where('id', '=', $msgId)
+                ->update($request->all());
+            return response()->json(['success' => true, 'msg' => ListingMessage::find($msgId)]);
         }
     }
 

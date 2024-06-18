@@ -350,3 +350,19 @@ span.tag {
     border: 1px solid burlywood;
     @apply p-1;
 }
+
+.animated-icon {
+    @apply absolute;
+    animation: rise-and-disappear 2.5s forwards;
+}
+
+@keyframes rise-and-disappear {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-20px) scale(0);
+        opacity: 0;
+    }
+}
