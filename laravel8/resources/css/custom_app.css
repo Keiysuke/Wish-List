@@ -255,6 +255,21 @@ a.link:hover {
     @apply text-black;
 }
 
+#icon-find-offer,
+#icon-find-opinion {
+    @apply text-black;
+}
+
+#icon-find-offer:hover {
+    @apply bg-amber-500;
+    @apply text-white;
+}
+
+#icon-find-opinion:hover {
+    @apply bg-warm_gray-500;
+    @apply text-white;
+}
+
 .music {
     @apply text-purple-500;
 }

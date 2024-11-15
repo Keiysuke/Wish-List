@@ -4,11 +4,10 @@
 </div>
 
 <x-admin.help.list_helpers>
-    <a href="https://heroicons.com/outline" class="link">Heroicons</a>
-    <a href="https://www.svgrepo.com/vectors/" class="link">SVG Repo</a>
-    <a href="https://cdpn.io/shshaw/debug/XbxvNj" class="link">Pixels to SVG</a>
-    <a href="https://emojis.wiki/fr/" class="link">Emojis en texte</a>
-    <a href="https://www.svgrepo.com/collection/yellow-emoji-icons/" class="link">Emojis SVG</a>
+    <a href="https://heroicons.com/outline" class="link" target="_blank">Heroicons</a>
+    <a href="https://www.svgrepo.com/vectors/" class="link" target="_blank">SVG Repo</a>
+    <a href="https://cdpn.io/shshaw/debug/XbxvNj" class="link" target="_blank">Pixels to SVG</a>
+    DesignService::ICONS
 </x-admin.help.list_helpers>
 
 <h3 class="mt-0">1. Les petites icônes ({{ count($icons['min']) }})</h3>
@@ -72,5 +71,9 @@
 </div>
 
 <h3>4. Les emojis pour les messages</h3>
+<x-admin.help.list_helpers>
+    <a href="https://emojis.wiki/fr/" class="link" target="_blank">Emojis en texte</a>
+    <a href="https://www.svgrepo.com/collection/yellow-emoji-icons/" class="link" target="_blank">Emojis SVG</a>
+</x-admin.help.list_helpers>
 
 A faire...

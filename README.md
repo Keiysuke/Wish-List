@@ -6,14 +6,15 @@ This website will help you recover all the purchases/and sells you made with tim
 As it's not automatically adding products/purchases from other websites, you'll have to add the products and other datas by yourself.
 
 New functionalities :
-- New page "My Friends" where you're able to search on other Users and add them as a Friend
-- You can now see all your benefits on "My benefits" page. All filters are available too.
-- Left Sidebar is now available with the list of your favorites websites
-- New filter for your products on "Discount", or "Free" (price was <= 1€)
+- Add 2 searches in sidebar for books & on products' page which are tagged as "Livre"
+- Reminder pages for Design-system / PSR / Example codings
+- New notitications (missing photos on product, video game without associated product)
+- Photo is no more necessary to create a product
+- Add search icon on products pages to find some pictures on Google
 
 Here are the current functionnalities (see upside for last ones) :
 - Register/Log in website
-- Add Products - Creating new product with minimum datas (name, price, description, at least one photo)
+- Add Products - Creating new product with minimum datas (name, price, description)
 - Link websites to a product - You can buy the product on a website ? Link it !
 - Add purchases - You bought a product ? You can save the purchase by creating one on the product page.
 - Add sells - Create as many purchases as you want and if you're selling a product, switch the purchase by clicking on it and link a new sell.
@@ -26,6 +27,10 @@ Here are the current functionnalities (see upside for last ones) :
 - Go to "My products / My purchases" - You'll have a look of all your previous purchases/sells - Grouped purchases have a slightly different look.
 
 Last ones were : 
+- New page "My Friends" where you're able to search on other Users and add them as a Friend
+- You can now see all your benefits on "My benefits" page. All filters are available too.
+- Left Sidebar is now available with the list of your favorites websites
+- New filter for your products on "Discount", or "Free" (price was <= 1€)
 - Update/Delete your grouped purchases - Plus you can delete selected purchase from a "grouped purchase" when editing one.
 - You can now filter on an entered period when visualizing your historic of purchases/sellings.
 - Possibility to archive your products & filter on archived/non archived products

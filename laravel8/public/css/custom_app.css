@@ -315,6 +315,25 @@ a.link:hover {
   color: rgba(0, 0, 0, var(--tw-text-opacity));
 }
 
+#icon-find-offer, #icon-find-opinion {
+  --tw-text-opacity: 1;
+  color: rgba(0, 0, 0, var(--tw-text-opacity));
+}
+
+#icon-find-offer:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(245, 158, 11, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+#icon-find-opinion:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(120, 113, 108, var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
 .music {
   --tw-text-opacity: 1;
   color: rgba(168, 85, 247, var(--tw-text-opacity));

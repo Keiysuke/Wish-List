@@ -211,6 +211,9 @@
                                 <x-svg.plus class="icon-xs"/>
                             </a>
                             <x-products.search_offer id="icon-find-offer" search="{{ $product->label }}"/>
+                            @if($product->isBook())
+                                <x-products.search_opinion id="icon-find-opinion" search="{{ $product->label }}"/>
+                            @endif
                             @if($productWebsites->nb_expired > 0)
                                 <span class="title-icon inline-flex cursor-pointer" title="Afficher les liens expirés" onClick="showExpired(this);">
                             @else

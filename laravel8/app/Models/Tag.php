@@ -11,6 +11,8 @@ class Tag extends Model
 {
     use HasFactory;
     protected $fillable = ['label', 'border_css_color_id', 'text_css_color_id', 'bg_css_color_id'];
+
+    const BOOK = 18;
     
     public function products(){
         return $this->belongsToMany(Product::class, 'product_tags')->withTimestamps();
@@ -34,6 +36,10 @@ class Tag extends Model
 
     public function color($kind){
         return $this->{$kind.'_css_color'}->css_class;
+    }
+
+    public function isBook(){
+        return $this->id === self::BOOK;
     }
 
     public static function getExample($borderCssColorId = null, $textCssColorId = null, $bgCssColorId = null, $label = 'Exemple'){

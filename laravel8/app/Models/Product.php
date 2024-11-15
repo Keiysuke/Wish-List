@@ -45,6 +45,13 @@ class Product extends Model
         }
         return $res;
     }
+
+    public function isBook(){
+        foreach($this->tags as $tag){
+            if ($tag->isBook()) return true;
+        }
+        return false;
+    }
     
     public function creator(){
         return $this->hasOne(User::class, 'id', 'created_by')->first();

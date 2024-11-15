@@ -20,7 +20,6 @@ use App\Services\NotificationService;
 use App\Models\Notyf;
 use App\Models\EmojiSection;
 use App\Services\DesignService;
-use App\Services\EmojiService;
 
 class ViewServiceProvider extends ServiceProvider
 {

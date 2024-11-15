@@ -25,6 +25,17 @@ class SearchService
             'link' => 'https://ledenicheur.fr/search?search=', 
             'replace' => [' ' => '%20']
         ],
+        'bookhunt' => [
+            'link' => 'https://www.chasse-aux-livres.fr/search?catalog=fr&query=', 
+            'replace' => [' ' => '+']
+        ],
+        'booknode' => [
+            'link' => 'https://booknode.com/search?q=', 
+            'replace' => [
+                ' ' => '+', 
+                ':' => '%3A',
+            ]
+        ],
         'pictures' => [
             'link' => 'https://www.google.com/search?q=', 
             'after' => '&sca_esv=4ce04de13f7e18f6&sca_upv=1&rlz=1C1CHBF_frFR906FR906&udm=2&biw=1920&bih=919&sxsrf=ADLYWILvwrDl4z_fWxSF3uhbyxGNWIO59Q%3A1717787401594&ei=CVtjZo7uI8itkdUP5aO4wA4&ved=0ahUKEwjOlvzemMqGAxXIVqQEHeURDugQ4dUDCBA&uact=5&oq=The+Essential+Games+Music+Collection&gs_lp=Egxnd3Mtd2l6LXNlcnAiJFRoZSBFc3NlbnRpYWwgR2FtZXMgTXVzaWMgQ29sbGVjdGlvbjIHEAAYgAQYGEjWBlAAWABwAXgAkAEAmAEAoAEAqgEAuAEDyAEAmAIBoAICmAMAiAYBkgcBMaAHAA&sclient=gws-wiz-serp', 

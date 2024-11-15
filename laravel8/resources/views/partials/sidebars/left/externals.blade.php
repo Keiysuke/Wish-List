@@ -37,6 +37,14 @@
             <x-Form.Btn type="submit" class="sb-search" data-kind="offer"><x-svg.big.euro class="icon-sm text-white"/></x-Form.Btn>
         </div>
         <div class="flex gap-2">
+            <x-Form.Input name="sb_bookhunt_text" type="text" placeholder="Chasse aux livres"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="bookhunt" color="amber"><x-svg.big.book class="icon-sm text-white"/></x-Form.Btn>
+        </div>
+        <div class="flex gap-2">
+            <x-Form.Input name="sb_booknode_text" type="text" placeholder="Avis sur vos livres"/>
+            <x-Form.Btn type="submit" class="sb-search" data-kind="booknode" color="warm_gray"><x-svg.big.like class="icon-sm text-white"/></x-Form.Btn>
+        </div>
+        <div class="flex gap-2">
             <x-Form.Input name="sb_pictures_text" type="text" placeholder="Rechercher des images"/>
             <x-Form.Btn type="submit" class="sb-search" data-kind="pictures" color="green"><x-svg.big.picture class="icon-sm text-black"/></x-Form.Btn>
         </div>
