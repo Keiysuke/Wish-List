@@ -4,6 +4,51 @@ namespace App\Services;
 
 class NotificationService
 {
+    const NOTIFS = [
+        'default' => [
+            'kind' => 'success',
+            'title' => 'Titre manquant',
+        ],
+        'App\Notifications\ProductSoonAvailable' => [
+            'url' => 'products.soon',
+        ],
+        'App\Notifications\ProductSoonExpire' => [
+            'url' => 'products.soon',
+        ],
+        'App\Notifications\MissingPhotos' => [
+            'url' => 'products.no_photos',
+        ],
+        'App\Notifications\MissingProductOnVideoGame' => [
+            'url' => 'video_games.no_product',
+        ],
+        'App\Notifications\FriendRequest' => [
+            'url' => 'requests.friend',
+        ],
+        'App\Notifications\Lists\ShareList' => [
+            'url' => 'lists.share',
+        ],
+        'App\Notifications\Lists\ListLeft' => [
+            'url' => 'lists.left',
+        ],
+        'App\Notifications\Lists\Products\ProductEdited' => [
+            'url' => 'lists.products.modified',
+            'kind' => 'warning',
+            'title' => 'Produit de liste édité',
+            'custom' => [
+                'edited' => true,
+            ],
+        ],
+        'App\Notifications\Lists\Products\ProductAdded' => [
+            'url' => 'lists.products.modified',
+            'title' => 'Produit de liste ajouté',
+        ],
+        'App\Notifications\Lists\Products\ProductRemoved' => [
+            'url' => 'lists.products.modified',
+            'kind' => 'error',
+            'title' => 'Produit de liste retiré',
+        ],
+    ];
+
     const KINDS = [
         'success' => [
             'id' => 'notif_1', 
@@ -53,5 +98,26 @@ class NotificationService
 
     static function getExample($kind) {
         return (Object)self::KINDS[$kind];
+    }
+
+    static function getUrl($notif) {
+        return 'partials.notifs.'.$notif['url'];
+    }
+
+    static function renderNotif($notif) {
+        $details = self::NOTIFS[$notif->type];
+        foreach (['kind', 'title'] as $key) {
+            $notif->$key = $details[$key] ?? self::NOTIFS['default'][$key];
+        }
+        self::getCustomProps($details, $notif);
+        return view(self::getUrl($details))->with(compact('notif'))->render();
+    }
+
+    static function getCustomProps($config, &$notif) {
+        if (isset($config['custom'])) {
+            foreach ($config['custom'] as $key => $value) {
+                $notif->$key = $value;
+            }
+        }
     }
 }

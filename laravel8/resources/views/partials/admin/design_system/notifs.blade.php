@@ -18,7 +18,7 @@
 
 <div class="grid grid-cols-3 gap-4">
     @foreach($notifications as $kind => $notif)
-        <div class="grid justify-items-center">
+        <div class="grid justify-items-center cursor-pointer" title="{{ $kind }}">
             <x-Notif :notif="$notif" kind="{{ $kind }}" title="{{ $notif->title }}">
                 Vous pouvez insérer tout type de contenu ici
             </x-Notif>

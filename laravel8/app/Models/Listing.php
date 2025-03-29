@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\ListingType;
+use App\Notifications\Lists\Products\ProductAdded;
+use App\Notifications\Lists\Products\ProductEdited;
+use Illuminate\Http\Request;
 
 class Listing extends Model
 {
@@ -68,5 +71,25 @@ class Listing extends Model
 
     public function owned() {
         return $this->user_id === auth()->user()->id;
+    }
+    
+    public function updateProductNb(Request $request, $newProduct) {
+        $product = Product::find($request->product_id);
+        $listingProduct = ListingProduct::where('listing_id', '=', $request->list_id)
+            ->where('product_id', '=', $request->product_id)
+            ->first();
+        //On envoie une notification aux users de la liste
+        if ($newProduct) {
+            foreach ($this->users as $user) {
+                $user->notify(new ProductAdded($user, $this, $product));
+            }
+        } else {
+            foreach ($this->users as $user) {
+                $user->notify(new ProductEdited($user, $this, $product, $listingProduct->nb, $request->nb));
+            }
+        }
+        ListingProduct::where('listing_id', '=', $request->list_id)
+            ->where('product_id', '=', $request->product_id)
+            ->update(['nb' => $request->nb]);
     }
 }

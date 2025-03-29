@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Lists;
 
 use App\Models\Listing;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
 
-class ListLeft extends Notification
+class ShareList extends Notification
 {
     use Queueable;
 
     protected $user;
     protected $list;
-    protected $status;
 
-    public function __construct(User $user, Listing $list, bool $status = true)
+    public function __construct(User $user, Listing $list)
     {
         $this->user = $user;
         $this->list = $list;
-        $this->status = $status;
     }
 
     public function via($notifiable)

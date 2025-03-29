@@ -8,8 +8,10 @@ use App\Models\ListingUser;
 use App\Models\User;
 use App\Http\Requests\ListingRequest;
 use App\Models\Notyf;
-use App\Notifications\ListLeft;
-use App\Notifications\ShareList;
+use App\Models\Product;
+use App\Notifications\Lists\ListLeft;
+use App\Notifications\Lists\Products\ProductRemoved;
+use App\Notifications\Lists\ShareList;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
 
@@ -23,20 +25,34 @@ class ListingController extends Controller
                 'nb' => 'bail|nullable|int',
                 'change_checked' => 'bail|nullable|boolean'
             ]);
-
             $list = Listing::find($request->list_id);
-            if($request->change_checked) $list->products()->toggle([$request->product_id]);
-            //Setting nb only if the product is still linked to that list
-            $products = $list->getProducts(false);
-            $hasProduct = $products->find($request->product_id);
-            if($hasProduct && isset($request->nb)){
-                ListingProduct::where('listing_id', '=', $request->list_id)
-                    ->where('product_id', '=', $request->product_id)
-                    ->update(['nb' => $request->nb]);
+            $newProduct = false;
+            
+            // Produit ajouté ou retiré (via page du produit)
+            if($request->change_checked) {
+                $list->products()->toggle([$request->product_id]);
+                $products = $list->getProducts(false, true);
+                $hasProduct = $products->find($request->product_id);
+                $product = Product::find($request->product_id);
+                if ($hasProduct) {
+                    $newProduct = true;
+                } else {
+                    foreach ($list->users as $user) {
+                        $user->notify(new ProductRemoved($user, $list, $product));
+                    }
+                }
+            } else {
+                $products = $list->getProducts(false, true);
+                $hasProduct = $products->find($request->product_id);
+            }
+            
+            //On met à jour les données seulement si le produit est toujours dans la liste
+            if ($hasProduct && isset($request->nb)) {
+                $list->updateProductNb($request, $newProduct);
             }
             
             $products = $list->getProducts();
-            return response()->json(array('success' => true, 'total_price' => $products->total_price));
+            return response()->json(array('success' => true, 'total_price' => $products->total_price, 'total_best_price' => $products->total_best_price));
         }
     }
 
@@ -201,7 +217,7 @@ class ListingController extends Controller
                     ]))->save();
                 //Check if the friend has already been notified or not
                 $exist = $friend->notifications()
-                    ->where('type', '=', 'App\Notifications\ShareList')
+                    ->where('type', '=', 'App\Notifications\Lists\ShareList')
                     ->whereJsonContains('data->list_id', $listId)
                     ->whereJsonContains('data->user_id', $user->id)
                     ->first();
