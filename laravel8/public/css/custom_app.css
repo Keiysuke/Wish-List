@@ -448,6 +448,15 @@ span.tag {
   padding: 0.25rem;
 }
 
+.show-nb-chars {
+  --tw-text-opacity: 1;
+  color: rgba(59, 130, 246, var(--tw-text-opacity));
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-style: italic;
+  font-weight: 700;
+}
+
 .animated-icon {
   position: absolute;
   -webkit-animation: rise-and-disappear 2.5s forwards;

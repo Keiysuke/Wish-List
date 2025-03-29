@@ -178,7 +178,7 @@
             @include('partials.products.list.pictures', [$photos, 'dir' => $dir, 'firstPhoto' => $product->pict])
         </div>
         <div class="{{ (count($photos) > 1)? 'w-2/3' : 'w-3/4' }}">
-            <div class="flex flex-col justify-between h-full gap-8 p-4 pt-0">
+            <div class="flex flex-col justify-between h-full gap-8 pl-4 pt-0">
                 <div class="flex gap-4 h-full">
                     <div class="flex flex-col justify-around gap-4 w-9/12">
                         <div>

@@ -83,8 +83,9 @@
     <div id="submenu-externals" class="submenu" onMouseOver="submenu(true, 'externals');" onMouseOut="submenu(false, 'externals');">
         <a target="_blank" href="https://www.prixdestimbres.fr/tarifs-colis.html">{{ __('Tarifs Colissimo') }}</a>
         <a target="_blank" href="https://www.laposte.fr/courriers-colis/conseils-pratiques/les-emballages-a-affranchir">{{ __('Emballages de la Poste') }}</a>
-        <a target="_blank" href="https://www.i-comparateur.com/">{{ __('Comparateur de prix') }}</a>
-        <a target="_blank" href="https://ledenicheur.fr/">{{ __('Dénicheur de produits') }}</a>
+        <a target="_blank" href="https://www.scamdoc.com/" class="inline-flex gap-1"><x-svg.warning class="icon-xs"/>{{ __('Vérifie la légitimité d\'un site') }}</a>
+        <a target="_blank" href="https://www.i-comparateur.com/" class="inline-flex gap-1"><x-svg.big.euro class="icon-xs"/>{{ __('Comparateur de prix') }}</a>
+        <a target="_blank" href="https://ledenicheur.fr/" class="inline-flex gap-1"><x-svg.search class="icon-xs"/>{{ __('Dénicheur de produits') }}</a>
     </div>
     <div id="subicon-bell" class="max-h-150 my-scrollbar subicon flex gap-2">
         @include("partials.notifs.show", ['notifs' => auth()->user()->unreadNotifications])

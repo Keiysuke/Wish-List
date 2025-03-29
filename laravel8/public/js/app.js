@@ -3829,6 +3829,18 @@ window.riseIcon = function (event, kind, v) {
   });
 };
 
+window.onload = function () {
+  //Allows to show nb chars from an input with the showNbChars dataset property that refers to an input id
+  Array.from(document.getElementsByClassName('show-nb-chars')).forEach(function (e) {
+    var id = e.dataset.nbChars;
+    var el = document.getElementById(id);
+    document.getElementById('show-nb-chars-' + id).innerHTML = '(' + el.value.length + ' caractères)';
+    el.addEventListener('input', function (el) {
+      document.getElementById('show-nb-chars-' + id).innerHTML = '(' + el.target.value.length + ' caractères)';
+    });
+  });
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

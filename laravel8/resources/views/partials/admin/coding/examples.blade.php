@@ -14,6 +14,12 @@
         <br />
         <x-Window.Var var="alertContent"/> = Blade::renderComponent(\App\View\Components\Alert::class, ['type' => 'success'], 'This is a success alert.');<br />
         <x-Window.Comment>// Maintenant $alertContent contient le HTML rendu du composant Alert<br /></x-Window.Comment>
+        <br />
+        <x-Window.Comment>// 2 - Dans le contrôleur<br /></x-Window.Comment>
+        <x-Window.Return/> <x-Window.Keyword name="view"/>('partials.ma_vue')-><x-Window.Keyword name="with"/>(compact('notif'))-><x-Window.Keyword name="render"/>();<br />
+        <x-Window.Comment>// Dans la vue<br /></x-Window.Comment>
+        <x-Window.Keyword name=""/> { !! <x-Window.Static name="\App\Services\NotificationService" method="renderNotif"/>(<x-Window.Var var="notif"/>) !! }<br />
+        <br />
     </x-Window.Coding>
 
     <x-Window.Coding class="w-10/12" title="La pagination en Ajax" major="vendor/pagination/tailwind | useAjax = true">

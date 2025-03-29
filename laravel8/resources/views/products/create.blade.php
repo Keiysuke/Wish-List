@@ -116,7 +116,7 @@
             </div>
         </div>
         <div class="my-4">
-            <x-Form.Label for="description" block>Description</x-Form.Label>
+            <x-Form.Label for="description" block showNbChars="description">Description</x-Form.Label>
             <x-Form.Textarea name="description">{{ old('description') }}</x-Form.Textarea>
         </div>
         

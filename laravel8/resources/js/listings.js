@@ -138,7 +138,8 @@
             if (nb_results > 0) {
                 document.getElementById('nb-results').setAttribute('data-nb', nb_results)
                 document.getElementById('nb-results').innerHTML = nb_results + ' Résultat(s)'
-                document.getElementById('total-price').innerHTML = 'Montant total : ' + res.total_price + ' €'
+                document.getElementById('total-price').innerHTML = 'Montant total : ' + res.total_best_price + ' €'
+                document.getElementById('total-price').title = 'Montant réel : ' + res.total_price + ' €'
             } else getProducts(listId)
         })
     }

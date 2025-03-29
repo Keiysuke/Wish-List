@@ -1,0 +1,1 @@
+<span class="purple">{{ $name }}</span>="<span class="green">{{ $value }}</span>"

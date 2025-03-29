@@ -168,7 +168,7 @@
             </div>
         </div>
         <div class="mb-4">
-            <x-Form.Label for="description" block>Description</x-Form.Label>
+            <x-Form.Label for="description" block showNbChars="description">Description</x-Form.Label>
             <x-Form.Textarea name="description">{{ old('description', $product->description) }}</x-Form.Textarea>
         </div>
         <div class="flex items-center justify-between">

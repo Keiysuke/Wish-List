@@ -95,7 +95,7 @@
             </div>
         @endif
         <div class="{{ is_null($product)? 'w-full' : 'w-4/5' }}">
-            <div class="flex flex-col justify-between h-full gap-8 p-4 pt-0">
+            <div class="flex flex-col justify-between h-full gap-8 pl-4 pt-0">
                 <div class="flex gap-4 h-full">
                     <div class="flex flex-col justify-around gap-4 w-9/12">
                         <div>

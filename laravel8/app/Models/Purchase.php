@@ -42,7 +42,7 @@ class Purchase extends Model
         return $this->hasMany(GroupBuyPurchase::class);
     }
     
-    public function price(){
+    public function calculatePrice(){
         return $this->cost - $this->discount;
     }
 

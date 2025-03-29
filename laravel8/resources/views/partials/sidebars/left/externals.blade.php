@@ -16,6 +16,9 @@
         <div class="rectangle bg-white">
             <a href="https://www.google.com/search?q=la%20poste%20colombes&rlz=1C1CHBF_frFR906FR906&oq=la+po&aqs=chrome.0.69i59j69i57j46i199i291i433i512j0i433i512j0i131i433i512j69i60l3.1888j0j1&sourceid=chrome&ie=UTF-8&tbs=lf:1,lf_ui:4&tbm=lcl&sxsrf=ALiCzsb6dKiXBv6Bue0i-5GjZcv50ny1uQ:1652725385178&rflfq=1&num=10&rldimm=3273829765213076558&lqi=ChFsYSBwb3N0ZSBjb2xvbWJlcyIDiAEBSKK00c2cqoCACFolEAAQARgAGAEYAiIRbGEgcG9zdGUgY29sb21iZXMqBggCEAAQAZIBC3Bvc3Rfb2ZmaWNlqgEQEAEqDCIIbGEgcG9zdGUoBA&ved=2ahUKEwiiq_rr0eT3AhUQ3RoKHUTFDS0QvS56BAgEEAE&sa=X&rlst=f#rlfi=hd:;si:3273829765213076558,l,ChFsYSBwb3N0ZSBjb2xvbWJlcyIDiAEBSKK00c2cqoCACFolEAAQARgAGAEYAiIRbGEgcG9zdGUgY29sb21iZXMqBggCEAAQAZIBC3Bvc3Rfb2ZmaWNlqgEQEAEqDCIIbGEgcG9zdGUoBA;mv:[[48.93069020000001,2.2746551],[48.902700599999996,2.2251434]];tbs:lrf:!1m4!1u3!2m2!3m1!1e1!2m1!1e3!3sIAE,lf:1,lf_ui:4" title="La Poste - horaires" target="_blank"><img src="{{ asset(config('images.icons_externals')).'/la_poste.png' }}"/></a>
         </div>
+        <div class="rectangle bg-white">
+            <a href="https://www.scamdoc.com/" title="Vérifier le site" target="_blank"><img src="{{ asset(config('images.icons_externals')).'/scamdoc.png' }}"/></a>
+        </div>
     </div>
     <div class="flex flex-col items-center mt-4 gap-4">
         <div class="flex gap-2">

@@ -1,6 +1,5 @@
-<div class="wrap_h1">
+<div class="wrap_h1 mt-8">
     <h1>Conventions Laravel</h1>
-    {{-- <x-svg.clipboard_list class="icon-lg"/> --}}
 </div>
 
 <x-admin.help.list_helpers>

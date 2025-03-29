@@ -1,4 +1,4 @@
-@php($payed = $purchase->price())
+@php($payed = $purchase->calculatePrice())
 @php($sell = $purchase->selling ?? null)
 @php($sold = is_null($sell)? null : $sell->price())
 <div class="{{ $class }} h-full w-full" onClick="toggle_thumbnail({{ $cpt }})">

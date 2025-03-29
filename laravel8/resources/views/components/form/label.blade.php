@@ -8,6 +8,10 @@
         </a>
     @endif
     {{ $slot }}
+    @if(isset($showNbChars))
+        @php($tmpId = \App\Http\Controllers\UtilsController::asId($showNbChars))
+        <span id="show-nb-chars-{{ $tmpId }}" class="show-nb-chars" data-nb-chars="{{ $tmpId }}"></span>
+    @endif
     @if(isset($required))
         <span class="required">
             *

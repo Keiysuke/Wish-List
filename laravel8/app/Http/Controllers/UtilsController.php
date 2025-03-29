@@ -48,4 +48,12 @@ class UtilsController extends Controller
         }
         return false;
     }
+
+    public static function getPriceColor($price, $real_cost){
+        return ($price < $real_cost) ? 'green' : (($price > $real_cost) ? 'red' : 'black');
+    }
+
+    public static function asId($s){
+        return str_replace('_', '-', $s);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Http\Controllers\FriendUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UtilsController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
@@ -34,15 +35,24 @@ class Listing extends Model
         return $this->belongsToMany(User::class, 'listing_users')->withTimestamps();
     }
 
-    public function getProducts($withExtra = true){
-        $products = (new ProductController)->getProducts($this->products()->paginate());
+    public function getProducts($withExtra = true, $all = false){
+        if ($all) {
+            $products = (new ProductController)->getProducts($this->products()->get());
+        } else {
+            $products = (new ProductController)->getProducts($this->products()->paginate());
+        }
         $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
         
         if ($withExtra) {
-            foreach($products as $product) $product->nb = ListingProduct::where('product_id', '=', $product->id)->first()->nb;
-            
             $products->total_price = 0;
-            foreach($products as $product) $products->total_price += $product->real_cost * $product->nb;
+            $products->total_best_price = 0;
+            foreach($products as $product) {
+                $product->nb = ListingProduct::where('listing_id', '=', $this->id)
+                    ->where('product_id', '=', $product->id)->first()->nb;
+                $products->total_best_price += $product->bestWebsiteOffer()->price * $product->nb;
+                $products->total_price += $product->real_cost * $product->nb;
+            }
+            $products->color_price = UtilsController::getPriceColor($products->total_best_price, $products->total_price);
         }
         return $products;
     }
