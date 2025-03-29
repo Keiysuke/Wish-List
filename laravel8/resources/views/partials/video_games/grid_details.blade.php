@@ -9,7 +9,8 @@
                         <div class="video-game-img rounded rounded-b-none" style="background-image: url({{ $videoGame->pict }})"></div>
                     </div>
                     <div class="down flex flex-col justify-between h-full font-semibold text-center">
-                        <p class="my-2 text-black">{{ (strlen($videoGame->label) > 50)? substr($videoGame->label, 0, 50).'...' : $videoGame->label }}</p>
+                        @php($label = \App\Http\Controllers\UtilsController::cutString($videoGame->label, 50))
+                        <p class="my-2 text-black">{{ $label }}</p>
                         
                         <div class="flex justify-end items-end">
                             <p class="text-xs bg-gray-800 text-white p-2">

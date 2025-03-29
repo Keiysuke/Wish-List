@@ -221,12 +221,7 @@ a.link:hover {
 }
 
 .title-icon.heart.on {
-    @apply text-red-500;
-}
-
-.title-icon.heart.on:hover {
-    @apply bg-red-500;
-    @apply text-white;
+    @apply text-red-500 hover:bg-red-500 hover:text-white;
 }
 
 .title-icon.heart:hover {
@@ -234,12 +229,7 @@ a.link:hover {
 }
 
 .title-icon.archive.on {
-    @apply text-yellow-700;
-}
-
-.title-icon.archive.on:hover {
-    @apply text-white;
-    @apply bg-yellow-700;
+    @apply text-yellow-700 hover:text-white hover:bg-yellow-700;
 }
 
 .title-icon.archive:hover {
@@ -270,31 +260,20 @@ a.link:hover {
     @apply text-white;
 }
 
-.music {
-    @apply text-purple-500;
+.product {
+    @apply text-orange-500 hover:bg-orange-500 hover:text-white;
 }
 
-.music:hover {
-    @apply bg-purple-500;
-    @apply text-white;
+.music {
+    @apply text-purple-500 hover:bg-purple-500 hover:text-white;
 }
 
 .trophy {
-    @apply text-yellow-700;
-}
-
-.trophy:hover {
-    @apply bg-yellow-300;
-    @apply text-black;
+    @apply text-yellow-700 hover:bg-yellow-300 hover:text-black;
 }
 
 .title-icon.refresh {
-    @apply text-green-500;
-}
-
-.title-icon.refresh:hover {
-    @apply bg-green-500;
-    @apply text-white;
+    @apply text-green-500 hover:bg-green-500 hover:text-white;
 }
 
 li.li-website.expired {
@@ -326,15 +305,15 @@ span.tag {
     @apply rounded-full;
 }
 
-#show-video-game:hover {
+.show-video-game:hover {
     @apply bg-red-700;
 }
 
-#show-video-game svg {
+.show-video-game svg {
     @apply text-red-700;
 }
 
-#show-video-game:hover svg {
+.show-video-game:hover svg {
     @apply text-white;
 }
 

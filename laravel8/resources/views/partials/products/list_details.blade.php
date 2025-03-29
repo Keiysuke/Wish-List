@@ -15,7 +15,7 @@
                             <x-svg.archive class="icon-sm absolute right-3 text-yellow-700"/>
                         @endif
                     </p>
-                    <p class="italic py-2 px-4 text-sm">{{ $product->description() }}</p>
+                    <p class="italic py-2 px-4 text-sm">{!! nl2br($product->description) !!}</p>
                     <div class="flex h-full px-4">
                         <div class="flex items-end w-4/5 pb-4">
                             <p class="font-semibold">Edition limitée : <span class="font-normal">{{ is_null($product->limited_edition)? 'Non' : $product->limited_edition.' ex.' }}</span></p>

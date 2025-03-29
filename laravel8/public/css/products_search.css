@@ -8,6 +8,38 @@ div.no-offer div.product-pict {
   filter: grayscale(90%);
 }
 
+div.wrap-grid-product {
+  position: relative;
+}
+
+div.wrap-grid-product:hover {
+  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+div.wrap-grid-product {
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+div.wrap-grid-product:hover {
+  --tw-rotate: -3deg;
+}
+
+div.wrap-grid-product {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 div.grid-product div.top.no-offer div.product-price {
   display: none;
 }
@@ -30,25 +62,32 @@ div.grid-product div.down.offer-soon div p {
   background-color: #ed8936;
 }
 
-div.grid-product div.top.vg-icons {
+div.wrap-grid-product div.top.vg-icons {
   display: flex;
   flex-direction: column;
+  top: 0;
   right: 0;
-  width: 2rem;
+  border-left: 1px solid red;
+  border-bottom: 1px solid red;
   background-color: white;
   position: absolute;
   z-index: 1;
 }
 
-div.grid-product div.top.vg-icons a {
+div.wrap-grid-product div.top.vg-icons a, 
+div.wrap-grid-product div.top.vg-icons div.title-icon {
   border: none;
 }
 
-div.grid-product div.top.vg-icons a:not(:last-child) {
+div.wrap-grid-product div.top.vg-icons div.title-icon:not(:last-child) {
   border-bottom: 1px solid #e4e4e7;
 }
 
-div.grid-product div.top.vg-icons a:last-child {
+div.wrap-grid-product div.top.vg-icons a:not(:last-child) {
+  border-bottom: 1px solid #e4e4e7;
+}
+
+div.wrap-grid-product div.top.vg-icons a:last-child {
   border-bottom-left-radius: 0.25rem;
 }
 

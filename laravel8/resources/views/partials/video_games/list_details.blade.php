@@ -12,6 +12,9 @@
                     <p class="relative flex items-center font-semibold text-black py-1 pl-4 border-b border-gray-300 bg-gray-200">
                         {{ $videoGame->label }}
                     </p>
+                    <p class="p-2 pb-0 text-sm"><b>Studio :</b> {!! $videoGame->getStudioAsLink() !!}</p>
+                    @php($desc = \App\Http\Controllers\UtilsController::cutString($videoGame->description(), 120))
+                    <p class="italic p-2 text-sm">{!! nl2br($desc) !!}</p>
                 </div>
             </div>
         @endforeach

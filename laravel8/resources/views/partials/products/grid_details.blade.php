@@ -1,16 +1,9 @@
 <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6" id="grid-products">
     @if(count($products) > 0)
         @foreach($products as $product)
+        <div class="wrap-grid-product">
             <a href="{{ route('products.show', $product->id) }}">
-                <div class="grid-product flex flex-col justify-between shadow border rounded h-full transform hover:-rotate-3 hover:shadow-xl transition ease-in-out duration-150">
-                    {{-- @if($product->video_game)
-                        @php($vg = $product->video_game->video_game)
-                        @php($support = $product->video_game->vg_support)
-                        <div class="top vg-icons">
-                            <x-Utils.Yt.TitleIcon search="{{ $vg->label }} Soundtrack"/>
-                            <x-Utils.Psthc.TitleIcon search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
-                        </div>
-                    @endif --}}
+                <div class="grid-product flex flex-col justify-between shadow border rounded h-full">
                     <div class="top relative {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                         <div class="product-price">{{ $product->real_cost }} €</div>
                         <div class="product-pict rounded rounded-b-none" style="background-image: url({{ $product->pict }})"></div>
@@ -34,6 +27,16 @@
                     </div>
                 </div>
             </a>
+            @if($product->video_game)
+                @php($vg = $product->video_game->video_game)
+                @php($support = $product->video_game->vg_support)
+                <div class="top vg-icons">
+                    <x-Utils.Vg.TitleIcon id="{{ $product->video_game->video_game_id }}"/>
+                    <x-Utils.Yt.TitleIcon search="{{ $vg->label }} Soundtrack"/>
+                    <x-Utils.Psthc.TitleIcon search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+                </div>
+            @endif
+        </div>
         @endforeach
     @else
         Aucun produit trouvé...

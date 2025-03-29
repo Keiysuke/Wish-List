@@ -14,6 +14,7 @@ class VideoGame extends Model
 {
     use HasFactory;
     protected $fillable = ['developer_id', 'label', 'date_released', 'nb_players'];
+    public $product = null;
 
     public function developer(){
         return $this->belongsTo(VgDeveloper::class);
@@ -31,14 +32,23 @@ class VideoGame extends Model
         return $this->hasMany(ProductAsVideoGame::class);
     }
 
+    public function description(): String {
+        return ($this->product())->description ?? '';
+    }
+
     public function date_released($format = 'd/m/Y'){
         return DateService::getDate($this->date_released, $format);
     }
 
     public function product(){
+        if (!is_null($this->product)) {
+            return $this->product;
+        }
+        
         $this->setFirstPhoto();
         if (count($this->products) > 0) {
-            return $this->products->first()->product;
+            $this->product = $this->products->first()->product;
+            return $this->product;
         }
         return null;
     }
@@ -56,6 +66,11 @@ class VideoGame extends Model
         } else {
             $this->pict = asset(ProductPhotoController::getPhotoLink(null));
         }
+    }
+
+    public function getStudioAsLink(){
+        $dev = $this->developer;
+        return '<a href="'.route('vg_developers.edit', $dev->id).'" class="link" target="_blank">'.$dev->label.'</a>';
     }
 
     /** 
@@ -78,31 +93,33 @@ class VideoGame extends Model
                 }
             }
 
-            if (!is_null($supportId)) { //If it's still null, we can't link
-                $pvg = ProductAsVideoGame::where('video_game_id', '=', $this->id)
-                    ->where('vg_support_id', '=', $supportId)
-                    ->where('product_id', '=', $product->id)
-                    ->get();
-                
-                if (count($pvg) > 0) { //Already linked to a product
-                    $pvg = $pvg->first();
-                    if ($pvg->video_game_id !== $this->id) {
-                        return ['success' => false, 'notyf' => Notyf::error('Linked to another product : '.$pvg->video_game_id)];
-                    } else {
-                        return ['success' => false, 'notyf' => Notyf::warning('Already linked to that product')];
-                    }
-                } else { //Linking to the product found
-                    $pvg = new ProductAsVideoGame([
-                        'product_id' => $product->id, 
-                        'video_game_id' => $this->id, 
-                        'vg_support_id' => $supportId, 
-                    ]);
-                    $pvg->save();
-                }
-                //Suppression d'une notification si jamais elle existe
-                NotificationsController::deleteFrom('MissingProductOnVideoGame', $this->id);
-                return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product')];
+            if (is_null($supportId)) { //If it's still null, we can't link
+                return ['success' => false, 'notyf' => Notyf::error('No support (PS4, PC...) found on the product\'s name')];
             }
+            
+            $pvg = ProductAsVideoGame::where('video_game_id', '=', $this->id)
+                ->where('vg_support_id', '=', $supportId)
+                ->where('product_id', '=', $product->id)
+                ->get();
+            
+            if (count($pvg) > 0) { //Already linked to a product
+                $pvg = $pvg->first();
+                if ($pvg->video_game_id !== $this->id) {
+                    return ['success' => false, 'notyf' => Notyf::error('Linked to another product : '.$pvg->video_game_id)];
+                } else {
+                    return ['success' => false, 'notyf' => Notyf::warning('Already linked to that product')];
+                }
+            } else { //Linking to the product found
+                $pvg = new ProductAsVideoGame([
+                    'product_id' => $product->id, 
+                    'video_game_id' => $this->id, 
+                    'vg_support_id' => $supportId, 
+                ]);
+                $pvg->save();
+            }
+            //Suppression d'une notification si jamais elle existe
+            NotificationsController::deleteFrom('MissingProductOnVideoGame', $this->id);
+            return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product')];
         }
         return ['success' => false, 'notyf' => Notyf::warning('No product found')];
     }

@@ -19,6 +19,8 @@
         <x-Window.Return/> <x-Window.Keyword name="view"/>('partials.ma_vue')-><x-Window.Keyword name="with"/>(compact('notif'))-><x-Window.Keyword name="render"/>();<br />
         <x-Window.Comment>// Dans la vue<br /></x-Window.Comment>
         <x-Window.Keyword name=""/> { !! <x-Window.Static name="\App\Services\NotificationService" method="renderNotif"/>(<x-Window.Var var="notif"/>) !! }<br />
+        <x-Window.Comment>// En traitant le rendu des balises HTML<br /></x-Window.Comment>
+        <x-Window.Keyword name=""/> { !! <x-Window.Keyword name="nl2br"/>(<x-Window.Var var="desc"/>) !! }<br />
         <br />
     </x-Window.Coding>
 
@@ -70,5 +72,11 @@
         <br />
         <x-svg.warning class="warning icon-sm"/><x-Window.Comment>il faut renseigner l'url pour que cela fonctionne<br /></x-Window.Comment>
         <x-Window.Keyword name="getFetch"/>('user/request/user/' + friendId + '/befriend')<br />
+    </x-Window.Coding>
+
+    <h3 class="my-0">2. Mes Models</h3>
+
+    <x-Window.Coding kind="JS" class="w-10/12" title="Label du studio avec un lien" major="VideoGame | getStudioAsLink">
+        { !! <x-Window.Var var="videoGame"/>-><x-Window.Keyword name="getStudioAsLink"/>() !! }<br />
     </x-Window.Coding>
 </div>

@@ -33,7 +33,7 @@
 <h3>3. Les icônes sur le site</h3>
 
 <div class="flex gap-1">
-    <div id="show-video-game" class="title-icon inline-flex">
+    <div class="show-video-game title-icon inline-flex">
         <x-svg.big.vg_controller class="icon-xs"/>
     </div>
     <div class="title-icon inline-flex">
@@ -51,6 +51,8 @@
     <div class="title-icon refresh inline-flex">
         <x-svg.refresh class="icon-xs"/>
     </div>
+    <x-Utils.Product.TitleIcon id="1"/>
+    <x-Utils.Vg.TitleIcon id="1"/>
     <x-Utils.Yt.TitleIcon search="Soundtrack"/>
     <x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
     <x-products.search_photo search="#" class="title-icon inline-flex"/>

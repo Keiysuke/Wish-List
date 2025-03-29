@@ -79,6 +79,9 @@
         @endif
         <h1>{{ $videoGame->label }}</h1>
         <div class="absolute right-0">
+            @if(!is_null($product))
+                <x-Utils.Product.TitleIcon id="{{ $product->id }}"/>
+            @endif
             <a title="Editer le jeu vidéo" href="{{ route('video_games.edit', $videoGame->id) }}" class="title-icon inline-flex">
                 <x-svg.edit class="icon-xs"/>
             </a>
@@ -97,10 +100,11 @@
         <div class="{{ is_null($product)? 'w-full' : 'w-4/5' }}">
             <div class="flex flex-col justify-between h-full gap-8 pl-4 pt-0">
                 <div class="flex gap-4 h-full">
-                    <div class="flex flex-col justify-around gap-4 w-9/12">
+                    <div class="flex flex-col justify-top gap-4 w-9/12">
                         <div>
+                            <p class="text-lg"><b>Studio :</b> {!! $videoGame->getStudioAsLink() !!}
                             <p class="text-lg font-semibold">Description</p>
-                            <p class="text-sm ml-4 italic">{!! nl2br($videoGame->description) !!}</p>
+                            <p class="text-sm ml-4 italic">{!! nl2br($videoGame->description()) !!}</p>
                         </div>
                     </div>
                 </div>

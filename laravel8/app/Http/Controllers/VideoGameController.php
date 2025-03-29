@@ -173,15 +173,7 @@ class VideoGameController extends Controller
         if($this->exists($request->label, $videoGame->id))
             return back()->withErrors(['label' => __('That video game already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $videoGame->update($request
-            ->merge([
-                'developer_id' => $request->developer_id, 
-                'label' => $request->label, 
-                'date_released' => $request->date_released,
-                'nb_players' => $request->nb_players,
-            ])
-            ->all()
-        );
+        $videoGame->update($request->all());
         return redirect()->route('video_games.edit', $videoGame)->with('info', __('The video game has been edited.'));
     }
 
