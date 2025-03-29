@@ -23,17 +23,27 @@ class SearchService
         ],
         'offer' => [
             'link' => 'https://ledenicheur.fr/search?search=', 
-            'replace' => [' ' => '%20']
+            'replace' => [
+                ' ' => '%20',
+                "&#039;" => '%27',
+                "#" => '%23',
+            ]
         ],
         'bookhunt' => [
             'link' => 'https://www.chasse-aux-livres.fr/search?catalog=fr&query=', 
-            'replace' => [' ' => '+']
+            'replace' => [
+                ' ' => '+',
+                "&#039;" => '%27',
+                "#" => '%23',
+            ]
         ],
         'booknode' => [
             'link' => 'https://booknode.com/search?q=', 
             'replace' => [
                 ' ' => '+', 
                 ':' => '%3A',
+                "&#039;" => '%27',
+                "#" => '%23',
             ]
         ],
         'pictures' => [

@@ -24,10 +24,18 @@
         document.getElementById('page').value = nb;
         getProducts(document.getElementById('list-selected').value, true);
     }
+
+    // document.forms['filter-historic'].onsubmit = (e) => {
+    //     e.preventDefault();
+    //     document.getElementById('page').value = 1;
+    //     get_historic();
+    // }
 </script>
 @endsection
 
 @section('absolute_content')
+    <div id="content-edit-product-list" class="hidden">
+    </div>
     <div id="content-share-list" class="hidden">
     </div>
     <div id="list-msg-menu" class="hidden">

@@ -39,7 +39,7 @@
   };
 
   toggleShareList = function toggleShareList() {
-    event.stopPropagation();
+    if (event) event.stopPropagation();
     document.getElementById('content-share-list').classList.toggle('hidden');
     document.getElementById('content-share-list').classList.toggle('flex');
     document.getElementById('main').classList.toggle('pointer-events-none');
@@ -49,9 +49,7 @@
     getFetch('shared/lists/' + listId + '/show').then(function (res) {
       if (res.success) {
         document.getElementById('content-share-list').innerHTML = res.html;
-        document.getElementById('content-share-list').classList.toggle('hidden');
-        document.getElementById('content-share-list').classList.toggle('flex');
-        document.getElementById('main').classList.toggle('pointer-events-none');
+        toggleShareList();
       }
     });
   };
@@ -202,6 +200,61 @@
       document.getElementById('wrap-lists').innerHTML = lists.html;
       getProducts(lists.first_list_id);
     });
+  };
+  /**
+   * Affiche la fenête d'édition d'un produit d'une liste
+   * @param {int} listId - Identifiant de la liste
+   * @param {int} productId - Identifiant du produit
+   */
+
+
+  showProductEdit = function showProductEdit(listId, productId) {
+    getFetch('shared/lists/' + listId + '/products/' + productId + '/edit').then(function (res) {
+      if (res.success) {
+        document.getElementById('content-edit-product-list').innerHTML = res.html;
+        document.getElementById('content-edit-product-list').classList.toggle('hidden');
+        document.getElementById('content-edit-product-list').classList.toggle('flex');
+        document.getElementById('main').classList.toggle('pointer-events-none');
+      }
+    });
+  };
+  /**
+   * Edite le produit d'une liste
+   * @param {int} listId - Identifiant de la liste
+   * @param {int} productId - Identifiant du produit
+   */
+
+
+  editProductList = function editProductList(listId, productId) {
+    event.stopPropagation();
+    var oldNb = document.getElementById('edit-product-list-old-nb').value;
+    var nb = document.getElementById('edit-product-list-nb').value;
+
+    if (oldNb === nb) {
+      notyfJS('Aucun changement apporté', 'success');
+      return;
+    }
+
+    myFetch('lists/products/toggle', {
+      method: 'post',
+      csrf: true
+    }, {
+      list_id: parseInt(listId),
+      product_id: parseInt(productId),
+      nb: nb
+    }).then(function (response) {
+      if (response.ok) return response.json();
+    }).then(function (res) {
+      toggleEditProductList();
+      notyfJS('Produit de la liste édité', 'success');
+      getProducts(listId, true);
+    });
+  };
+
+  toggleEditProductList = function toggleEditProductList() {
+    document.getElementById('content-edit-product-list').classList.toggle('flex');
+    document.getElementById('content-edit-product-list').classList.toggle('hidden');
+    document.getElementById('main').classList.toggle('pointer-events-none');
   }; // setInterval(showMessages, 5000)
 
 })();

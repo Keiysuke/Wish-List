@@ -13,7 +13,17 @@
                         <p class="text-xs w-full font-semibold text-black">
                             {{ $product->label }}<span class="ml-2 text-sm text-blue-500">x {{ $product->nb }}</span>
                         </p>
+                        <input type="hidden" id="{{ 'quantity-list-'.$list->id.'-'.$product->id }}" value="{{ $product->nb }}"/>
                         <div class="icons-container">
+                            @if($list->owned())
+                            <a 
+                                class="edit-list-product inline-flex hover:text-blue-600 cursor-pointer" 
+                                title="Modifier la quantité" 
+                                onClick="showProductEdit({{ $list->id }}, {{ $product->id }});"
+                                >
+                                <x-svg.edit class="icon-xs"/>
+                            </a>
+                            @endif
                             <a href="{{ route('products.show', $product->id) }}" class="inline-flex hover:text-blue-500" title="Fiche du produit">
                                 <x-svg.eye_open class="icon-xs"/>
                             </a>

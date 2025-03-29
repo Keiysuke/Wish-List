@@ -97,6 +97,7 @@ Route::resource('lists', ListingController::class)->middleware(['auth', 'verifie
 Route::get('lists/{listId}/destroy', [ListingController::class, 'destroy'])->name('destroyList');
 Route::get('lists/{listId}/download', [ListingController::class, 'download'])->name('downloadList');
 Route::get('shared/lists/{listId}/show', [ListingController::class, 'showShare'])->name('show_shareList');
+Route::get('shared/lists/{listId}/products/{productId}/edit', [ListingController::class, 'showEditProduct'])->name('show_editProduct');
 Route::post('lists/share', [ListingController::class, 'share'])->name('shareList');
 Route::get('lists/{listId}/leave', [ListingController::class, 'leave'])->name('leaveFriendList');
 //Listing Messages

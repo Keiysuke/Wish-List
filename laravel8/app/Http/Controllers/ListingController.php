@@ -254,4 +254,15 @@ class ListingController extends Controller
             'success' => true,
         ]);
     }
+    
+    public function showEditProduct(int $listId, int $productId){
+        $productList = ListingProduct::where('listing_id', '=', $listId)
+            ->where('product_id', '=', $productId)
+            ->first();
+        $returnHTML = view('partials.lists.edit_product')->with(compact('productList'))->render();
+        return response()->json([
+            'success' => true, 
+            'html' => $returnHTML
+        ]);
+    }
 }

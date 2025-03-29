@@ -1,4 +1,5 @@
-#content-share-list {
+#content-share-list,
+#content-edit-product-list {
     @apply absolute;
     @apply justify-center;
     @apply items-center;
@@ -20,7 +21,7 @@
     @apply w-2/5;
     @apply flex-col;
     @apply gap-1;
-    @apply px-3;
+    @apply pl-3;
     @apply -mt-2;
 }
 

@@ -8,7 +8,8 @@
         <span class="font-light" style="margin-top:0.10rem;"> - {{ $list->isShared() ? 'Partagée' : 'Privée' }}</span>
     @endif
     <div class="absolute right-0">
-        <span id="total-price">Montant total : {{ $products->total_price }} €</span>
+        @php($color = 'text-'.$products->color_price.'-600')
+        <span id="total-price" title="Montant réel : {{ $products->total_price }} €">Montant total : <span class="{{ $color }}">{{ $products->total_best_price }} €</span></span>
         @if($list->owned())
             <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShareList({{ $list->id }});">
                 <x-svg.share title="Partager la liste ?" class="icon-xs"/>
@@ -24,4 +25,4 @@
 @endif
 <h2 class="mb-2" id="nb-results" data-nb="{{ $nb_results }}">{{ $nb_results }} produit(s)</h2>
 
-@include('lists.products.details', $products)
+@include('lists.products.details', compact($products, $list))

@@ -1,8 +1,20 @@
-#content-share-list {
+#content-share-list, #content-edit-product-list {
   position: absolute;
+}
+
+#content-share-list, #content-edit-product-list {
   justify-content: center;
+}
+
+#content-share-list, #content-edit-product-list {
   align-items: center;
+}
+
+#content-share-list, #content-edit-product-list {
   width: 100%;
+}
+
+#content-share-list, #content-edit-product-list {
   height: 100%;
 }
 
@@ -21,7 +33,6 @@
   flex-direction: column;
   gap: 0.25rem;
   padding-left: 0.75rem;
-  padding-right: 0.75rem;
   margin-top: -0.5rem;
 }
 

@@ -37,7 +37,7 @@
     }
 
     toggleShareList = function () {
-        event.stopPropagation()
+        if (event) event.stopPropagation()
         document.getElementById('content-share-list').classList.toggle('hidden')
         document.getElementById('content-share-list').classList.toggle('flex')
         document.getElementById('main').classList.toggle('pointer-events-none')
@@ -48,9 +48,7 @@
             .then(res => {
                 if (res.success) {
                     document.getElementById('content-share-list').innerHTML = res.html
-                    document.getElementById('content-share-list').classList.toggle('hidden')
-                    document.getElementById('content-share-list').classList.toggle('flex')
-                    document.getElementById('main').classList.toggle('pointer-events-none')
+                    toggleShareList()
                 }
             })
     }
@@ -65,10 +63,7 @@
             notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error')
             return
         }
-        myFetch('lists/share', {
-            method: 'post',
-            csrf: true
-        }, {
+        myFetch('lists/share', { method: 'post', csrf: true }, {
             list_id: parseInt(listId),
             friends: friends,
         }).then(response => {
@@ -123,10 +118,7 @@
      * @param {int} productId - Identifiant du produit
      */
     toggleList = function (listId, productId) {
-        myFetch('lists/products/toggle', {
-            method: 'post',
-            csrf: true
-        }, {
+        myFetch('lists/products/toggle', { method: 'post', csrf: true }, {
             list_id: parseInt(listId),
             product_id: parseInt(productId),
             change_checked: true
@@ -153,20 +145,20 @@
         if (oldListId == listId && !pageChanged) return
 
         myFetch('lists/' + listId + '/products/show', {method: 'post', csrf: true}, {
-                user_id: parseInt(document.getElementById('user-id').value),
-                page: document.getElementById('page').value,
-            }).then(response => {
-                if (response.ok) return response.json()
-            }).then(products => {
-                if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined)
-                    document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected')
-                document.getElementById('list-selected').value = listId
-                document.getElementById('list-' + listId).classList.toggle('selected')
-                document.getElementById('content-results').innerHTML = products.html
-                document.getElementById('btn-go-up').click();
-                extendListMsg(true)
-                toggleShowMessages(products)
-            })
+            user_id: parseInt(document.getElementById('user-id').value),
+            page: document.getElementById('page').value,
+        }).then(response => {
+            if (response.ok) return response.json()
+        }).then(products => {
+            if (document.getElementById('list-selected').value != '' && document.getElementById('list-' + document.getElementById('list-selected').value) != undefined)
+                document.getElementById('list-' + document.getElementById('list-selected').value).classList.toggle('selected')
+            document.getElementById('list-selected').value = listId
+            document.getElementById('list-' + listId).classList.toggle('selected')
+            document.getElementById('content-results').innerHTML = products.html
+            document.getElementById('btn-go-up').click();
+            extendListMsg(true)
+            toggleShowMessages(products)
+        })
     }
 
     /**
@@ -187,10 +179,59 @@
 
         document.getElementById('lists-user-id').value = userId
         getFetch('lists/users/' + userId)
-            .then(lists => {
-                document.getElementById('wrap-lists').innerHTML = lists.html
-                getProducts(lists.first_list_id)
-            })
+        .then(lists => {
+            document.getElementById('wrap-lists').innerHTML = lists.html
+            getProducts(lists.first_list_id)
+        })
+    }
+
+    /**
+     * Affiche la fenête d'édition d'un produit d'une liste
+     * @param {int} listId - Identifiant de la liste
+     * @param {int} productId - Identifiant du produit
+     */
+    showProductEdit = function (listId, productId) {
+        getFetch('shared/lists/' + listId + '/products/' + productId + '/edit')
+        .then(res => {
+            if (res.success) {
+                document.getElementById('content-edit-product-list').innerHTML = res.html
+                document.getElementById('content-edit-product-list').classList.toggle('hidden')
+                document.getElementById('content-edit-product-list').classList.toggle('flex')
+                document.getElementById('main').classList.toggle('pointer-events-none')
+            }
+        })
+    }
+
+    /**
+     * Edite le produit d'une liste
+     * @param {int} listId - Identifiant de la liste
+     * @param {int} productId - Identifiant du produit
+     */
+    editProductList = function (listId, productId) {
+        event.stopPropagation()
+        const oldNb = document.getElementById('edit-product-list-old-nb').value
+        const nb = document.getElementById('edit-product-list-nb').value
+        if (oldNb === nb) {
+            notyfJS('Aucun changement apporté', 'success')
+            return
+        }
+        myFetch('lists/products/toggle', { method: 'post', csrf: true }, {
+            list_id: parseInt(listId),
+            product_id: parseInt(productId),
+            nb: nb,
+        }).then(response => {
+            if (response.ok) return response.json()
+        }).then(res => {
+            toggleEditProductList()
+            notyfJS('Produit de la liste édité', 'success')
+            getProducts(listId, true)
+        })
+    }
+
+    toggleEditProductList = function() {
+        document.getElementById('content-edit-product-list').classList.toggle('flex')
+        document.getElementById('content-edit-product-list').classList.toggle('hidden')
+        document.getElementById('main').classList.toggle('pointer-events-none')
     }
 
     // setInterval(showMessages, 5000)
