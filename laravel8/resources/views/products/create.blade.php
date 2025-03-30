@@ -4,8 +4,15 @@
     {{ Breadcrumbs::render('create', 'product') }}
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
+@endsection
+
 @section('js')
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="{{ asset('js/templates.js') }}"></script>
 <script>
     document.getElementById('ws-url').addEventListener('change', (e) => {
         const url = e.target.value;
@@ -40,6 +47,10 @@
         URL.revokeObjectURL(event.target.files[0]);
         document.getElementById('img').src = URL.createObjectURL(event.target.files[0]);
     };
+
+    initSelect2('#lk-video-game', 'Sélectionnez un jeu vidéo...', 'video_game');
+    initSelect2('#lk-vg-support', 'Sélectionnez un support de jv...', 'vg_support', (item) => item.alias + ' - ' + item.label);
+    initSelect2('#lk-publisher', 'Sélectionnez une maison d\'édition...', 'publisher');
 </script>
 @endsection
 
@@ -73,21 +84,7 @@
                     <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label') }}"/>
                 </div>
                 <div class="flex gap-4">
-                    <div class="w-1/5">
-                        <x-Form.Label for="template-type" block>Type du produit</x-Form.Label>
-                        <select name="template_type" id="template-type" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
-                            <option value="none">Aucun</option>
-                            <option value="video_game" @if(strcmp(old('template_type'), 'video_game') === 0) selected @endif>Jeu Vidéo</option>
-                            <option value="vg_support" @if(strcmp(old('template_type'), 'vg_support') === 0) selected @endif>Support de JV</option>
-                        </select>
-                        @error('template_type')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="w-4/5">
-                        <x-Form.Label for="product-type-linked" block>Associer avec l'existant</x-Form.Label>
-                        <x-Form.Input name="product_type_linked" placeholder="Commencez à saisir le nom..." value="{{ old('product_type_linked') }}"/>
-                    </div>
+                    @include('partials.products.template.edit', compact(($message ?? null)))
                 </div>
             </div>
 

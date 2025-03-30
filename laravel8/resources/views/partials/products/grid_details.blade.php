@@ -31,9 +31,15 @@
                 @php($vg = $product->video_game->video_game)
                 @php($support = $product->video_game->vg_support)
                 <div class="top vg-icons">
-                    <x-Utils.Vg.TitleIcon id="{{ $product->video_game->video_game_id }}"/>
-                    <x-Utils.Yt.TitleIcon search="{{ $vg->label }} Soundtrack"/>
-                    <x-Utils.Psthc.TitleIcon search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+                    <x-Utils.TitleIcon.Vg id="{{ $product->video_game->video_game_id }}"/>
+                    <x-Utils.TitleIcon.Yt search="{{ $vg->label }} Soundtrack"/>
+                    <x-Utils.TitleIcon.Psthc search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+                </div>
+            @elseif($product->book)
+                @php($book = $product->book)
+                <div class="top vg-icons">
+                    <x-Utils.TitleIcon.Book id="{{ $book->id }}"/>
+                    <x-products.search_opinion id="icon-find-opinion" search="{{ $product->label }}"/>
                 </div>
             @endif
         </div>

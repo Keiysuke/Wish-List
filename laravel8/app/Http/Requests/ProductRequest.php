@@ -41,6 +41,9 @@ class ProductRequest extends FormRequest
                 case 'vg_support':
                     $rules = array_merge($rules, ['lk_vg_support' => 'int|required']);
                     break;
+                case 'publisher':
+                    $rules = array_merge($rules, ['lk_publisher' => 'int|required']);
+                    break;
             }
         }
         return $rules;
@@ -51,6 +54,7 @@ class ProductRequest extends FormRequest
         return [
             'lk_video_game.required' => 'You must choose a video game',
             'lk_vg_support.required' => 'You must choose a support',
+            'lk_publisher.required' => 'You must choose a publisher',
         ];
     }
 }

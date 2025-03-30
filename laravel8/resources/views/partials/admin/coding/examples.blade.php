@@ -56,6 +56,10 @@
         <x-Window.Keyword name="setInterval"/>(showMsg, 5000)<br />
     </x-Window.Coding>
 
+    <x-Window.Coding kind="JS" class="w-10/12" title="Passer une url route() au JS" major="select2 | initSelect2 | templates.js">
+        <x-Window.Tag name="select"><x-Window.Property name="data-url" value="{ { route('autocomplete') } }"/></x-Window.Tag>
+    </x-Window.Coding>
+
     <x-Window.Coding kind="JS" class="w-10/12" title="Lancer un appel ajax" major="POST => myFetch | GET => getFetch">
         <x-Window.Keyword name="myFetch"/>(' { { route('externalSearch') } }', {<x-Window.Keyword name="method" color="red"/>: 'post', <x-Window.Keyword name="csrf" color="red"/>: true}, {<br />
             <div class="ml-4">

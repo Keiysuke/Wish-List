@@ -307,6 +307,9 @@ class ProductController extends Controller
         
         //We link it to the current user
         $product->users()->attach($request->user_id);
+
+        //Set product's kind if inputed
+        ProductTemplateController::updateProduct($request, $product);
         
         if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
             
@@ -405,14 +408,8 @@ class ProductController extends Controller
         $request->merge(['real_cost' => str_replace(',', '.', $request->real_cost)]);
         $product->update($request->all());
         
-        //Updating product's template
-        $template = new ProductTemplateController($product->id);
-        $templates = [
-            'video_game' => $request->lk_video_game,
-            'vg_support' => $request->lk_vg_support,
-            'none' => null,
-        ];
-        $template->update($product, $request->template_type, $templates);
+        //Set product's kind if inputed
+        ProductTemplateController::updateProduct($request, $product);
 
         return redirect()->route('products.show', $product->id)->with('info', __('The product has been edited.'));
     }

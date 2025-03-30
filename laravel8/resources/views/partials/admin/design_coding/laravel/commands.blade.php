@@ -5,6 +5,10 @@
 
 <x-admin.help.list_helpers>
     <a href="https://blog.enguehard.info/laravel-quelques-commandes-artisan/" class="link">Commandes artisan</a>
+    <span>php artisan route:clear</span>
+    <span>route:cache</span>
+    <span>Seeder</span>
+    <span>Migrate</span>
 </x-admin.help.list_helpers>
 
 <h3 class="mt-0">0. Commandes diverses</h3>
@@ -27,7 +31,7 @@
     <div>Annuler mais relancer les migrations : <span class="italic text-sm">php artisan migrate:refresh</span></div>
 </div>
 
-<h3>2. Gestion de Ressources</h3>
+<h3>2. Gestion de Ressources (Seeder)</h3>
 <div class="grid grid-cols-1 gap-4">
     <div>Création de modèle, controller et migration : <span class="italic text-sm">php artisan make:model monModel -mcr</span></div>
     <div>Créer la migration & son modèle : <span class="italic text-sm">php artisan make:model Emojis --migration</span></div>

@@ -80,13 +80,13 @@
         <h1>{{ $videoGame->label }}</h1>
         <div class="absolute right-0">
             @if(!is_null($product))
-                <x-Utils.Product.TitleIcon id="{{ $product->id }}"/>
+                <x-Utils.TitleIcon.Product id="{{ $product->id }}"/>
             @endif
             <a title="Editer le jeu vidéo" href="{{ route('video_games.edit', $videoGame->id) }}" class="title-icon inline-flex">
                 <x-svg.edit class="icon-xs"/>
             </a>
-            <x-Utils.Yt.TitleIcon search="{{ $videoGame->label }} Soundtrack"/>
-            <x-Utils.Psthc.TitleIcon search="{{ $videoGame->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+            <x-Utils.TitleIcon.Yt search="{{ $videoGame->label }} Soundtrack"/>
+            <x-Utils.TitleIcon.Psthc search="{{ $videoGame->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
         </div>
     </div>
     <div class="flex justify-between h-full divide-x-2 pb-12">

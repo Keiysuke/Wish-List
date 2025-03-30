@@ -355,6 +355,21 @@ a.link:hover {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
+.book:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(120, 113, 108, var(--tw-bg-opacity));
+}
+
+.book {
+  --tw-text-opacity: 1;
+  color: rgba(120, 113, 108, var(--tw-text-opacity));
+}
+
+.book:hover {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
 .music:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(168, 85, 247, var(--tw-bg-opacity));

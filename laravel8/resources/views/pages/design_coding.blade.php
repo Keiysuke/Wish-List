@@ -11,6 +11,7 @@
         <x-admin.dashboard_menu menu="design" sub="coding"/>
         
         <div class="right pb-20">
+            @include("partials.admin.design_coding.laravel.warnings")
             @include("partials.admin.design_coding.laravel.conventions")
             @include("partials.admin.design_coding.laravel.commands")
         </div>

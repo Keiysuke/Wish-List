@@ -153,7 +153,7 @@
         <h1>{{ $product->label }}</h1>
         <div class="absolute right-0">
             @if($product->video_game)
-                <x-Utils.Vg.TitleIcon id="{{ $product->video_game->video_game_id }}"/>
+                <x-Utils.TitleIcon.Vg id="{{ $product->video_game->video_game_id }}"/>
             @endif
             @if($product->created)
                 <a title="Editer le produit" href="{{ route('products.edit', $product->id) }}" class="title-icon inline-flex">

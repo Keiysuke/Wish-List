@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\ProductPhotoController;
+use App\Http\Controllers\UtilsController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
@@ -32,6 +33,14 @@ class Product extends Model
 
     public function video_game(){
         return $this->hasOne(ProductAsVideoGame::class);
+    }
+
+    public function vgSupport(){
+        return $this->hasOne(VgSupport::class);
+    }
+
+    public function book(){
+        return $this->hasOne(Book::class);
     }
     
     public function tags(){
@@ -136,8 +145,7 @@ class Product extends Model
     }
 
     public function description($length = 1000){
-        $desc = substr($this->description, 0, $length) . (($length >= 1000)? '' : '...');
-        return $desc;
+        return UtilsController::cutString($this->description, $length);
     }
     
     public function bestWebsiteOffer(){
@@ -152,10 +160,13 @@ class Product extends Model
 
     public function get_template(): object{
         $videoGame = ProductAsVideoGame::where('product_id', '=', $this->id)->first();
-        if(!is_null($videoGame)) return (object)['type' => 'video_game', 'id' => $videoGame->id];
+        if(!is_null($videoGame)) return (object)['type' => 'video_game', 'id' => $videoGame->id, 'support_id' => $videoGame->vg_support_id];
 
         $support = VgSupport::where('product_id', '=', $this->id)->first();
         if(!is_null($support)) return (object)['type' => 'vg_support', 'id' => $support->id];
+        
+        $book = Book::where('product_id', '=', $this->id)->first();
+        if(!is_null($book)) return (object)['type' => 'publisher', 'id' => $book->id];
 
         return (object)['type' => 'none', 'id' => null];
     }

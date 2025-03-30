@@ -19,6 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/manageFriends.js', 'public/js')
     .js('resources/js/tchat.js', 'public/js')
     .js('resources/js/listings.js', 'public/js')
+    .js('resources/js/templates.js', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('postcss-import'),
         require('tailwindcss'),

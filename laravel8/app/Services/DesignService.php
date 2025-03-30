@@ -31,6 +31,7 @@ class DesignService
         ['name' => 'close', 'sizes' => [true, false]],
         ['name' => 'cmd', 'sizes' => [true, true]],
         ['name' => 'cog', 'sizes' => [true, false]],
+        ['name' => 'console', 'sizes' => [true, true]],
         ['name' => 'db', 'sizes' => [false, true]],
         ['name' => 'double_arrow', 'sizes' => [false, true]],
         ['name' => 'duplicate', 'sizes' => [true, true]],

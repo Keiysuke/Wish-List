@@ -1,0 +1,1 @@
+<<span class="red">{{ $name }}</span> {{ $slot }}>< /<span class="red">{{ $name }}</span>>

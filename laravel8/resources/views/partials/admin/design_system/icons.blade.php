@@ -51,10 +51,11 @@
     <div class="title-icon refresh inline-flex">
         <x-svg.refresh class="icon-xs"/>
     </div>
-    <x-Utils.Product.TitleIcon id="1"/>
-    <x-Utils.Vg.TitleIcon id="1"/>
-    <x-Utils.Yt.TitleIcon search="Soundtrack"/>
-    <x-Utils.Psthc.TitleIcon search="Lies of P" support="ps4"/>
+    <x-Utils.TitleIcon.Product id="1"/>
+    <x-Utils.TitleIcon.Book id="1"/>
+    <x-Utils.TitleIcon.Vg id="1"/>
+    <x-Utils.TitleIcon.Yt search="Soundtrack"/>
+    <x-Utils.TitleIcon.Psthc search="Lies of P" support="ps4"/>
     <x-products.search_photo search="#" class="title-icon inline-flex"/>
 </div>
 

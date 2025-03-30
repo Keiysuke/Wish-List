@@ -11,74 +11,11 @@
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="{{ asset('js/templates.js') }}"></script>
     <script type="text/javascript">
-        document.getElementById('template-type').addEventListener('change', setTemplateType);
-        function setTemplateType(){
-            document.getElementById('wrap-lk-video-game').classList.add('hidden');
-            document.getElementById('wrap-lk-vg-support').classList.remove('hidden');
-            if(document.getElementById('template-type').value === 'video_game'){
-                document.getElementById('wrap-lk-video-game').classList.remove('hidden');
-            }
-            if(document.getElementById('template-type').value === 'none'){
-                document.getElementById('wrap-lk-vg-support').classList.add('hidden');
-            }
-        }
-        setTemplateType();
-
-        $('#lk-video-game').select2({
-            placeholder: 'Sélectionnez un jeu vidéo...',
-            ajax: {
-                url: "{{ route('autocomplete') }}",
-                dataType: 'json',
-                delay: 200,
-                data: function(params) {
-                    return {
-                        q: params.term,
-                        page: params.page,
-                        searchDataType: 'video_game'
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (item) {
-                            return {
-                                text: item.label,
-                                id: item.id
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
-        $('#lk-vg-support').select2({
-            placeholder: 'Sélectionnez un support de jv...',
-            allowClear: true,
-            ajax: {
-                url: "{{ route('autocomplete') }}",
-                dataType: 'json',
-                delay: 200,
-                data: function(params) {
-                    return {
-                        q: params.term,
-                        page: params.page,
-                        searchDataType: 'vg_support'
-                    };
-                },
-                processResults: function (data) {
-                    return {
-                        results:  $.map(data, function (item) {
-                            return {
-                                text: item.alias + ' - ' + item.label,
-                                id: item.id
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
+        initSelect2('#lk-video-game', 'Sélectionnez un jeu vidéo...', 'video_game');
+        initSelect2('#lk-vg-support', 'Sélectionnez un support de jv...', 'vg_support', (item) => item.alias + ' - ' + item.label);
+        initSelect2('#lk-publisher', 'Sélectionnez une maison d\'édition...', 'publisher');
     </script>
 @endsection
 
@@ -110,36 +47,7 @@
                     <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label', $product->label) }}"/>
                 </div>
                 <div class="flex gap-4">
-                    <div class="w-1/5">
-                        <x-Form.Label for="template-type" block>Type du produit</x-Form.Label>
-                        <select name="template_type" id="template-type" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
-                            <option value="none">Aucun</option>
-                            <option value="video_game" @if(strcmp($template->type, 'video_game') === 0) selected @endif>Jeu Vidéo</option>
-                            <option value="vg_support" @if(strcmp($template->type, 'vg_support') === 0) selected @endif>Support de JV</option>
-                        </select>
-                        @error('lk_video_game')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        @error('lk_vg_support')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    @if ($product->video_game)
-                        @php($vg = $product->video_game)
-                        <div class="flex inline-flex items-center gap-2 pt-6">
-                            Associé à<x-svg.big.vg_controller class="icon-sm text-red-600"/>
-                            <a href="{{ route('video_games.show', $vg->video_game_id) }}" class="font-bold link">{{ $vg->video_game->label.' ('.$vg->vg_support->alias.')' }}</a>
-                        </div>
-                    @else
-                        <div id="wrap-lk-video-game" class="w-2/5">
-                            <x-Form.Label for="lk-video-game" required block>Associer le jeu vidéo</x-Form.Label>
-                            <select name="lk_video_game" id="lk-video-game" value="{{ old('lk_video_game') }}" class="w-full"></select>
-                        </div>
-                        <div id="wrap-lk-vg-support" class="w-2/5">
-                            <x-Form.Label for="lk-vg-support" required block>Associer le support</x-Form.Label>
-                            <select name="lk_vg_support" id="lk-vg-support" value="{{ old('lk_vg_support') }}" class="w-full"></select>
-                        </div>
-                    @endif
+                    @include('partials.products.template.edit', compact($template, ($message ?? null)))
                 </div>
             </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookPublisher;
 use Illuminate\Http\Request;
 use App\Models\Listing;
 use App\Models\Product;
@@ -55,6 +56,11 @@ class SearchController extends Controller
                     $data = VgSupport::select("label", "alias", "id")
                         ->where('label', 'LIKE', '%'. $request->get('q'). '%')
                         ->Orwhere('alias', 'LIKE', '%'. $request->get('q'). '%')
+                        ->get();
+                    break;
+                case 'publisher':
+                    $data = BookPublisher::select("label", "id")
+                        ->where('label', 'LIKE', '%'. $request->get('q'). '%')
                         ->get();
                     break;
             }
