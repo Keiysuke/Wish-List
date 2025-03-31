@@ -25,6 +25,10 @@ class Website extends Model
         return $this->hasMany(Selling::class);
     }
 
+    public function asLink(){
+        return '<a href="'.$this->url.'" class="link" target="_blank">'.$this->label.'</a>';
+    }
+
     public static function parseUrl($url){
         $parsedUrl = parse_url($url);
 

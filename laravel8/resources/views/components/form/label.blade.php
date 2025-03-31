@@ -1,5 +1,5 @@
 <label 
-    class="{{ $class?? '' }} {{ isset($block)? 'block ' : '' }}text-gray-600 text-sm font-semibold mb-2 {{ isset($create)? 'flex inline-flex' : '' }}" 
+    class="{{ $class?? '' }} {{ isset($block)? 'block ' : '' }}text-gray-600 text-sm font-semibold {{ isset($create)? 'flex inline-flex' : '' }}" 
     {{ $attributes }}
     >
     @if(isset($create))

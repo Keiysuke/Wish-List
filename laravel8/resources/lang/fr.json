@@ -338,5 +338,9 @@
     "Add a support": "Création d'un support",
     "Developers list": "Liste des développeurs",
     "Add a developer": "Création d'un développeur",
+    "Book Publishers": "Maisons d'édition",
+    "Book Publishers list": "Liste des maisons d'édition",
+    "Add a book publisher": "Création d'une maison d'édition",
+    "No website found for this publisher. Please create it first.": "Aucun site trouvé pour cette maison d'édition. Merci de le créer au préalable.",
     "Unknown": "Inconnu"
 }

@@ -31,7 +31,7 @@
                 @enderror
             </div>
             <div class="w-2/12 flex justify-center">
-                <div class="pt-9">
+                <div class="pt-7">
                     <x-Form.Checkbox name="secret">{{ old('secret')? 'checked' : '' }}</x-Form.Checkbox>
                     <x-Form.Label class="ml-1" for="secret">Garder la surprise ?</x-Form.Label>
                 </div>

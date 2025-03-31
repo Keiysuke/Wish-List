@@ -10,3 +10,15 @@
         </div>
     </div>
 @endif
+@if ($errors->any())
+    <div class="notification is-error">
+        <div>
+            <x-svg.close class="icon-sm mr-1"/>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif

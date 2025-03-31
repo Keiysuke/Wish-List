@@ -18,6 +18,12 @@
             </ul>
         </div>
         <div>
+            <span>{{ __('Book Publishers') }}</span>
+            <ul>
+                <li><a href="{{ route('book_publishers.index') }}">{{ __('Book Publishers list') }}</a></li>
+            </ul>
+        </div>
+        <div>
             <span>{{ __('Dashboard') }}</span>
             <ul>
                 <li><a href="{{ route('websites.index') }}">{{ __('Websites') }}</a></li>

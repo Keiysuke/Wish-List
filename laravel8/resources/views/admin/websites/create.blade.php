@@ -16,11 +16,11 @@
                         <x-Form.Input name="label" placeholder="Nom du site" value="{{ old('label') }}"/>
                     </div>
                     <div class="flex w-3/12 justify-around">
-                        <div class="pt-9">
+                        <div class="pt-7">
                             <x-Form.Checkbox class="mr-1" name="can_sell">{{ old('can_sell')? 'checked' : '' }}</x-Form.Checkbox>
                             <x-Form.Label class="ml-1" for="can-sell">de vente ?</x-Form.Label>
                         </div>
-                        <div class="pt-9">
+                        <div class="pt-7">
                             <x-Form.Checkbox class="mr-1" name="is_vg">{{ old('is_vg')? 'checked' : '' }}</x-Form.Checkbox>
                             <x-Form.Label class="ml-1" for="is-vg">de JV ?</x-Form.Label>
                         </div>

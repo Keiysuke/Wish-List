@@ -15,7 +15,7 @@
                 <a title="Editer la vente" href="{{ route('sellings.edit', $sell->id) }}" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                     <x-svg.edit class="w-5 h-5 hover:transform hover:scale-125"/>
                 </a>
-                <a onClick="simulateBenef({{ $sell->purchase->price() }}, {{ $sell->price() }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
+                <a onClick="simulateBenef({{ $sell->purchase->calculatePrice() }}, {{ $sell->price() }});" title="Simuler le bénéfice" class="no-propagate inline-flex items-center text-sm font-medium text-white hover:text-black transition ease-in-out duration-150">
                     <x-svg.euro class="w-5 h-5 hover:transform hover:scale-125"/>
                 </a>
             </div>

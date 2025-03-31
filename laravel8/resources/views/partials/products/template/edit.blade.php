@@ -32,15 +32,15 @@
     @include('partials.products.template.linked.book', compact($template, $book))
 @else
     <div id="wrap-lk-video-game" class="w-2/5 hidden">
-        <x-Form.Label for="lk-video-game" required block>Associer le jeu vidéo</x-Form.Label>
+        <x-Form.Label for="lk-video-game" required block create="{{ route('video_games.create') }}">Associer le jeu vidéo</x-Form.Label>
         <select name="lk_video_game" id="lk-video-game" data-url="{{ route('autocomplete') }}" value="{{ old('lk_video_game') }}" class="w-full"></select>
     </div>
     <div id="wrap-lk-vg-support" class="w-2/5 hidden">
-        <x-Form.Label for="lk-vg-support" required block>Associer le support</x-Form.Label>
+        <x-Form.Label for="lk-vg-support" required block create="{{ route('vg_supports.create') }}">Associer le support</x-Form.Label>
         <select name="lk_vg_support" id="lk-vg-support" data-url="{{ route('autocomplete') }}" value="{{ old('lk_vg_support') }}" class="w-full"></select>
     </div>
     <div id="wrap-lk-publisher" class="w-2/5 hidden">
-        <x-Form.Label for="lk-publisher" required block>Associer la maison d'édition</x-Form.Label>
+        <x-Form.Label for="lk-publisher" required block create="{{ route('book_publishers.create') }}">Associer la maison d'édition</x-Form.Label>
         <select name="lk_publisher" id="lk-publisher" data-url="{{ route('autocomplete') }}" value="{{ old('lk_publisher') }}" class="w-full"></select>
     </div>
 @endif

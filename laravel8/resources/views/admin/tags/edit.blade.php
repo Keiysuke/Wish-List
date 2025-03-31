@@ -8,8 +8,14 @@
             <form class="flex flex-col gap-4 bg-white rounded px-8 pt-2" action="{{ route('tags.update', $tag->id) }}" method="POST">
                 @csrf
                 @method('put')
-                <h1>Edition du tag</h1>
-                <hr/>
+                <div class="relative flex border-b-2 mb-4">
+                    <h1>Edition du tag</h1>
+                    <div class="absolute right-0">
+                        <a title="Créer un site" href="{{ route('tags.create') }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="flex mb-4">
                     <div class="w-1/2">

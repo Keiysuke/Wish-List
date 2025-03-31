@@ -10,7 +10,7 @@
                 <h1>Création d'un Emoji</h1>
                 <hr/>
 
-                <div class="flex gap-4 mb-4">
+                <div class="flex gap-4 mb-4 items-center">
                     <div class="w-2/3">
                         <x-Form.Label for="emoji-section-id" block required create="{{ route('sections.emojis.create') }}">Section d'émojis</x-Form.Label>
                         <select name="emoji_section_id" id="emoji-section-id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">

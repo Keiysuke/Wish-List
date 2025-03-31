@@ -8,8 +8,14 @@
             <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('states.sells.update', $sellState) }}" method="POST">
                 @csrf
                 @method('put')
-                <h1>Edition d'un état de vente</h1>
-                <hr/>
+                <div class="relative flex border-b-2 mb-4">
+                    <h1>Edition d'un état de vente</h1>
+                    <div class="absolute right-0">
+                        <a title="Créer un état de vente" href="{{ route('states.sells.create') }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                </div>
                 
                 <div class="mb-4">
                     <x-Form.Label for="label" block required>Nom de l'état</x-Form.Label>

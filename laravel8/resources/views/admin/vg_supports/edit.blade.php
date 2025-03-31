@@ -8,8 +8,14 @@
             <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('vg_supports.update', $vgSupport) }}" method="POST">
                 @csrf
                 @method('put')
-                <h1>Edition d'un support de Jeu Vidéo</h1>
-                <hr/>
+                <div class="relative flex border-b-2 mb-4">
+                    <h1>Edition d'un support de Jeu Vidéo</h1>
+                    <div class="absolute right-0">
+                        <a title="Créer un support" href="{{ route('vg_supports.create') }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="w-full flex inline-flex justify-between mb-4 gap-4">
                     <div class="w-2/4">

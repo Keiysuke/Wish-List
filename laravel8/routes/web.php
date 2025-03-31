@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\BookPublisherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,7 @@ use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
 use App\Http\Controllers\VideoGameController;
+use App\Models\BookPublisher;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -136,66 +139,53 @@ Route::prefix('admin')->group(function () {
     Route::resource('websites', WebsiteController::class);
     Route::resource('tags', TagController::class);
     Route::resource('emojis', EmojiController::class);
-    
-    Route::resource('sections/emojis', EmojiSectionController::class)
-        ->parameters(['emojis' => 'section'])
-        ->except(['show'])
-        ->names([
-        'index' => 'sections.emojis.index',
-        'create' => 'sections.emojis.create',
-        'store' => 'sections.emojis.store',
-        'edit' => 'sections.emojis.edit',
-        'update' => 'sections.emojis.update',
-        'destroy' => 'sections.emojis.destroy',
-    ]);
 
-    Route::resource('states/products', ProductStateController::class)
-        ->parameters(['products' => 'product_state'])
-        ->except(['show'])
-        ->names([
-        'index' => 'states.products.index',
-        'create' => 'states.products.create',
-        'store' => 'states.products.store',
-        'edit' => 'states.products.edit',
-        'update' => 'states.products.update',
-        'destroy' => 'states.products.destroy',
-    ]);
+    $resources = [
+        'sections/emojis' => [
+            'controller' => EmojiSectionController::class,
+            'param' => ['emojis' => 'section'],
+            'name' => 'sections.emojis'
+        ],
+        'states/products' => [
+            'controller' => ProductStateController::class,
+            'param' => ['products' => 'product_state'],
+            'name' => 'states.products'
+        ],
+        'states/sells' => [
+            'controller' => SellStateController::class,
+            'param' => ['sells' => 'sell_state'],
+            'name' => 'states.sells'
+        ],
+        'video_games/supports' => [
+            'controller' => VgSupportController::class,
+            'param' => ['supports' => 'vg_support'],
+            'name' => 'vg_supports'
+        ],
+        'video_games/developers' => [
+            'controller' => VgDeveloperController::class,
+            'param' => ['developers' => 'vg_developer'],
+            'name' => 'vg_developers'
+        ],
+        'books/publishers' => [
+            'controller' => BookPublisherController::class,
+            'param' => ['publishers' => 'publisher'],
+            'name' => 'book_publishers'
+        ],
+    ];
 
-    Route::resource('states/sells', SellStateController::class)
-        ->parameters(['sells' => 'sell_state'])
-        ->except(['show'])
-        ->names([
-        'index' => 'states.sells.index',
-        'create' => 'states.sells.create',
-        'store' => 'states.sells.store',
-        'edit' => 'states.sells.edit',
-        'update' => 'states.sells.update',
-        'destroy' => 'states.sells.destroy',
-    ]);
-    
-    Route::resource('video_games/supports', VgSupportController::class)
-        ->parameters(['supports' => 'vg_support'])
-        ->except(['show'])
-        ->names([
-        'index' => 'vg_supports.index',
-        'create' => 'vg_supports.create',
-        'store' => 'vg_supports.store',
-        'edit' => 'vg_supports.edit',
-        'update' => 'vg_supports.update',
-        'destroy' => 'vg_supports.destroy',
-    ]);
-
-    Route::resource('video_games/developers', VgDeveloperController::class)
-        ->parameters(['developers' => 'vg_developer'])
-        ->except(['show'])
-        ->names([
-        'index' => 'vg_developers.index',
-        'create' => 'vg_developers.create',
-        'store' => 'vg_developers.store',
-        'edit' => 'vg_developers.edit',
-        'update' => 'vg_developers.update',
-        'destroy' => 'vg_developers.destroy',
-    ]);
+    foreach ($resources as $uri => $options) {
+        Route::resource($uri, $options['controller'])
+            ->parameters($options['param'])
+            ->except(['show'])
+            ->names([
+                'index' => "{$options['name']}.index",
+                'create' => "{$options['name']}.create",
+                'store' => "{$options['name']}.store",
+                'edit' => "{$options['name']}.edit",
+                'update' => "{$options['name']}.update",
+                'destroy' => "{$options['name']}.destroy",
+            ]);
+    }
 });
 
 Route::get('scripts/video_games/product/link', [ScriptsController::class, 'lkAllVgToProduct'])->name('lkAllVgToProduct');

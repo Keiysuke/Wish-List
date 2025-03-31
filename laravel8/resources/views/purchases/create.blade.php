@@ -115,7 +115,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="pt-9">
+                    <div class="pt-7">
                         <x-Form.Checkbox name="box">{{ old('box')? 'checked' : '' }}</x-Form.Checkbox>
                         <x-Form.Label class="ml-1" for="box">Avec la boîte</x-Form.Label>
                     </div>

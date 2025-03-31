@@ -8,8 +8,14 @@
             <form class="bg-white rounded px-8 pt-6 pb-8 mb-4" action="{{ route('vg_developers.update', $vgDeveloper) }}" method="POST">
                 @csrf
                 @method('put')
-                <h1>Edition du Studio de développement (JV)</h1>
-                <hr/>
+                <div class="relative flex border-b-2 mb-4">
+                    <h1>Edition du Studio de développement (JV)</h1>
+                    <div class="absolute right-0">
+                        <a title="Créer un développeur" href="{{ route('vg_developers.create') }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="w-full flex inline-flex justify-between mb-4 gap-4">
                     <div class="w-3/4">

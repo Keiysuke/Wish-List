@@ -8,10 +8,16 @@
             <form class="bg-white rounded px-8 pt-2 pb-8 mb-4" action="{{ route('emojis.update', $emoji->id) }}" method="POST">
                 @csrf
                 @method('put')
-                <h1>Edition d'émoji</h1>
-                <hr/>
+                <div class="relative flex border-b-2 mb-4">
+                    <h1>Edition de l'émoji</h1>
+                    <div class="absolute right-0">
+                        <a title="Créer un nouvel Emoji" href="{{ route('emojis.create') }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                </div>
 
-                <div class="flex gap-4 mb-4">
+                <div class="flex gap-4 mb-4 items-center">
                     <div class="w-2/3">
                         <x-Form.Label for="emoji-section-id" block required create="{{ route('sections.emojis.create') }}">Section d'émojis</x-Form.Label>
                         <select name="emoji_section_id" id="emoji-section-id" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Controllers\UtilsController;
+use App\Services\DateService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
