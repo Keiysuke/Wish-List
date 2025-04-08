@@ -54,10 +54,7 @@
     </div>
 </nav>
 
-@include('partials.sidebars.left.icons')
-@include('partials.sidebars.left.websites')
-@include('partials.sidebars.left.help')
-@include('partials.sidebars.left.externals')
+@include('partials.sidebars.left.index')
 
 <nav id="submenu">
     <div id="submenu-my-datas" class="submenu" onMouseOver="submenu(true, 'my-datas');" onMouseOut="submenu(false, 'my-datas');">

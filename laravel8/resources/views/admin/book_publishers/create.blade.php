@@ -25,10 +25,10 @@
                     </div>
                     <div class="w-2/6">
                         <x-Form.Label for="country" block>Pays</x-Form.Label>
-                        <x-Form.Input name="country" placeholder="France (Paris)" value="{{ old('country') }}"/>
+                        <x-Form.Input name="country" placeholder="France (Paris)" value="{{ old('country', 'France (Paris)') }}"/>
                     </div>
                     <div class="w-1/6 flex inline-flex items-center pt-6">
-                        <x-Form.Checkbox class="mr-1" name="active">{{ old('active')? 'checked' : '' }}</x-Form.Checkbox>
+                        <x-Form.Checkbox class="mr-1" name="active">{{ old('active', true)? 'checked' : '' }}</x-Form.Checkbox>
                         <x-Form.Label class="ml-1" for="active" block>Active ?</x-Form.Label>
                     </div>
                 </div>

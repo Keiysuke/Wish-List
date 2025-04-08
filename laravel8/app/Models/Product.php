@@ -170,4 +170,8 @@ class Product extends Model
 
         return (object)['type' => 'none', 'id' => null];
     }
+
+    public function noTemplate() {
+        return ($this->get_template())->type === 'none';
+    }
 }

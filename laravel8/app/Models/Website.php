@@ -25,6 +25,10 @@ class Website extends Model
         return $this->hasMany(Selling::class);
     }
 
+    public function publisher(){
+        return $this->hasOne(BookPublisher::class);
+    }
+
     public function asLink(){
         return '<a href="'.$this->url.'" class="link" target="_blank">'.$this->label.'</a>';
     }

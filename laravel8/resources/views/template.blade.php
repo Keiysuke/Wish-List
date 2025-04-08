@@ -121,6 +121,7 @@
             'icon-star': 'left-sidebar-websites',
             'icon-help': 'left-sidebar-help',
             'icon-globe': 'left-sidebar-externals',
+            'icon-book': 'left-sidebar-publishers',
         };
 
         for (var icon in SIDEBAR) { //Gestion de left sidebar
@@ -174,6 +175,13 @@
             document.getElementById('ls-convert-text').value = document.getElementById(inputId).value;
             lsConvert();
             document.getElementById(inputId).value = document.getElementById('ls-convert-result').value;
+        }
+
+        function lsLinkPublishers(){
+            getFetch('scripts/product/publishers/link')
+            .then(results => {
+                myNotyf(results);
+            });
         }
 
         function deleteNotif(id){

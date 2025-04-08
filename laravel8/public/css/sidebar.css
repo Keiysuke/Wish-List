@@ -39,8 +39,12 @@
   color: #ed8936;
 }
 
-#icon-star.active {
+#icon-star.active, #icon-book.active,  {
   fill: currentColor;
+}
+
+#icon-star.active,
+#icon-book.active, {
   color: #ed8936;
 }
 

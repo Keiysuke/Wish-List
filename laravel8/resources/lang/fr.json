@@ -332,6 +332,7 @@
     "November": "Novembre",
     "December": "Décembre",
     "Video Games": "Jeux Vidéo",
+    "My video games": "Mes jeux vidéo",
     "Video games list": "Liste des Jeux Vidéo",
     "Video Game": "Jeu Vidéo",
     "Supports list": "Liste des supports",
@@ -341,6 +342,8 @@
     "Book Publishers": "Maisons d'édition",
     "Book Publishers list": "Liste des maisons d'édition",
     "Add a book publisher": "Création d'une maison d'édition",
+    "The publisher has been saved.": "La maison d'édition a bien été créée",
+    "Number of books created : ": "Nombre de livres créés : ",
     "No website found for this publisher. Please create it first.": "Aucun site trouvé pour cette maison d'édition. Merci de le créer au préalable.",
     "Unknown": "Inconnu"
 }

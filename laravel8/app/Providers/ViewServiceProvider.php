@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\BookPublisher;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Website;
@@ -33,17 +34,21 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['*'], function ($view) {
             $userWebsites = [];
             if (auth()->check()) {
-                $userWebsites = UserWebsite::where('user_id', '=', auth()->user()->id)->orderBy('user_website_section_id')->orderBy('ordered')->get();
+                $userWebsites = UserWebsite::where('user_id', '=', auth()->user()->id)
+                    ->orderBy('user_website_section_id')
+                    ->orderBy('ordered')
+                    ->get();
             }
-            $sections = [];
+            $userWebsiteSections = [];
             foreach ($userWebsites as $userWebsite) {
-                if (array_key_exists($userWebsite->user_website_section_id, $sections)) {
-                    $sections[$userWebsite->user_website_section_id][] = $userWebsite;
+                if (array_key_exists($userWebsite->user_website_section_id, $userWebsiteSections)) {
+                    $userWebsiteSections[$userWebsite->user_website_section_id][] = $userWebsite;
                 } else {
-                    $sections[$userWebsite->user_website_section_id] = [$userWebsite];
+                    $userWebsiteSections[$userWebsite->user_website_section_id] = [$userWebsite];
                 }
             }
-            $view->with('userWebsiteSections', $sections);
+            $lsbPublishers = BookPublisher::with('website')->orderBy('label')->get();
+            $view->with(compact('userWebsiteSections', 'lsbPublishers'));
         });
         View::composer(['components.Notif'], function ($view) {
             $view->with(['kinds' => NotificationService::KINDS]);

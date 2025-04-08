@@ -19,4 +19,9 @@ class Book extends Model
     public function publisher(){
         return $this->belongsTo(BookPublisher::class, 'book_publisher_id');
     }
+
+    public function getPublisherAsLink(){
+        $publisher = $this->publisher;
+        return '<a href="'.$publisher->website->url.'" class="link" target="_blank">'.$publisher->label.'</a>';
+    }
 }

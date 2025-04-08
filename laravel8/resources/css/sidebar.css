@@ -26,7 +26,8 @@
     color: #ed8936;
 }
 
-#icon-star.active {
+#icon-star.active,
+#icon-book.active, {
     @apply fill-current;
     color: #ed8936;
 }

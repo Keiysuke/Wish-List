@@ -180,6 +180,9 @@
                 <div class="flex gap-4 h-full">
                     <div class="flex flex-col justify-around gap-4 w-9/12">
                         <div>
+                            @if($product->book)
+                                <p class="text-lg"><b>Maison d'édition :</b> {!! $product->book->getPublisherAsLink() !!}
+                            @endif
                             <p class="text-lg font-semibold">Description</p>
                             <p class="text-sm ml-4 italic">{!! nl2br($product->description) !!}</p>
                         </div>

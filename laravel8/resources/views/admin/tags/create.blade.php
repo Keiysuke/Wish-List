@@ -19,7 +19,7 @@
                         <div id="content-ex-tag"><x-Tags.Tag id="ex_tag" :tag="\App\Models\Tag::getExample()" /></div>
                     </div>
                 </div>
-                <div class="flex gap-12 mb-4">
+                <div class="flex gap-12 mb-4 items-center">
                     <div class="w-1/3">
                         @include('partials.tags.edit_colors', ['kind_css_color' => 'border'])
                     </div>

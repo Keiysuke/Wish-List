@@ -73,16 +73,16 @@ form#fast-search div:first-of-type svg {
 
 /* Icons */
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-book, #icon-globe {
   height: 1.5rem;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-book, #icon-globe {
   --tw-text-opacity: 1;
   color: rgba(161, 161, 170, var(--tw-text-opacity));
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-book, #icon-globe {
   cursor: pointer;
 }
 
@@ -92,15 +92,16 @@ form#fast-search div:first-of-type svg {
 #icon-sidebar,
 #icon-star,
 #icon-help,
+#icon-book,
 #icon-globe {
   transition: color;
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-book, #icon-globe {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-globe {
+#icon-bell, #icon-msg, #icon-profil, #icon-sidebar, #icon-star, #icon-help, #icon-book, #icon-globe {
   transition-duration: 300ms;
 }
 
@@ -134,7 +135,8 @@ form#fast-search div:first-of-type svg {
 #icon-sidebar:hover,
 #icon-star:hover,
 #icon-help:hover,
-#icon-globe:hover {
+#icon-globe:hover,
+#icon-book:hover {
   color: #ed8936;
 }
 

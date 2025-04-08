@@ -37,7 +37,7 @@
                 </div>
             @elseif($product->book)
                 @php($book = $product->book)
-                <div class="top vg-icons">
+                <div class="top book-icons">
                     <x-Utils.TitleIcon.Book id="{{ $book->id }}"/>
                     <x-products.search_opinion id="icon-find-opinion" search="{{ $product->label }}"/>
                 </div>

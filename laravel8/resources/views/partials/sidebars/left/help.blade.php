@@ -30,4 +30,10 @@
         <x-Form.Input name="ls_convert_text" placeholder="30 $" onChange="lsConvert()"/>
         <x-Form.Input readonly name="ls_convert_result" placeholder="28.4442 €"/>
     </div>
+
+    <p class="ls_title mt-4"><x-svg.cmd class="icon-sm text-purple-400"/> Lancement de scripts</p>
+    <x-Form.Btn color="warm_gray" id="ls-link-publishers" class="inline-flex text-xs gap-2" type="submit" onClick="lsLinkPublishers()">
+        <x-svg.book class="icon-xs"/>
+        Lier produits & Maisons d'éditions
+    </x-Form.Btn>
 </div>

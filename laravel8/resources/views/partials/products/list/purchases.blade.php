@@ -1,4 +1,4 @@
-<div class="h-full">
+<div class="h-full mb-5">
     @if(count($purchases) == 0)
         Aucun achat associé
     @else

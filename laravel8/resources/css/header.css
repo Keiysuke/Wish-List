@@ -62,6 +62,7 @@ form#fast-search div:first-of-type svg {
 #icon-sidebar,
 #icon-star,
 #icon-help,
+#icon-book,
 #icon-globe {
     @apply h-6;
     @apply text-gray-400;
@@ -99,7 +100,8 @@ form#fast-search div:first-of-type svg {
 #icon-sidebar:hover,
 #icon-star:hover,
 #icon-help:hover,
-#icon-globe:hover {
+#icon-globe:hover,
+#icon-book:hover {
     color: #ed8936;
 }
 
