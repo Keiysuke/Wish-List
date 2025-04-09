@@ -1,6 +1,6 @@
 <x-Notif :notif="$notif" icon="svg.clipboard_list" kind="message" title="Vous avez rejoint une liste">
     <div class="flex flex-col content-center mb-2">
-        <a href="{{ route('lists.index', ['id' => $notif->data['list_id']]) }}" class="link">
+        <a href="{{ route('lists.index', ['id' => $notif->data['list_id']]) }}" class="link" target="_blank" onClick="deleteNotif('{{ $notif->id }}');">
             <div class="flex justify-center gap-2 text-black">
                 <x-svg.big.clipboard_list class="icon-sm"/><span class="font-semibold">{{ $notif->data['list_name'] }}</span>
             </div>

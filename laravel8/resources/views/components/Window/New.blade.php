@@ -1,0 +1,1 @@
+<span class="amber"><span class="orange">new</span> {{ $name }}</span>

@@ -115,12 +115,9 @@ class ViewServiceProvider extends ServiceProvider
 
         //Pages
         View::composer(['pages.design_system'], function ($view) {
-            $icons = [
-                'min' => DesignService::getIconsAsComponent(),
-                'big' => DesignService::getIconsAsComponent('big')
-            ];
+            $icons = DesignService::getIconsAsComponent();
             $emojis = Emoji::all();
-            $colors = DesignService::getColors();
+            $colors = CssColor::uniqueColors();
             
             $notifications = NotificationService::getExistingNotifications();
             $notyfs = [];

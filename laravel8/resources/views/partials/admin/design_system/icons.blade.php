@@ -12,20 +12,20 @@
 
 <h3 class="mt-0">1. Les petites icônes ({{ count($icons['min']) }})</h3>
 <div class="grid grid-cols-10 gap-4">
-    @foreach($icons['min'] as $icon)
+    @foreach($icons['min'] as $icon => $component)
         <div class="grid justify-items-center">
-            <x-dynamic-component :component="$icon['component']" class="icon-sm" href="#"/>
-            <span class="text-sm">{{ $icon['name'] }}</span>
+            <x-dynamic-component :component="$component" class="icon-sm" href="#"/>
+            <span class="text-sm">{{ $icon }}</span>
         </div>
     @endforeach
 </div>
 
 <h3>2. Les grandes icônes ({{ count($icons['big']) }})</h3>
 <div class="grid grid-cols-10 gap-4">
-    @foreach($icons['big'] as $icon)
+    @foreach($icons['big'] as $icon => $component)
         <div class="grid justify-items-center">
-            <x-dynamic-component :component="$icon['component']" class="icon-lg" href="#"/>
-            <span class="text-sm">{{ $icon['name'] }}</span>
+            <x-dynamic-component :component="$component" class="icon-lg" href="#"/>
+            <span class="text-sm">{{ $icon }}</span>
         </div>
     @endforeach
 </div>

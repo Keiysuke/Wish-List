@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\FriendUser;
+use App\Models\Listing;
+use App\Models\ListingUser;
 use App\Models\Notyf;
+use App\Models\Product;
 use App\Models\User;
 use App\Notifications\FriendRequest;
+use App\Notifications\Lists\ShareList;
+use App\Notifications\Lists\ShareProduct;
+use App\Notifications\Share;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class FriendUserController extends Controller

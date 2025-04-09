@@ -36,48 +36,6 @@
             })
     }
 
-    toggleShareList = function () {
-        if (event) event.stopPropagation()
-        document.getElementById('content-share-list').classList.toggle('hidden')
-        document.getElementById('content-share-list').classList.toggle('flex')
-        document.getElementById('main').classList.toggle('pointer-events-none')
-    }
-
-    showShareList = function (listId) {
-        getFetch('shared/lists/' + listId + '/show')
-            .then(res => {
-                if (res.success) {
-                    document.getElementById('content-share-list').innerHTML = res.html
-                    toggleShareList()
-                }
-            })
-    }
-
-    shareList = function (listId) {
-        event.stopPropagation()
-        let friends = Array()
-        Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(el => {
-            if (el.checked) friends.push(parseInt(el.dataset.friendId))
-        })
-        if (friends.length === 0) {
-            notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error')
-            return
-        }
-        myFetch('lists/share', { method: 'post', csrf: true }, {
-            list_id: parseInt(listId),
-            friends: friends,
-        }).then(response => {
-            if (response.ok) return response.json()
-        }).then(res => {
-            myNotyf(res)
-            if (res.success) {
-                document.getElementById('content-share-list').classList.toggle('flex')
-                document.getElementById('content-share-list').classList.toggle('hidden')
-                document.getElementById('main').classList.toggle('pointer-events-none')
-            }
-        })
-    }
-
     /**
      * Met à jour les mesages affichés dans le tchat
      * @param {object} res - Résultat contenant le html de la liste des messages

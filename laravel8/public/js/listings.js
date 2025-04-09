@@ -37,53 +37,6 @@
       link.click();
     });
   };
-
-  toggleShareList = function toggleShareList() {
-    if (event) event.stopPropagation();
-    document.getElementById('content-share-list').classList.toggle('hidden');
-    document.getElementById('content-share-list').classList.toggle('flex');
-    document.getElementById('main').classList.toggle('pointer-events-none');
-  };
-
-  showShareList = function showShareList(listId) {
-    getFetch('shared/lists/' + listId + '/show').then(function (res) {
-      if (res.success) {
-        document.getElementById('content-share-list').innerHTML = res.html;
-        toggleShareList();
-      }
-    });
-  };
-
-  shareList = function shareList(listId) {
-    event.stopPropagation();
-    var friends = Array();
-    Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(function (el) {
-      if (el.checked) friends.push(parseInt(el.dataset.friendId));
-    });
-
-    if (friends.length === 0) {
-      notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error');
-      return;
-    }
-
-    myFetch('lists/share', {
-      method: 'post',
-      csrf: true
-    }, {
-      list_id: parseInt(listId),
-      friends: friends
-    }).then(function (response) {
-      if (response.ok) return response.json();
-    }).then(function (res) {
-      myNotyf(res);
-
-      if (res.success) {
-        document.getElementById('content-share-list').classList.toggle('flex');
-        document.getElementById('content-share-list').classList.toggle('hidden');
-        document.getElementById('main').classList.toggle('pointer-events-none');
-      }
-    });
-  };
   /**
    * Met à jour les mesages affichés dans le tchat
    * @param {object} res - Résultat contenant le html de la liste des messages

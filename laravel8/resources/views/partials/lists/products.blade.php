@@ -11,7 +11,7 @@
         @php($color = 'text-'.$products->color_price.'-600')
         <span id="total-price" title="Montant réel : {{ $products->total_price }} €">Montant total : <span class="{{ $color }}">{{ $products->total_best_price }} €</span></span>
         @if($list->owned())
-            <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShareList({{ $list->id }});">
+            <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShare({{ $list->id }}, 'list');">
                 <x-svg.share title="Partager la liste ?" class="icon-xs"/>
             </span>
         @endif

@@ -27,6 +27,9 @@ class NotificationService
         'App\Notifications\Lists\ShareList' => [
             'url' => 'lists.share',
         ],
+        'App\Notifications\Friends\Share\ShareProduct' => [
+            'url' => 'products.share',
+        ],
         'App\Notifications\Lists\ListLeft' => [
             'url' => 'lists.left',
         ],
@@ -80,8 +83,14 @@ class NotificationService
             'icon' => 'svg.msg', 
             'title' => 'Intéraction entre utilisateurs'
         ], 
-        'custom' => [
+        'share' => [
             'id' => 'notif_6', 
+            'color' => 'pink', 
+            'icon' => 'svg.share', 
+            'title' => 'Partage entre utilisateurs'
+        ], 
+        'custom' => [
+            'id' => 'notif_7', 
             'color' => 'pink', 
             'icon' => 'svg.heart', 
             'title' => 'Customisez comme vous le souhaitez !'
@@ -119,5 +128,16 @@ class NotificationService
                 $notif->$key = $value;
             }
         }
+    }
+
+    static function getModel($type) {
+        $r = null;
+        switch ($type) {
+            case 'list': $r = 'App\Models\Listing';
+                break;
+            case 'product': $r = 'App\Models\Product';
+                break;
+        }
+        return $r;
     }
 }

@@ -35,6 +35,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ScriptsController;
 use App\Http\Controllers\EmojiSectionController;
 use App\Http\Controllers\ListMsgReactionsController;
+use App\Http\Controllers\ShareController;
 use App\Http\Controllers\UtilsController;
 use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
@@ -99,9 +100,9 @@ Route::post('lists/products/toggle', [ListingController::class, 'toggleProduct']
 Route::resource('lists', ListingController::class)->middleware(['auth', 'verified'])->except(['destroy']);
 Route::get('lists/{listId}/destroy', [ListingController::class, 'destroy'])->name('destroyList');
 Route::get('lists/{listId}/download', [ListingController::class, 'download'])->name('downloadList');
-Route::get('shared/lists/{listId}/show', [ListingController::class, 'showShare'])->name('show_shareList');
 Route::get('shared/lists/{listId}/products/{productId}/edit', [ListingController::class, 'showEditProduct'])->name('show_editProduct');
-Route::post('lists/share', [ListingController::class, 'share'])->name('shareList');
+Route::get('user/friends/share/{type}/{id}', [ShareController::class, 'showList'])->name('show_shareList');
+Route::post('share', [ShareController::class, 'share'])->name('share');
 Route::get('lists/{listId}/leave', [ListingController::class, 'leave'])->name('leaveFriendList');
 //Listing Messages
 Route::post('lists/messages/menu/show', [ListingMessagesController::class, 'getActionsMenu'])->name('openMsgMenu');

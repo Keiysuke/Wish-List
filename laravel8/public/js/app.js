@@ -3841,6 +3841,52 @@ window.onload = function () {
   });
 };
 
+window.share = function (id, type) {
+  event.stopPropagation();
+  var friends = Array();
+  Array.from(document.querySelectorAll('[name^="share_friend_"]')).forEach(function (el) {
+    if (el.checked) friends.push(parseInt(el.dataset.friendId));
+  });
+
+  if (friends.length === 0) {
+    notyfJS('Veuillez sélectionner au moins l\'un de vos amis', 'error');
+    return;
+  }
+
+  myFetch('http://localhost/00%20-%20API/products-managing/laravel8/public/share', {
+    method: 'post',
+    csrf: true
+  }, {
+    id: parseInt(id),
+    type: type,
+    friends: friends
+  }).then(function (response) {
+    if (response.ok) return response.json();
+  }).then(function (res) {
+    myNotyf(res);
+
+    if (res.success) {
+      toggleShare(type);
+    }
+  });
+};
+
+window.toggleShare = function (type) {
+  if (event) event.stopPropagation();
+  document.getElementById('content-share-' + type).classList.toggle('flex');
+  document.getElementById('content-share-' + type).classList.toggle('hidden');
+  document.getElementById('main').classList.toggle('pointer-events-none');
+};
+
+window.showShare = function (id, type) {
+  getFetch('user/friends/share/' + type + '/' + id).then(function (res) {
+    if (res.success) {
+      document.getElementById('content-share-' + type).innerHTML = res.html;
+      toggleShare(type);
+    }
+  });
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

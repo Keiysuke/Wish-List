@@ -7,6 +7,26 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+#content-share-list, #content-share-product, #content-edit-product-list {
+  position: absolute;
+}
+
+#content-share-list, #content-share-product, #content-edit-product-list {
+  justify-content: center;
+}
+
+#content-share-list, #content-share-product, #content-edit-product-list {
+  align-items: center;
+}
+
+#content-share-list, #content-share-product, #content-edit-product-list {
+  width: 100%;
+}
+
+#content-share-list, #content-share-product, #content-edit-product-list {
+  height: 100%;
+}
+
 .my-scrollbar {
   overflow-x: hidden;
   overflow-y: auto;

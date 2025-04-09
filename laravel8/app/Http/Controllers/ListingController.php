@@ -191,56 +191,6 @@ class ListingController extends Controller
         ]);
     }
 
-    public function showShare(int $listId){
-        $list = Listing::find($listId);
-        $friends = $list->getFriendsNotShared();
-        
-        $returnHTML = view('partials.lists.share_friends')->with(compact('list', 'friends'))->render();
-        return response()->json([
-            'success' => true, 
-            'html' => $returnHTML
-        ]);
-    }
-
-    public function share(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, ['list_id' => 'bail|required|int']);
-            $listId = $request->list_id;
-            $user = auth()->user();
-
-            $notifs = 0;
-            foreach ($request->friends as $friend_id) {
-                $friend = User::find($friend_id);
-                (new ListingUser([
-                    'listing_id' => $listId,
-                    'user_id' => $friend_id,
-                    ]))->save();
-                //Check if the friend has already been notified or not
-                $exist = $friend->notifications()
-                    ->where('type', '=', 'App\Notifications\Lists\ShareList')
-                    ->whereJsonContains('data->list_id', $listId)
-                    ->whereJsonContains('data->user_id', $user->id)
-                    ->first();
-                if (!$exist) {
-                    $notifs++;
-                    $friend->notify(new ShareList($user, Listing::find($listId)));
-                }
-            }
-
-            if ($notifs > 0) {
-                return response()->json([
-                    'success' => true, 
-                    'notyf' => Notyf::success('Your friend can now access your list')
-                ]);
-            } else {
-                return response()->json([
-                    'success' => false, 
-                    'notyf' => Notyf::warning('These friends can already access your list')
-                ]);
-            }
-        }
-    }
-
     function leave(int $listId) {
         $list = Listing::find($listId);
         $authUser = User::find(auth()->user()->id);

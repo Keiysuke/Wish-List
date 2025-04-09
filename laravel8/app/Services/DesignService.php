@@ -12,117 +12,97 @@ class DesignService
     ];
 
     const ICONS = [
-        ['name' => 'add_to_list', 'sizes' => [true, false]],
-        ['name' => 'archive', 'sizes' => [true, true]],
-        ['name' => 'arrow', 'sizes' => [false, true]],
-        ['name' => 'asc', 'sizes' => [true, false]],
-        ['name' => 'bell', 'sizes' => [false, true]],
-        ['name' => 'box', 'sizes' => [false, true]],
-        ['name' => 'book', 'sizes' => [true, true]],
-        ['name' => 'cart', 'sizes' => [true, true]],
-        ['name' => 'circle_search', 'sizes' => [false, true]],
-        ['name' => 'clock', 'sizes' => [true, true]],
-        ['name' => 'check', 'sizes' => [true, false]],
-        ['name' => 'chevron_d', 'sizes' => [true, false]],
-        ['name' => 'chevron_l', 'sizes' => [true, false]],
-        ['name' => 'christmas_tree', 'sizes' => [true, true]],
-        ['name' => 'circle_plus', 'sizes' => [true, false]],
-        ['name' => 'clipboard_list', 'sizes' => [true, true]],
-        ['name' => 'close', 'sizes' => [true, false]],
-        ['name' => 'cmd', 'sizes' => [true, true]],
-        ['name' => 'cog', 'sizes' => [true, false]],
-        ['name' => 'console', 'sizes' => [true, true]],
-        ['name' => 'db', 'sizes' => [false, true]],
-        ['name' => 'double_arrow', 'sizes' => [false, true]],
-        ['name' => 'duplicate', 'sizes' => [true, true]],
-        ['name' => 'desc', 'sizes' => [true, false]],
-        ['name' => 'edit', 'sizes' => [true, false]],
-        ['name' => 'euro', 'sizes' => [true, true]],
-        ['name' => 'excel', 'sizes' => [true, false]],
-        ['name' => 'extand', 'sizes' => [false, true]],
-        ['name' => 'external_link', 'sizes' => [true, false]],
-        ['name' => 'eye_close', 'sizes' => [true, false]],
-        ['name' => 'eye_open', 'sizes' => [true, false]],
-        ['name' => 'filter', 'sizes' => [true, false]],
-        ['name' => 'folder', 'sizes' => [true, false]],
-        ['name' => 'gift', 'sizes' => [true, true]],
-        ['name' => 'globe', 'sizes' => [true, true]],
-        ['name' => 'globe_alt', 'sizes' => [true, true]],
-        ['name' => 'grid', 'sizes' => [true, false]],
-        ['name' => 'heart', 'sizes' => [true, false]],
-        ['name' => 'help', 'sizes' => [true, true]],
-        ['name' => 'house', 'sizes' => [true, true]],
-        ['name' => 'info', 'sizes' => [true, true]],
-        ['name' => 'like', 'sizes' => [true, true]],
-        ['name' => 'list', 'sizes' => [true, false]],
-        ['name' => 'log_out', 'sizes' => [true, false]],
-        ['name' => 'menu', 'sizes' => [true, true]],
-        ['name' => 'minus_circle', 'sizes' => [true, false]],
-        ['name' => 'moon', 'sizes' => [false, true]],
-        ['name' => 'mail', 'sizes' => [false, true]],
-        ['name' => 'music_note', 'sizes' => [true, true]],
-        ['name' => 'msg', 'sizes' => [true, true]],
-        ['name' => 'picture', 'sizes' => [true, true]],
-        ['name' => 'plus', 'sizes' => [true, false]],
-        ['name' => 'plus_circle', 'sizes' => [true, false]],
-        ['name' => 'profil', 'sizes' => [false, true]],
-        ['name' => 'refresh', 'sizes' => [true, true]],
-        ['name' => 'reply', 'sizes' => [true, false]],
-        ['name' => 'screen', 'sizes' => [false, true]],
-        ['name' => 'search', 'sizes' => [true, false]],
-        ['name' => 'share', 'sizes' => [true, true]],
-        ['name' => 'shop_bag', 'sizes' => [false, true]],
-        ['name' => 'star', 'sizes' => [true, true]],
-        ['name' => 'stats', 'sizes' => [false, true]],
-        ['name' => 'sun', 'sizes' => [false, true]],
-        ['name' => 'template', 'sizes' => [true, true]],
-        ['name' => 'trophy', 'sizes' => [false, true]],
-        ['name' => 'trash', 'sizes' => [true, false]],
-        ['name' => 'truck', 'sizes' => [true, true]],
-        ['name' => 'user', 'sizes' => [true, true]],
-        ['name' => 'user_group', 'sizes' => [true, true]],
-        ['name' => 'users', 'sizes' => [true, true]],
-        ['name' => 'user_minus', 'sizes' => [true, true]],
-        ['name' => 'user_plus', 'sizes' => [true, true]],
-        ['name' => 'upper', 'sizes' => [true, false]],
-        ['name' => 'v_dot', 'sizes' => [false, true]],
-        ['name' => 'vg_controller', 'sizes' => [false, true]],
-        ['name' => 'warning', 'sizes' => [true, true]],
-        ['name' => 'zoom_in', 'sizes' => [false, true]],
+        'add_to_list' => ['sizes' => [true, false]],
+        'archive' => ['sizes' => [true, true]],
+        'arrow' => ['sizes' => [false, true]],
+        'asc' => ['sizes' => [true, false]],
+        'bell' => ['sizes' => [false, true]],
+        'box' => ['sizes' => [false, true]],
+        'book' => ['sizes' => [true, true]],
+        'cart' => ['sizes' => [true, true]],
+        'circle_search' => ['sizes' => [false, true]],
+        'clock' => ['sizes' => [true, true]],
+        'check' => ['sizes' => [true, false]],
+        'chevron_d' => ['sizes' => [true, false]],
+        'chevron_l' => ['sizes' => [true, false]],
+        'christmas_tree' => ['sizes' => [true, true]],
+        'circle_plus' => ['sizes' => [true, false]],
+        'clipboard_list' => ['sizes' => [true, true]],
+        'close' => ['sizes' => [true, false]],
+        'cmd' => ['sizes' => [true, true]],
+        'cog' => ['sizes' => [true, false]],
+        'console' => ['sizes' => [true, true]],
+        'db' => ['sizes' => [false, true]],
+        'double_arrow' => ['sizes' => [false, true]],
+        'duplicate' => ['sizes' => [true, true]],
+        'desc' => ['sizes' => [true, false]],
+        'edit' => ['sizes' => [true, false]],
+        'euro' => ['sizes' => [true, true]],
+        'excel' => ['sizes' => [true, false]],
+        'extand' => ['sizes' => [false, true]],
+        'external_link' => ['sizes' => [true, false]],
+        'eye_close' => ['sizes' => [true, false]],
+        'eye_open' => ['sizes' => [true, false]],
+        'filter' => ['sizes' => [true, false]],
+        'folder' => ['sizes' => [true, false]],
+        'gift' => ['sizes' => [true, true]],
+        'globe' => ['sizes' => [true, true]],
+        'globe_alt' => ['sizes' => [true, true]],
+        'grid' => ['sizes' => [true, false]],
+        'heart' => ['sizes' => [true, false]],
+        'help' => ['sizes' => [true, true]],
+        'house' => ['sizes' => [true, true]],
+        'info' => ['sizes' => [true, true]],
+        'like' => ['sizes' => [true, true]],
+        'list' => ['sizes' => [true, false]],
+        'log_out' => ['sizes' => [true, false]],
+        'menu' => ['sizes' => [true, true]],
+        'minus_circle' => ['sizes' => [true, false]],
+        'moon' => ['sizes' => [false, true]],
+        'mail' => ['sizes' => [false, true]],
+        'music_note' => ['sizes' => [true, true]],
+        'msg' => ['sizes' => [true, true]],
+        'picture' => ['sizes' => [true, true]],
+        'plus' => ['sizes' => [true, false]],
+        'plus_circle' => ['sizes' => [true, false]],
+        'profil' => ['sizes' => [false, true]],
+        'refresh' => ['sizes' => [true, true]],
+        'reply' => ['sizes' => [true, false]],
+        'screen' => ['sizes' => [false, true]],
+        'search' => ['sizes' => [true, false]],
+        'share' => ['sizes' => [true, true]],
+        'shop_bag' => ['sizes' => [false, true]],
+        'star' => ['sizes' => [true, true]],
+        'stats' => ['sizes' => [false, true]],
+        'sun' => ['sizes' => [false, true]],
+        'template' => ['sizes' => [true, true]],
+        'trophy' => ['sizes' => [false, true]],
+        'trash' => ['sizes' => [true, false]],
+        'truck' => ['sizes' => [true, true]],
+        'user' => ['sizes' => [true, true]],
+        'user_group' => ['sizes' => [true, true]],
+        'users' => ['sizes' => [true, true]],
+        'user_minus' => ['sizes' => [true, true]],
+        'user_plus' => ['sizes' => [true, true]],
+        'upper' => ['sizes' => [true, false]],
+        'v_dot' => ['sizes' => [false, true]],
+        'vg_controller' => ['sizes' => [false, true]],
+        'warning' => ['sizes' => [true, true]],
+        'zoom_in' => ['sizes' => [false, true]],
     ];
-
-    /*
-    * Return the list of SVG icons
-    */
-    static function getIcons($size = 'min') {
-        $res = [];
-        foreach (self::ICONS as $icon) {
-            if ($icon['sizes'][$size === 'big']) $res[] = $icon['name'];
-        }
-        return $res;
-    }
 
     /*
     * Return the list of SVG icons as their component name link
     */
     static function getIconsAsComponent($size = 'min') {
-        $res = [];
-        foreach (self::getIcons($size) as $icon) {
-            $res[] = [
-                'name' => $icon,
-                'component' => 'svg.'.($size === 'big' ? 'big.' : '').$icon,
-            ];
-        }
-        return $res;
-    }
-
-    /*
-    * Return the list of possible Tailwind colors
-    */
-    static function getColors() {
-        $res = [];
-        foreach (CssColor::uniqueColors() as $color) {
-            $res[] = $color;
+        $res = ['min' => [], 'big' => []];
+        foreach (self::ICONS as $icon => $config) {
+            if ($config['sizes'][0]) {
+                $res['min'][$icon] = 'svg.' . $icon;
+            }
+            if ($config['sizes'][1]) {
+                $res['big'][$icon] = 'svg.big.' . $icon;
+            }
         }
         return $res;
     }

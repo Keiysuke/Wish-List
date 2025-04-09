@@ -1,12 +1,3 @@
-#content-share-list,
-#content-edit-product-list {
-    @apply absolute;
-    @apply justify-center;
-    @apply items-center;
-    @apply w-full;
-    @apply h-full;
-}
-
 #content-msg {
     @apply w-1/5;
     @apply pl-1;

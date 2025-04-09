@@ -8,6 +8,8 @@
 @section('absolute_content')
     @include('partials.products.zoom_pictures', ['dir' => $dir, 'photos' => $photos, 'firstPhoto' => $product->pict])
     @include('partials.products.my_lists', ['id' => $product->id, 'product_id' => $product->id])
+    <div id="content-share-product" class="hidden">
+    </div>
 @endsection
 
 @section('breadcrumbs')
@@ -165,6 +167,9 @@
             </span>
             <span title="{{ $product->following? 'Ne plus suivre' : 'Suivre le produit' }}" id="follow-product" class="title-icon heart {{ $product->following? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.heart class="icon-xs"/>
+            </span>
+            <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShare({{ $product->id }}, 'product');">
+                <x-svg.share title="Partager le produit ?" class="icon-xs"/>
             </span>
             <span title="{{ $product->archived? 'Retirer des archives' : 'Archiver le produit' }}" id="archive-product" class="title-icon archive {{ $product->archived? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.archive class="icon-xs"/>
