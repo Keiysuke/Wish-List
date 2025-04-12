@@ -36,11 +36,9 @@
         if (update || document.getElementById('cost').value === '') document.getElementById('cost').value = document.getElementById('real-cost').value;
     }
 
-    function set_purchase(v) {
-        document.getElementById('section-product-website').classList.toggle('hidden');
-        document.getElementById('section-product-website').classList.toggle('block');
-        document.getElementById('section-purchase').classList.toggle('hidden');
-        document.getElementById('section-purchase').classList.toggle('block');
+    function toggle_section(section) {
+        document.getElementById('section-' + section).classList.toggle('hidden');
+        document.getElementById('section-' + section).classList.toggle('block');
     }
     
     var loadFile = function(event) {
@@ -119,7 +117,7 @@
         
         <!-- Formulaire liaison de site de vente au produit -->
 
-        <div id="section-product-website" class="{{ strcmp(old('add_purchase'), 'on') === 0 ? 'block' : 'hidden' }}">
+        <div id="section-offer" class="{{ strcmp(old('add_offer'), 'on') === 0 ? 'block' : 'hidden' }}">
             <h1 class="text-orange-500">Pouvant être acheté sur</h1>
             <hr class="border-orange-500"/>
             
@@ -196,9 +194,16 @@
             </div>
         </div>
 
-        <div class="mb-4">
-            <x-Form.Checkbox onChange="set_purchase(this.checked);" name="add_purchase">{{ strcmp(old('add_purchase'), 'on') === 0 ? 'checked' : '' }}</x-Form.Checkbox>
-            <x-Form.Label class="ml-1" for="add-purchase">Créer & lier un achat</x-Form.Label>
+        <div class="flex items-end w-4/5 mb-4">
+            <div>
+                <x-Form.Checkbox onChange="toggle_section('offer');" name="add_offer">{{ strcmp(old('add_offer'), 'on') === 0 ? 'checked' : '' }}</x-Form.Checkbox>
+                <x-Form.Label class="ml-1" for="add-offer">Lier une offre</x-Form.Label>
+            </div>
+            <x-Utils.VLine />
+            <div>
+                <x-Form.Checkbox onChange="toggle_section('purchase');" name="add_purchase">{{ strcmp(old('add_purchase'), 'on') === 0 ? 'checked' : '' }}</x-Form.Checkbox>
+                <x-Form.Label class="ml-1" for="add-purchase">Lier un achat</x-Form.Label>
+            </div>
         </div>
         <div class="flex items-center justify-between">
             <x-Form.Btn type="submit">Ajouter le produit</x-Form.Btn>

@@ -100,4 +100,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getFavWebsite($type = 'buy') {
         return ($type === 'buy') ? 1 : 2;
     }
+
+    public function getFriendLists(){
+        return Listing::select('listings.*')
+            ->join('listing_users', 'listings.id', '=', 'listing_users.listing_id')
+            ->where('listing_users.user_id', '=', $this->id)
+            ->join('users', 'listings.user_id', '=', 'users.id')
+            ->orderBy('users.name')
+            ->get();
+    }
 }

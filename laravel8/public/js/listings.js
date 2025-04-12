@@ -141,8 +141,8 @@
     if (oldUserId == userId) return;
 
     if (userId == 0) {
-      document.getElementById('title-others-lists').classList.add('active');
-      document.getElementById('title-my-lists').classList.remove('active');
+      document.getElementById('title-others-lists').classList.toggle('active');
+      document.getElementById('title-my-lists').classList.toggle('active');
     } else {
       document.getElementById('title-others-lists').classList.remove('active');
       document.getElementById('title-my-lists').classList.add('active');

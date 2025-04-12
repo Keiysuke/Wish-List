@@ -70,6 +70,9 @@ class VideoGame extends Model
 
     public function getStudioAsLink(){
         $dev = $this->developer;
+        if (is_null($dev)) {
+            return '<a href="'.route('vg_developers.create').'" class="link" target="_blank">Indéfini</a>';
+        }
         return '<a href="'.route('vg_developers.edit', $dev->id).'" class="link" target="_blank">'.$dev->label.'</a>';
     }
 

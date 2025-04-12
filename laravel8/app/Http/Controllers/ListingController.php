@@ -102,12 +102,7 @@ class ListingController extends Controller
         $messagesHTML = null;
         $firstList = null;
         if ($userId === 0) {//Listes des amis
-            $lists = Listing::select('listings.*')
-                ->join('listing_users', 'listings.id', '=', 'listing_users.listing_id')
-                ->where('listing_users.user_id', '=', auth()->user()->id)
-                ->join('users', 'listings.user_id', '=', 'users.id')
-                ->orderBy('users.name')
-                ->get();
+            $lists = auth()->user()->getFriendLists();
             $usersName = [];
             $listingUsers = [];
             foreach ($lists as $list) {

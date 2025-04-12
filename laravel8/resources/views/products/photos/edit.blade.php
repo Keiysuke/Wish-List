@@ -57,13 +57,13 @@
             <div class="w-1/3">
                 <x-Form.Label for="nb-photos" block>Nombre de photos à lier</x-Form.Label>
                 <div class="flex gap-2">
-                    <x-svg.minus_circle class="icon-sm icon-clickable" onClick="updateNbPhotos(false);"/>
+                    <x-svg.minus_circle class="icon-lg icon-clickable" onClick="updateNbPhotos(false);"/>
                     <select name="nb_photos" id="nb-photos" value="{{ $nb_photos }}" class="pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent" onChange="uploadPhotos(this.value)">
                         @for ($i = 1; $i <= 10; $i++)
                             <option value="{{ $i }}" @if($nb_photos == $i) selected @endif>{{ $i }}</option>
                         @endfor
                     </select>
-                    <x-svg.plus_circle class="icon-sm icon-clickable" onClick="updateNbPhotos();"/>
+                    <x-svg.plus_circle class="icon-lg icon-clickable" onClick="updateNbPhotos();"/>
                 </div>
             </div>
         </div>

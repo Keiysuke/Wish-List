@@ -8,6 +8,7 @@ use App\Models\Notyf;
 use App\Models\ProductAsVideoGame;
 use App\Models\VgSupport;
 use App\Models\VideoGame;
+use App\Services\DateService;
 
 class VideoGameController extends Controller
 {
@@ -140,7 +141,8 @@ class VideoGameController extends Controller
     }
 
     public function create(){
-        return view('video_games.create');
+        $today = DateService::today();
+        return view('video_games.create', compact('today'));
     }
 
     public function store(VideoGameRequest $request){

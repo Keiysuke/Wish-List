@@ -11,7 +11,7 @@ class CreateVideoGamesTable extends Migration
         Schema::create('video_games', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('developer_id');
+            $table->unsignedInteger('developer_id')->nullable();
             $table->foreign('developer_id')
                 ->references('id')
                 ->on('vg_developers')

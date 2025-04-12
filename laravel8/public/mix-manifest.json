@@ -3,6 +3,8 @@
     "/js/my_fetch.js": "/js/my_fetch.js",
     "/js/clipboard.js": "/js/clipboard.js",
     "/js/my_notyf.js": "/js/my_notyf.js",
+    "/js/products.js": "/js/products.js",
+    "/js/productsSearch.js": "/js/productsSearch.js",
     "/js/groupBuys.js": "/js/groupBuys.js",
     "/js/manageFriends.js": "/js/manageFriends.js",
     "/js/tchat.js": "/js/tchat.js",

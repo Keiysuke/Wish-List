@@ -311,8 +311,7 @@ class ProductController extends Controller
         //Set product's kind if inputed
         ProductTemplateController::updateProduct($request, $product);
         
-        if($request->add_purchase){ //On créé et lie également un achat et le site web utilisé
-            
+        if($request->add_offer){ //On lie une offre avec le site web utilisé
             $productWebsite = new ProductWebsite([
                 'product_id' => $product->id,
                 'website_id' => $request->website_id,
@@ -321,7 +320,9 @@ class ProductController extends Controller
                 'expiration_date' => $request->expiration_date,
             ]);
             $productWebsite->save();
-            
+        }
+
+        if($request->add_purchase){ //On lie un nouvel achat
             $purchase = new Purchase([
                 'user_id' => $request->user_id,
                 'product_id' => $product->id,
@@ -333,10 +334,9 @@ class ProductController extends Controller
                 'date' => $request->date,
             ]);
             $purchase->save();
-            
-            $info = __('The product & the related purchase have been created.');
         }
         
+        $info = __('The product & associated data have been created.');
         return redirect()->route('products.show', $product->id)->with('info', $info);
     }
     
