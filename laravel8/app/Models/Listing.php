@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\ListingType;
 use App\Notifications\Lists\Products\ProductAdded;
 use App\Notifications\Lists\Products\ProductEdited;
+use App\Services\ProductService;
 use Illuminate\Http\Request;
 
 class Listing extends Model
@@ -49,7 +50,7 @@ class Listing extends Model
             foreach($products as $product) {
                 $product->nb = ListingProduct::where('listing_id', '=', $this->id)
                     ->where('product_id', '=', $product->id)->first()->nb;
-                $products->total_best_price += $product->bestWebsiteOffer()->price * $product->nb;
+                $products->total_best_price += (ProductService::bestWebsiteOffer($product))->price * $product->nb;
                 $products->total_price += $product->real_cost * $product->nb;
             }
             $products->color_price = UtilsController::getPriceColor($products->total_best_price, $products->total_price);

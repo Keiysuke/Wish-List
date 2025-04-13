@@ -4,7 +4,7 @@
     @else
         <ul class="list-disc">
         @foreach ($products as $pvg)
-            @php($best_offer = $pvg->product->bestWebsiteOffer())
+            @php($best_offer = \App\Services\ProductService::bestWebsiteOffer($pvg->product))
             <li class="li_product" id="product-link-{{ $pvg->product->id }}">
                 <div class="flex inline-flex gap-1">
                     {{ $pvg->product->label }} ({{ $pvg->vg_support->alias }}) pour <span class="font-semibold text-{{ $best_offer->color }}-500">{{ $best_offer->price }}€</span>

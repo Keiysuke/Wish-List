@@ -36,7 +36,7 @@ class ReactionService
     }
 
     public function show() {
-        $returnHTML = view('components.Tchat.ReactionsLine')->with(['reactions' => $this->reactions])->render();
-        return response()->json(['success' => true, 'html' => $returnHTML]);
+        $html = view('components.Tchat.ReactionsLine')->with(['reactions' => $this->reactions])->render();
+        return response()->json(['success' => true, 'html' => $html]);
     }
 }

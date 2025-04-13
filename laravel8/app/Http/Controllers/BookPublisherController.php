@@ -26,15 +26,11 @@ class BookPublisherController extends Controller
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That publisher already exists')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $publisher = new BookPublisher([
-            'label' => $request->label,
-            'description' => $request->description,
-            'founded_year' => $request->founded_year,
-            'country' => $request->country,
-            'website_id' => $request->website_id,
-            'active' => $request->has('active')? 1 : 0,
-        ]);
-        $publisher->save();
+        BookPublisher::create(
+            $request->merge([
+                'active' => $request->has('active')? 1 : 0,
+            ])->all()
+        );
 
         return redirect()->route('book_publishers.index')->with('info', __('The publisher has been saved.'));
     }
@@ -47,11 +43,10 @@ class BookPublisherController extends Controller
         if($this->exists($request->label, $publisher->id))
             return back()->withErrors(['label' => __('That publisher already exists')])->withInput();
 
-        $publisher->update($request
-            ->merge([
+        $publisher->update(
+            $request->merge([
                 'active' => ($request->has('active')? 1 : 0),
-            ])
-            ->all()
+            ])->all()
         );
         return redirect()->route('book_publishers.index')->with('info', __('The publisher has been edited.'));
     }

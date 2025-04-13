@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductPhoto;
 use App\Models\User;
+use App\Services\UploadService;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
@@ -65,7 +66,7 @@ class ProductPhotoController extends Controller
         for($i = 1; $i <= $request->nb_photos; $i++){
             if(!array_key_exists('photo_'.$i, $rules)) continue;
 
-            app('App\Http\Controllers\UploadController')->storePhoto($request, $i, $product);
+            UploadService::storePhoto($request, $i, $product);
         }
         return redirect()->route('products.show', $product->id)->with('info', __('Photos have been edited.'));
     }

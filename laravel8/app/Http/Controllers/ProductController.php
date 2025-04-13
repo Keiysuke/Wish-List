@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Website;
-use App\Models\ProductPhoto;
-use App\Models\ProductWebsite;
-use App\Models\Purchase;
 use App\Models\Listing;
 use App\Models\ListingProduct;
 use App\Models\ProductTag;
@@ -18,6 +15,11 @@ use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use App\Http\Controllers\ProductTemplateController;
 use App\Services\DateService;
+use App\Services\ProductService;
+use App\Services\ProductWebsiteService;
+use App\Services\PurchaseService;
+use App\Services\UploadService;
+use App\Services\VideoGameService;
 
 class ProductController extends Controller
 {
@@ -27,44 +29,6 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->setFirstPhoto();
         return response()->json(['success' => true, 'html' => $product->pict, 'link' => route('products.show', $id)]);
-    }
-
-    public function setProductWebsites(&$products){
-        foreach($products as $product){
-            $product->nb_offers = count($product->getAvailableWebsites());
-            $product->can_buy = $product->nb_offers > count($product->getWebsitesAvailableSoon());
-            $product->date_show = null;
-
-            if($product->nb_offers > 0){ //Des offres sont disponibles
-                if($product->can_buy){
-                    if(count($product->purchases) >= 1){
-                        $product->date_show = __('Purchased on').' '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date));
-                    }else{
-                        //On affiche la date d'expiration la plus proche
-                        $nextExpiration = $product->getwebsitesExpirationSoon()->first();
-                        if(is_null($nextExpiration)) $product->date_show = __('Not bought');
-                        else $product->date_show = __('An offer expire on').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($nextExpiration->expiration_date);
-                    }
-                }else{ //Les offres sont pour des dates futures
-                    $offer = $product->getWebsitesAvailableSoon()->first();
-                    $product->date_show = app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($offer->available_date);
-                }
-            }else $product->date_show = __('No offer listed');
-        }
-    }
-
-    public function setProductPurchases(&$products){
-        foreach($products as $product){
-            $product->url = route('products.show', $product->id);
-            $product->setFirstPhoto();
-            $product->description = strlen($product->description) > 450 ? substr($product->description, 0, 450).'...': $product->description;
-            $product->nb_purchases = count($product->purchases);
-            $product->nb_resells = 0;
-            foreach($product->sellings as $selling){
-                if($selling->isSold()) $product->nb_resells++;
-            }
-            $product->nb_sellings = count($product->sellings)-$product->nb_resells;
-        }
     }
 
     //Routes
@@ -103,7 +67,7 @@ class ProductController extends Controller
         $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
         $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
         
-        $this->setProductWebsites($products);
+        (new ProductService())->setProductWebsites($products);
         return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
     }
 
@@ -253,15 +217,16 @@ class ProductController extends Controller
             $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
             $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
                         
-            $returnHTML = view('partials.products.'.$request->list.'_details')->with(['products' => $this->getProducts($products)])->render();
-            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $returnHTML]);
+            $html = view('partials.products.'.$request->list.'_details')->with(['products' => $this->getProducts($products)])->render();
+            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $html]);
         }
         abort(404);
     }
 
     function getProducts($products){
-        $this->setProductWebsites($products);
-        $this->setProductPurchases($products);
+        $productService = new ProductService();
+        $productService->setProductWebsites($products);
+        $productService->setProductPurchases($products);
         return $products;
     }
 
@@ -289,16 +254,10 @@ class ProductController extends Controller
     }
 
     public function store(ProductRequest $request){
-        $product = new Product([
-            'label' => $request->label,
-            'description' => $request->description,
-            'limited_edition' => $request->limited_edition,
-            'real_cost' => str_replace(',', '.', $request->real_cost),
-        ]);
-        $product->save();
+        $product = (new ProductService())->createFromRequest($request);
         
         if (UtilsController::checkKeyExistingInArray($request->all(), 'photo_')) {//Adding the photo
-            (new UploadController)->storePhoto($request, 1, $product);
+            UploadService::storePhoto($request, 1, $product);
         }
         $info = __('The product has been created.');
         //Adding the potential tags
@@ -311,29 +270,16 @@ class ProductController extends Controller
         //Set product's kind if inputed
         ProductTemplateController::updateProduct($request, $product);
         
-        if($request->add_offer){ //On lie une offre avec le site web utilisé
-            $productWebsite = new ProductWebsite([
-                'product_id' => $product->id,
-                'website_id' => $request->website_id,
-                'price' => str_replace(',', '.', $request->price),
-                'url' => $request->url,
-                'expiration_date' => $request->expiration_date,
-            ]);
-            $productWebsite->save();
-        }
+        if($request->add_offer) //On lie une offre avec le site web utilisé
+            (new ProductWebsiteService())->createFromRequest($request, $product);
 
-        if($request->add_purchase){ //On lie un nouvel achat
-            $purchase = new Purchase([
-                'user_id' => $request->user_id,
-                'product_id' => $product->id,
-                'product_state_id' => $request->product_state_id,
-                'website_id' => $request->website_id,
-                'cost' => str_replace(',', '.', $request->cost),
-                'discount' => str_replace(',', '.', $request->discount),
-                'customs' => str_replace(',', '.', $request->customs),
-                'date' => $request->date,
-            ]);
-            $purchase->save();
+        if($request->add_purchase) //On lie un nouvel achat
+            (new PurchaseService())->createFromRequest($request);
+
+        if($request->add_vg) { //On lie un nouveau JV
+            (new VideoGameService())->createFromRequest($request->merge([
+                'label' => $product->getLabelAsVideoGame(),
+            ]));
         }
         
         $info = __('The product & associated data have been created.');
@@ -371,9 +317,9 @@ class ProductController extends Controller
                     $productWebsites->nb_expired++;
                     $pw->date_show = __('Expired');
                 }
-                $pw->date_show .= ' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->expiration_date, $pastDate);
+                $pw->date_show .= ' '.ProductWebsiteService::showAvailableDate($pw->expiration_date, $pastDate);
             }elseif($pw->available_soon){
-                $pw->date_show = __('Available').' '.app('App\Http\Controllers\ProductWebsiteController')->showAvailableDate($pw->available_date);
+                $pw->date_show = __('Available').' '.ProductWebsiteService::showAvailableDate($pw->available_date);
             }
         }
         

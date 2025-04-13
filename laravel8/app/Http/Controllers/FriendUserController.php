@@ -53,8 +53,8 @@ class FriendUserController extends Controller
         $user = User::find($userId);
         $user->isFriend = $user->isFriend();
 
-        $returnHTML = view('partials.friends.profile', compact('user'))->render();
-        return response()->json(['success' => true, 'html' => $returnHTML, 'isFriend' => $user->isFriend]);
+        $html = view('partials.friends.profile', compact('user'))->render();
+        return response()->json(['success' => true, 'html' => $html, 'isFriend' => $user->isFriend]);
     }
 
     function requesting(int $friendId){
@@ -132,8 +132,8 @@ class FriendUserController extends Controller
                 $friend->first_letter = $friend->name[0];
             }
 
-            $returnHTML = view('partials.friends.list', compact('friends'))->render();
-            return response()->json(['success' => true, 'html' => $returnHTML, 'nb_results' => count($friends)]);
+            $html = view('partials.friends.list', compact('friends'))->render();
+            return response()->json(['success' => true, 'html' => $html, 'nb_results' => count($friends)]);
         }
         abort(404);
     }

@@ -8,9 +8,10 @@ use Illuminate\Http\Request;
 
 class EmojiController extends Controller
 {
-    public function exists($lbl, $id = null){
-        if(is_null($id)) return Emoji::where("label", $lbl)->exists();
-        else return Emoji::where('label', $lbl)->where('id', '<>', $id)->exists();
+    public function exists(string $label, ?int $id = null): bool
+    {
+        if(is_null($id)) return Emoji::where("label", $label)->exists();
+        else return Emoji::where('label', $label)->where('id', '<>', $id)->exists();
     }
 
     public function index(){
@@ -26,11 +27,7 @@ class EmojiController extends Controller
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That emoji already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
 
-        $emoji = new Emoji([
-            'label' => $request->label, 
-            'emoji_section_id' => $request->emoji_section_id,
-        ]);
-        $emoji->save();
+        Emoji::create($request->all());
         return redirect()->route('emojis.index')->with('info', __('The emoji has been created.'));
     }
     
@@ -42,13 +39,7 @@ class EmojiController extends Controller
         if($this->exists($request->label, $emoji->id))
             return back()->withErrors(['label' => __('That emoji already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $emoji->update($request
-            ->merge([
-                'label' => $request->label,
-                'emoji_section_id' => $request->emoji_section_id,
-            ])
-            ->all()
-        );
+        $emoji->update($request->all());
         return redirect()->route('emojis.index')->with('info', __('The emoji has been edited.'));
     }
     

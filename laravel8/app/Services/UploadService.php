@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
 
 use App\Models\ProductPhoto;
 
-class UploadController extends Controller
+class UploadService
 {
-    public function storePhoto($request, $nb, $product){
+    public static function storePhoto($request, $nb, $product){
         $dir = config('images.path_products').'/'.$product->id;
         $ext = '.'.$request['photo_'.$nb]->getClientOriginalExtension();
 

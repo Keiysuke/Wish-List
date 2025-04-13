@@ -80,7 +80,7 @@
         </div>
         <div class="flex gap-4 mb-4">
             <div class="w-1/4">
-                <label for="price" block required>Mon prix de vente (€)</label>
+                <x-Form.Label for="price" block required>Mon prix de vente (€)</x-Form.Label>
                 <x-Form.Input name="price" placeholder="80" value="{{ old('price') }}"/>
             </div>
             <div class="w-1/4">

@@ -24,10 +24,10 @@ class ShareController extends Controller
             $friends = auth()->user()->friends;
         }
         
-        $returnHTML = view('partials.lists.share_friends')->with(compact('item', 'friends', 'type'))->render();
+        $html = view('partials.lists.share_friends')->with(compact('item', 'friends', 'type'))->render();
         return response()->json([
             'success' => true, 
-            'html' => $returnHTML
+            'html' => $html
         ]);
     }
 

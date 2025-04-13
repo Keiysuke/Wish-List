@@ -17,7 +17,7 @@ class VideoGameRequest extends FormRequest
             'developer_id' => 'int|nullable',
             'label' => 'string|required',
             'date_released' => 'required|date',
-            'nb_players' => 'int|required',
+            'nb_players' => 'int|nullable',
         ];
     }
 

@@ -35,8 +35,8 @@ class ListingMessagesController extends Controller
         $messages = $buildQuery->get();
         MessageService::setReactions($messages);
 
-        $returnHTML = view('components.Tchat.MessagesList')->with(compact('messages'))->render();
-        return response()->json(['success' => true, 'html' => $returnHTML]);
+        $html = view('components.Tchat.MessagesList')->with(compact('messages'))->render();
+        return response()->json(['success' => true, 'html' => $html]);
     }
 
     public function send(ListingMessageRequest $request){

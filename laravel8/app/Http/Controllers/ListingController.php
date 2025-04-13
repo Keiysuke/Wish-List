@@ -11,7 +11,6 @@ use App\Models\Notyf;
 use App\Models\Product;
 use App\Notifications\Lists\ListLeft;
 use App\Notifications\Lists\Products\ProductRemoved;
-use App\Notifications\Lists\ShareList;
 use App\Services\MessageService;
 use Illuminate\Http\Request;
 
@@ -64,11 +63,11 @@ class ListingController extends Controller
         $messagesHTML = (new MessageService())->show($listId);
         
         $nb_results = $products->links()? $products->links()->paginator->total() : count($products);
-        $returnHTML = view('partials.lists.products')->with(compact('products', 'list', 'friends', 'nb_results'))->render();
+        $html = view('partials.lists.products', compact('products', 'list', 'friends', 'nb_results'))->render();
         return response()->json([
             'success' => true, 
             'nb_results' => $nb_results, 
-            'html' => $returnHTML,
+            'html' => $html,
             'shared_list' => $list->isShared(),
             'htmlMsg' => $messagesHTML
         ]);
@@ -87,14 +86,11 @@ class ListingController extends Controller
     }
 
     public function store(ListingRequest $request){
-        $list = new Listing([
-            'user_id' => $request->user_id,
-            'listing_type_id' => $request->listing_type_id,
-            'label' => $request->label,
-            'description' => $request->description,
-            'secret' => $request->has('secret')? 1 : 0,
-        ]);
-        $list->save();
+        Listing::create(
+            $request->merge([
+                'secret' => $request->has('secret')? 1 : 0,
+            ])->all()
+        );
         return redirect()->route('lists.index')->with('info', __('The list has been created.'));
     }
 
@@ -117,7 +113,7 @@ class ListingController extends Controller
             
             $messagesHTML = (new MessageService())->show($firstList->id);
 
-            $returnHTML = view('partials.lists.others')->with(compact('listingUsers', 'usersName'))->render();
+            $html = view('partials.lists.others', compact('listingUsers', 'usersName'))->render();
 
         } else {
             $typesLabel = [];
@@ -132,11 +128,11 @@ class ListingController extends Controller
                     $typesLabel[$list->listing_type_id] = $list->listing_type->label;
                 }
             }
-            $returnHTML = view('partials.lists.mine')->with(compact('listingTypes', 'typesLabel'))->render();
+            $html = view('partials.lists.mine', compact('listingTypes', 'typesLabel'))->render();
         }
         return response()->json([
             'success' => true, 
-            'html' => $returnHTML,
+            'html' => $html,
             'first_list_id' => $firstList->id,
             'shared_list' => $firstList->isShared(),
             'htmlMsg' => $messagesHTML
@@ -149,9 +145,7 @@ class ListingController extends Controller
 
     public function update(Request $request, Listing $list){
         $list->update($request
-            ->merge(['listing_type_id' => $request->listing_type_id,
-                'label' => $request->label,
-                'description' => $request->description,
+            ->merge([
                 'secret' => ($request->has('secret')? 1 : 0)])
             ->all()
         );
@@ -189,8 +183,8 @@ class ListingController extends Controller
     function leave(int $listId) {
         $list = Listing::find($listId);
         $authUser = User::find(auth()->user()->id);
-        ListingUser::where('listing_id', '=', $listId)
-            ->where('user_id', '=', $authUser->id)
+        ListingUser::where('listing_id', $listId)
+            ->where('user_id', $authUser->id)
             ->delete();
         
         //On informe le propriétaire
@@ -201,13 +195,15 @@ class ListingController extends Controller
     }
     
     public function showEditProduct(int $listId, int $productId){
-        $productList = ListingProduct::where('listing_id', '=', $listId)
-            ->where('product_id', '=', $productId)
-            ->first();
-        $returnHTML = view('partials.lists.edit_product')->with(compact('productList'))->render();
+        $productList = ListingProduct::where('listing_id', $listId)
+            ->where('product_id', $productId)
+            ->firstOrFail();
+        
+        $html = view('partials.lists.edit_product', compact('productList'))->render();
+        
         return response()->json([
             'success' => true, 
-            'html' => $returnHTML
+            'html' => $html
         ]);
     }
 }

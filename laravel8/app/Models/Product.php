@@ -81,22 +81,11 @@ class Product extends Model
     }
 
     //Utils
-    public function getAvailableWebsites(){
-        return $this->productWebsites()->where(function($query){
-            $query->where('available_date', '<=', date("Y-m-d"))
-                ->orWhereNull('available_date')
-                ->orWhere('available_date', '>', date("Y-m-d"));
-        })->where(function($query){
-            $query->where('expiration_date', '>', date("Y-m-d"))
-                ->orWhereNull('expiration_date');
-        })->orderBy('available_date')->get();
-    }
-
-    public function getwebsitesAvailableSoon(){
+    public function getWebsitesAvailableSoon(){
         return $this->productWebsites()->where('available_date', '>=', date("Y-m-d"))->orderBy('available_date')->get();
     }
 
-    public function getwebsitesExpirationSoon(){
+    public function getWebsitesExpirationSoon(){
         return $this->productWebsites()->where('expiration_date', '>=', date("Y-m-d"))->orderBy('expiration_date')->get();
     }
 
@@ -146,16 +135,6 @@ class Product extends Model
 
     public function description($length = 1000){
         return UtilsController::cutString($this->description, $length);
-    }
-    
-    public function bestWebsiteOffer(){
-        $res = ['price' => $this->real_cost, 'url' => null, 'website_id' => null];
-        foreach($this->getAvailableWebsites() as $offer){
-            if($offer->price <= $res['price']){
-                $res = ['price' => $offer->price, 'url' => $offer->url, 'website_id' => $offer->website_id];
-            }
-        }
-        return (Object)array_merge($res, ['color' => ($res['price'] < $this->real_cost)? 'green' : (($res['price'] > $this->real_cost)? 'red' : 'black')]);
     }
 
     public function get_template(): object{

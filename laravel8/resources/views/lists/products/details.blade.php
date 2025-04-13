@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-6" id="list-products">
     @if(count($products) > 0)
         @foreach($products as $product)
-            @php($offer = $product->bestWebsiteOffer())
+            @php($offer = \App\Services\ProductService::bestWebsiteOffer($product))
             <div class="list_product flex justify-between h-full border rounded hover:shadow-lg transition ease-in-out duration-150" id="list-{{ isset($list)? $list->id : '' }}-product-{{ $product->id }}">
                 <div class="relative w-1/12 {{ ($product->nb_offers > 0)? '' : 'no-offer' }}">
                     <a href="{{ route('products.show', $product->id) }}">

@@ -30,7 +30,7 @@ class CssColorController extends Controller
                 $cssClasses[$kind] = $request->{$kind.'_color'}.(empty($variant)? '' : '-'.$variant);
 
                 if($kind === $request->kind)
-                    $returnHTML = view('partials.tags.select_variants')->with(['variants' => $res, 'selected' => $variant])->render();
+                    $html = view('partials.tags.select_variants')->with(['variants' => $res, 'selected' => $variant])->render();
             }
             //Set the tag
             $exTag = Tag::getExample(
@@ -40,7 +40,7 @@ class CssColorController extends Controller
             );
             $returnTag = view('components.tags.tag')->with(['tag' => $exTag])->render();
             
-            return response()->json(['success' => true, 'html' => $returnHTML, 'tag' => $returnTag]);
+            return response()->json(['success' => true, 'html' => $html, 'tag' => $returnTag]);
         }
     }
 }

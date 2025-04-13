@@ -9,6 +9,7 @@ use App\Models\ProductAsVideoGame;
 use App\Models\VgSupport;
 use App\Models\VideoGame;
 use App\Services\DateService;
+use App\Services\VideoGameService;
 
 class VideoGameController extends Controller
 {
@@ -134,8 +135,8 @@ class VideoGameController extends Controller
             $videoGames = $buildRequest->orderBy($sortBy, $request->order_by)->paginate($request->f_nb_results);
             $videoGames->useAjax = true; //Permet l'utilisation du système de pagination en ajax
             
-            $returnHTML = view('partials.video_games.'.$request->list.'_details')->with(compact('videoGames'))->render();
-            return response()->json(['success' => true, 'nb_results' => $videoGames->links()? $videoGames->links()->paginator->total() : count($videoGames), 'html' => $returnHTML]);
+            $html = view('partials.video_games.'.$request->list.'_details')->with(compact('videoGames'))->render();
+            return response()->json(['success' => true, 'nb_results' => $videoGames->links()? $videoGames->links()->paginator->total() : count($videoGames), 'html' => $html]);
         }
         abort(404);
     }
@@ -146,16 +147,11 @@ class VideoGameController extends Controller
     }
 
     public function store(VideoGameRequest $request){
-        if($this->exists($request->label))
-            return back()->withErrors(['label' => __('That video game already exists.')])->withInput(); //Redirect back with a custom error and older Inputs
-
-        $videoGame = new VideoGame([
-            'developer_id' => $request->developer_id, 
-            'label' => $request->label, 
-            'date_released' => $request->date_released,
-            'nb_players' => $request->nb_players,
-        ]);
-        $videoGame->save();
+        try {
+            $videoGame = app(VideoGameService::class)->createFromRequest($request);
+        } catch (\Exception $e) {
+            return back()->withErrors(['label' => $e->getMessage()])->withInput();
+        }
         return redirect()->route('video_games.edit', $videoGame->id)->with('info', __('The video game has been created.'));
     }
 

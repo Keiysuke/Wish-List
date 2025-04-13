@@ -26,12 +26,7 @@ class VgDeveloperController extends Controller
         if($this->exists($request->label))
             return back()->withErrors(['label' => __('That video game developer already exists')])->withInput(); //Redirect back with a custom error and older Inputs
         
-        $vgDeveloper = new VgDeveloper([
-            'label' => $request->label,
-            'description' => $request->description,
-            'year_created' => $request->year_created,
-        ]);
-        $vgDeveloper->save();
+        VgDeveloper::create($request->all());
 
         return redirect()->route('vg_developers.index')->with('info', __('The video game developer has been saved.'));
     }

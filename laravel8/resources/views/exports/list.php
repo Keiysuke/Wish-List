@@ -1,4 +1,7 @@
 <?php
+
+use App\Services\ProductService;
+
 $file_name = "list.xls";
 header("Content-Disposition: attachment; filename=\"$file_name\"");
 header("Content-Type: application/vnd.ms-excel");
@@ -9,7 +12,7 @@ echo "Prix Unitaire\t";
 echo "Lien\t\n";
 
 foreach ($products as $product) {
-    $offer = $product->bestWebsiteOffer();
+    $offer = ProductService::bestWebsiteOffer($product);
     echo $product->label."\t";
     echo $product->nb."\t";
     echo $offer->price."\t";
