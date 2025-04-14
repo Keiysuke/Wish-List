@@ -6,20 +6,19 @@ use App\Http\Requests\ProductRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
-use App\Models\Website;
 use App\Models\Listing;
 use App\Models\ListingProduct;
 use App\Models\ProductTag;
-use App\Models\Tag;
 use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use App\Http\Controllers\ProductTemplateController;
+use App\Http\Requests\ProductFilterRequest;
 use App\Services\DateService;
+use App\Services\Filters\ProductFilterService;
 use App\Services\ProductService;
 use App\Services\ProductWebsiteService;
 use App\Services\PurchaseService;
 use App\Services\UploadService;
-use App\Services\VideoGameService;
 
 class ProductController extends Controller
 {
@@ -59,10 +58,6 @@ class ProductController extends Controller
         if ($request->query('fast_search') && count($products) === 1) {
             return redirect()->route('products.show', $products->first()->id);
         }
-        // dd($products);
-        // \DB::enableQueryLog();
-        // dd(\DB::getQueryLog());
-        // die();
         
         $paginator = (object)['cur_page' => $products->links()->paginator->currentPage()];
         $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
@@ -71,156 +66,15 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'sortBy', 'filters', 'search', 'paginator'));
     }
 
-    function filter(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'search_text' => 'bail|nullable|string',
-                'sort_by' => 'bail|required|string',
-                'order_by' => 'bail|required|string',
-                'list' => 'bail|required|string',
-                'show_archived' => 'bail|required|int',
-                'page' => 'bail|required|int',
-                'stock' => 'bail|required|string',
-                'purchased' => 'bail|required|string',
-                'f_nb_results' => 'bail|required|int',
-                'tag_in' => 'bail|int',
-            ]);
-            switch($request->sort_by){
-                case 'alpha': $sort_by = 'label';
-                    break;
-                case 'price': $sort_by = 'real_cost';
-                    break;
-                default: $sort_by = 'created_at';
-            }
-
-            $buildRequest = Product::query();
-            $filterPw = [];
-            $filterTag = ['in' => [], 'out' => []];
-            //Filtrés par sites
-            foreach($request->websites as $product_website){
-                $r = explode('_', $product_website);
-                $filterPw[] = intval($r[1]);
-            }
-            $tags = Tag::all();
-            //Filtrés par tags
-            foreach($tags as $tag){
-                if(in_array('tag_'.$tag->id, $request->tags)) $filterTag['in'][] = $tag->id;
-                else $filterTag['out'][] = $tag->id;
-            }
-            //Ajout des tags filtrés
-            if (!is_null($request->tag_in) && !in_array($request->tag_in, $filterTag['in'])) {
-                $filterTag['in'][] = $request->tag_in;
-            }
-            if (!is_null($request->tag_out) && !in_array($request->tag_out, $filterTag['out'])) {
-                $filterTag['out'][] = $request->tag_out;
-            }
-
-            if($request->url === 'products/user'){
-                $buildRequest->whereHas('users', function($query){
-                    $query->where('user_id', '=', auth()->user()->id);
-                });
-            }else{
-                $buildRequest->whereHas('users', function($query){
-                    $query->whereNotIn('product_id', function($query){
-                        $query->select('product_id')->from('product_users')->where('user_id', '=', auth()->user()->id);
-                    });
-                })->orWheredoesntHave('users');
-            }
-
-            //$products = DB::table('productWebsites')->rightJoin('products', 'productWebsites.product_id', '=', 'products.id')->get();
-            if($request->stock === 'product_missing'){
-                $buildRequest->wheredoesntHave('productWebsites')
-                    ->orWhereHas('productWebsites', function($query){
-                        $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
-                });
-            }elseif($request->stock === 'product_all' and $request->purchased === 'purchased_all' and !strcmp(count($filterPw), Website::count())){
-                $buildRequest->where(function($query) use ($filterPw){
-                    $query->wheredoesntHave('productWebsites')
-                    ->orWhereHas('productWebsites', function($query) use ($filterPw){
-                        $query->whereIn('website_id', $filterPw);
-                    });
-                });
-            }else{
-                $buildRequest->whereHas('productWebsites', function($query) use ($filterPw){
-                    $query->whereIn('website_id', $filterPw);
-                });
-            }
-            //Filter on tags
-            if($request->no_tag){
-                $buildRequest->wheredoesntHave('tags');
-                
-            }elseif(count($filterTag['in']) > 0){
-                $buildRequest->whereHas('tags', function($query) use ($filterTag){
-                    $query->whereIn('tag_id', $filterTag['in']);
-                });
-                if($request->exclusive_tags){
-                    $buildRequest->whereDoesntHave('tags', function($query) use ($filterTag){
-                        $query->whereIn('tag_id', $filterTag['out']);
-                    });
-                }
-            }
-            
-            //Filtrés par produits achetés ou non, vendus ou non
-            switch($request->purchased){
-                case 'purchased_yes': $buildRequest->whereHas('purchases', function($query){
-                        $query->doesntHave('selling');
-                    });
-                    break;
-                case 'purchased_no': $buildRequest->doesntHave('purchases');
-                    break;
-                case 'not_received': $buildRequest->whereHas('purchases', function($query){
-                        $query->whereNull('date_received');
-                    });
-                    break;
-                case 'selling': $buildRequest->whereHas('sellings', function($query){
-                        $query->whereNull('date_send');
-                    });
-                    break;
-                case 'resold': $buildRequest->whereHas('sellings', function($query){
-                        $query->whereNotNull('date_send');
-                    });
-                    break;
-                case 'discount': $buildRequest->whereHas('purchases', function($query){
-                        $query->where('discount', '>', '0');
-                    });
-                    break;
-                case 'free': $buildRequest->whereHas('purchases', function($query){
-                        $query->whereRaw('cost - discount <= 1');
-                    });
-                    break;
-                default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
-            }
-
-            //Filtrés par produits disponibles, a venir, expirés
-            switch($request->stock){
-                case 'product_available': 
-                    $buildRequest->whereHas('productWebsites', function($query){
-                        $query->where([['available_date', '<=', date("Y-m-d H:i:s")], ['expiration_date', '>', date("Y-m-d")]])
-                            ->orWhere([['available_date', '<=', date("Y-m-d H:i:s")], ['expiration_date', '=', null]])
-                            ->orWhere([['available_date', '=', null], ['expiration_date', '>', date("Y-m-d")]])
-                            ->orWhere([['available_date', '=', null], ['expiration_date', '=', null]]);
-                    })->where('label', 'like', '%'.$request->search_text.'%');
-                    break;
-                case 'product_to_come': 
-                    $buildRequest->whereHas('productWebsites', function($query){
-                        $query->where([['available_date', '>', date("Y-m-d H:i:s")], ['available_date', '<>', null]]);
-                    })->where('label', 'like', '%'.$request->search_text.'%');
-                    break;
-                case 'product_expired': 
-                    $buildRequest->whereHas('productWebsites', function($query){
-                        $query->where([['expiration_date', '<>', null], ['expiration_date', '<=', date("Y-m-d H:i:s")], ['available_date', '=', null]]);
-                    })->where('label', 'like', '%'.$request->search_text.'%');
-                    break;
-                default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
-            }
-            $buildRequest->where('archived', '=', $request->show_archived);
-            $products = $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
-            $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
-                        
-            $html = view('partials.products.'.$request->list.'_details')->with(['products' => $this->getProducts($products)])->render();
-            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $html]);
-        }
-        abort(404);
+    function filter(ProductFilterRequest $request){
+        abort_unless($request->ajax(), 404);
+        $products = (new ProductFilterService())->applyFilters($request);
+        $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
+                    
+        $html = view('partials.products.'.$request->list.'_details', [
+            'products' => $this->getProducts($products)
+        ])->render();
+        return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $html]);
     }
 
     function getProducts($products){
@@ -277,9 +131,9 @@ class ProductController extends Controller
             (new PurchaseService())->createFromRequest($request);
 
         if($request->add_vg) { //On lie un nouveau JV
-            (new VideoGameService())->createFromRequest($request->merge([
-                'label' => $product->getLabelAsVideoGame(),
-            ]));
+            // (new VideoGameService())->createFromRequest($request->merge([
+            //     'label' => ProductService::getLabelAsVideoGame($product),
+            // ]));
         }
         
         $info = __('The product & associated data have been created.');

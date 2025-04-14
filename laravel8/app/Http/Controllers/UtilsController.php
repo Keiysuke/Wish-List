@@ -2,23 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SimuBenefitRequest;
 use App\Models\VideoGame;
-use Illuminate\Http\Request;
 
 class UtilsController extends Controller
 {
-    public function simulateBenefit(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'payed' => 'bail|numeric',
-                'sold' => 'bail|numeric',
-                'commission' => 'bail|nullable|boolean',
-            ]);
-            $benefit = $request->sold - $request->payed;
-            if($request->commission) $benefit -= self::getCommission($request->sold);
-            return response()->json(['success' => true, 'req' => $request->all(), 'benefit' => round($benefit, 4)]);
-        }
-        abort(404);
+    public function simulateBenefit(SimuBenefitRequest $request){
+        abort_unless($request->ajax(), 404);
+        $benefit = $request->sold - $request->payed;
+        if($request->commission) $benefit -= self::getCommission($request->sold);
+        return response()->json(['success' => true, 'req' => $request->all(), 'benefit' => round($benefit, 4)]);
     }
 
     public static function getCommission($price){

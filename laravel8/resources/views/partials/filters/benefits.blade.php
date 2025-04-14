@@ -9,7 +9,7 @@
     </div>
     <div class="flex flex-grow justify-center gap-4">
         <div class="filter_block flex flex-col items-center gap-2">
-            <x-filters.products_bought kind="benefits"/>
+            <x-filters.products.bought kind="benefits"/>
         </div>
         <div class="filter_block flex flex-col items-center gap-2">
             <x-filters.period/>

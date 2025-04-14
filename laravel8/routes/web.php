@@ -204,3 +204,7 @@ Route::get('design-coding', function() {
 Route::get('coding-examples', function() {
     return view("pages.coding_examples")->render();
 })->middleware(['auth', 'verified'])->name('codingExamples');
+
+Route::get('coding-services', function() {
+    return view("pages.coding_services")->render();
+})->middleware(['auth', 'verified'])->name('codingServices');

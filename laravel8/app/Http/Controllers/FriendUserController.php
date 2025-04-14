@@ -109,33 +109,31 @@ class FriendUserController extends Controller
     }
 
     function filter(Request $request) {
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'name' => 'bail|nullable|string',
-                'is_friend' => 'bail|required|boolean',
-            ]);
-            $user = auth()->user();
-            
-            $buildRequest = User::query()
-                ->where('id', '!=', $user->id)
-                ->where('name', 'like', '%'.$request->name.'%');
+        abort_unless($request->ajax(), 404);
+        $this->validate($request, [
+            'name' => 'bail|nullable|string',
+            'is_friend' => 'bail|required|boolean',
+        ]);
+        $user = auth()->user();
+        
+        $buildRequest = User::query()
+            ->where('id', '!=', $user->id)
+            ->where('name', 'like', '%'.$request->name.'%');
 
-            if ($request->is_friend) {// He must be a friend of the user
-                self::whereIsFriend($buildRequest, $user);
+        if ($request->is_friend) {// He must be a friend of the user
+            self::whereIsFriend($buildRequest, $user);
 
-            } else {// He can be anyone
-                self::whereIsNotFriend($buildRequest, $user);
-            }
-            $friends = $buildRequest->orderBy('name', 'asc')->get();
-            
-            foreach ($friends as $friend) {
-                $friend->first_letter = $friend->name[0];
-            }
-
-            $html = view('partials.friends.list', compact('friends'))->render();
-            return response()->json(['success' => true, 'html' => $html, 'nb_results' => count($friends)]);
+        } else {// He can be anyone
+            self::whereIsNotFriend($buildRequest, $user);
         }
-        abort(404);
+        $friends = $buildRequest->orderBy('name', 'asc')->get();
+        
+        foreach ($friends as $friend) {
+            $friend->first_letter = $friend->name[0];
+        }
+
+        $html = view('partials.friends.list', compact('friends'))->render();
+        return response()->json(['success' => true, 'html' => $html, 'nb_results' => count($friends)]);
     }
 
     static function whereIsFriend(&$buildRequest, $user) {

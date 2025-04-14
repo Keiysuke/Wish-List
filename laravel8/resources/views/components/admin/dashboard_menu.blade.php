@@ -46,6 +46,7 @@
             <a href="{{ route('designSystem') }}" class="sub {{ $sub === 'system' ? 'active' : '' }}">{{ __('Design System') }}</a>
             <a href="{{ route('designCoding') }}" class="sub {{ $sub === 'coding' ? 'active' : '' }}">{{ __('Design Coding') }}</a>
             <a href="{{ route('codingExamples') }}" class="sub {{ $sub === 'coding_examples' ? 'active' : '' }}">{{ __('Coding Examples') }}</a>
+            <a href="{{ route('codingServices') }}" class="sub {{ $sub === 'coding_services' ? 'active' : '' }}">{{ __('Services & Models') }}</a>
         @endif
     </div>
     @if($menu === 'stats')

@@ -9,10 +9,10 @@
     </div>
     <div class="flex flex-grow justify-center gap-4">
         <div class="filter_block flex flex-col items-center gap-2">
-            <x-filters.products_bought/>
+            <x-filters.products.bought/>
         </div>
         <div class="filter_block flex flex-col items-center gap-2">
-            <x-filters.stock_products :filters="$filters"/>
+            <x-filters.products.stock :filters="$filters"/>
         </div>
         <div class="filter_block flex flex-col items-center gap-2">
             <x-filters.nb_results />

@@ -13,18 +13,16 @@ use App\Services\ReactionService;
 class ListingMessagesController extends Controller
 {
     public function getActionsMenu(Request $request){
-        if ($request->ajax()) {
-            $this->validate($request, [
-                'msg_id' => 'bail|nullable|int',
-                'yours' => 'bail|required|boolean',
-                'pin' => 'bail|required|boolean',
-                'answer_to' => 'bail|required|string',
-            ]);
-            
-            $html = view('components.Tchat.ActionMenu')->with($request->toArray())->render();
-            return response()->json(['success' => true, 'html' => $html]);
-        }
-        abort(404);
+        abort_unless($request->ajax(), 404);
+        $this->validate($request, [
+            'msg_id' => 'bail|nullable|int',
+            'yours' => 'bail|required|boolean',
+            'pin' => 'bail|required|boolean',
+            'answer_to' => 'bail|required|string',
+        ]);
+        
+        $html = view('components.Tchat.ActionMenu')->with($request->toArray())->render();
+        return response()->json(['success' => true, 'html' => $html]);
     }
 
     public function show(int $listId, string $status){
@@ -44,7 +42,6 @@ class ListingMessagesController extends Controller
             $message = new ListingMessage([
                 'listing_id' => $request->list_id,
                 'user_id' => auth()->user()->id,
-                'message' => $request->message,
                 'answer_to_id' => ($request->answer_to_id === 0 ? null : $request->answer_to_id),
             ]);
             //On récupère le dernier message de la liste pour vérifier s'il s'agit du même user

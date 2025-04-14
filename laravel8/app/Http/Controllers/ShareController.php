@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FriendUser;
 use App\Models\Listing;
 use App\Models\ListingUser;
 use App\Models\Notyf;

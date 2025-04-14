@@ -6,6 +6,10 @@
             @php($titleColor = 'text-orange-500')
             @php($iconColor = 'text-yellow-400')
             @break
+        @case('SQL')
+            @php($titleColor = 'text-green-600')
+            @php($iconColor = 'text-green-400')
+            @break
     @endswitch
 @endif
 <div class="flex justify-center">
