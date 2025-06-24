@@ -136,6 +136,18 @@
                 <div class="h-full">
                     <div class="flex justify-between border-b-2 mb-4">
                         <div class="flex align-start gap-1">
+                            <x-svg.big.idea class="w-7"/>
+                            <h2>Projets participatifs associés :</h2>
+                        </div>
+                        <a title="Ajouter un projet" href="{{ route('products.crowdfundings.create', $product->id) }}" class="title-icon inline-flex">
+                            <x-svg.plus class="icon-xs"/>
+                        </a>
+                    </div>
+                    @include('partials.products.list.crowdfundings', ['product' => $product])
+                </div>
+                <div class="h-full">
+                    <div class="flex justify-between border-b-2 mb-4">
+                        <div class="flex align-start gap-1">
                             <x-svg.big.truck class="w-7"/>
                             <h2>Mes achats & ventes associées :</h2>
                         </div>

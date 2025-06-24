@@ -24,11 +24,9 @@
             <h4 class="font-medium" id="nb-results"></h4>
             @include('partials.products.search_bar', ['sortBy' => $sortBy])
         </div>
-        
         <hr class="mt-2"/>
         @include('partials.filters.products')
     </form>
-    
     <div id="content-results">
     </div>
     <input type="hidden" id="page" name="cur_page" value="{{ $paginator->cur_page }}">

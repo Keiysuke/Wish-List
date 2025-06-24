@@ -18,18 +18,22 @@
                 </div>
 
                 <div class="flex gap-4 mb-4">
-                    <div class="w-9/12">
+                    <div class="w-8/12">
                         <x-Form.Label for="label" block required>Nom du site</x-Form.Label>
                         <x-Form.Input name="label" placeholder="Nom du site" value="{{ old('label', $website->label) }}"/>
                     </div>
-                    <div class="flex w-3/12 justify-around">
+                    <div class="flex w-4/12 justify-around">
                         <div class="pt-7">
                             <x-Form.Checkbox name="can_sell">{{ old('can_sell', $website->can_sell)? 'checked' : '' }}</x-Form.Checkbox>
-                            <x-Form.Label class="ml-1" for="can-sell">de vente ?</x-Form.Label>
+                            <x-Form.Label class="ml-1" for="can-sell">de vente</x-Form.Label>
                         </div>
                         <div class="pt-7">
                             <x-Form.Checkbox class="mr-1" name="is_vg">{{ old('is_vg', $website->is_vg)? 'checked' : '' }}</x-Form.Checkbox>
-                            <x-Form.Label class="ml-1" for="is-vg">de JV ?</x-Form.Label>
+                            <x-Form.Label class="ml-1" for="is-vg">de JV</x-Form.Label>
+                        </div>
+                        <div class="pt-7">
+                            <x-Form.Checkbox class="mr-1" name="is_crowdfunding">{{ old('is_vg', $website->is_crowdfunding)? 'checked' : '' }}</x-Form.Checkbox>
+                            <x-Form.Label class="ml-1" for="is-crowdfunding">Projets Associatifs</x-Form.Label>
                         </div>
                     </div>
                 </div>

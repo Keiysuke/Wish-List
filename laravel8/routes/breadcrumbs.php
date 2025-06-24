@@ -117,3 +117,20 @@ Breadcrumbs::for('myFriends', function ($trail) {
     $trail->parent('home');
     $trail->push('Mes amis', route('myFriends'));
 });
+
+// Projets participatifs
+Breadcrumbs::for('product_crowdfunding.create', function ($trail, $product) {
+    $trail->parent('show', 'product', $product);
+    $trail->push('Lier un projet participatif', route('myProducts'));
+});
+
+Breadcrumbs::for('crowdfundings.create', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Créer un projet participatif', route('crowdfundings.create'));
+});
+
+Breadcrumbs::for('crowdfundings.edit', function ($trail, $crowdfunding) {
+    $trail->parent('show', 'product', $crowdfunding->product);
+    $trail->push('Éditer le projet participatif', route('crowdfundings.edit', $crowdfunding));
+});
+

@@ -25,6 +25,7 @@ use App\Http\Controllers\GroupBuyController;
 use App\Http\Controllers\SellingController;
 use App\Http\Controllers\ProductStateController;
 use App\Http\Controllers\SellStateController;
+use App\Http\Controllers\CrowdfundingStateController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendUserController;
@@ -41,6 +42,8 @@ use App\Http\Controllers\VgSupportController;
 use App\Http\Controllers\VgDeveloperController;
 use App\Http\Controllers\VideoGameController;
 use App\Models\BookPublisher;
+use App\Http\Controllers\CrowdfundingController;
+use App\Models\CrowdfundingState;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -157,6 +160,11 @@ Route::prefix('admin')->group(function () {
             'param' => ['sells' => 'sell_state'],
             'name' => 'states.sells'
         ],
+        'states/crowdfundings' => [
+            'controller' => CrowdfundingStateController::class,
+            'param' => ['crowdfundings' => 'crowdfunding_state'],
+            'name' => 'states.crowdfundings'
+        ],
         'video_games/supports' => [
             'controller' => VgSupportController::class,
             'param' => ['supports' => 'vg_support'],
@@ -208,3 +216,6 @@ Route::get('coding-examples', function() {
 Route::get('coding-services', function() {
     return view("pages.coding_services")->render();
 })->middleware(['auth', 'verified'])->name('codingServices');
+
+Route::resource('crowdfundings', CrowdfundingController::class)->except(['index', 'show', 'destroy']);
+Route::get('products/{product}/crowdfundings/create', [CrowdfundingController::class, 'createForProduct'])->name('products.crowdfundings.create');

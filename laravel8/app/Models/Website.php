@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductWebsite;
 use App\Models\Purchase;
 use App\Models\Selling;
+use App\Models\Crowdfunding;
 
 class Website extends Model
 {
     use HasFactory;
-    protected $fillable = ['label', 'url', 'icon', 'can_sell', 'is_vg'];
+    protected $fillable = ['label', 'url', 'icon', 'can_sell', 'is_vg', 'is_crowdfunding'];
 
     public function product_websites(){
         return $this->hasMany(ProductWebsite::class);
+    }
+
+    public function crowdfundings(){
+        return $this->hasMany(Crowdfunding::class);
     }
 
     public function purchases(){

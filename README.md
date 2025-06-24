@@ -6,13 +6,15 @@ This website will help you recover all the purchases/and sells you made with tim
 As it's not automatically adding products/purchases from other websites, you'll have to add the products and other datas by yourself.
 
 New functionalities :
+- Add possibility to create "Crowdfundings" (product/website) and access the project's webpage from it
+- New section "Crowdfundings" on product's detailed page
+
+Here are the current functionnalities (see upside for last ones) :
 - Add 2 searches in sidebar for books & on products' page which are tagged as "Livre"
 - Reminder pages for Design-system / PSR / Example codings
 - New notitications (missing photos on product, video game without associated product)
 - Photo is no more necessary to create a product
 - Add search icon on products pages to find some pictures on Google
-
-Here are the current functionnalities (see upside for last ones) :
 - Register/Log in website
 - Add Products - Creating new product with minimum datas (name, price, description)
 - Link websites to a product - You can buy the product on a website ? Link it !

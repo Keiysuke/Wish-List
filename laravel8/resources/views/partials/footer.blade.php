@@ -10,6 +10,12 @@
             </ul>
         </div>
         <div>
+            <span>{{ __('Crowdfunding') }}</span>
+            <ul>
+                <li><a href="{{ route('crowdfundings.create') }}">{{ __('Add a crowdfunding') }}</a></li>
+            </ul>
+        </div>
+        <div>
             <span>{{ __('Video Games') }}</span>
             <ul>
                 <li><a href="{{ route('video_games.index') }}">{{ __('List') }}</a></li>

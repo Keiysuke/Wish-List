@@ -204,6 +204,14 @@
                 <x-Form.Checkbox onChange="toggle_section('purchase');" name="add_purchase">{{ strcmp(old('add_purchase'), 'on') === 0 ? 'checked' : '' }}</x-Form.Checkbox>
                 <x-Form.Label class="ml-1" for="add-purchase">Lier un achat</x-Form.Label>
             </div>
+            <x-Utils.VLine />
+            <div>
+                <x-Form.Checkbox onChange="toggle_section('crowdfunding');" name="add_crowdfunding">{{ strcmp(old('add_crowdfunding'), 'on') === 0 ? 'checked' : '' }}</x-Form.Checkbox>
+                <x-Form.Label class="ml-1" for="add-crowdfunding">Lier un projet participatif</x-Form.Label>
+            </div>
+        </div>
+        <div id="section-crowdfunding" class="{{ strcmp(old('add_crowdfunding'), 'on') === 0 ? 'block' : 'hidden' }}">
+            @include('partials.products.form.crowdfunding')
         </div>
         <div class="flex items-center justify-between">
             <x-Form.Btn type="submit">Ajouter le produit</x-Form.Btn>

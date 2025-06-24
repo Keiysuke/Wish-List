@@ -126,5 +126,11 @@ class ViewServiceProvider extends ServiceProvider
             }
             $view->with(compact('icons', 'emojis', 'notifications', 'notyfs', 'colors'));
         });
+
+        // Crowdfundings
+        View::composer(['crowdfundings.create', 'crowdfundings.edit', 'products.create', 'products.edit', 'partials.products.form.crowdfunding'], function ($view) {
+            $view->with('websites', \App\Models\Website::orderBy('label')->where('is_crowdfunding', '=', 1)->get());
+            $view->with('crowdfundingStates', \App\Models\CrowdfundingState::orderBy('label')->get());
+        });
     }
 }

@@ -43,6 +43,7 @@
             <x-Sitemap.Link label="Add a product's state" url="{{ route('states.products.create') }}" ml="8"/>
             <x-Sitemap.Link label="Selling's states list" url="{{ route('states.sells.index') }}" ml="4"/>
             <x-Sitemap.Link label="Add a selling's state" url="{{ route('states.sells.create') }}" ml="8"/>
+            <x-Sitemap.Link label="Add a crowdfunding's state" url="{{ route('states.crowdfundings.create') }}" ml="8"/>
         </div>
     </div>
     <h1 class="text-red-400">{{ __('Video Games Section') }}</h1>

@@ -29,6 +29,9 @@
                                 @if($website->is_vg)
                                     <x-svg.big.vg_controller class="icon-xs text-red-500"/>
                                 @endif
+                                @if($website->is_crowdfunding)
+                                    <x-svg.big.idea class="icon-xs text-yellow-500"/>
+                                @endif
                             </span>
                             <x-Utils.VLine />
                             <span>{{ $website->url }}</span>

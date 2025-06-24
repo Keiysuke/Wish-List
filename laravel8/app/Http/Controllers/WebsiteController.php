@@ -31,6 +31,7 @@ class WebsiteController extends Controller
             'url' => $request->url,
             'can_sell' => $request->has('can_sell')? 1 : 0,
             'is_vg' => $request->has('is_vg')? 1 : 0,
+            'is_crowdfunding' => $request->has('is_crowdfunding')? 1 : 0,
         ]);
         $website->save();
         return redirect()->route('websites.index')->with('info', __('The website has been created.'));
@@ -48,6 +49,7 @@ class WebsiteController extends Controller
             ->merge([
                 'can_sell' => ($request->has('can_sell')? 1 : 0),
                 'is_vg' => ($request->has('is_vg')? 1 : 0),
+                'is_crowdfunding' => ($request->has('is_crowdfunding')? 1 : 0),
             ])
             ->all()
         );

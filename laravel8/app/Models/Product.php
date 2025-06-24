@@ -12,6 +12,7 @@ use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\ProductPhoto;
 use App\Models\Listing;
+use App\Models\Crowdfunding;
 use App\Models\Tag;
 
 class Product extends Model
@@ -23,6 +24,10 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'product_users')->withPivot('archive')->withTimestamps();
     }
     
+    public function crowdfundings(){
+        return $this->hasMany(Crowdfunding::class);
+    }
+
     public function listings(){
         return $this->belongsToMany(Listing::class, 'listing_products')->withTimestamps();
     }

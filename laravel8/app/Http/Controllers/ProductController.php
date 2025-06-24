@@ -192,7 +192,8 @@ class ProductController extends Controller
 
     public function edit(Product $product){
         $product->setFirstPhoto();
-        return view('products.edit', compact('product'));
+        $websites = \App\Models\Website::all();
+        return view('products.edit', compact('product', 'websites'));
     }
     
     public function update(ProductRequest $request, Product $product){

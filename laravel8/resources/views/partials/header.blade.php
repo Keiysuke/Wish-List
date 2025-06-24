@@ -60,6 +60,7 @@
     <div id="submenu-my-datas" class="submenu" onMouseOver="submenu(true, 'my-datas');" onMouseOut="submenu(false, 'my-datas');">
         <a href="{{ route('myProducts') }}">{{ __('My products') }}</a>
         <a href="{{ route('lists.index') }}">{{ __("My lists") }}</a>
+        <a href="{{ route('myProducts') }}">{{ __('My Crowdfundings') }}</a>
         <a href="{{ route('userHistoric', 'purchases') }}">{{ __('My purchases') }}</a>
         <a href="{{ route('userHistoric', 'sellings') }}">{{ __('My sells') }}</a>
         <a href="{{ route('userBenefits') }}">{{ __('My benefits') }}</a>
@@ -67,6 +68,7 @@
     </div>
     <div id="submenu-create" class="submenu" onMouseOver="submenu(true, 'create');" onMouseOut="submenu(false, 'create');">
         <a href="{{ route('products.create') }}">{{ __('Product') }}</a>
+        <a href="{{ route('crowdfundings.create') }}">{{ __('Crowdfunding') }}</a>
         <a href="{{ route('group_buys.create') }}">{{ __('Group purchase') }}</a>
         <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
         <hr class="py-1 border-red-600"/>
