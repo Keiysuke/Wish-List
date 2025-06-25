@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Crowdfunding;
+use App\Models\CrowdfundingState;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\VideoGame;
@@ -98,6 +100,49 @@ class NotificationsController extends Controller
             $user = $videoGame->creator();
             $exist = $user->notifications()->where('type', '=', 'App\Notifications\MissingProductOnVideoGame')->whereJsonContains('data->video_game_id', $videoGame->id)->first();
             if(!$exist) $user->notify(new MissingProductOnVideoGame($videoGame, $user));
+        }
+    }
+
+    /** 
+     * Crowdfunding Notifications
+    */
+    
+    public function checkCrowdfundingNotifications(){
+        $buildRequest = Crowdfunding::query();
+        $crowdfundings = $buildRequest->orderBy('project_name')->get();
+
+        $today = Carbon::now();
+        foreach($crowdfundings as $cf){
+            $product = $cf->product;
+            if(!$product) continue;
+            $user = $product->creator();
+            if(!$user || $cf->done()) continue;
+
+            // 1. Début du crowdfunding (si la date est passée et pas encore notifié)
+            if($cf->started()){
+                $exist = $user->notifications()->where('type', '=', 'App\\Notifications\\CrowdfundingStart')->whereJsonContains('data->crowdfunding_id', $cf->id)->first();
+                if(!$exist) $user->notify(new \App\Notifications\CrowdfundingStart($cf, $user));
+                
+                // 2. 1 semaine avant la fin de la campagne (si on est dans la dernière semaine et pas encore notifié)
+                $end = Carbon::parse($cf->end_date);
+                $oneWeekBefore = $end->copy()->subWeek();
+                if($today->greaterThanOrEqualTo($oneWeekBefore) && $today->lessThanOrEqualTo($end)){
+                    $exist = $user->notifications()->where('type', '=', 'App\\Notifications\\CrowdfundingEndSoon')->whereJsonContains('data->crowdfunding_id', $cf->id)->first();
+                    if(!$exist) $user->notify(new \App\Notifications\CrowdfundingEndSoon($cf, $user));
+                }
+            }
+
+            // 3. En attente de la date d'envoi des produits
+            if($cf->waitForSend()){
+                $exist = $user->notifications()->where('type', '=', 'App\\Notifications\\CrowdfundingWaitShipping')->whereJsonContains('data->crowdfunding_id', $cf->id)->first();
+                if(!$exist) $user->notify(new \App\Notifications\CrowdfundingWaitShipping($cf, $user));
+            }
+
+            // 3. Date d'expédition passée (si la date est passée et pas encore notifié)
+            if($cf->sending()){
+                $exist = $user->notifications()->where('type', '=', 'App\\Notifications\\CrowdfundingShipped')->whereJsonContains('data->crowdfunding_id', $cf->id)->first();
+                if(!$exist) $user->notify(new \App\Notifications\CrowdfundingShipped($cf, $user));
+            }
         }
     }
 }

@@ -27,8 +27,16 @@ class Crowdfunding extends Model
         return $this->state_id == $state_id;
     }
 
+    public function started(){
+        return $this->inState(CrowdfundingState::STARTED) && $this->start_date <= now() && $this->end_date >= now();
+    }
+
     public function banked(){
         return $this->inState(CrowdfundingState::BANKED) && $this->end_date <= now();
+    }
+
+    public function waitForSend(){
+        return $this->inState(CrowdfundingState::SENDING) || is_null($this->shipping_date);
     }
 
     public function sending(){

@@ -50,6 +50,26 @@ class NotificationService
             'kind' => 'error',
             'title' => 'Produit de liste retiré',
         ],
+        'App\\Notifications\\CrowdfundingStart' => [
+            'url' => 'crowdfundings.soon',
+            'title' => 'Campagne démarré',
+            'kind' => 'info',
+        ],
+        'App\\Notifications\\CrowdfundingEndSoon' => [
+            'url' => 'crowdfundings.soon',
+            'title' => 'Fin de campagne imminente',
+            'kind' => 'warning',
+        ],
+        'App\\Notifications\\CrowdfundingWaitShipping' => [
+            'url' => 'crowdfundings.wait_shipping',
+            'title' => 'En attente d\'envoi du produit',
+            'kind' => 'warning',
+        ],
+        'App\\Notifications\\CrowdfundingShipped' => [
+            'url' => 'crowdfundings.shipped',
+            'title' => 'Produits expédiés',
+            'kind' => 'info',
+        ],
     ];
 
     const KINDS = [

@@ -9,6 +9,7 @@ class CrowdfundingState extends Model
 {
     use HasFactory;
     protected $fillable = ['label'];
+    const STARTED = 2;
     const BANKED = 3;
     const SENDING = 4;
     const DONE = 5;

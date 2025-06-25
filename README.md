@@ -8,6 +8,8 @@ As it's not automatically adding products/purchases from other websites, you'll 
 New functionalities :
 - Add possibility to create "Crowdfundings" (product/website) and access the project's webpage from it
 - New section "Crowdfundings" on product's detailed page
+- Filter on crowdfundings websites
+- Notifications to follow crowdfunding's advancement
 
 Here are the current functionnalities (see upside for last ones) :
 - Add 2 searches in sidebar for books & on products' page which are tagged as "Livre"

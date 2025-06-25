@@ -36,6 +36,7 @@ class ProductController extends Controller
         //Si la mise à jour des notifications n'a pas été faite
         app('App\Http\Controllers\NotificationsController')->checkProductNotifications();
         app('App\Http\Controllers\NotificationsController')->checkVideoGameNotifications();
+        app('App\\Http\\Controllers\\NotificationsController')->checkCrowdfundingNotifications();
 
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid', 'show_archived' => 0];
         $filters = (object)[

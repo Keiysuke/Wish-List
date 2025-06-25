@@ -43,11 +43,11 @@
     </div>
     <div class="flex gap-4 mb-4">
         <div class="w-1/3">
-            <x-Form.Label for="start_date" block>Date de début</x-Form.Label>
+            <x-Form.Label for="start_date" block required>Date de début</x-Form.Label>
             <x-Form.Date name="start_date" value="{{ old('start_date') }}"/>
         </div>
         <div class="w-1/3">
-            <x-Form.Label for="end_date" block>Date de fin</x-Form.Label>
+            <x-Form.Label for="end_date" block required>Date de fin</x-Form.Label>
             <x-Form.Date name="end_date" value="{{ old('end_date') }}"/>
         </div>
         <div class="w-1/3">

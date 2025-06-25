@@ -53,6 +53,7 @@
     </div>
     <x-Utils.TitleIcon.Product id="1"/>
     <x-Utils.TitleIcon.Book id="1"/>
+    <x-Utils.TitleIcon.Cfg :cfg="App\Models\Crowdfunding::first()"/>
     <x-Utils.TitleIcon.Vg id="1"/>
     <x-Utils.TitleIcon.Yt search="Soundtrack"/>
     <x-Utils.TitleIcon.Psthc search="Lies of P" support="ps4"/>
