@@ -12,6 +12,7 @@ use App\Models\Website;
 use App\Models\Selling;
 use App\Models\ProductState;
 use App\Models\GroupBuyPurchase;
+use App\Models\Crowdfunding;
 
 class Purchase extends Model
 {
@@ -28,6 +29,12 @@ class Purchase extends Model
     
     public function website(){
         return $this->belongsTo(Website::class);
+    }
+
+    public function crowdfunding(){
+        return Crowdfunding::where('product_id', $this->product_id)
+            ->where('website_id', $this->website_id)
+            ->first();
     }
     
     public function productState(){

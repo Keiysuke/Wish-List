@@ -67,7 +67,8 @@
       tags: tags,
       purchased: document.querySelector('input[name="purchased"]:checked').value,
       stock: document.querySelector('input[name="stock"]:checked').value,
-      f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value
+      f_nb_results: document.querySelector('input[name="f_nb_results"]:checked').value,
+      crowdfunding: document.getElementById('check-crowdfunding').checked ? 1 : 0
     }).then(function (response) {
       if (response.ok) {
         document.getElementById('search-text').classList.remove('border');
@@ -98,7 +99,16 @@
   });
   document.getElementById('check-all-websites').addEventListener('change', function (event) {
     Array.from(document.getElementsByClassName('filter-website')).forEach(function (el) {
-      el.checked = !event.target.checked;
+      el.checked = event.target.checked;
+    });
+  });
+  document.getElementById('check-crowdfunding').addEventListener('change', function (event) {
+    Array.from(document.getElementsByClassName('filter-website')).forEach(function (el) {
+      if (event.target.checked) {
+        el.checked = el.dataset.cfg == 1;
+      } else {
+        el.checked = el.dataset.cfg == 0;
+      }
     });
   });
   document.getElementById('check-all-tags').addEventListener('change', function (event) {

@@ -39,11 +39,10 @@
                 <x-Form.Input name="project_name" value="{{ old('project_name', $crowdfunding->project_name) }}" placeholder="Nom du projet participatif"/>
             </div>
             <div class="w-1/3">
-                <x-Form.Label for="status" block>Avancée du projet</x-Form.Label>
-                <select name="status" class="form-input w-full">
-                    <option value="">Sélectionner un statut</option>
-                    @foreach($crowdfundingStates as $status)
-                        <option value="{{ $status->id }}" @if(old('status', $crowdfunding->status) == $status->id) selected @endif>{{ $status->label }}</option>
+                <x-Form.Label for="state_id" block>Avancée du projet</x-Form.Label>
+                <select name="state_id" class="form-input w-full">
+                    @foreach($crowdfundingStates as $state)
+                        <option value="{{ $state->id }}" @if(old('state_id', $crowdfunding->state_id) == $state->id) selected @endif>{{ $state->label }}</option>
                     @endforeach
                 </select>
             </div>

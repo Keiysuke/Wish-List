@@ -390,6 +390,21 @@ a.link:hover {
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
+.idea:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(234, 179, 8, var(--tw-bg-opacity));
+}
+
+.idea {
+  --tw-text-opacity: 1;
+  color: rgba(234, 179, 8, var(--tw-text-opacity));
+}
+
+.idea:hover {
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
 .music:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(168, 85, 247, var(--tw-bg-opacity));

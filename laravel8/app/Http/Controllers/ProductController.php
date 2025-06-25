@@ -13,6 +13,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use App\Http\Controllers\ProductTemplateController;
 use App\Http\Requests\ProductFilterRequest;
+use App\Services\CrowdfundingService;
 use App\Services\DateService;
 use App\Services\Filters\ProductFilterService;
 use App\Services\ProductService;
@@ -37,7 +38,13 @@ class ProductController extends Controller
         app('App\Http\Controllers\NotificationsController')->checkVideoGameNotifications();
 
         $sortBy = (object)['kind' => 'date', 'order' => 'desc', 'list' => 'grid', 'show_archived' => 0];
-        $filters = (object)['purchased' => 'purchased_all', 'stock' => request('stock', 'product_all'), 'tag_in' => request('tag_in', 0), 'f_nb_results' => $this->nb_page_results];
+        $filters = (object)[
+            'purchased' => 'purchased_all', 
+            'stock' => request('stock', 'product_all'), 
+            'tag_in' => request('tag_in', 0), 
+            'crowdfunding' => request('crowdfunding', 0), 
+            'f_nb_results' => $this->nb_page_results
+        ];
         $search = $request->search;
 
         $buildRequest = Product::query();
@@ -129,6 +136,10 @@ class ProductController extends Controller
 
         if($request->add_purchase) //On lie un nouvel achat
             (new PurchaseService())->createFromRequest($request);
+
+        if($request->add_crowdfunding) { //On lie un nouvel achat
+            (new CrowdfundingService())->createFromRequest($request);
+        }
 
         if($request->add_vg) { //On lie un nouveau JV
             // (new VideoGameService())->createFromRequest($request->merge([

@@ -1,6 +1,7 @@
 <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6" id="grid-products">
     @if(count($products) > 0)
         @foreach($products as $product)
+        @php($crowdfunding = $product->firstCrowdfunding())
         <div class="wrap-grid-product">
             <a href="{{ route('products.show', $product->id) }}">
                 <div class="grid-product flex flex-col justify-between shadow border rounded h-full">
@@ -17,17 +18,21 @@
                             @if($product->archived)
                                 <x-svg.archive class="icon-sm absolute left-1 bottom-1 text-yellow-700"/>
                             @endif
-                            <p class="text-xs bg-gray-800 text-white p-2">
-                                @if($product->nb_offers > 0 && !$product->can_buy)
-                                    <x-svg.big.clock class="icon-xs"/>
-                                @endif
-                                {{ $product->date_show }}
-                            </p>
+                            <div class="flex gap-2 text-xs">
+                                {!! $product->renderStateIcon() !!}
+                                <p class="bg-gray-800 text-white p-2">
+                                    {{ $product->date_show }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </a>
-            @if($product->video_game)
+            @if($crowdfunding)
+                <div class="top cfg-icons">
+                    <x-Utils.TitleIcon.Cfg :cfg="$product->firstCrowdfunding()"/>
+                </div>
+            @elseif($product->video_game)
                 @php($vg = $product->video_game->video_game)
                 @php($support = $product->video_game->vg_support)
                 <div class="top vg-icons">

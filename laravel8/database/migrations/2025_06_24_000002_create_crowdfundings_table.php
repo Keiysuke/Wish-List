@@ -18,11 +18,12 @@ class CreateCrowdfundingsTable extends Migration {
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->date('shipping_date')->nullable();
-            $table->string('status')->nullable(); // ex: ongoing, funded, failed
+            $table->string('state_id')->nullable();
             $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('website_id')->references('id')->on('websites')->onDelete('cascade');
+            $table->foreign('state_id')->references('id')->on('crowdfunding_states')->onDelete('cascade');
         });
     }
 

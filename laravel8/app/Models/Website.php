@@ -47,4 +47,8 @@ class Website extends Model
         }
         return null;
     }
+
+    public static function getCrowdfundingWebsites(){
+        return self::where('is_crowdfunding', true)->pluck('id')->toArray();
+    }
 }

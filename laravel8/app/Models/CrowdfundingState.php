@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class CrowdfundingState extends Model
 {
     use HasFactory;
-    protected $fillable = ['label', 'color'];
+    protected $fillable = ['label'];
+    const BANKED = 3;
+    const SENDING = 4;
+    const DONE = 5;
 
     public function crowdfundings(){
         return $this->hasMany(Crowdfunding::class);

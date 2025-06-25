@@ -28,6 +28,10 @@ class Product extends Model
         return $this->hasMany(Crowdfunding::class);
     }
 
+    public function firstCrowdfunding(){
+        return $this->crowdfundings()->first();
+    }
+
     public function listings(){
         return $this->belongsToMany(Listing::class, 'listing_products')->withTimestamps();
     }
@@ -157,5 +161,39 @@ class Product extends Model
 
     public function noTemplate() {
         return ($this->get_template())->type === 'none';
+    }
+
+    /**
+     * Retourne le nom de l'icône correspondant à l'état du produit.
+     */
+    public function renderStateIcon()
+    {
+        $icon = null;
+        // Offre à venir
+        if ($this->nb_offers > 0 && !$this->can_buy) {
+            $icon = 'clock';
+            $title = 'Offre à venir';
+        }
+
+        // Crowdfunding en cours d'envoi
+        $crowdfunding = $this->firstCrowdfunding();
+        if ($crowdfunding) {
+            if ($crowdfunding->done()) {
+                $icon = 'check';
+            } elseif ($crowdfunding->sending()) {
+                $icon = 'send';
+            } elseif ($crowdfunding->banked()) {
+                $icon = 'banked';
+            }
+            $title = $crowdfunding->state->label;
+        }
+
+        if ($icon) {
+            $class = 'icon-xs';
+            return view("components.svg.big.$icon", [
+                'attributes' => new \Illuminate\View\ComponentAttributeBag(compact('title', 'class')),
+            ])->render();
+        }
+        return null;
     }
 }

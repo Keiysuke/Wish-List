@@ -23,6 +23,7 @@ class ProductFilterRequest extends FormRequest
             'purchased' => 'bail|required|string',
             'f_nb_results' => 'bail|required|int',
             'tag_in' => 'bail|int',
+            'crowdfunding' => 'bail|int',
         ];
     }
 }

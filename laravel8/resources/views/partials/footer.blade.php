@@ -12,12 +12,14 @@
         <div>
             <span>{{ __('Crowdfunding') }}</span>
             <ul>
-                <li><a href="{{ route('crowdfundings.create') }}">{{ __('Add a crowdfunding') }}</a></li>
+                <li><a href="{{ route('crowdfundings.create') }}">{{ __('Add new') }}</a></li>
+                <li><a href="{{ route('myProducts', ['crowdfunding' => 1]) }}">{{ __('Liste') }}</a></li>
             </ul>
         </div>
         <div>
             <span>{{ __('Video Games') }}</span>
             <ul>
+                <li><a href="{{ route('video_games.create') }}">{{ __('Add new') }}</a></li>
                 <li><a href="{{ route('video_games.index') }}">{{ __('List') }}</a></li>
                 <li><a href="{{ route('vg_supports.index') }}">{{ __('Supports list') }}</a></li>
                 <li><a href="{{ route('vg_developers.index') }}">{{ __('Developers list') }}</a></li>

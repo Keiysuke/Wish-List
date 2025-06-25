@@ -21,7 +21,7 @@ class ProductFilterService
         }
 
         $buildRequest = Product::query();
-        $this->applyTagsFilter($buildRequest, $request);
+        $this->applyTagsFilter($buildRequest, $request); //Contient applyWebsiteFilter
         //Filtrés par produits achetés ou non, vendus ou non
         $this->applyBoughtFilter($buildRequest, $request);
         //Filtrés par produits disponibles, a venir, expirés
@@ -81,9 +81,13 @@ class ProductFilterService
     function applyWebsiteFilter(Builder &$buildRequest, ProductFilterRequest $request){
         $filterPw = [];
         //Filtrés par sites
-        foreach($request->websites as $product_website){
-            $r = explode('_', $product_website);
-            $filterPw[] = intval($r[1]);
+        if($request->crowdfunding){
+            $filterPw = Website::getCrowdfundingWebsites();
+        }else{
+            foreach($request->websites as $product_website){
+                $r = explode('_', $product_website);
+                $filterPw[] = intval($r[1]);
+            }
         }
 
         if($request->stock === 'product_missing'){
