@@ -22,12 +22,15 @@ class UserBenefitsFilterService
         $buildRequest->where('user_id', '=', $userId)
             ->where('date', '>=', $date_from)
             ->where('date', '<=', $date_to);
-            
+        
         $this->applyTagsFilter($buildRequest, $request);
         //Filtrés par produits achetés ou vendus
         $this->applyBoughtFilter($buildRequest, $request);
         //Filtrés par sites
         $this->applyWebsiteFilter($buildRequest, $request);
+        
+        // OPTIMISATION : eager loading des relations utilisées dans formatResults
+        $buildRequest->with(['selling', 'product', 'website']);
         
         return $buildRequest->orderBy('date', 'desc')->limit($nb_results)->get();
     }
@@ -41,7 +44,8 @@ class UserBenefitsFilterService
             $data->sold_price = is_null($sell) ? '-' : $sell->confirmed_price;
             $data->shipping_fees = is_null($sell) ? '-' : $sell->shipping_fees;
             $data->shipping_fees_payed = is_null($sell) ? '-' : $sell->shipping_fees_payed;
-            $data->benefits = is_null($sell) ? '-' : $data->getBenefits();
+            // Utilise la relation déjà chargée pour getBenefits
+            $data->benefits = is_null($sell) ? '-' : $data->getBenefits($sell);
 
             $totals['paid'] += $data->cost;
             //Adding to the Total if it has been sold

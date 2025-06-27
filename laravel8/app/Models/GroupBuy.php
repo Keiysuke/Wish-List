@@ -21,6 +21,11 @@ class GroupBuy extends Model
         return $this->hasMany(GroupBuyPurchase::class);
     }
 
+    public function travel_step_products()
+    {
+        return $this->hasMany(TravelStepProduct::class);
+    }
+
     public function setDatas(){
         $purchasesId = [];
         foreach($this->group_buy_purchases as $p){

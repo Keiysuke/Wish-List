@@ -89,6 +89,11 @@ class Product extends Model
         return $this->hasMany(ProductPhoto::class);
     }
 
+    public function travel_step_products()
+    {
+        return $this->hasMany(TravelStepProduct::class);
+    }
+
     //Utils
     public function getWebsitesAvailableSoon(){
         return $this->productWebsites()->where('available_date', '>=', date("Y-m-d"))->orderBy('available_date')->get();

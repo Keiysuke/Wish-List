@@ -13,6 +13,8 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Selling;
 use App\Models\Listing;
+use App\Models\TravelStepProduct;
+use App\Models\TravelJourney;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -88,6 +90,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function friends(){
         return $this->belongsToMany(User::class, 'friend_users', 'friend_id', 'user_id')->withPivot('favorite')->withTimestamps();
+    }
+
+    public function travel_journeys()
+    {
+        return $this->hasMany(TravelJourney::class);
     }
 
     public function isFriend() {

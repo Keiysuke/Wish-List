@@ -48,6 +48,11 @@ class Purchase extends Model
     public function group_buy_purchases(){
         return $this->hasMany(GroupBuyPurchase::class);
     }
+
+    public function travel_step_products()
+    {
+        return $this->hasMany(TravelStepProduct::class);
+    }
     
     public function calculatePrice(){
         return $this->cost - $this->discount;
@@ -57,8 +62,10 @@ class Purchase extends Model
         return DateService::getDate($this->date, $format);
     }
 
-    public function getBenefits(){
-        $s = $this->selling()->first();
+    public function getBenefits($selling = null){
+        // Utilise la relation déjà chargée si fournie, sinon fallback
+        $s = $selling ?? $this->selling;
+        if (is_null($s) || !$s) return 0;
         $priceSold = ($s->confirmed_price + $s->shipping_fees);
         //No comission if I haven't paid fees (I can have sold it in hand)
         $priceSold -= ($s->shipping_fees > 0) ? UtilsController::getCommission($priceSold) : 0;
