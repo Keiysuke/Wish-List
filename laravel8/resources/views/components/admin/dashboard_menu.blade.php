@@ -19,6 +19,8 @@
             <a href="{{ route('vg_supports.index') }}" class="sub {{ $sub === 'vg_supports' ? 'active' : '' }}">{{ __("Supports list") }}</a>
             <a href="{{ route('vg_developers.index') }}" class="sub {{ $sub === 'vg_developers' ? 'active' : '' }}">{{ __("Developers list") }}</a>
             <a href="{{ route('book_publishers.index') }}" class="sub {{ $sub === 'book_publishers' ? 'active' : '' }}">{{ __("Book Publishers list") }}</a>
+            <a href="{{ route('countries.index') }}" class="sub {{ $sub === 'countries' ? 'active' : '' }}">{{ __("Countries list") }}</a>
+            <a href="{{ route('cities.index') }}" class="sub {{ $sub === 'cities' ? 'active' : '' }}">{{ __("Cities list") }}</a>
         @endif
     </div>
     <a href="{{ route('profile.show') }}" class="{{ $menu === 'profil' ? 'active' : '' }}">

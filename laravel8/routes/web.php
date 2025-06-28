@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BookPublisherController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CountryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -179,6 +181,16 @@ Route::prefix('admin')->group(function () {
             'controller' => BookPublisherController::class,
             'param' => ['publishers' => 'publisher'],
             'name' => 'book_publishers'
+        ],
+        'cities' => [
+            'controller' => CityController::class,
+            'param' => ['cities' => 'city'],
+            'name' => 'cities'
+        ],
+        'countries' => [
+            'controller' => CountryController::class,
+            'param' => ['countries' => 'country'],
+            'name' => 'countries'
         ],
     ];
 
