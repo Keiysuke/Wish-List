@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\GroupBuyPurchase;
-use Illuminate\Support\Facades\DB;
 
 class GroupBuy extends Model
 {

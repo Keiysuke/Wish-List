@@ -6,17 +6,7 @@
     setListeners = function(){
         for(const el of document.getElementsByClassName('product-bought')) el.addEventListener('change', handleProductChange)
         for(const el of document.getElementsByClassName('dynamic-selected-product')) el.addEventListener('change', setSelectData)
-    }
-
-    /** 
-     * Met à jour les données dynamiques du produit sélectionné
-    */
-    setSelectData = function(){
-        const e = this
-        for(const opt of e.options) {
-            if(e.value == opt.value) document.getElementById(e.id+'_'+opt.value).setAttribute('selected', 'selected')
-            else document.getElementById(e.id+'_'+opt.value).removeAttribute('selected')
-        }
+        for(const el of document.getElementsByClassName('dynamic-value-product')) el.addEventListener('change', setValueData)
     }
 
     /** 

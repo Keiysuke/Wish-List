@@ -20,6 +20,9 @@
             <x-Menu.Submenu id="create" href="{{ route('products.create') }}" active="{{ $path === 'products/create' }}">{{ __('Add new') }}</x-Menu.Submenu>
             <x-Menu.Link href="{{ route('sitemap') }}" active="{{ $path === 'sitemap' }}">{{ __('Sitemap') }}</x-Menu.Link>
             <x-Menu.ExtLink href="https://www.boursorama.com/bourse/devises/convertisseur-devises/dollar-euro">{{ __('Convertisseur $ -> €') }}</x-Menu.ExtLink>
+            <x-Menu.Submenu id="travels" href="{{ route('travel_journeys.index') }}" active="{{ $path === 'travel_journeys' }}">
+                <span class="px-1">{{ __('Voyages') }}</span>
+            </x-Menu.Submenu>
 
             <x-Menu.Submenu id="externals">{{ __('External links') }}</x-Menu.Submenu>
             <x-Menu.ExtLink href="http://localhost/phpmyadmin/db_structure.php?server=2&db=api_products_managing">

@@ -31,7 +31,6 @@ class CreateTravelStepProductsTable extends Migration
                 ->references('id')
                 ->on('group_buys')
                 ->onDelete('set null');
-            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

@@ -78,5 +78,5 @@
             <x-Form.Cancel href="{{ route('myProducts') }}"/>
         </div>
     </form>
-    </div>
+</div>
 @endsection

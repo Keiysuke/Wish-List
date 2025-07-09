@@ -68,7 +68,7 @@
             <div class="flex flex-col items-center w-2/12">
                 <input type="file" accept="image/*" id="photo-1" name="photo_1" class="hidden" onchange="loadFile(event)">
                 <div class="inline-flex">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    <x-svg.big.picture class="icon"/>
                     <label class="custom-file-label cursor-pointer" for="photo-1" data-browse="Parcourir">Choisissez une image</label>
                 </div>
                 <label for="photo-1" class="cursor-pointer"><img id="img" class="border max-w-20 max-h-32" src="{{ asset('resources/images/no_pict.png') }}"/></label>

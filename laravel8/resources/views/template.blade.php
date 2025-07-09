@@ -61,6 +61,8 @@
         }
 
         function submenu(show, nav){
+            if (!document.getElementById('submenu-' + nav)) return
+            
             if(show) document.getElementById('submenu-' + nav).classList.toggle('open');
             else document.getElementById('submenu-' + nav).classList.remove('open');
             //document.getElementById('submenu-'+nav).classList.toggle('open')

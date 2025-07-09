@@ -42,22 +42,15 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     } finally {
       _iterator2.f();
     }
-  };
-  /** 
-   * Met à jour les données dynamiques du produit sélectionné
-  */
 
-
-  setSelectData = function setSelectData() {
-    var e = this;
-
-    var _iterator3 = _createForOfIteratorHelper(e.options),
+    var _iterator3 = _createForOfIteratorHelper(document.getElementsByClassName('dynamic-value-product')),
         _step3;
 
     try {
       for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var opt = _step3.value;
-        if (e.value == opt.value) document.getElementById(e.id + '_' + opt.value).setAttribute('selected', 'selected');else document.getElementById(e.id + '_' + opt.value).removeAttribute('selected');
+        var _el2 = _step3.value;
+
+        _el2.addEventListener('change', setValueData);
       }
     } catch (err) {
       _iterator3.e(err);

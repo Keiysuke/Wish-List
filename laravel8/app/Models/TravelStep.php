@@ -9,7 +9,7 @@ class TravelStep extends Model
     use HasFactory;
     protected $fillable = ['travel_journey_id', 'city_id', 'start_date', 'end_date'];
 
-    public function journey()
+    public function travelJourney()
     {
         return $this->belongsTo(TravelJourney::class, 'travel_journey_id');
     }
@@ -17,5 +17,10 @@ class TravelStep extends Model
     public function city()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function travelStepProduct()
+    {
+        return $this->hasMany(TravelStepProduct::class);
     }
 }

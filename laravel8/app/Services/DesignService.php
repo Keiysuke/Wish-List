@@ -62,6 +62,7 @@ class DesignService
         'minus_circle' => ['sizes' => [true, false]],
         'moon' => ['sizes' => [false, true]],
         'mail' => ['sizes' => [false, true]],
+        'map_pin' => ['sizes' => [true, true]],
         'music_note' => ['sizes' => [true, true]],
         'msg' => ['sizes' => [true, true]],
         'picture' => ['sizes' => [true, true]],

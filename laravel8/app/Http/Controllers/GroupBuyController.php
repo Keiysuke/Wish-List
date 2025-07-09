@@ -24,8 +24,7 @@ class GroupBuyController extends Controller
     }
 
     public function getProducts(int $userId, int $nb){
-        $products = User::find($userId)->products()->orderBy('label')->get();
-        $html = view('partials.group_buy.select_product', compact('nb', 'products'))->render();
+        $html = view('partials.group_buy.select_product', compact('nb'))->render();
         return response()->json(['success' => true, 'html' => $html]);
     }
     
@@ -69,20 +68,18 @@ class GroupBuyController extends Controller
                 $p = Purchase::find($request->input('product_bought_purchase_id_'.$i));
                 $groupBuy->global_cost += ($p->cost - $p->discount);
 
-            }else{ //An existing offer was selected
-                for($j = 0; $j < $request->input('product_bought_nb_'.$i); $j++){
-                    //On récupère l'offre choisie
-                    $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
-                    $purchaseService = new PurchaseService();
-                    $purchase = $purchaseService->createFromRequest($request->merge(
-                        array_merge(
-                            $this->setPurchaseFromRequest($request, $i, $offer), [
-                            'discount' => empty($request->input('product_bought_discount_'.$i))? 0 : $request->input('product_bought_discount_'.$i),
-                        ])
-                    ));
-                    $this->link_purchase($groupBuy->id, $purchase->id);
-                    $groupBuy->global_cost += ($purchase->price - $purchase->discount);
-                }
+            }else{
+                //On récupère l'offre choisie
+                $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
+                $purchaseService = new PurchaseService();
+                $purchase = $purchaseService->createFromRequest($request->merge(
+                    array_merge(
+                        $this->setPurchaseFromRequest($request, $i, $offer), [
+                        'discount' => empty($request->input('product_bought_discount_'.$i))? 0 : $request->input('product_bought_discount_'.$i),
+                    ])
+                ));
+                $this->link_purchase($groupBuy->id, $purchase->id);
+                $groupBuy->global_cost += ($purchase->price - $purchase->discount);
             }
         }
         $groupBuy->save();
@@ -116,20 +113,18 @@ class GroupBuyController extends Controller
                 $p = Purchase::find($request->input('product_bought_purchase_id_'.$i));
                 $groupBuy->global_cost += ($p->cost - $p->discount);
             }else{
-                for($j = 0; $j < $request->input('product_bought_nb_'.$i); $j++){
-                    //On récupère l'offre choisie
-                    $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
-                    $purchaseService = new PurchaseService();
-                    $purchase = $purchaseService->createFromRequest($request->merge(
-                        array_merge(
-                            $this->setPurchaseFromRequest($request, $i, $offer), [
-                            'discount' => $request->input('product_bought_discount_'.$i),
-                        ])
-                    ));
-                    $this->link_purchase($groupBuy->id, $purchase->id);
-                    $purchases_to_link[] = $groupBuy->id.'_'.$purchase->id;
-                    $groupBuy->global_cost += ($purchase->price - $purchase->discount);
-                }
+                //On récupère l'offre choisie
+                $offer = ProductWebsite::find($request->input('product_bought_offer_id_'.$i));
+                $purchaseService = new PurchaseService();
+                $purchase = $purchaseService->createFromRequest($request->merge(
+                    array_merge(
+                        $this->setPurchaseFromRequest($request, $i, $offer), [
+                        'discount' => $request->input('product_bought_discount_'.$i),
+                    ])
+                ));
+                $this->link_purchase($groupBuy->id, $purchase->id);
+                $purchases_to_link[] = $groupBuy->id.'_'.$purchase->id;
+                $groupBuy->global_cost += ($purchase->price - $purchase->discount);
             }
             $groupBuy->save();
         }

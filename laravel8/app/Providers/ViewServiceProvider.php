@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\BookPublisher;
+use App\Models\City;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Website;
@@ -91,7 +92,10 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['partials.group_buy.select_offer'], function ($view) {
             $view->with('productStates', ProductState::all());
         });
-        View::composer(['group_buys.create', 'group_buys.edit'], function ($view) {
+        View::composer(['partials.group_buy.select_product', 'partials.travel_journeys.form.select_product'], function ($view) {
+            $view->with('products', User::find(auth()->user()->id)->products()->orderBy('label')->get());
+        });
+        View::composer(['group_buys.create', 'group_buys.edit', 'travel_journeys.create', 'travel_journeys.edit'], function ($view) {
             $view->with('products', User::find(auth()->user()->id)->products()->orderBy('label')->get());
         });
         
@@ -131,6 +135,11 @@ class ViewServiceProvider extends ServiceProvider
         View::composer(['crowdfundings.create', 'crowdfundings.edit', 'products.create', 'products.edit', 'partials.products.form.crowdfunding'], function ($view) {
             $view->with('websites', \App\Models\Website::orderBy('label')->where('is_crowdfunding', '=', 1)->get());
             $view->with('crowdfundingStates', \App\Models\CrowdfundingState::orderBy('label')->get());
+        });
+
+        // Travel Journeys
+        View::composer(['travel_journeys.create', 'travel_journeys.edit', 'partials.travel_journeys.select_travel_step'], function ($view) {
+            $view->with('cities', City::orderBy('name')->get());
         });
     }
 }

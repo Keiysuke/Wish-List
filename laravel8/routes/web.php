@@ -46,6 +46,7 @@ use App\Http\Controllers\VideoGameController;
 use App\Models\BookPublisher;
 use App\Http\Controllers\CrowdfundingController;
 use App\Models\CrowdfundingState;
+use App\Http\Controllers\TravelJourneyController;
 
 Route::get('/', function () {return view('welcome');})->name('home');
 Route::get('/sitemap', function () {return view('sitemap');})->name('sitemap');
@@ -231,3 +232,7 @@ Route::get('coding-services', function() {
 
 Route::resource('crowdfundings', CrowdfundingController::class)->except(['index', 'show', 'destroy']);
 Route::get('products/{product}/crowdfundings/create', [CrowdfundingController::class, 'createForProduct'])->name('products.crowdfundings.create');
+
+Route::resource('travel_journeys', TravelJourneyController::class)->middleware(['auth', 'verified']);
+Route::get('user/{userId}/travel_journeys/steps/{nb}', [TravelJourneyController::class, 'getSteps'])->name('travelJourneys.getSteps');
+Route::get('user/{userId}/travel_journeys/steps/{stepNb}/products/{nb}', [TravelJourneyController::class, 'getStepProducts'])->name('travelJourneys.getStepProducts');

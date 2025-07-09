@@ -45,7 +45,7 @@
             <x-Form.Label block for="product-bought-nb-{{ $nb }}">Acheté(s)</x-Form.Label>
             <select name="product_bought_nb_{{ $nb }}" id="product-bought-nb-{{ $nb }}" class="dynamic-selected-product pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
                 @for ($i = 1; $i <= 10; $i++)
-                    <option id="product-bought-nb-{{ $nb }}-{{ $i }}" value="{{ $i }}" @if(old('product_bought_nb_'.$nb) == $i) selected @endif>{{ $i }}</option>
+                    <option id="product-bought-nb-{{ $nb }}_{{ $i }}" value="{{ $i }}" @if(old('product_bought_nb_'.$nb) == $i) selected @endif>{{ $i }}</option>
                 @endfor
             </select>
             @error('product_bought_nb_'.$nb)
@@ -54,13 +54,13 @@
         </div>
 
         <div class="w-1/12 {{ $existingPurchase? 'hidden' : '' }}" id="product-bought-discount-{{ $nb }}">
-            <x-Form.Label for="product-bought-discount-{{ $nb }}" block>Réduction (€)</x-Form.Label>
-            <x-Form.Input name="product_bought_discount_{{ $nb }}" placeholder="0" value="{{ old('product_bought_discount_'.$nb) }}"/>
+            <x-Form.Label for="product-bought-discount-val-{{ $nb }}" block>Réduction (€)</x-Form.Label>
+            <x-Form.Input class="dynamic-value-product" id="product-bought-discount-val-{{ $nb }}" name="product_bought_discount_{{ $nb }}" placeholder="0" value="{{ old('product_bought_discount_'.$nb) }}"/>
         </div>
 
         <div class="w-1/12 {{ $existingPurchase? 'hidden' : '' }}" id="product-bought-customs-{{ $nb }}">
-            <x-Form.Label for="product-bought-customs-{{ $nb }}" block>Douane (€)</x-Form.Label>
-            <x-Form.Input name="product_bought_customs_{{ $nb }}" placeholder="0" value="{{ old('product_bought_customs_'.$nb) }}"/>
+            <x-Form.Label for="product-bought-customs-val-{{ $nb }}" block>Douane (€)</x-Form.Label>
+            <x-Form.Input class="dynamic-value-product" id="product-bought-customs-val-{{ $nb }}" name="product_bought_customs_{{ $nb }}" placeholder="0" value="{{ old('product_bought_customs_'.$nb) }}"/>
         </div>
     </div>
 </div>

@@ -89,3 +89,19 @@ window.showShare = function (id, type) {
             }
         })
 }
+
+/** 
+ * Met à jour les données dynamiques de l'objet sélectionné
+*/
+window.setSelectData = function(){
+    const e = this
+    for(const opt of e.options) {
+        if(e.value == opt.value) document.getElementById(e.id+'_'+opt.value).setAttribute('selected', 'selected')
+        else document.getElementById(e.id+'_'+opt.value).removeAttribute('selected')
+    }
+}
+
+window.setValueData = function(){
+    const e = this
+    document.getElementById(e.id).setAttribute('value', e.value)
+}

@@ -16,8 +16,18 @@ Breadcrumbs::for('sitemap', function ($trail) {
 //Home > Produits
 Breadcrumbs::for('list', function ($trail, $elem) {
     $trail->parent('home');
-    $all = ['website' => 'Sites', 'product' => 'Produits', 'purchase' => 'Achats', 'selling' => 'Ventes', 'photo' => 'Photos', 'list' => 'Listes', 'video_game' => 'Jeux Vidéo'];
-    $trail->push(str_replace($elem, $elem, $all[$elem]), route((!strcmp($elem, 'product')? 'myProducts' : $elem.'s.index')));
+    $trail->push(str_replace($elem, $elem, [
+        'website' => 'Sites',
+        'product' => 'Produits',
+        'purchase' => 'Achats',
+        'selling' => 'Ventes',
+        'photo' => 'Photos',
+        'list' => 'Listes',
+        'video_game' => 'Jeux Vidéo',
+        'travel_journey' => 'Voyages',
+        'crowfunding' => 'Projets Participatifs',
+    ][$elem]), 
+    route((!strcmp($elem, 'product')? 'myProducts' : $elem.'s.index')));
 });
 
 //Home > Sites > Amazon
@@ -134,3 +144,19 @@ Breadcrumbs::for('crowdfundings.edit', function ($trail, $crowdfunding) {
     $trail->push('Éditer le projet participatif', route('crowdfundings.edit', $crowdfunding));
 });
 
+// Home > Voyages
+Breadcrumbs::for('travel_journeys.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Mes voyages', route('travel_journeys.index'));
+});
+
+// Home > Voyages > Création
+Breadcrumbs::for('create_travel_journey', function ($trail) {
+    $trail->parent('travel_journeys.index');
+    $trail->push('Créer un voyage', route('travel_journeys.create'));
+});
+
+Breadcrumbs::for('edit_travel_journey', function ($trail, $travelJourney) {
+    $trail->parent('show', 'travel_journey', $travelJourney);
+    $trail->push('Edition d\'un voyage', route('travel_journeys.edit', $travelJourney));
+});

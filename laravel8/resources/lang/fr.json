@@ -350,5 +350,8 @@
     "The publisher has been saved.": "La maison d'édition a bien été créée",
     "Number of books created : ": "Nombre de livres créés : ",
     "No website found for this publisher. Please create it first.": "Aucun site trouvé pour cette maison d'édition. Merci de le créer au préalable.",
-    "Unknown": "Inconnu"
+    "Unknown": "Inconnu",
+    "The journey has been created.": "Le voyage a bien été créé.",
+    "You already created a journey with that name.": "Vous avez déjà créé un voyage à ce nom.",
+    "There must be at least one step.": "Vous devez renseigner au moins une étape."
 }
