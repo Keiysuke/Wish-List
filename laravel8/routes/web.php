@@ -140,6 +140,9 @@ Route::resource('video_games', VideoGameController::class)->middleware(['auth', 
 Route::post('video_games/filter', [VideoGameController::class, 'filter'])->name('videoGamesSearch');
 Route::get('video_games/{vgId}/vg_support/{vgSupportId?}/products/link', [UtilsController::class, 'linkVgToProduct'])->name('vgLinkProduct');
 Route::get('video_games/products/{productId}/unlink', [VideoGameController::class, 'unlinkProduct'])->name('vgUnlinkProduct');
+//Psn mensual game creation
+Route::get('video_games/psn/create', [VideoGameController::class, 'createPsn'])->name('createPsnVideoGame');
+Route::post('video_games/psn/store', [VideoGameController::class, 'storePsn'])->name('storePsnVideoGame');
 
 //Admin routes
 Route::prefix('admin')->group(function () {

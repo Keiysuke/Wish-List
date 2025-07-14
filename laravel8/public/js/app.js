@@ -3920,6 +3920,15 @@ window.setValueData = function () {
   document.getElementById(e.id).setAttribute('value', e.value);
 };
 
+window.webSearch = function (search) {
+  var website = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'google';
+  var idSearch = search.replace('_', '-');
+
+  if (website === 'google') {
+    window.open('https://www.google.com/search?q=' + encodeURIComponent(document.getElementById(idSearch).value), '_blank');
+  }
+};
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

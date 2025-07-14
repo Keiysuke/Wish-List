@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PsnVgRequest;
 use App\Http\Requests\VgFilterRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\VideoGameRequest;
@@ -76,6 +77,31 @@ class VideoGameController extends Controller
             return back()->withErrors(['label' => $e->getMessage()])->withInput();
         }
         return redirect()->route('video_games.edit', $videoGame->id)->with('info', __('The video game has been created.'));
+    }
+
+    public function createPsn(){
+        $today = DateService::today();
+        return view('video_games.psn.create', compact('today'));
+    }
+
+    public function storePsn(PsnVgRequest $request){
+        try {
+            for ($i = 0; $i < 3; $i++) {
+                $request->merge([
+                    'label' => $request->input('label_' . $i),
+                    'developer_id' => $request->input('developer_id_' . $i),
+                    'date_released' => $request->input('date_released_' . $i),
+                    'nb_players' => $request->input('nb_players_' . $i),
+                ]);
+                $videoGame = app(VideoGameService::class)->createPsnFromRequest($request);
+
+                //On crée le produit pour le jeu vidéo PSN
+                UtilsController::createProductFromPsPlus($videoGame, $request->input('ps_month'), $request->input('ps_year'));
+            }
+        } catch (\Exception $e) {
+            return back()->withErrors(['label' => $e->getMessage()])->withInput();
+        }
+        return redirect()->route('video_games.index')->with('info', __('The video games has been created.'));
     }
 
     public function show(VideoGame $videoGame){

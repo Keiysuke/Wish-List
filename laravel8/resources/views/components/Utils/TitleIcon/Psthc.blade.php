@@ -1,3 +1,4 @@
+@if($support && $support->isPsn())
 <a 
     {{ $attributes }} 
     title="{{ $title ?? "Voir les succès" }}" 
@@ -7,3 +8,4 @@
     >
     <x-svg.big.trophy class="icon-xs"/>
 </a>
+@endif

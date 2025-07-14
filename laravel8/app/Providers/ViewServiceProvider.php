@@ -102,7 +102,7 @@ class ViewServiceProvider extends ServiceProvider
         });
         
         //Video Games Section
-        View::composer(['video_games.create', 'video_games.edit', 'video_games.index'], function ($view) {
+        View::composer(['video_games.create', 'video_games.edit', 'video_games.psn.create', 'video_games.psn.edit', 'video_games.index'], function ($view) {
             $view->with('developers', VgDeveloper::orderBy('label')->get());
         });
         View::composer(['video_games.index'], function ($view) {

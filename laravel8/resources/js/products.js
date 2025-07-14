@@ -67,8 +67,14 @@
         const id = document.getElementById('product-id').value
         getFetch('products/' + id + '/archive')
         .then(res => {
-            document.getElementById('archive-product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
-            document.getElementById('archive-product').classList.toggle('on');
+            if (res != undefined && res.success) {
+                notyfJS(res.product.archived? 'Produit désarchivé' : 'Produit archivé', 'success');
+                document.getElementById('archive-product').setAttribute('title', res.product.archived? 'Retirer des archives' : 'Archiver');
+                document.getElementById('archive-product').classList.toggle('on');
+            } else {
+                notyfJS('Une erreur est survenue', 'error');
+            }
+                
         });
     });
 

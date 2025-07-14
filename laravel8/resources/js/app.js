@@ -105,3 +105,10 @@ window.setValueData = function(){
     const e = this
     document.getElementById(e.id).setAttribute('value', e.value)
 }
+
+window.webSearch = function(search, website = 'google') {
+    const idSearch = search.replace('_', '-')
+    if(website === 'google') {
+        window.open('https://www.google.com/search?q=' + encodeURIComponent(document.getElementById(idSearch).value), '_blank');
+    }
+}

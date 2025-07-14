@@ -11,7 +11,7 @@
                 <div class="flex flex-col w-4/5 {{ ($product->nb_offers > 0)? ($product->can_buy? '' : 'offer-soon' ) : 'no-offer' }}">
                     <p class="relative flex items-center text-lg font-semibold text-black py-1 pl-4 border-b border-gray-300 bg-gray-200">
                         {{ $product->label }}
-                        @if($product->archived)
+                        @if($product->isArchived())
                             <x-svg.archive class="icon-sm absolute right-3 text-yellow-700"/>
                         @endif
                     </p>

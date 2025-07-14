@@ -122,7 +122,7 @@ class VideoGame extends Model
             }
             //Suppression d'une notification si jamais elle existe
             NotificationsController::deleteFrom('MissingProductOnVideoGame', $this->id);
-            return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product')];
+            return ['success' => true, 'notyf' => Notyf::success('Correctly linked to product'), 'productId' => $product->id];
         }
         return ['success' => false, 'notyf' => Notyf::warning('No product found')];
     }

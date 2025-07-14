@@ -4,14 +4,25 @@
 </div>
 
 <div class="flex flex-col gap-8">
-    <h3 class="my-0">1. Mes Models</h3>
+    <h3 class="my-0">1. UtilsController</h3>
 
-    <x-Window.Coding kind="JS" class="w-10/12" title="Label avec redirection" major="getStudioAsLink | getPublisherAsLink">
+    <x-Window.Coding class="w-10/12" title="Lier jeu PS+ avec produit" major="createProductFromPsPlus | linkVgToProduct">
+        <x-Window.Comment>Créé ou lie un produit au jeu vidéo & créé une offre PS Store & un achat pour l'utilisateur</x-Window.Comment><br />
+        <x-Window.Static name="UtilsController" method="createProductFromPsPlus"/>(<x-Window.Var var="videoGame"/>, 1, 2025)
+        <br />
+        <br />
+        <x-Window.Comment>Lie un produit au jeu vidéo & support fournis</x-Window.Comment><br />
+        <x-Window.Static name="UtilsController" method="linkVgToProduct"/>(<x-Window.Var var="videoGameId"/>, <x-Window.Var var="vgSupportId"/>)
+    </x-Window.Coding>
+
+    <h3 class="my-0">2. Mes Models</h3>
+
+    <x-Window.Coding class="w-10/12" title="Label avec redirection" major="getStudioAsLink | getPublisherAsLink">
         { !! <x-Window.Var var="videoGame"/>-><x-Window.Keyword name="getStudioAsLink"/>() !! }<br />
         { !! <x-Window.Var var="Book"/>-><x-Window.Keyword name="getPublisherAsLink"/>() !! }<br />
     </x-Window.Coding>
 
-    <h3 class="my-0">2. Mes Services</h3>
+    <h3 class="my-0">3. Mes Services</h3>
 
     <x-Window.Coding class="w-10/12" title="Lancer une recherche externe" major="SearchService | route 'externalSearch' => SearchController::externalSearch">
         <x-Window.Static name="MySearch" method="getLink"/>('pictures', <x-Window.Var var="search"/>)

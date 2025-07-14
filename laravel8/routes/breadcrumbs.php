@@ -160,3 +160,9 @@ Breadcrumbs::for('edit_travel_journey', function ($trail, $travelJourney) {
     $trail->parent('show', 'travel_journey', $travelJourney);
     $trail->push('Edition d\'un voyage', route('travel_journeys.edit', $travelJourney));
 });
+
+//Home > Jeux videos > Psn > Création
+Breadcrumbs::for('create_psn_video_game', function ($trail) {
+    $trail->parent('list', 'video_game');
+    $trail->push('Création d\'un jeu vidéo Psn', route('createPsnVideoGame'));
+});

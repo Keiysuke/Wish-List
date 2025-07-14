@@ -12,7 +12,10 @@
 
                 <div class="w-full flex inline-flex justify-between mb-4 gap-4">
                     <div class="w-3/4">
-                        <x-Form.Label for="label" block required>Studio de développement</x-Form.Label>
+                        <div class="relative flex inline-flex justify-between w-full">
+                            <x-Form.Label for="label" block required>Studio de développement</x-Form.Label>
+                            <x-svg.search class="icon-xs cursor-pointer" onClick="webSearch('label')"/>
+                        </div>
                         <x-Form.Input name="label" placeholder="Naughty Dog" value="{{ old('label') }}"/>
                     </div>
                     <div class="w-1/4">

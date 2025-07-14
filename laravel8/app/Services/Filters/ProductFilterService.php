@@ -27,7 +27,6 @@ class ProductFilterService
         //Filtrés par produits disponibles, a venir, expirés
         $this->applyStockFilter($buildRequest, $request);
         
-        $buildRequest->where('archived', '=', $request->show_archived);
         return $buildRequest->orderBy($sort_by, $request->order_by)->paginate($request->f_nb_results);
     }
 
@@ -48,14 +47,16 @@ class ProductFilterService
         }
         
         if($request->url === 'products/user'){
-            $buildRequest->whereHas('users', function($query){
-                $query->where('user_id', '=', auth()->user()->id);
+            $buildRequest->whereHas('users', function($query) use ($request){
+                $query->where('user_id', '=', auth()->user()->id)
+                    ->where('archive', '=', $request->show_archived);
             });
         }else{
-            $buildRequest->whereHas('users', function($query){
+            $buildRequest->whereHas('users', function($query) use ($request){
                 $query->whereNotIn('product_id', function($query){
                     $query->select('product_id')->from('product_users')->where('user_id', '=', auth()->user()->id);
-                });
+                })
+                ->where('archive', '=', $request->show_archived);
             })->orWheredoesntHave('users');
         }
         

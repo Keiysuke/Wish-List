@@ -22,4 +22,15 @@ class VideoGameService
     {
         return VideoGame::where('label', $label)->exists();
     }
+
+    public function createPsnFromRequest(Request $request, $check = true): VideoGame
+    {
+        if ($check && $this->exists($request->label)) {
+            throw new \Exception(__('That video game already exists.'));
+        }
+
+        return VideoGame::create($request->merge([
+            'date_released' => $request->date_released ?? DateService::today(),
+        ])->all());
+    }
 }

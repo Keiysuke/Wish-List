@@ -76,6 +76,7 @@
         <a href="{{ route('lists.create') }}">{{ __('Products list') }}</a>
         <hr class="py-1 border-red-600"/>
         <a href="{{ route('video_games.create') }}">{{ __("Video Games") }}</a>
+        <a href="{{ route('createPsnVideoGame') }}">{{ __("Psn mensual Game") }}</a>
         <hr class="py-1 border-black"/>
         <a href="{{ route('websites.create') }}">{{ __('Website') }}</a>
         <a href="{{ route('tags.create') }}">{{ __('Tag') }}</a>

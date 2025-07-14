@@ -13,6 +13,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Carbon\Carbon;
 use App\Http\Controllers\ProductTemplateController;
 use App\Http\Requests\ProductFilterRequest;
+use App\Models\ProductUser;
 use App\Services\CrowdfundingService;
 use App\Services\DateService;
 use App\Services\Filters\ProductFilterService;
@@ -20,6 +21,7 @@ use App\Services\ProductService;
 use App\Services\ProductWebsiteService;
 use App\Services\PurchaseService;
 use App\Services\UploadService;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -50,17 +52,18 @@ class ProductController extends Controller
 
         $buildRequest = Product::query();
         if($request->path() === 'products/user'){
-            $buildRequest->whereHas('users', function($query){
-                $query->where('user_id', '=', auth()->user()->id);
+            $buildRequest->whereHas('users', function($query) use ($sortBy){
+                $query->where('user_id', '=', auth()->user()->id)
+                    ->where('archive', '=', $sortBy->show_archived);
             });
         }else{
-            $buildRequest->whereHas('users', function($query){
-                $query->where('user_id', '<>', auth()->user()->id);
+            $buildRequest->whereHas('users', function($query) use ($sortBy){
+                $query->where('user_id', '<>', auth()->user()->id)
+                    ->where('archive', '=', $sortBy->show_archived);
             });
         }
 
         if(!is_null($search)) $buildRequest->where('label', 'like', '%'.$search.'%');
-        $buildRequest->where('archived', '=', $sortBy->show_archived);
         $products = $buildRequest->orderBy('created_at', $sortBy->order)->paginate($this->nb_page_results);
 
         if ($request->query('fast_search') && count($products) === 1) {
@@ -102,13 +105,21 @@ class ProductController extends Controller
     }
 
     function archive(int $id){
-        $product = Product::find($id);
-        $product->archived = !$product->archived;
-        $product->save();
-        return response()->json([
-            'success' => true, 
-            'product' => ['archived' => $product->archived],
-        ]);
+        try {
+            $product = ProductUser::where('product_id', $id)
+                ->where('user_id', auth()->user()->id)
+                ->firstOrFail();
+            DB::table('product_users')->where(['product_id' => $id, 'user_id' => auth()->user()->id])->update([
+                'archive' => !$product->archive
+            ]);
+                
+            return response()->json([
+                'success' => true, 
+                'product' => ['archived' => $product->archive],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Product not found'], 404);
+        }
     }
 
     public function create(){

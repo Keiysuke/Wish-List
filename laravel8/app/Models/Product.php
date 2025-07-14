@@ -60,6 +60,13 @@ class Product extends Model
         return $res;
     }
 
+    public function isArchived() {
+        return ProductUser::where('product_id', $this->id)
+            ->where('user_id', auth()->user()->id)
+            ->firstOrFail()
+            ->archive;
+    }
+
     public function isBook(){
         foreach($this->tags as $tag){
             if ($tag->isBook()) return true;

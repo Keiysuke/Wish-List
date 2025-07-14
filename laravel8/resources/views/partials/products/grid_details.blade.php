@@ -15,7 +15,7 @@
                         <x-products.tags_details class="mb-2 justify-center" :tags="$product->tags"/>
                         
                         <div class="flex justify-end items-end">
-                            @if($product->archived)
+                            @if($product->isArchived())
                                 <x-svg.archive class="icon-sm absolute left-1 bottom-1 text-yellow-700"/>
                             @endif
                             <div class="flex gap-2 text-xs">
@@ -38,7 +38,7 @@
                 <div class="top vg-icons">
                     <x-Utils.TitleIcon.Vg id="{{ $product->video_game->video_game_id }}"/>
                     <x-Utils.TitleIcon.Yt search="{{ $vg->label }} Soundtrack"/>
-                    <x-Utils.TitleIcon.Psthc search="{{ $vg->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+                    <x-Utils.TitleIcon.Psthc search="{{ $vg->label }}" :support="$support"/>
                 </div>
             @elseif($product->book)
                 @php($book = $product->book)

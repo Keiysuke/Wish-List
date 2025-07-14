@@ -71,7 +71,7 @@
             <span class="title-icon cursor-pointer inline-flex ml-1" onClick="showShare({{ $product->id }}, 'product');">
                 <x-svg.share title="Partager le produit ?" class="icon-xs"/>
             </span>
-            <span title="{{ $product->archived? 'Retirer des archives' : 'Archiver le produit' }}" id="archive-product" class="title-icon archive {{ $product->archived? 'on' : '' }} cursor-pointer inline-flex">
+            <span title="{{ $product->isArchived()? 'Retirer des archives' : 'Archiver le produit' }}" id="archive-product" class="title-icon archive {{ $product->isArchived()? 'on' : '' }} cursor-pointer inline-flex">
                 <x-svg.archive class="icon-xs"/>
             </span>
         </div>
