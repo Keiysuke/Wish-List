@@ -27,9 +27,6 @@ class CreateCrowdfundingsTable extends Migration {
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('crowdfundings');

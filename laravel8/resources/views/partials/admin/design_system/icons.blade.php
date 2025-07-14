@@ -56,7 +56,8 @@
     <x-Utils.TitleIcon.Cfg :cfg="App\Models\Crowdfunding::first()"/>
     <x-Utils.TitleIcon.Vg id="1"/>
     <x-Utils.TitleIcon.Yt search="Soundtrack"/>
-    <x-Utils.TitleIcon.Psthc search="Lies of P" support="ps4"/>
+    @php($support = \App\Models\VgSupport::where('alias', 'ps4')->first())
+    <x-Utils.TitleIcon.Psthc search="Lies of P" :support="$support"/>
     <x-products.search_photo search="#" class="title-icon inline-flex"/>
 </div>
 

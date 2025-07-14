@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
-use App\Models\BookPublisher;
+use App\Models\Publisher;
 
 class Book extends Model
 {
@@ -17,11 +17,11 @@ class Book extends Model
     }
     
     public function publisher(){
-        return $this->belongsTo(BookPublisher::class, 'book_publisher_id');
+        return $this->belongsTo(Publisher::class, 'book_publisher_id');
     }
 
     public function getPublisherAsLink(){
         $publisher = $this->publisher;
-        return '<a href="'.$publisher->website->url.'" class="link" target="_blank">'.$publisher->label.'</a>';
+        return $publisher && $publisher->website ? '<a href="'.$publisher->website->url.'" class="link" target="_blank">'.$publisher->label.'</a>' : ($publisher ? $publisher->label : '');
     }
 }

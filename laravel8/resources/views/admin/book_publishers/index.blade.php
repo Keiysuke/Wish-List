@@ -21,9 +21,18 @@
                         <div class="flex w-full items-center gap-8">
                             <span class="font-bold text-{{ $publisher->active ? 'green' : 'red' }}-400"># {{ $publisher->id }}</span>
                             <x-Utils.VLine />
-                            <span>{!! $publisher->website->asLink() !!}</span>
+                            <span class="inline-flex gap-2">
+                                @if($publisher->type_id == \App\Models\PublisherType::BOOK)
+                                    <x-svg.book class="icon-xs text-warm_gray-500"/>
+                                @elseif($publisher->type_id == \App\Models\PublisherType::ANIME)
+                                    <x-svg.film class="icon-xs"/>
+                                @elseif($publisher->type_id == \App\Models\PublisherType::BOARDGAME)
+                                    <x-svg.puzzle class="icon-xs text-yellow-500"/>
+                                @endif
+                                {!! $publisher->website->asLink() !!}
+                            </span>
                             <x-Utils.VLine />
-                            <span>{{ $publisher->country }}</span>
+                            <span>{{ $publisher->city->name }}</span>
                             <x-Utils.VLine />
                             <span>Fondée en {{ $publisher->founded_year }}</span>
                         </div>

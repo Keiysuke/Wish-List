@@ -41,7 +41,7 @@
             @endif
 
             <!-- Page Content -->
-            <div id="page-container">
+            <div id="page-container" class="mt-12">
                 <main id="main">
                     {{ $slot }}
                 </main>

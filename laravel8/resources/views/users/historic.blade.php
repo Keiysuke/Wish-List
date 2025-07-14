@@ -67,6 +67,11 @@
                 <span class="title-icon cursor-pointer inline-flex">
                     <x-svg.filter class="icon-xs"/>
                 </span>
+                @if($purchases)
+                    <a title="Créer un achat groupé" href="{{ route('group_buys.create') }}" class="title-icon inline-flex">
+                        <x-svg.plus class="icon-xs"/>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

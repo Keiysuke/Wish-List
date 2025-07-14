@@ -6,6 +6,8 @@
 <div class="flex flex-col gap-8">
     <h3 class="my-0">1. PHP / Blade</h3>
     <x-Window.Coding class="w-10/12" title="Utiliser une vue en tant que String" major="renderAsString | renderComponent">
+        <x-Window.Comment>// Attention : L'affichage des icones dans la liste des sites web & des maisons d'édition (admin/websites/index.php) ne peut être dynamique<br /></x-Window.Comment>
+        <br />
         <x-Window.Use>Illuminate\Support\Facades\Blade;<br /></x-Window.Use>
         <br />
         <x-Window.Var var="name"/> = 'John Doe';<br />

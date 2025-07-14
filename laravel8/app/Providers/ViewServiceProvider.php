@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\BookPublisher;
+use App\Models\PublisherType;
 use App\Models\City;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -48,7 +48,9 @@ class ViewServiceProvider extends ServiceProvider
                     $userWebsiteSections[$userWebsite->user_website_section_id] = [$userWebsite];
                 }
             }
-            $lsbPublishers = BookPublisher::with('website')->orderBy('label')->get();
+            $lsbPublishers = \App\Models\Publisher::with('website')
+                ->where('type_id', PublisherType::BOOK)
+                ->orderBy('label')->get();
             $view->with(compact('userWebsiteSections', 'lsbPublishers'));
         });
         View::composer(['components.Notif'], function ($view) {
@@ -117,6 +119,10 @@ class ViewServiceProvider extends ServiceProvider
             $view->with('sections', EmojiSection::all());
         });
 
+        View::composer(['admin.book_publishers.create', 'admin.book_publishers.edit'], function ($view) {
+            $view->with('publisherTypes', PublisherType::orderBy('label')->get());
+        });
+
         //Pages
         View::composer(['pages.design_system'], function ($view) {
             $icons = DesignService::getIconsAsComponent();
@@ -133,7 +139,8 @@ class ViewServiceProvider extends ServiceProvider
 
         // Crowdfundings
         View::composer(['crowdfundings.create', 'crowdfundings.edit', 'products.create', 'products.edit', 'partials.products.form.crowdfunding'], function ($view) {
-            $view->with('websites', \App\Models\Website::orderBy('label')->where('is_crowdfunding', '=', 1)->get());
+            $view->with('websites', \App\Models\Website::orderBy('label')->where('is_vg', '=', 0)->get());
+            $view->with('crowdfundingWebsites', \App\Models\Website::orderBy('label')->where('is_crowdfunding', '=', 1)->get());
             $view->with('crowdfundingStates', \App\Models\CrowdfundingState::orderBy('label')->get());
         });
 

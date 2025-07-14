@@ -1,6 +1,6 @@
 <a 
     title="{{ $title ?? 'Voir la maison d\'édition associée' }}" 
-    href="{{ route('products.show', $id) }}" 
+    href="{{ route('book_publishers.edit', $id) }}" 
     class="title-icon book inline-flex {{ $class ?? '' }}"
     >
     <x-svg.big.book class="icon-xs"/>

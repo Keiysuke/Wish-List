@@ -20,7 +20,7 @@
                             @endif
                             <div class="flex gap-2 text-xs">
                                 {!! $product->renderStateIcon() !!}
-                                <p class="bg-gray-800 text-white p-2">
+                                <p class="bg-{{ $product->bought ? 'green-600' : 'gray-800' }} text-white p-2">
                                     {{ $product->date_show }}
                                 </p>
                             </div>

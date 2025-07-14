@@ -55,7 +55,7 @@ class VideoGame extends Model
     
     public function support(){
         $products = $this->products;
-        return (count($products) > 0)? $products->first()->support : null;
+        return (count($products) > 0)? $products->first()->vg_support : null;
     }
 
     public function setFirstPhoto(){

@@ -83,11 +83,11 @@
                 </div>
                 <div class="w-1/3">
                     <x-Form.Label for="discount" block>Réduction (€)</x-Form.Label>
-                    <x-Form.Input name="discount" placeholder="0" value="{{ old('discount') }}"/>
+                    <x-Form.Input name="discount" placeholder="0" value="{{ old('discount', 0) }}"/>
                 </div>
                 <div class="w-1/3">
                     <x-Form.Label for="customs" block>Douane (€)</x-Form.Label>
-                    <x-Form.Input name="customs" placeholder="0" value="{{ old('customs') }}"/>
+                    <x-Form.Input name="customs" placeholder="0" value="{{ old('customs', 0) }}"/>
                 </div>
             </div>
         </div>

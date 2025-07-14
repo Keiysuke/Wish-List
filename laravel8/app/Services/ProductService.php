@@ -28,10 +28,11 @@ class ProductService
             $product->nb_offers = count(ProductService::getAvailableWebsites($product));
             $product->can_buy = $product->nb_offers > count($product->getWebsitesAvailableSoon());
             $product->date_show = null;
+            $product->bought = count($product->purchases) >= 1;
 
             if($product->nb_offers > 0){ //Des offres sont disponibles
                 if($product->can_buy){
-                    if(count($product->purchases) >= 1){
+                    if($product->bought){
                         $product->date_show = __('Purchased on').' '.date('d/m/Y', strtotime($product->purchases()->orderBy('date')->first()->date));
                     }else{
                         //On affiche la date d'expiration la plus proche

@@ -86,7 +86,7 @@
                 <x-svg.edit class="icon-xs"/>
             </a>
             <x-Utils.TitleIcon.Yt search="{{ $videoGame->label }} Soundtrack"/>
-            <x-Utils.TitleIcon.Psthc search="{{ $videoGame->label }}" support="{{ is_null($support)? 'ps4' : $support->alias }}"/>
+            <x-Utils.TitleIcon.Psthc search="{{ $videoGame->label }}" :support="$support"/>
         </div>
     </div>
     <div class="flex justify-between h-full divide-x-2 pb-12">

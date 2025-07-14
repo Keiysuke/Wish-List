@@ -25,7 +25,9 @@
     @endif
 </div>
 @if ($templated && $vg = $product->video_game)
+    @php($support = $support ?? $product->video_game->vg_support)
     @include('partials.products.template.linked.vg', compact($template, $vg))
+    @include('partials.products.template.linked.support', compact($template, $support))
 @elseif ($templated && $support = $product->vgSupport)
     @include('partials.products.template.linked.support', compact($template, $support))
 @elseif ($templated && $book = $product->book)

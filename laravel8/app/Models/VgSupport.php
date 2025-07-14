@@ -22,4 +22,8 @@ class VgSupport extends Model
     public function date_released($format = 'd/m/Y'){
         return DateService::getDate($this->date_released, $format);
     }
+
+    public function isPsn(){
+        return in_array($this->alias, ['PS1', 'PS2', 'PS3', 'PS4', 'PS5']);
+    }
 }

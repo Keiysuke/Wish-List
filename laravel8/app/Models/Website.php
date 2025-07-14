@@ -31,7 +31,7 @@ class Website extends Model
     }
 
     public function publisher(){
-        return $this->hasOne(BookPublisher::class);
+        return $this->hasOne(Publisher::class);
     }
 
     public function asLink(){

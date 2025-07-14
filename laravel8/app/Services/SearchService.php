@@ -9,7 +9,11 @@ class SearchService
     CONST KINDS = [
         'yt' => [
             'link' => 'https://www.youtube.com/results?search_query=', 
-            'replace' => [' ' => '+']
+            'replace' => [
+                "&amp;" => '%26',
+                "&#039;" => '%27',
+                ' ' => '+',
+            ]
         ],
         'psthc' => [
             'link' => 'https://www.psthc.fr/unjeu/', 

@@ -44,10 +44,6 @@ class Product extends Model
         return $this->hasOne(ProductAsVideoGame::class);
     }
 
-    public function vgSupport(){
-        return $this->hasOne(VgSupport::class);
-    }
-
     public function book(){
         return $this->hasOne(Book::class);
     }

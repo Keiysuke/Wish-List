@@ -4,6 +4,7 @@
             @foreach($product->crowdfundings as $crowdfunding)
                 <li>
                     <a class="link" href="{{ $crowdfunding->project_url }}" target="_blank" class="text-blue-600 underline">{{ $crowdfunding->website->label }}</a>
+                    - <span class="font-semibold">{{ $crowdfunding->project_name }}</span>
                     <span>({{ $crowdfunding->state->label }})</span>
                     
                     <a title="Editer le projet" href="{{ route('crowdfundings.edit', $crowdfunding) }}" class="inline-flex text-gray-700">

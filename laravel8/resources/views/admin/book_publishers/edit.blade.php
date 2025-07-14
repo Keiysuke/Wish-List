@@ -16,8 +16,16 @@
                         </a>
                     </div>
                 </div>
-
+                
                 <div class="w-full flex inline-flex justify-between mb-4 gap-4">
+                    <div class="w-1/6">
+                        <x-Form.Label for="type_id" block required>Type de maison d'édition</x-Form.Label>
+                        <select name="type_id" class="form-select pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                            @foreach($publisherTypes as $publisherType)
+                                <option value="{{ $publisherType->id }}" {{ old('type_id', $publisher->type_id) == $publisherType->id ? 'selected' : '' }}>{{ $publisherType->getName() }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="w-2/6">
                         <x-Form.Label for="label" block required>Nom de la maison d'édition</x-Form.Label>
                         <x-Form.Input name="label" placeholder="Third Editions" value="{{ old('label', $publisher->label) }}"/>
@@ -26,9 +34,13 @@
                         <x-Form.Label for="founded-year" block>Année de fondation</x-Form.Label>
                         <x-Form.Input name="founded_year" value="{{ old('founded_year', $publisher->founded_year) }}"/>
                     </div>
-                    <div class="w-2/6">
-                        <x-Form.Label for="country" block>Pays</x-Form.Label>
-                        <x-Form.Input name="country" placeholder="France (Paris)" value="{{ old('country', $publisher->country) }}"/>
+                    <div class="w-1/6">
+                        <x-Form.Label for="city_id" block required create="{{ route('cities.create') }}">Pays</x-Form.Label>
+                        <select name="city_id" class="form-select pl-2 h-10 block w-full rounded-md bg-gray-100 border-transparent">
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}" {{ old('city_id', $publisher->city->id) == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="w-1/6 flex inline-flex items-center pt-6">
                         <x-Form.Checkbox class="mr-1" name="active">{{ old('active', $publisher->active)? 'checked' : '' }}</x-Form.Checkbox>

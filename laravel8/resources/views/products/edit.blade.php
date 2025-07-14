@@ -37,48 +37,56 @@
         </div>
         <hr/>
         
-        <div class="flex gap-4 mb-4">
-            <div class="w-2/12 flex justify-center items-center">
-                <img src="{{ $product->pict }}" class="h-40"/>
-            </div>
-            <div class="flex flex-col w-7/12 gap-4">
-                <div>
-                    <x-Form.Label for="label" block required>Nom du produit</x-Form.Label>
-                    <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label', $product->label) }}"/>
-                </div>
-                <div class="flex gap-4">
-                    @include('partials.products.template.edit', compact($template, ($message ?? null)))
-                </div>
-            </div>
+        <div class="flex flex-row gap-4">
+            <div class="flex flex-col w-10/12 gap-4">
+                <div class="flex w-full gap-4">
+                    <div class="flex flex-col items-center w-2/12">
+                        <img src="{{ $product->pict }}" class="h-40"/>
+                    </div>
+                    <div class="flex flex-col w-7/12 gap-4">
+                        <div>
+                            <x-Form.Label for="label" block required>Nom du produit</x-Form.Label>
+                            <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label', $product->label) }}"/>
+                        </div>
+                        <div class="flex gap-4">
+                            @include('partials.products.template.edit', compact($template, ($message ?? null)))
+                        </div>
+                    </div>
 
-            <div class="flex justify-around w-3/12 gap-4">
-                <div class="flex flex-col w-1/3 gap-4">
-                    <div>
-                        <x-Form.Label for="limited-edition" block>Edition limitée ?</x-Form.Label>
-                        <x-Form.Input name="limited_edition" placeholder="3000" value="{{ old('limited_edition', $product->limited_edition) }}"/>
-                    </div>
-                    <div>
-                        <x-Form.Label for="real-cost" block required>Prix neuf (€)</x-Form.Label>
-                        <x-Form.Input name="real_cost" placeholder="20.50" value="{{ old('real_cost', $product->real_cost) }}"/>
+                    <div class="flex justify-around w-3/12 gap-4">
+                        <div class="flex flex-col gap-4">
+                            <div>
+                                <x-Form.Label for="limited-edition" block>Edition limitée ?</x-Form.Label>
+                                <x-Form.Input name="limited_edition" placeholder="3000" value="{{ old('limited_edition', $product->limited_edition) }}"/>
+                            </div>
+                            <div>
+                                <div class="relative flex inline-flex w-full">
+                                    <x-Form.Label for="real-cost" block required>Prix neuf (€)</x-Form.Label>
+                                    <x-Utils.Convert inputId="real-cost" onClick="updatePrices(true)"/>
+                                </div>
+                                <x-Form.Input name="real_cost" placeholder="20.50" value="{{ old('real_cost', $product->real_cost) }}"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="w-2/3">
-                    <x-Form.Label for="tag-ids" block required create="{{ route('tags.create') }}">Tags associés</x-Form.Label>
-                    <select multiple name="tag_ids[]" id="tag-ids" class="pl-2 h-32 block w-full rounded-md bg-gray-100 border-transparent">
-                        @foreach($tags as $tag)
-                            <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', $product->tag_ids()))) selected @endif>{{ $tag->label }}</option>
-                        @endforeach
-                    </select>
-                    @error('product_state_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                <div class="w-full mb-4">
+                    <x-Form.Label for="description" block showNbChars="description">Description</x-Form.Label>
+                    <x-Form.Textarea name="description">{{ old('description', $product->description) }}</x-Form.Textarea>
                 </div>
             </div>
+            <div class="flex flex-col w-2/12 h-full">
+                <x-Form.Label for="tag-ids" block required create="{{ route('tags.create') }}">Tags associés</x-Form.Label>
+                <select multiple name="tag_ids[]" id="tag-ids" class="pl-2 h-72 block w-full rounded-md bg-gray-100 border-transparent">
+                    @foreach($tags as $tag)
+                        <option value="{{ $tag->id }}" @if(in_array($tag->id, old('tags_id', $product->tag_ids()))) selected @endif>{{ $tag->label }}</option>
+                    @endforeach
+                </select>
+                @error('product_state_id')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
-        <div class="mb-4">
-            <x-Form.Label for="description" block showNbChars="description">Description</x-Form.Label>
-            <x-Form.Textarea name="description">{{ old('description', $product->description) }}</x-Form.Textarea>
-        </div>
+        
         <div class="flex items-center justify-between">
             <x-Form.Btn type="submit">Modifier le produit</x-Form.Btn>
             <x-Form.Cancel href="{{ route('products.show', $product->id) }}"/>

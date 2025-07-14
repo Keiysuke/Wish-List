@@ -11,6 +11,7 @@
     switch (document.getElementById('template-type').value) {
       case 'video_game':
         document.getElementById('wrap-lk-video-game').classList.remove('hidden');
+        document.getElementById('wrap-lk-vg-support').classList.remove('hidden');
         break;
 
       case 'vg_support':

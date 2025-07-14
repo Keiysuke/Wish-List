@@ -11,10 +11,8 @@
             <x-Form.Label for="crowdfunding_website_id" block>Site web</x-Form.Label>
             <select name="crowdfunding_website_id" class="form-input w-full">
                 <option value="">Sélectionner un site web</option>
-                @foreach($websites as $website)
-                    @if($website->is_crowdfunding)
-                        <option value="{{ $website->id }}" @if(old('crowdfunding_website_id') == $website->id) selected @endif>{{ $website->label }}</option>
-                    @endif
+                @foreach($crowdfundingWebsites as $website)
+                    <option value="{{ $website->id }}" @if(old('crowdfunding_website_id') == $website->id) selected @endif>{{ $website->label }}</option>
                 @endforeach
             </select>
         </div>
