@@ -154,7 +154,7 @@
             }).then(response => {
                 if (response.ok) return response.json();
             }).then(results => {
-                document.getElementById('ls-benefit-results-benef').innerHTML = results.benefit + ' €';
+                document.getElementById('ls-benefit-results-benef').innerHTML = results.benefit + ' %';
                 if (results.benefit >= 0) {
                     document.getElementById('ls-benefit-results-benef').classList.add('text-green-400');
                     document.getElementById('ls-benefit-results-benef').classList.remove('text-red-400');
@@ -166,7 +166,7 @@
         }
 
         function lsConvert(){
-            document.getElementById('ls-convert-result').value = (document.getElementById('ls-convert-text').value * 0.92445).toFixed(4);
+            document.getElementById('ls-convert-result').value = (document.getElementById('ls-convert-text').value * 0.85316).toFixed(4);
         }
 
         /**
@@ -177,6 +177,23 @@
             document.getElementById('ls-convert-text').value = document.getElementById(inputId).value;
             lsConvert();
             document.getElementById(inputId).value = document.getElementById('ls-convert-result').value;
+        }
+        
+        function lsDiscountHelp(){
+            let price = parseFloat(document.getElementById('ls-discount-price').value).toFixed(2);
+            let discount = parseFloat(document.getElementById('ls-discount-sum').value).toFixed(2);
+            if (isNaN(price) || isNaN(discount)) {
+                notyfJS('Veuillez saisir un prix et un montant de réduction', 'error');
+                return;
+            }
+            myFetch('{{ route('simulateDiscount') }}', {method: 'post', csrf: true}, {
+                price: document.getElementById('ls-discount-price').value,
+                discount: document.getElementById('ls-discount-sum').value,
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                document.getElementById('ls-discount-results-percent').innerHTML = results.percent + ' %';
+            });
         }
 
         function lsLinkPublishers(){

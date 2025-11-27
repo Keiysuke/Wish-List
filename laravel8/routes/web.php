@@ -132,6 +132,7 @@ Route::post('color/variants', [CssColorController::class, 'get_variants'])->name
 
 //Help sidebar
 Route::post('benefit', [UtilsController::class, 'simulateBenefit'])->name('simulateBenefit');
+Route::post('discount', [UtilsController::class, 'simulateDiscount'])->name('simulateDiscount');
 Route::post('search/external', [SearchController::class, 'externalSearch'])->name('externalSearch');
 
 Route::get('autocomplete', [SearchController::class, 'autocomplete'])->name('autocomplete');

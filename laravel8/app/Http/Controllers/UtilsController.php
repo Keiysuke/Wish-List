@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SimuBenefitRequest;
+use App\Http\Requests\SimuDiscountRequest;
 use App\Models\Product;
 use App\Models\VgSupport;
 use App\Models\VideoGame;
@@ -17,6 +18,12 @@ class UtilsController extends Controller
         $benefit = $request->sold - $request->payed;
         if($request->commission) $benefit -= self::getCommission($request->sold);
         return response()->json(['success' => true, 'req' => $request->all(), 'benefit' => round($benefit, 4)]);
+    }
+
+    public function simulateDiscount(SimuDiscountRequest $request){
+        abort_unless($request->ajax(), 404);
+        $percent = (($request->price - ($request->price - $request->discount)) / $request->price) * 100;
+        return response()->json(['success' => true, 'req' => $request->all(), 'percent' => round($percent, 4)]);
     }
 
     public static function getCommission($price){

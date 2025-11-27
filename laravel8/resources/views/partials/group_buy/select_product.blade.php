@@ -18,7 +18,7 @@
             <x-Form.Label for="product-bought-id-{{ $nb }}" block required class="relative">
                 Produit acheté
                 
-                <div class="absolute inline right-0">
+                <div class="absolute inline right-0 -mt-1">
                     <x-Form.Checkbox name="product_bought_exists_{{ $nb }}" onChange="handleExistingBuy(this, {{ $nb }})">{{ $existingPurchase? 'checked' : '' }}</x-Form.Checkbox>
                     <x-Form.Label class="ml-1" for="product-bought-exists-{{ $nb }}">Achat existant ?</x-Form.Label>
                 </div>

@@ -77,7 +77,7 @@
 }
 
 .sidebar-content p:not(:first-child) {
-    @apply mt-10;
+    @apply mt-4;
 }
 
 div.square {
