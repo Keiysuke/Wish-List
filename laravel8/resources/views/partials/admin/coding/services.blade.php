@@ -17,6 +17,14 @@
 
     <h3 class="my-0">2. Mes Models</h3>
 
+    <x-Window.Coding class="w-10/12" title="Propriété dynamique">
+        <x-Window.Function public name="address"/><br />
+        <div class="ml-4">
+            <x-Window.Return/> <x-Window.Var var="this"/>->street.", ".<x-Window.Var var="this"/>->city.", ".<x-Window.Var var="this"/>->cp;<br />
+        </div>
+        }
+    </x-Window.Coding>
+
     <x-Window.Coding class="w-10/12" title="Label avec redirection" major="getStudioAsLink | getPublisherAsLink">
         { !! <x-Window.Var var="videoGame"/>-><x-Window.Keyword name="getStudioAsLink"/>() !! }<br />
         { !! <x-Window.Var var="Book"/>-><x-Window.Keyword name="getPublisherAsLink"/>() !! }<br />
