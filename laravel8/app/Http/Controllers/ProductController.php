@@ -17,6 +17,7 @@ use App\Models\ProductUser;
 use App\Services\CrowdfundingService;
 use App\Services\DateService;
 use App\Services\Filters\ProductFilterService;
+use Illuminate\Support\Facades\Log;
 use App\Services\ProductService;
 use App\Services\ProductWebsiteService;
 use App\Services\PurchaseService;
@@ -79,13 +80,21 @@ class ProductController extends Controller
 
     function filter(ProductFilterRequest $request){
         abort_unless($request->ajax(), 404);
-        $products = (new ProductFilterService())->applyFilters($request);
-        $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
-                    
-        $html = view('partials.products.'.$request->list.'_details', [
-            'products' => $this->getProducts($products)
-        ])->render();
-        return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $html]);
+
+        Log::info('products/filter called', $request->all());
+
+        try {
+            $products = (new ProductFilterService())->applyFilters($request);
+            $products->useAjax = true; //Permet l'utilisation du système de pagination en ajax
+
+            $html = view('partials.products.'.$request->list.'_details', [
+                'products' => $this->getProducts($products)
+            ])->render();
+            return response()->json(['success' => true, 'nb_results' => $products->links()? $products->links()->paginator->total() : count($products), 'html' => $html]);
+        } catch (\Throwable $e) {
+            Log::error('Error in products/filter', ['exception' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     function getProducts($products){

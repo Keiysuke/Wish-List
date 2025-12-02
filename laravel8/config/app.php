@@ -178,9 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
-        App\Providers\JetstreamServiceProvider::class,
-        Fouladgar\EloquentBuilder\ServiceProvider::class,
-
+        App\Providers\JetstreamServiceProvider::class
     ],
 
     /*
@@ -232,7 +230,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'EloquentBuilder' => Fouladgar\EloquentBuilder\Facade::class,
         'MySearch' => App\Facades\MySearchFacade::class,
 
     ],

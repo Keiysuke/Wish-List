@@ -266,7 +266,7 @@ a.link:hover {
 }
 
 #icon-find-opinion:hover {
-    @apply bg-warm_gray-500;
+    @apply bg-gray-500;
     @apply text-white;
 }
 
@@ -275,7 +275,7 @@ a.link:hover {
 }
 
 .book {
-    @apply text-warm_gray-500 hover:bg-warm_gray-500 hover:text-white;
+    @apply text-gray-500 hover:bg-gray-500 hover:text-white;
 }
 
 .idea {

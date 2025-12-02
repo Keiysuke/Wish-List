@@ -12,10 +12,6 @@ class CreateTravelJourneysTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
             $table->string('label');
             $table->timestamps();
         });

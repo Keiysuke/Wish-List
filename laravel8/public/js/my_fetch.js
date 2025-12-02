@@ -9,14 +9,30 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 window.myFetch = function (url, headers, datas) {
-  var csrf = headers.csrf ? {
-    "X-CSRF-Token": document.head.querySelector("[name=csrf-token][content]").content
+  // Récupère le token CSRF de façon robuste : meta[name=csrf-token] ou cookie XSRF-TOKEN
+  var csrfToken = null;
+
+  if (headers.csrf) {
+    var meta = document.querySelector('meta[name="csrf-token"]');
+
+    if (meta && meta.getAttribute('content')) {
+      csrfToken = meta.getAttribute('content');
+    } else {
+      // fallback: chercher le cookie XSRF-TOKEN
+      var match = document.cookie.match(new RegExp('(^|; )XSRF-TOKEN=([^;]+)'));
+      if (match) csrfToken = decodeURIComponent(match[2]);
+    }
+  }
+
+  var csrfHeader = headers.csrf && csrfToken ? {
+    "X-CSRF-Token": csrfToken
   } : {};
+  if (headers.csrf && !csrfToken) console.warn('CSRF token not found in meta or cookie; request may be rejected.');
   return fetch(url, {
     headers: _objectSpread({
       "Content-Type": "application/json",
       "X-Requested-With": "XMLHttpRequest"
-    }, csrf),
+    }, csrfHeader),
     method: headers['method'],
     body: JSON.stringify(datas)
   });

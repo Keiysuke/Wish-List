@@ -138,8 +138,8 @@ class ProductFilterService
                     $query->whereRaw('cost - discount <= 1');
                 });
                 break;
-            default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
         }
+        $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
     }
 
     function applyStockFilter(Builder &$buildRequest, ProductFilterRequest $request){

@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->unsignedInteger('book_publisher_id');
             $table->foreign('book_publisher_id')
                 ->references('id')
-                ->on('book_publishers')
+                ->on('publishers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->integer('page_count')->default(0);

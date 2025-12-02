@@ -11,36 +11,13 @@ class CreateSellingsTable extends Migration
         Schema::create('sellings', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            // keep type compatible with users.id (unsigned INT)
+            $table->unsignedInteger('user_id')->default(1);
             $table->unsignedInteger('product_id');
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->unsignedTinyInteger('product_state_id');
-            $table->foreign('product_state_id')
-                ->references('id')
-                ->on('product_states')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->unsignedInteger('purchase_id');
-            $table->foreign('purchase_id')
-                ->references('id')
-                ->on('purchases')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->unsignedInteger('website_id');
-            $table->foreign('website_id')
-                ->references('id')
-                ->on('websites')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->unsignedTinyInteger('sell_state_id');
-            $table->foreign('sell_state_id')
-                ->references('id')
-                ->on('sell_states')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->decimal('price', $precision = 10, $scale = 2);
             $table->decimal('confirmed_price', $precision = 10, $scale = 2)->nullable();
             $table->decimal('shipping_fees', $precision = 10, $scale = 2)->nullable();

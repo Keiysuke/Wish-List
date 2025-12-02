@@ -9,18 +9,8 @@ class CreateProductUsersTable extends Migration
     {
         Schema::create('product_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('product_id');
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->tinyInteger('archive')->default(0);
             $table->timestamps();
             $table->primary(['user_id', 'product_id']);

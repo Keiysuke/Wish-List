@@ -9,6 +9,8 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -17,6 +19,11 @@
         <link rel="stylesheet" href="{{ asset('css/admin/admin.css') }}">
         <link rel="stylesheet" href="{{ asset('css/pagination.css') }}">
 
+        <!-- Scripts -->
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <script src="{{ mix('js/app.js') }}" defer></script>
+
+        <!-- Styles -->
         @livewireStyles
 
         <!-- Scripts -->
@@ -24,9 +31,8 @@
         <script src="{{ asset('js/clipboard.js') }}" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     </head>
-    @yield('css')
-    <body id="top-page" class="font-sans antialiased scrollbar-thin scrollbar-track-gray-400 scrollbar-thumb-gray-700">
-        <x-jet-banner />
+    <body class="font-sans antialiased">
+        <x-banner />
 
         <div class="min-h-screen bg-gray-100">
             @livewire('navigation-menu')
@@ -41,11 +47,9 @@
             @endif
 
             <!-- Page Content -->
-            <div id="page-container" class="mt-12">
-                <main id="main">
-                    {{ $slot }}
-                </main>
-            </div>
+            <main>
+                {{ $slot }}
+            </main>
         </div>
 
         @stack('modals')

@@ -2,21 +2,17 @@
 
 namespace App\Actions\Fortify;
 
-use Laravel\Fortify\Rules\Password;
+use Illuminate\Validation\Rules\Password;
 
 trait PasswordValidationRules
 {
     /**
      * Get the validation rules used to validate passwords.
      *
-     * @return array
+     * @return array<int, \Illuminate\Contracts\Validation\Rule|array<mixed>|string>
      */
-    protected function passwordRules()
+    protected function passwordRules(): array
     {
-        $pwd = new Password;
-        $pwd->requireUppercase();
-        $pwd->requireNumeric();
-        $pwd->requireSpecialCharacter();
-        return ['required', 'string', $pwd, 'confirmed'];
+        return ['required', 'string', Password::default(), 'confirmed'];
     }
 }

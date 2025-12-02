@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
+// Supprimer l'affichage des warnings de type Deprecated (ex. PDO::MYSQL_ATTR_SSL_CA)
+// Ces messages peuvent polluer la sortie JSON des requêtes AJAX en local.
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 /*
 |--------------------------------------------------------------------------
 | Check If Application Is Under Maintenance

@@ -43,8 +43,6 @@ mix.js('resources/js/app.js', 'public/js')
     .postCss('resources/css/list_products.css', 'public/css', [require('tailwindcss')])
     .postCss('resources/css/lists.css', 'public/css', [require('tailwindcss')]);
 
-mix.sass('resources/assets/sass/app.scss', 'public/css');
-
 if (mix.inProduction()) {
     mix.version();
 }

@@ -11,10 +11,11 @@
     "/js/listings.js": "/js/listings.js",
     "/js/travelJourneys.js": "/js/travelJourneys.js",
     "/js/templates.js": "/js/templates.js",
-    "/css/app.css": "/css/app.css",
+    "/css/header.css": "/css/header.css",
     "/css/admin/design_system.css": "/css/admin/design_system.css",
     "/css/admin/admin.css": "/css/admin/admin.css",
     "/css/custom_app.css": "/css/custom_app.css",
+    "/css/app.css": "/css/app.css",
     "/css/lists.css": "/css/lists.css",
     "/css/list_products.css": "/css/list_products.css",
     "/css/video_games_search.css": "/css/video_games_search.css",
@@ -22,6 +23,5 @@
     "/css/products_search.css": "/css/products_search.css",
     "/css/pagination.css": "/css/pagination.css",
     "/css/sidebar.css": "/css/sidebar.css",
-    "/css/footer.css": "/css/footer.css",
-    "/css/header.css": "/css/header.css"
+    "/css/footer.css": "/css/footer.css"
 }

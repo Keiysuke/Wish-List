@@ -1,31 +1,30 @@
 /* Index products */
-
 div.no-offer div.product-pict {
-  filter: grayscale(90%);
+    filter: grayscale(90%);
 }
 
 .product-pict {
-  height: 6rem;
-  background-position: center;
-  background-size: cover;
+    height: 6rem;
+    background-position: center;
+    background-size: cover;
 }
 
 .icons-container {
-  display: flex;
-  display: inline-flex;
-  gap: 0.25rem;
-  padding-right: 0.25rem;
+    display: flex;
+    display: inline-flex;
+    gap: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 .icons-container a {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 #my-lists div#left div.selected {
-  --tw-bg-opacity: 1;
-  background-color: rgba(228, 228, 231, var(--tw-bg-opacity));
-  font-weight: 600;
-  padding: 0.5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
+    font-weight: 600;
+    padding: 0.5rem;
 }
 

@@ -80,7 +80,7 @@ class VgFilterService
         }
 
         if(!count($filterSupport)){
-            $buildRequest->wheredoesntHave('vg_supports');
+            $buildRequest->whereDoesntHave('vg_supports');
             
         }elseif(strcmp(count($filterSupport), VgSupport::count())){
             $buildRequest->whereHas('vg_supports', function($query) use ($filterSupport){

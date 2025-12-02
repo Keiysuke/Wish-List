@@ -4,13 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBookPublishersTable extends Migration
+class CreatePublishersTable extends Migration
 {
     public function up()
     {
-        Schema::create('book_publishers', function (Blueprint $table) {
+        Schema::create('publishers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
+            $table->unsignedInteger('type_id')->default(1);
+            $table->foreign('type_id')
+                ->references('id')
+                ->on('publisher_types')
+                ->onDelete('restrict');
             $table->string('label', 200)->unique();
             $table->longText('description')->nullable();
             $table->smallInteger('founded_year')->nullable();
@@ -28,6 +33,6 @@ class CreateBookPublishersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('book_publishers');
+        Schema::dropIfExists('publishers');
     }
 }

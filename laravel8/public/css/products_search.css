@@ -1,92 +1,75 @@
 /* Index products */
-
 div.no-offer div.product-price {
-  filter: grayscale(30%);
+    filter: grayscale(30%);
 }
 
 div.no-offer div.product-pict {
-  filter: grayscale(90%);
+    filter: grayscale(90%);
 }
 
 div.wrap-grid-product {
-  position: relative;
+    position: relative;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 div.wrap-grid-product:hover {
-  --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-div.wrap-grid-product {
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-div.wrap-grid-product:hover {
-  --tw-rotate: -3deg;
-}
-
-div.wrap-grid-product {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+    --tw-rotate: -3deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 div.grid-product div.top.no-offer div.product-price {
-  display: none;
+    display: none;
 }
 
 div.grid-product div.down.no-offer p {
-  --tw-text-opacity: 1;
-  color: rgba(161, 161, 170, var(--tw-text-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 
 div.grid-product div.down.no-offer div p {
-  width: 100%;
-  color: black;
-  background-color: darkgrey;
+    width: 100%;
+    color: black;
+    background-color: darkgrey;
 }
 
 div.grid-product div.down.offer-soon div p {
-  color: black;
-  display: inline-flex;
-  gap: 0.25rem;
-  background-color: #ed8936;
+    color: black;
+    display: inline-flex;
+    gap: 0.25rem;
+    background-color: #ed8936;
 }
 
 div.wrap-grid-product div.top.cfg-icons,
 div.wrap-grid-product div.top.vg-icons,
 div.wrap-grid-product div.top.book-icons {
-  display: flex;
-  flex-direction: column;
-  top: 0;
-  right: 0;
-  background-color: white;
-  position: absolute;
-  z-index: 1;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    background-color: white;
+    position: absolute;
+    z-index: 1;
 }
 
 div.wrap-grid-product div.top.cfg-icons {
-  border-left: 1px solid yellow;
-  border-bottom: 1px solid yellow;
+    border-left: 1px solid yellow;
+    border-bottom: 1px solid yellow;
 }
 
 div.wrap-grid-product div.top.vg-icons {
-  border-left: 1px solid red;
-  border-bottom: 1px solid red;
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
 }
 
 div.wrap-grid-product div.top.book-icons {
-  border-left: 1px solid rgba(120, 113, 108, 1);
-  border-bottom: 1px solid rgba(120, 113, 108, 1);
+    border-left: 1px solid rgba(120, 113, 108, 1);
+    border-bottom: 1px solid rgba(120, 113, 108, 1);
 }
 
 div.wrap-grid-product div.top.cfg-icons a, 
@@ -95,7 +78,7 @@ div.wrap-grid-product div.top.book-icons a,
 div.wrap-grid-product div.top.cfg-icons div.title-icon, 
 div.wrap-grid-product div.top.vg-icons div.title-icon, 
 div.wrap-grid-product div.top.book-icons div.title-icon {
-  border: none;
+    border: none;
 }
 
 div.wrap-grid-product div.top.cfg-icons div.title-icon:not(:last-child), 
@@ -104,97 +87,95 @@ div.wrap-grid-product div.top.book-icons div.title-icon:not(:last-child),
 div.wrap-grid-product div.top.cfg-icons a:not(:last-child), 
 div.wrap-grid-product div.top.vg-icons a:not(:last-child), 
 div.wrap-grid-product div.top.book-icons a:not(:last-child) {
-  border-bottom: 1px solid #e4e4e7;
+    border-bottom: 1px solid #e4e4e7;
 }
 
 div.wrap-grid-product div.top.cfg-icons a:last-child, 
 div.wrap-grid-product div.top.vg-icons a:last-child, 
 div.wrap-grid-product div.top.book-icons a:last-child {
-  border-bottom-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem; 
 }
 
 .product-price {
-  position: absolute;
-  top: 1rem;
-  padding: 0.5rem;
-  font-weight: 600;
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-  border-width: 1px;
-  border-left-width: 0px;
-  --tw-border-opacity: 1;
-  border-color: rgba(255, 255, 255, var(--tw-border-opacity));
+    position: absolute;
+    top: 1rem;
+    padding: 0.5rem;
+    font-weight: 600;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity, 1));
+    border-width: 1px;
+    border-left-width: 0px;
+    --tw-border-opacity: 1;
+    border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
 }
 
 .product-pict {
-  height: 11rem;
-  background-position: center;
-  background-size: cover;
+    height: 11rem;
+    background-position: center;
+    background-size: cover;
 }
 
 /* Search products bar */
-
 .sticky-search-bar.off {
-  position: relative;
-  margin-top: 2rem;
+    position: relative;
+    margin-top: 2rem;
 }
 
 .sticky-search-bar.off div#search-bar {
-  position: absolute;
-  top: -2.5rem;
-  right: 0px;
+    position: absolute;
+    top: -2.5rem;
+    right: 0px;
 }
 
 .sticky-search-bar.on {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgba(113, 113, 122, var(--tw-border-opacity));
-  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  position: fixed;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 3.5rem;
-  padding-right: 3rem;
-  width: 100vw;
-  left: 0px;
-  z-index: 8;
-  top: 3.4rem;
-  background-color: bisque;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-width: 2px;
+    --tw-border-opacity: 1;
+    border-color: rgb(107 114 128 / var(--tw-border-opacity, 1));
+    --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    position: fixed;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 3.5rem;
+    padding-right: 3rem;
+    width: 100vw;
+    left: 0px;
+    z-index: 8;
+    top: 3.4rem;
+    background-color: bisque;
 }
 
 .sticky-search-bar div#search-bar {
-  --tw-bg-opacity: 1;
-  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
-input#search-text, input#search-text:focus {
-  border-style: none;
-}
-
-input#search-text, input#search-text:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+input#search-text,
+input#search-text:focus {
+    border-style: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
 }
 
 #icon-show-archived:hover {
-  cursor: pointer;
-  --tw-text-opacity: 1;
-  color: rgba(161, 98, 7, var(--tw-text-opacity));
+    cursor: pointer;
+    --tw-text-opacity: 1;
+    color: rgb(161 98 7 / var(--tw-text-opacity, 1));
 }
 
 #icon-show-archived.active {
-  --tw-text-opacity: 1;
-  color: rgba(161, 98, 7, var(--tw-text-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(161 98 7 / var(--tw-text-opacity, 1));
 }
 
 #icon-filter.on {
-  --tw-text-opacity: 1;
-  color: rgba(59, 130, 246, var(--tw-text-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(59 130 246 / var(--tw-text-opacity, 1));
 }
 

@@ -1,176 +1,134 @@
 div#wrap-sidebar-friends {
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-  display: flex;
-  gap: 1rem;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    display: flex;
+    gap: 1rem
 }
 
-div#wrap-sidebar-friends div#user-profile, div#wrap-sidebar-friends div#sidebar-friends {
-  --tw-bg-opacity: 1;
-  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
-}
-
-div#wrap-sidebar-friends div#user-profile, div#wrap-sidebar-friends div#sidebar-friends {
-  width: 20%;
-}
-
-div#wrap-sidebar-friends div#user-profile, div#wrap-sidebar-friends div#sidebar-friends {
-  border-radius: 0.375rem;
-}
-
-div#wrap-sidebar-friends div#user-profile, div#wrap-sidebar-friends div#sidebar-friends {
-  --tw-border-opacity: 1;
-  border-color: rgba(82, 82, 91, var(--tw-border-opacity));
-}
-
-div#wrap-sidebar-friends div#user-profile, div#wrap-sidebar-friends div#sidebar-friends {
-  border-width: 2px;
+div#wrap-sidebar-friends div#user-profile,
+div#wrap-sidebar-friends div#sidebar-friends {
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+    width: 20%;
+    border-radius: 0.375rem;
+    --tw-border-opacity: 1;
+    border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
+    border-width: 2px
 }
 
 div#wrap-sidebar-friends div#user-profile {
-  position: relative;
-  flex-direction: column;
-  padding: 1rem;
-  height: 15rem;
+    position: relative;
+    flex-direction: column;
+    padding: 1rem;
+    height: 15rem
 }
 
 div#sidebar-friends {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  min-height: 100vh;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    min-height: 100vh
 }
 
 div#sidebar-friends div#sb-friends-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem
 }
 
 div#sbh-friends-icons {
-  display: flex;
-  justify-content: center;
-  width: 33.333333%;
-  gap: 1rem;
-  padding: 0.5rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(82, 82, 91, var(--tw-bg-opacity));
-  border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    width: 33.333333%;
+    gap: 1rem;
+    padding: 0.5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1));
+    border-radius: 0.5rem
 }
 
 div#sidebar-friends div#sb-friends-head div#content-search-user {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  --tw-text-opacity: 1;
-  color: rgba(82, 82, 91, var(--tw-text-opacity));
-  width: 91.666667%;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+    width: 91.666667%;
+    padding-top: 1rem;
+    padding-bottom: 1rem
 }
 
-input#search-text, input#search-text:focus {
-  border-style: none;
-}
-
-input#search-text, input#search-text:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
+input#search-text,
+input#search-text:focus {
+    border-style: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px
 }
 
 div #friends-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem
 }
 
 div.friend-row {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  gap: 0.5rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1))
 }
 
 div.friend-row:hover {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(82, 82, 91, var(--tw-bg-opacity));
+    border-radius: 0.375rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1))
 }
 
 div.friend-request-row {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  gap: 0.5rem;
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  display: flex;
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  justify-content: center;
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  align-items: center;
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  height: 2rem;
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  width: 2rem;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem
 }
 
 div.friend-row div.avatar,
 div.friend-request-row div.avatar,
 div.user-avatar {
-  min-width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 2rem;
+    min-width: 2rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+    border-radius: 9999px
 }
 
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  --tw-bg-opacity: 1;
-  background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  --tw-text-opacity: 1;
-  color: rgba(255, 255, 255, var(--tw-text-opacity));
-}
-
-div.friend-row div.avatar, div.friend-request-row div.avatar, div.user-avatar {
-  border-radius: 9999px;
-}
-
-div.friend-row div.name, div.friend-request-row div.name {
-  display: flex;
-}
-
-div.friend-row div.name, div.friend-request-row div.name {
-  flex-direction: column;
-}
-
-div.friend-row div.name, div.friend-request-row div.name {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+div.friend-row div.name,
+div.friend-request-row div.name {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.875rem;
+    line-height: 1.25rem
 }
 
 .btn-close {
-  position: absolute;
-  right: 1rem;
-  padding: 0.25rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(39, 39, 42, var(--tw-bg-opacity));
-  border-radius: 0.375rem;
+    position: absolute;
+    right: 1rem;
+    padding: 0.25rem;
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
+    border-radius: 0.375rem
 }
 
 .btn-close:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgba(82, 82, 91, var(--tw-bg-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(75 85 99 / var(--tw-bg-opacity, 1))
 }

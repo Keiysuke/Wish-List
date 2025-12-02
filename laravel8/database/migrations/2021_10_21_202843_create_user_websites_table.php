@@ -10,17 +10,7 @@ class CreateUserWebsitesTable extends Migration
         Schema::create('user_websites', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->unsignedInteger('user_id');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->unsignedInteger('website_id');
-            $table->foreign('website_id')
-                ->references('id')
-                ->on('websites')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
             $table->integer('ordered')->default('0');
             $table->timestamps();
             $table->primary(['user_id', 'website_id']);
