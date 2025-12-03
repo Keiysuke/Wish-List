@@ -4,6 +4,11 @@ body {
     flex-direction: column;
     overflow: auto;
     overflow-x: hidden;
+}body.scrollbar {
+    overflow-x: hidden;
+}body.scrollbar-thin {
+    overflow-x: hidden;
+}body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -19,12 +24,31 @@ body {
 
 .my-scrollbar {
     overflow-x: hidden;
+}
+
+.scrollbar.my-scrollbar {
+    overflow-x: hidden;
+}
+
+.scrollbar-thin.my-scrollbar {
+    overflow-x: hidden;
+}
+
+.my-scrollbar {
     overflow-y: auto;
     overscroll-behavior: contain;
     --scrollbar-track: initial;
     --scrollbar-thumb: initial;
     scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     overflow: overlay;
+}
+
+.my-scrollbar.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
+.my-scrollbar.overflow-y-hidden {
+    overflow-y: hidden;
 }
 
 .my-scrollbar::-webkit-scrollbar-track {

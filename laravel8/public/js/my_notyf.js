@@ -15,7 +15,6 @@ window.notyfJS = function (msg, kind) {
     'dismissible': true
   });
 };
-
 window.myNotyf = function (r) {
   if (r.notyf) {
     var notyf = new Notyf();

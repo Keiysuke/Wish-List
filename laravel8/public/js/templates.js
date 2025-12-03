@@ -7,26 +7,21 @@
     document.getElementById('wrap-lk-video-game').classList.add('hidden');
     document.getElementById('wrap-lk-vg-support').classList.add('hidden');
     document.getElementById('wrap-lk-publisher').classList.add('hidden');
-
     switch (document.getElementById('template-type').value) {
       case 'video_game':
         document.getElementById('wrap-lk-video-game').classList.remove('hidden');
         document.getElementById('wrap-lk-vg-support').classList.remove('hidden');
         break;
-
       case 'vg_support':
         document.getElementById('wrap-lk-vg-support').classList.remove('hidden');
         break;
-
       case 'publisher':
         document.getElementById('wrap-lk-publisher').classList.remove('hidden');
         break;
     }
   };
-
   document.getElementById('template-type').addEventListener('change', setTemplateType);
   setTemplateType();
-
   initSelect2 = function initSelect2(selector, placeholder, searchDataType) {
     var formatText = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function (item) {
       return item.label;

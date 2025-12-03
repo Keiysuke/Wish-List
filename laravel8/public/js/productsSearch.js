@@ -5,13 +5,11 @@
 (function () {
   toggle_filters = function toggle_filters() {
     document.getElementById('icon-filter').classList.toggle('on');
-
     if (window.scrollY >= '40') {
       window.scrollTo(0, 0);
       if (document.getElementById('content-filters').classList.contains('hidden')) document.getElementById('content-filters').classList.remove('hidden');
     } else document.getElementById('content-filters').classList.toggle('hidden');
   };
-
   sort = function sort(order_by) {
     document.getElementById('icon-asc-sort').classList.toggle('hidden');
     document.getElementById('icon-desc-sort').classList.toggle('hidden');
@@ -19,7 +17,6 @@
     document.getElementById('title-order-by').title = order_by === 'asc' ? 'Ordre croissant' : 'Ordre décroissant';
     searchProducts();
   };
-
   toggle_archived = function toggle_archived() {
     show = document.getElementById('show-archived');
     document.getElementById('show-archived').value = show.value == 0 ? 1 : 0;
@@ -27,7 +24,6 @@
     document.getElementById('icon-show-archived').classList.toggle('active');
     searchProducts();
   };
-
   display_result = function display_result(kind) {
     document.getElementById('result-icon-list').classList.toggle('hidden');
     document.getElementById('result-icon-grid').classList.toggle('hidden');
@@ -35,12 +31,10 @@
     document.getElementById('icon-list').title = kind === 'list' ? 'Liste' : 'Grille';
     searchProducts();
   };
-
   change_page = function change_page(nb) {
     document.getElementById('page').value = nb;
     searchProducts();
   };
-
   searchProducts = function searchProducts() {
     var websites = Array();
     var tags = Array();
@@ -78,7 +72,6 @@
           document.getElementById('search-text').classList.add('border');
           document.getElementById('search-text').classList.add('border-red-500');
         }
-
         return null;
       }
     }).then(function (products) {
@@ -87,13 +80,11 @@
       document.getElementById('nb-results').innerHTML = products.nb_results + ' Résultat(s)';
     });
   };
-
   document.forms['search-products'].onsubmit = function (e) {
     e.preventDefault();
     document.getElementById('page').value = 1;
     searchProducts();
   };
-
   window.addEventListener('scroll', function () {
     if (window.scrollY >= '40') document.getElementById('result-bar').setAttribute('class', 'sticky-search-bar on');else document.getElementById('result-bar').setAttribute('class', 'sticky-search-bar off');
   });

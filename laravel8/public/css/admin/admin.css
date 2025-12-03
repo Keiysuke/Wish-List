@@ -2681,11 +2681,20 @@ select {
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
+.scrollbar.overflow-x-hidden {
+  overflow-x: hidden;
+}
 .scrollbar-thin {
   --scrollbar-track: initial;
   --scrollbar-thumb: initial;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   overflow: overlay;
+}
+.scrollbar-thin.overflow-x-hidden {
+  overflow-x: hidden;
+}
+.scrollbar-thin.overflow-y-hidden {
+  overflow-y: hidden;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background-color: var(--scrollbar-track);
@@ -2700,17 +2709,17 @@ select {
   width: 8px;
   height: 8px;
 }
-.scrollbar-track-gray-\34 00 {
-  --scrollbar-track: #9ca3af;
+.scrollbar-track-gray-400 {
+  --scrollbar-track: #9ca3af !important;
 }
-.scrollbar-thumb-gray-\37 00 {
-  --scrollbar-thumb: #374151;
+.scrollbar-thumb-gray-700 {
+  --scrollbar-thumb: #374151 !important;
 }
-.scrollbar-track-red-\32 00 {
-  --scrollbar-track: #fecaca;
+.scrollbar-track-red-200 {
+  --scrollbar-track: #fecaca !important;
 }
-.scrollbar-thumb-red-\35 00 {
-  --scrollbar-thumb: #ef4444;
+.scrollbar-thumb-red-500 {
+  --scrollbar-thumb: #ef4444 !important;
 }
 
 #dashboard-table {
