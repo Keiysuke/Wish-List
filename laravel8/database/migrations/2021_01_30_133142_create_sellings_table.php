@@ -12,7 +12,7 @@ class CreateSellingsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             // keep type compatible with users.id (unsigned INT)
-            $table->unsignedInteger('user_id')->default(1);
+            $table->unsignedBigInteger('user_id')->default(1);
             $table->unsignedInteger('product_id');
             $table->unsignedTinyInteger('product_state_id');
             $table->unsignedInteger('purchase_id');

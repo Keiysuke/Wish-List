@@ -12,7 +12,7 @@ class CreateListingMessagesTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->unsignedInteger('listing_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->longText('message')->nullable();
             $table->unsignedInteger('answer_to_id')->nullable();
             $table->timestamps();

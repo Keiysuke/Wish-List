@@ -9,7 +9,7 @@ class AddCreatedByToProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->unsignedInteger('created_by')->after('real_cost')->default(1);
+            $table->unsignedBigInteger('created_by')->after('real_cost')->default(1);
         });
     }
     

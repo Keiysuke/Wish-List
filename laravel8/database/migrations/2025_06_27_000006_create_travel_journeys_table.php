@@ -11,7 +11,7 @@ class CreateTravelJourneysTable extends Migration
         Schema::create('travel_journeys', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('label');
             $table->timestamps();
         });

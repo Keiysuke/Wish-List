@@ -11,7 +11,7 @@ class CreateListingsTable extends Migration
         Schema::create('listings', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->longText('label');
             $table->longText('description')->nullable();
             $table->tinyInteger('secret')->default(0);

@@ -9,7 +9,7 @@ class CreateGroupBuysTable extends Migration
         Schema::create('group_buys', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->longText('label')->nullable();
             $table->date('date');
             $table->decimal('global_cost', $precision = 10, $scale = 2);

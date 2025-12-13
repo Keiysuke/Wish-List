@@ -84,7 +84,7 @@
                             <x-Form.Input name="label" placeholder="Uncharted 4" value="{{ old('label') }}"/>
                         </div>
                         <div class="flex gap-4">
-                            @include('partials.products.template.edit', compact(($message ?? null)))
+                            @include('partials.products.template.edit', compact(($message ?? [])))
                         </div>
                     </div>
 

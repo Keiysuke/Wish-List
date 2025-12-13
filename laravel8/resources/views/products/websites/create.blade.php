@@ -8,6 +8,7 @@
 <script type="text/javascript" src="{{ URL::asset('js/my_fetch.js') }}"></script>
 <script>
     document.getElementById('ws-url').addEventListener('change', (e) => {
+        console.log('change detected');
         const url = e.target.value;
         myFetch('{{ route('findByUrl') }}', {method: 'post', csrf: true}, {
             url: url,
@@ -16,6 +17,7 @@
                 return response.json();
             }
         }).then(res => {
+            console.log(res);
             document.getElementById('website-id').value = res.id;
         });
     });

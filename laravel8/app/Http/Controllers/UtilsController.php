@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\simulateWalkAppRequest;
 use App\Http\Requests\SimuBenefitRequest;
 use App\Http\Requests\SimuDiscountRequest;
 use App\Models\Product;
@@ -13,6 +14,20 @@ use App\Services\PurchaseService;
 
 class UtilsController extends Controller
 {
+    public function convertWalkApp(simulateWalkAppRequest $request){
+        abort_unless($request->ajax(), 404);
+        switch($request->app){
+            case 'winwalk':
+                $oneAppEuro = 38000/20;
+                break;
+            case 'macadam':
+                $oneAppEuro = 210000/120;
+                break;
+        }
+        $points = $oneAppEuro * $request->rising;
+        return response()->json(['success' => true, 'points' => round($points, 4)]);
+    }
+
     public function simulateBenefit(SimuBenefitRequest $request){
         abort_unless($request->ajax(), 404);
         $benefit = $request->sold - $request->payed;

@@ -154,9 +154,9 @@ class Product extends Model
         return UtilsController::cutString($this->description, $length);
     }
 
-    public function get_template(){
+    public function get_template(): object{
         $videoGame = ProductAsVideoGame::where('product_id', '=', $this->id)->first();
-        if(!is_null($videoGame)) return ['type' => 'video_game', 'id' => $videoGame->id, 'support_id' => $videoGame->vg_support_id];
+        if(!is_null($videoGame)) return (object)['type' => 'video_game', 'id' => $videoGame->id, 'support_id' => $videoGame->vg_support_id];
 
         $support = VgSupport::where('product_id', '=', $this->id)->first();
         if(!is_null($support)) return (object)['type' => 'vg_support', 'id' => $support->id];

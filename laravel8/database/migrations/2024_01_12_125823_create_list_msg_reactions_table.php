@@ -12,7 +12,7 @@ class CreateListMsgReactionsTable extends Migration
             $table->engine = 'InnoDB';
             $table->unsignedInteger('list_msg_id');
             $table->unsignedInteger('emoji_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->primary(['list_msg_id', 'emoji_id', 'user_id']);
         });

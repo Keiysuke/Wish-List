@@ -12,7 +12,7 @@ class CreateUserWebsiteSectionsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('label', 20)->unique();
-            $table->string('icon', 20)->unique();
+            $table->string('icon', 50)->unique();
             $table->unsignedInteger('bg_css_color_id');
             $table->foreign('bg_css_color_id')
                 ->references('id')

@@ -67,8 +67,8 @@ class VgFilterService
                     });
                 });
                 break;
-            default: $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
         }
+        $buildRequest->where('label', 'like', '%'.$request->search_text.'%');
     }
 
     function applyVgSupportFilter(Builder &$buildRequest, VgFilterRequest $request){

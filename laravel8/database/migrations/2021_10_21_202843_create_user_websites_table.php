@@ -9,7 +9,7 @@ class CreateUserWebsitesTable extends Migration
     {
         Schema::create('user_websites', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedInteger('website_id');
             $table->integer('ordered')->default('0');
             $table->timestamps();

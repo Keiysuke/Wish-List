@@ -16,7 +16,7 @@ class CreateListingUsersTable extends Migration
         Schema::create('listing_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->unsignedInteger('listing_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
             $table->primary(['listing_id', 'user_id']);
         });

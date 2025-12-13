@@ -1,3 +1,8 @@
+@php($walkapp = [
+    (object)['label' => 'Winwalk', 'id' => 'winwalk'], 
+    (object)['label' => 'Macadam', 'id' => 'macadam']
+]
+)
 <div class="sidebar-content" id="left-sidebar-help">
     <p><x-svg.help class="icon-sm text-green-400"/> Simuler un bénéfice</p>
     <div id="ls-help-benefit" class="w-full px-4">
@@ -21,7 +26,7 @@
             <x-Form.Btn id="ls-simulate-benefit" type="submit" onClick="lsBenefitHelp()">Simuler</x-Form.Btn>
         </div>
         
-        <div id="ls-benefit-results-benef" class="pt-8 flex justify-center text-2xl">
+        <div id="ls-benefit-results-benef" class="text-green-500 flex justify-center text-2xl">
         </div>
     </div>
 
@@ -50,6 +55,14 @@
     <div id="ls-help-convert" class="w-full px-4 mb-4 flex inline-flex gap-2">
         <x-Form.Input name="ls_convert_text" placeholder="30 $" onChange="lsConvert()"/>
         <x-Form.Input readonly name="ls_convert_result" placeholder="28.4442 €"/>
+    </div>
+
+    <p class="ls_title"><x-svg.euro class="icon-sm text-green-400"/> Convertisseur Walk App</p>
+    <div id="ls-help-convert-walk" class="w-full px-4 mb-4 flex inline-flex gap-2">
+        <x-Form.select class="text-black" :datas="$walkapp" name="ls_convert_walk_app" id="ls-convert-walk-app" onChange="lsConvertWalk()"/>
+        <x-Form.Input name="ls_convert_walk_text" id="ls-convert-walk-text" placeholder="10 €" onChange="lsConvertWalk()"/>
+    </div>
+    <div id="ls-convert-walk-results" class="pt-8 flex justify-center text-2xl">
     </div>
 
     <p class="ls_title"><x-svg.cmd class="icon-sm text-purple-400"/> Lancement de scripts</p>

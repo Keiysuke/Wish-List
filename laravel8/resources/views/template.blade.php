@@ -169,6 +169,22 @@
             document.getElementById('ls-convert-result').value = (document.getElementById('ls-convert-text').value * 0.85316).toFixed(4);
         }
 
+        function lsConvertWalk(){
+            let rising = parseFloat(document.getElementById('ls-convert-walk-text').value).toFixed(2);
+            if (isNaN(rising)) {
+                notyfJS('Veuillez saisir un montant correct', 'error');
+                return;
+            }
+            myFetch('{{ route('convertWalkApp') }}', {method: 'post', csrf: true}, {
+                rising: rising,
+                app: document.getElementById('ls-convert-walk-app').value,
+            }).then(response => {
+                if (response.ok) return response.json();
+            }).then(results => {
+                document.getElementById('ls-convert-walk-results').innerHTML = results.points + ' points';
+            });
+        }
+
         /**
          * Met à jour un montant en utilisant le convertisseur
          * @param string Id du champs qui contient la valeur à convertir

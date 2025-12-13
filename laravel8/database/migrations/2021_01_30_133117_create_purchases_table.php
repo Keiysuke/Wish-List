@@ -11,12 +11,13 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedInteger('product_id');
             $table->unsignedTinyInteger('product_state_id');
             $table->unsignedInteger('website_id');
             $table->decimal('cost', $precision = 10, $scale = 2);
             $table->date('date');
+            $table->date('date_received')->nullable();
             $table->decimal('customs', $precision = 10, $scale = 2)->nullable();
             $table->timestamps();
         });

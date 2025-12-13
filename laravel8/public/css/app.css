@@ -2591,6 +2591,18 @@ select {
 [x-cloak] {
     display: none;
 }
+.bg-orange-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(251 146 60 / var(--tw-bg-opacity, 1));
+}
+.bg-orange-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 115 22 / var(--tw-bg-opacity, 1));
+}
+.bg-orange-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(234 88 12 / var(--tw-bg-opacity, 1));
+}
 @media (prefers-color-scheme: dark) {
   .dark\:prose-invert {
     --tw-prose-body: var(--tw-prose-invert-body);
@@ -3358,4 +3370,3 @@ select {
     color: rgb(209 213 219 / var(--tw-text-opacity, 1));
   }
 }
-

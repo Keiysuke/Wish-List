@@ -10,8 +10,8 @@ class CreateFriendUsersTable extends Migration
     {
         Schema::create('friend_users', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('friend_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('friend_id');
             $table->boolean('favorite')->default('0');
             $table->timestamps();
             $table->primary(['user_id', 'friend_id']);
